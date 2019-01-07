@@ -20,9 +20,10 @@
 #' \code{other.sigs}
 #'
 #' @export
+#' @family signature matching functions
 #'
 #' @import lsa
-FindNearestSig <- function(query.sig, other.sigs) {
+Match1Sig <- function(query.sig, other.sigs) {
   sims <-
     apply(other.sigs,
           MARGIN = 2,
@@ -56,19 +57,20 @@ FindNearestSig <- function(query.sig, other.sigs) {
 #'
 #'
 #' @export
+#' @family signature matching functions
 #'
-MatchSigs <- function(query.sigs, other.sigs) {
+MatchSigs1Direction <- function(query.sigs, other.sigs) {
 
   stopifnot(!is.null(colnames(query.sigs)))
 
-  Match1Sig <- function(query.sig.name) {
+  Match1SigInternal <- function(query.sig.name) {
     query.sig <- query.sigs[ , query.sig.name]
-    return(FindNearestSig(query.sig, other.sigs))
+    return(Match1Sig(query.sig, other.sigs))
   }
 
   ret <-
     lapply(X = colnames(query.sigs),
-           FUN = Match1Sig)
+           FUN = Match1SigInternal)
   names(ret) <- colnames(query.sigs)
   return(ret)
 }
@@ -97,12 +99,13 @@ MatchSigs <- function(query.sigs, other.sigs) {
 #' \code{match1} and \code{match2} might not have the same number of rows.
 #'
 #' @export
+#' @family signature matching functions
 #'
-SigSetSimilarity <- function(sigs1, sigs2) {
+MatchSigs2Directions <- function(sigs1, sigs2) {
   # TODO(steve): match1 and match2 can be simplified
 
-  match1 <- MatchSigs(sigs1, sigs2)
-  match2 <- MatchSigs(sigs2, sigs1)
+  match1 <- MatchSigs1Direction(sigs1, sigs2)
+  match2 <- MatchSigs1Direction(sigs2, sigs1)
   avg <-
     (sum(unlist(match1)) + sum(unlist(match2))) /
     (length(match1) + length(match2))
@@ -156,7 +159,8 @@ fwriteDataFrame <- function(df, file, rowname.name = "mutation.type") {
 }
 
 
-#' Run \code{SigSetSimilarity}, then plot its results and write them as .csv files.
+#' Run \code{MatchSigs2Directions}, then
+#' plot its results and write them as .csv files.
 #'
 #' @param ex.sigs Newly extracted signatures to be compared to gt.sigs
 #            (actually, this is more general)
@@ -178,6 +182,7 @@ fwriteDataFrame <- function(df, file, rowname.name = "mutation.type") {
 #'  also echos the input arguments \code{ex.sigs} and \code{gt.sigs}.
 #
 #' @export
+#' @family signature matching functions
 #'
 #' @details Uses \code{plot.fn} to
 #' plot the extracted signatures with identifiers showing the
@@ -186,13 +191,13 @@ fwriteDataFrame <- function(df, file, rowname.name = "mutation.type") {
 #' .csv file with suffixes \code{match.extracted.to.gt.csv}
 #' and \code{match.gt.to.extracted.csv}.
 #'
-WriteAndPlotSimilarSigs <-
+MatchSigsThenWriteAndPlot <-
   function(ex.sigs, gt.sigs, plot.fn, file.prefix = '') {
 
     if (is.null(colnames(ex.sigs))) {
       colnames(ex.sigs) <- paste0("Ex.", 1:ncol(ex.sigs))
     }
-    sim <- SigSetSimilarity(ex.sigs, gt.sigs)
+    sim <- MatchSigs2Directions(ex.sigs, gt.sigs)
 
     # Write the "match" tables as .csv files
     fwriteDataFrame(sim$match1,
@@ -207,9 +212,6 @@ WriteAndPlotSimilarSigs <-
     labels <- character(ncol(ex.sigs))
     names(labels) <- colnames(ex.sigs)
     nums <- NumFromId(sim$match1$to)
-    # nums <-
-    #  as.numeric(sub("[^\\d]*(\\d+).*", "\\1",
-    #                 sim$match1$to, perl = T))
     reordered.ex <- colnames(ex.sigs)[order(nums)]
     ex.sigs.x <- ex.sigs[ , order(nums)]
     bestmatch.id <- sim$match1[reordered.ex, "to"]
