@@ -257,6 +257,7 @@ MatchSigsThenWriteAndPlot <-
 #' @details Stop on error
 #' @export
 #'
+#' @family signature matching functions
 TestMatchSigs2Directions <- function() {
   out1 <- MatchSigs2Directions(.test.extracted.sigs, .test.ground.truth.sigs)
   stopifnot(all.equal(out1, .test.match.out))
