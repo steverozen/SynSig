@@ -1,0 +1,14 @@
+Package: SigMisc
+Type: Package
+Title: Mutational Signatures - Miscellaneous Functions
+Version: 0.1.0
+Author: Steven G. Rozen
+Maintainer: Steven G. Rozen <steverozen@gmail.com>
+Description: A collection of functions for working with 
+    mutational signatures that are pending possible further
+    organization or re-packaging.
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+Imports: lsa
+RoxygenNote: 6.1.1
