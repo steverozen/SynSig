@@ -11,4 +11,5 @@ License: GPL-3
 Encoding: UTF-8
 LazyData: true
 Imports: lsa, data.table
+Depends: R (>= 2.10)
 RoxygenNote: 6.1.1
