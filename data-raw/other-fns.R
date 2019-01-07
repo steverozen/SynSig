@@ -1,49 +1,5 @@
 
 
-SigSetSimilarity <- function(sigs1, sigs2) {
-  # Calculate bidirectional closest similarities bewteen two sets of signatures
-  # and the average of the similarities.
-  #
-  # Args: sigs1 and sigs2 are matrices of sigantures; their colnames
-  #       are used as idenfiers.
-  #
-  # Returns:
-  #  A list with the elements:
-  #    avg: the average of the cosine similarities between each signature
-  #         in sigs1 and its closest match in sigs2 and the closest match
-  #         between each signature in sigs2 and its closest match in sigs1
-  #
-  #    match1: a data frame with a signature in sigs1 in the first column,
-  #            the closest match in sigs2 in the second column, and the
-  #            cosine similarity between them in the third column; the rownames
-  #            are the values in column 1. TODO(steve): can be simplified
-  #            by dropping column 1.
-  #
-  #    match2: a data frame with a signature in sigs2 in the first column,
-  #            the closest match in sigs1 in the second column, and the
-  #            cosine similarity between them in the third column; the rownames
-  #            are the values in column 1.
-  #
-  #    In general, match1 and match2 will not have the same number of rows.
-
-  match1 <- MatchSigs(sigs1, sigs2)
-  match2 <- MatchSigs(sigs2, sigs1)
-  avg <-
-    (sum(unlist(match1)) + sum(unlist(match2))) /
-    (length(match1) + length(match2))
-
-  table1 <-
-    data.frame(from=names(match1),
-               to=unlist(lapply(match1, names)),
-               sim=unlist(match1),
-               stringsAsFactors = FALSE)
-  table2 <-
-    data.frame(from=names(match2),
-               to=unlist(lapply(match2, names)),
-               sim=unlist(match2),
-               stringsAsFactors = FALSE)
-  return(list(avg=avg, match1=table1, match2=table2))
-}
 
 # Get the numerical part of signature ids, e.g. c("SBS3", "SBS10") -> c(3, 10)
 # (Actually, just gets the numbers corresponding to the first stretch of digits

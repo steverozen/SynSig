@@ -73,3 +73,50 @@ MatchSigs <- function(query.sigs, other.sigs) {
   return(ret)
 }
 
+#' Calculate bidirectional closest similarities bewteen two sets of signatures
+#' and the average of the similarities.
+#'
+#' @param sigs1 Matrix of signatures; colnames used as identifiers
+#' @param sigs2 Matrix of signatures; colnames used as identifiers
+#'
+#' @return   #  A list with the elements:
+#'    \code{avg}: the average of the cosine similarities between each signature
+#'         in sigs1 and its closest match in sigs2 and the closest match
+#'         between each signature in sigs2 and its closest match in sigs1
+#'
+#'    \code{match1}: a data frame with a signature in sigs1 in the first column,
+#'            the closest match in sigs2 in the second column, and the
+#'            cosine similarity between them in the third column; the rownames
+#'            are the values in column 1.
+#'
+#'    \code{match2}: a data frame with a signature in sigs2 in the first column,
+#'            the closest match in sigs1 in the second column, and the
+#'            cosine similarity between them in the third column; the rownames
+#'            are the values in column 1.
+#'
+#' \code{match1} and \code{match2} might not have the same number of rows.
+#'
+#' @export
+#'
+SigSetSimilarity <- function(sigs1, sigs2) {
+  # TODO(steve): match1 and match2 can be simplified
+
+  match1 <- MatchSigs(sigs1, sigs2)
+  match2 <- MatchSigs(sigs2, sigs1)
+  avg <-
+    (sum(unlist(match1)) + sum(unlist(match2))) /
+    (length(match1) + length(match2))
+
+  table1 <-
+    data.frame(from=names(match1),
+               to=unlist(lapply(match1, names)),
+               sim=unlist(match1),
+               stringsAsFactors = FALSE)
+  table2 <-
+    data.frame(from=names(match2),
+               to=unlist(lapply(match2, names)),
+               sim=unlist(match2),
+               stringsAsFactors = FALSE)
+  return(list(avg=avg, match1=table1, match2=table2))
+}
+

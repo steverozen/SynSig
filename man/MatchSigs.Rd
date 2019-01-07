@@ -21,7 +21,7 @@ A list with one element for each signature in query.sigs. The names
   is a vector of length 1, and the name of the vector element is
   the name of the closest matching signature in other.sigs, and the value
   is the cosine similarily between the given signature in query.sigs and
-  the matching signatute in other.sigs.
+  the matching signature in other.sigs.
 }
 \description{
 Find the closest match in \code{other.sigs} for each signature in \code{query.sigs}
