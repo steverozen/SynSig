@@ -2,4 +2,8 @@
 .Rhistory
 .RData
 .Ruserdata
-
+sp.exposure.Rdata
+SP.sigs.used.in.sa.sp.csv
+sa.sp.extracted.sigs.Rdata
+sa.sp.match.extracted.to.gt.csv
+sa.sp.match.gt.to.extracted.csv
