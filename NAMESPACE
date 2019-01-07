@@ -3,4 +3,7 @@
 export(FindNearestSig)
 export(MatchSigs)
 export(SigSetSimilarity)
+export(WriteAndPlotSimilarSigs)
+export(fwriteDataFrame)
+import(data.table)
 import(lsa)

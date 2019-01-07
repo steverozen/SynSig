@@ -10,5 +10,5 @@ Description: A collection of functions for working with
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
-Imports: lsa
+Imports: lsa, data.table
 RoxygenNote: 6.1.1
