@@ -8,25 +8,27 @@ and the average of the similarities.}
 MatchSigs2Directions(sigs1, sigs2)
 }
 \arguments{
-\item{sigs1}{Matrix of signatures; colnames used as identifiers}
+\item{sigs1}{Matrix of signatures; colnames are used as signature
+identifiers, and the colnams in \code{sigs1} should be distinguisable from
+those in \code{sigs2}.}
 
-\item{sigs2}{Matrix of signatures; colnames used as identifiers}
+\item{sigs2}{Matrix of signatures; colnames are used as signature identifiers.}
 }
 \value{
-#  A list with the elements:
-   \code{avg}: the average of the cosine similarities between each signature
-        in sigs1 and its closest match in sigs2 and the closest match
-        between each signature in sigs2 and its closest match in sigs1
+A list with the elements:
 
-   \code{match1}: a data frame with a signature in sigs1 in the first column,
-           the closest match in sigs2 in the second column, and the
-           cosine similarity between them in the third column; the rownames
-           are the values in column 1.
+\code{avg}: the average of the cosine similarities between each signature in
+\code{sigs1} and its closest match in \code{sigs2} and the closest match
+between each signature in \code{sigs2} and its closest match in \code{sigs1}.
 
-   \code{match2}: a data frame with a signature in sigs2 in the first column,
-           the closest match in sigs1 in the second column, and the
-           cosine similarity between them in the third column; the rownames
-           are the values in column 1.
+\code{match1}: a data frame with rownames being signature identifiers from
+\code{sigs1}, the signature identifier of the closest match in \code{sigs1}
+in the 1st column, and the cosine similarity between them in the 2nd column.
+
+\code{match2}: a data frame with the rownames being signature identifiers
+from \code{sigs2}, the signature identifier of the closest match in
+\code{sigs1} in the 1st column, and the cosine similarity between them in the
+2nd column.
 
 \code{match1} and \code{match2} might not have the same number of rows.
 }
