@@ -1,7 +1,7 @@
 Package: SigMisc
 Type: Package
 Title: Mutational Signatures - Miscellaneous Functions
-Version: 0.1.0
+Version: 0.1.1
 Author: Steven G. Rozen
 Maintainer: Steven G. Rozen <steverozen@gmail.com>
 Description: A collection of functions for working with 
