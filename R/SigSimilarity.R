@@ -237,7 +237,7 @@ MatchSigsThenWriteAndPlot <-
     colnames(ex.sigs.x) <- init.labels
     plot.file <- paste0(file.prefix, "extracted.sigs.pdf")
     # cat("Plotting to", plot.file, "\n")
-    plot.fn(ex.sigs.x, plot.file)
+    plot.fn(ex.sigs.x, plot.file, type = "signature")
 
     sim$ex.sigs <- ex.sigs
     sim$gt.sigs <- gt.sigs
