@@ -1,5 +1,5 @@
 context("Mutational Signature Matching")
-library(SigMisc)
+library(SynSig)
 
 test_that("Test a top level function", {
   expect_equal(

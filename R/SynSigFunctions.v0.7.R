@@ -34,15 +34,16 @@
 
 #' @title Extract SynSig parameters for one mutational signature profile
 #'
-#' @param
-#'   counts     A vector of mutation counts attributed to one signature across
+#' @param counts     A vector of mutation counts attributed to one signature across
 #'                length(counts) samples.
 #'
-#'  target.size The length of genomic sequence from which the counts
+#' @param target.size The length of genomic sequence from which the counts
 #'                were dervived, in megabases TODO:(steve) probably do not need this
 #'
 #' @return
 #'   A 3-element vector with names "prevalence", "mean", and "stdv"
+#'
+#' @importFrom stats sd
 #'
 SynSigParamsOneSignature <- function(counts, target.size ) {
 
@@ -60,13 +61,12 @@ SynSigParamsOneSignature <- function(counts, target.size ) {
 
 #' @title Determine 3 parameters for synthetic tumours from an exposure matrix
 #'
-#' @param
-#' counts A matrix in which each column is a sample and each row is a mutation
+#' @param counts A matrix in which each column is a sample and each row is a mutation
 #'         signature, with each element being the "exposure",
 #'         i.e. mutation count attributed to a
 #'         (sample, signature) pair.
 #'
-#' target.size Deprecated - was the length of sequence
+#' @param target.size Deprecated - was the length of sequence
 #'         from which the counts were dervived; in the future
 #'         make any adjustments (e.g exome to genome) before
 #'         providing the exposure matrix.
@@ -105,11 +105,14 @@ synsig.params.from.attributions <- function(counts, target.size = 1) {
 #' @title Write SynSig parameters --prevalence, mean(log(exposure))
 #'  and sd(log(exposure)) to a file.
 #'
-#'  @param
-#'    params The parameters to write
-#'    file   The path to the file to write
-#'    append Whether to append to or overwrite \code{file} if it already
+#' @param params The parameters to write
+#'
+#' @param file   The path to the file to write
+#'
+#' @param append Whether to append to or overwrite \code{file} if it already
 #'        exists.
+#'
+#' @importFrom utils write.table
 #'
 WriteSynSigParams <- function(params, file, append = FALSE) {
   write.table(x = as.data.frame(params), file = file,
@@ -125,10 +128,11 @@ WriteSynSigParams <- function(params, file, append = FALSE) {
 #' generated samples. Each entry is the count of mutations due to one
 #' signature in one sample.
 #'
-#' @param
-#'   sig.params Parameters from \code{synsig.parameters.from.attribution}
-#'    num.samples Number of samples to generate
-#'    name Prefix for sample identifiers in the simulated dataset
+#' @param sig.params Parameters from \code{synsig.parameters.from.attribution}
+#'
+#' @param num.samples Number of samples to generate
+#'
+#' @param name Prefix for sample identifiers in the simulated dataset
 
 generate.synthetic.exposures <-
   function(sig.params,
@@ -159,17 +163,18 @@ generate.synthetic.exposures <-
 
 #' @title Decide which signatures are present in the catalogs of synthetic tumors.
 #'
+#' @param num.tumors Number of tumors to generate
+#'
+#' @param prev.present Vector of prevalences, each the prevalence of 1 mutationa
+#'    signature
+#'
+#' @param sigs List(?) maybe vector(?) of signature names (?)
+#'
 #' @details If a tumor ends up with no signature assigned,
 #' signature 1 is added as the only signature. TODO:(steve)
 #' needs redesign how to handle 0 sig assigned cases
 #'
-#' @param
-#'  num.tumours Number of tumors to generate
-#'
-#'  prev.present Vector of prevalences, each the prevalence of 1 mutationa
-#'    signature
-#'
-#'  sigs List(?) maybe vector(?) of signature names (?)
+
 present.sigs <-
   function(num.tumors,   ## number of tumors
            prev.present, ## prevalence(frequency) of a signature being present
@@ -202,15 +207,19 @@ present.sigs <-
 
 #' @title TODO(steve) trace this to be sure we understand what it does.
 #'
-#' @param
-#'  tumor
-#'  sig.interest
-#'  burden.per.sig
-#'  sd.per.sig
+#' @param tumor TODO
+#'
+#' @param sig.interest TODO
+#'
+#' @param burden.per.sig TODO
+#'
+#' @param sd.per.sig TODO
 #'
 #' @details ??Determine the intensity of each
 #' mutational signature in a tumor, returning mutations per mb
 #' using the mean mutation burden per signature and the std dev
+#'
+#' @importFrom stats rbinom rnorm
 get.syn.exposure <-
   function(tumor,          ## matrix with present.signatures output
            sig.interest,   ## signatures of interest

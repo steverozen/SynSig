@@ -1,4 +1,5 @@
 library(testthat)
-library(SigMisc)
+library(SynSig)
+library(ICAMS)
 
-test_check("SigMisc")
+test_check("SynSig")
