@@ -1,4 +1,6 @@
-#' SigMisc: A package for working with mutational signatures
+#' SigMisc: A package for working with synthetic mutational signatures for
+#' purpose of evalating software packages for extracting and attributing
+#' mutational signatures.
 #'
 #' The SigMisc package provides several categories
 #' of functions for working with mutational signatures.
