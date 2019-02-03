@@ -100,7 +100,8 @@ synsig.params.from.attributions <- function(counts, target.size = 1) {
 #'    params The parameters to write
 #'    file   The path to the file to write
 #'    append Whether to append to or overwrite \code{file} if it already
-#'        exists
+#'        exists.
+#'
 WriteSynSigParams <- function(params, file, append = FALSE) {
   write.table(x = as.data.frame(params), file = file,
               sep = ",",
@@ -109,19 +110,21 @@ WriteSynSigParams <- function(params, file, append = FALSE) {
               append = append)
 }
 
+#' @title create synthetic exposures based given parameters
+#'
+#' @return A matrix with the rows being each signature and the columns being
+#' generated samples. Each entry is the count of mutations due to one
+#' signature in one sample.
+#'
+#' @param
+#'   sig.params Parameters from \code{synsig.parameters.from.attribution}
+#'    num.samples Number of samples to generate
+#'    name Prefix for sample identifiers in the simulated dataset
 
 generate.synthetic.exposures <-
   function(sig.params,
            num.samples = 10,
            name = 'synthetic') {
-    # Return a matrix with the rows being each signature and the columns being
-    # generated samples. Each entry is the count of mutations due to one
-    # signature in one sample.
-    #
-    # Args:
-    #   sig.params:   parameters from synsig.parameters.from.attribution
-    #   num.samples:  number of samples to generate
-    #   name:         prefix for sample identifiers in the simulated dataset
 
     sigs <- colnames(sig.params)
     sig.probs <- sig.params['prob', , drop = F]

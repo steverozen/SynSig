@@ -1,16 +1,19 @@
-#' SigMisc: A package for working with synthetic mutational signatures for
+#' SynSig: A package for working with synthetic mutational signatures for
 #' purpose of evalating software packages for extracting and attributing
 #' mutational signatures.
 #'
-#' The SigMisc package provides several categories
+#' The SynSig package provides several categories
 #' of functions for working with mutational signatures.
 #'
-#' @section Creating synthetic mutational catalogs based
-#' parameters derived from signaure profiles
-#' and attributions (exposures)
+#' @section Creating Synthetic Mutational Catalogs:
+#'
+#' These functions create synthetic mutational catalogs based
+#' on parameters derived from signature profiles
+#' and attributions (exposures).
 #'
 #'
 #' @section Signature Matching and Comparison:
+#'
 #' Functions for comparing mutational signatures and
 #' sets of mutational signatures:
 #' \code{\link{Match1Sig}},
