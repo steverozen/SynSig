@@ -5,6 +5,11 @@
 #' The SigMisc package provides several categories
 #' of functions for working with mutational signatures.
 #'
+#' @section Creating synthetic mutational catalogs based
+#' parameters derived from signaure profiles
+#' and attributions (exposures)
+#'
+#'
 #' @section Signature Matching and Comparison:
 #' Functions for comparing mutational signatures and
 #' sets of mutational signatures:
@@ -14,11 +19,13 @@
 #' \code{\link{MatchSigsThenWriteAndPlot}},
 #' \code{\link{TestMatchSigs2Directions}}
 #'
+#'
+#'
 #' @section Miscellaneous:
 #' fwriteDataFrame
 #'
 #'
 #' @docType package
-#' @name SigMisc
+#' @name SynSig
 #' @keywords internal
 NULL
