@@ -14,9 +14,9 @@ of functions for working with mutational signatures.
 \section{Creating Synthetic Mutational Catalogs}{
 
 
-The functions create synthetic mutational catalogs based
+These functions create synthetic mutational catalogs based
 on parameters derived from signature profiles
-and attributions (exposures)
+and attributions (exposures).
 }
 
 \section{Signature Matching and Comparison}{

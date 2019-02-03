@@ -32,18 +32,20 @@
 ##
 ## https://docs.google.com/document/d/183DzzG80BxuAdcnuL1jD1qI_YM-cgtVEdHvkbMLwHGc/edit?usp=sharing
 
-
+#' @title Extract SynSig parameters for one mutational signature profile
+#'
+#' @param
+#'   counts     A vector of mutation counts attributed to one signature across
+#'                length(counts) samples.
+#'
+#'  target.size The length of genomic sequence from which the counts
+#'                were dervived, in megabases TODO:(steve) probably do not need this
+#'
+#' @return
+#'   A 3-element vector with names "prevalence", "mean", and "stdv"
+#'
 SynSigParamsOneSignature <- function(counts, target.size ) {
-    # Args:
-    #   counts:      A vector of mutation counts attributed to one signature across
-    #                length(counts) samples.
-    #
-    #   target.size: The length of genomic sequence from which the counts
-    #                were dervived, in megabases
-    #
-    # Output:
-    #   A 3-element vector with names "prevalence", "mean", and "stdv"
-    #
+
   prevalence <-  length(counts[counts >= 1 ]) / length(counts)
 
   counts.per.mb <- counts[counts >= 1 ] / target.size
