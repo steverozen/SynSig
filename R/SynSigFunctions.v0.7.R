@@ -58,25 +58,32 @@ SynSigParamsOneSignature <- function(counts, target.size ) {
 }
 
 
+#' @title Determine 3 parameters for synthetic tumours from an exposure matrix
+#'
+#' @param
+#' counts A matrix in which each column is a sample and each row is a mutation
+#'         signature, with each element being the "exposure",
+#'         i.e. mutation count attributed to a
+#'         (sample, signature) pair.
+#'
+#' target.size Deprecated - was the length of sequence
+#'         from which the counts were dervived; in the future
+#'         make any adjustments (e.g exome to genome) before
+#'         providing the exposure matrix.
+#'
+#' @return A data frame with one row for
+#' each of a subset of the input signatures
+#'  and the following columns. Signatures not present in
+#'  \code{counts} or present only in a single tumour in \code{counts} are removed.
+#'
+#' \enumerate{
+#' \item the proportion of tumours with the signature
+#' \item mean(log_10(mutations.per.Mb))
+#' \item stddev(log_10(muations.per.Mb))
+#' }
+
 synsig.params.from.attributions <- function(counts, target.size = 1) {
 
-  ## Args:
-  ##
-  ## counts: A matrix in which each column is a sample and each row is a mutation
-  ##         signature, with each element being the "exposure",
-  ##         i.e. mutation count attributed to a
-  ##         (sample, signature) pair.
-  ##
-  ## target.size: The length of sequence from which the counts were dervived.
-  ##
-  ## Output:
-  ##
-  ## A data frame one row for a subset of the input signatures
-  ## and the following columns. Signatures not present in counts are removed.
-  ##
-  ## 1. the proportion of tumours with the signature
-  ## 2. mean(log_10(mutations.per.Mb))
-  ## 3. stddev(log_10(muations.per.Mb))
 
   integer.counts <- round(counts, digits=0)
   integer.counts <- integer.counts[rowSums(integer.counts) >0 , ]
@@ -150,17 +157,28 @@ generate.synthetic.exposures <-
   }
 
 
-## present.sigs determines whether a signature is present in a tumor,
-## if a tumor ends up with no signature assigned, signature 1 is added as the only signature.
-### maybe needs rethinking how to handle 0 sig assigned cases
-present.sigs <- function(num.tumors,   ## number of tumors
-                         prev.present, ## prevalence(frequency) of a signature being present
-                         sigs   ){     ## list of signatures to generate tumors with
+#' @title Decide which signatures are present in the catalogs of synthetic tumors.
+#'
+#' @details If a tumor ends up with no signature assigned,
+#' signature 1 is added as the only signature. TODO:(steve)
+#' needs redesign how to handle 0 sig assigned cases
+#'
+#' @param
+#'  num.tumours Number of tumors to generate
+#'
+#'  prev.present Vector of prevalences, each the prevalence of 1 mutationa
+#'    signature
+#'
+#'  sigs List(?) maybe vector(?) of signature names (?)
+present.sigs <-
+  function(num.tumors,   ## number of tumors
+           prev.present, ## prevalence(frequency) of a signature being present
+           sigs   ){     ## list of signatures to generate tumors with
 
 
-  num.process <- length(prev.present)
+    num.process <- length(prev.present)
 
-  present.list <- list()
+    present.list <- list()
 
   for (i in 1:num.process){
     present.each <- rbinom(num.tumors,
@@ -179,45 +197,54 @@ present.sigs <- function(num.tumors,   ## number of tumors
       present['SBS1',tumor] = 1
     }
   }
-  present
+  return(present)
 }
 
-## get.syn(thetic).exposure determines the intensity of each
-## mutational signature in a tumor, returning mutations per mb
-## using the mean mutation burden per signature and the std dev
-get.syn.exposure<- function(tumor,          ## matrix with present.signatures output
-                            sig.interest,   ## signatures of interest
-                            burden.per.sig, ## mutation burden in log10(muts/mb)
-                            sd.per.sig      ## standard deviation of mutation burden
-) {
+#' @title TODO(steve) trace this to be sure we understand what it does.
+#'
+#' @param
+#'  tumor
+#'  sig.interest
+#'  burden.per.sig
+#'  sd.per.sig
+#'
+#' @details ??Determine the intensity of each
+#' mutational signature in a tumor, returning mutations per mb
+#' using the mean mutation burden per signature and the std dev
+get.syn.exposure <-
+  function(tumor,          ## matrix with present.signatures output
+           sig.interest,   ## signatures of interest
+           burden.per.sig, ## mutation burden in log10(muts/mb)
+           sd.per.sig      ## standard deviation of mutation burden
+  ) {
 
-  ## starts with individual tumors,
-  active.sigs <- which(tumor != 0)
+    ## starts with individual tumors,
+    active.sigs <- which(tumor != 0)
 
-  for (sigs in active.sigs) {
-    stdev <- sd.per.sig[,sigs]
-    burden <- burden.per.sig[,sigs]
+    for (sigs in active.sigs) {
+      stdev <- sd.per.sig[,sigs]
+      burden <- burden.per.sig[,sigs]
 
-    ## if std dev is too big, >= 3, max = 3
-    ### consider handling this different. the worry is that the variation
-    ##  is too large, the sampled mutation burden will be very high,
-    ### which will have a mutation burden that is not biologically possible
-    if (stdev >= 3) {
-      cat("Very large stdev", stdev, "\n")
-      stdev = 3
+      ## if std dev is too big, >= 3, max = 3
+      ### consider handling this different. the worry is that the variation
+      ##  is too large, the sampled mutation burden will be very high,
+      ### which will have a mutation burden that is not biologically possible
+      if (stdev >= 3) {
+        cat("Very large stdev", stdev, "\n")
+        stdev = 3
+      }
+
+      ## mutational intensity follows a log normal distibution
+      ## use the normal distribution with log-ed values instead
+      mutations.per.mb <- 10^(rnorm(1,
+                                    sd = stdev,
+                                    mean = burden))
+
+      tumor[sigs] <- mutations.per.mb
     }
 
-    ## mutational intensity follows a log normal distibution
-    ## use the normal distribution with log-ed values instead
-    mutations.per.mb <- 10^(rnorm(1,
-                        sd = stdev,
-                        mean = burden))
+    tumor <- as.matrix(tumor)
+    names(tumor) <- sig.interest
+    return(tumor)
 
-    tumor[sigs] <- mutations.per.mb
   }
-
-  tumor <- as.matrix(tumor)
-  names(tumor) <- sig.interest
-  tumor
-
-}
