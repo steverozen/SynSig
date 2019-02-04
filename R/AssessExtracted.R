@@ -82,6 +82,30 @@ MatchSigsThenWriteAndPlot <-
     invisible(sim)
   }
 
+#' @title Write exposure matrix to a file
+#'
+#' @param exposure.matrix Matrix of exposures
+#'
+#' @param file File to which to write the exposure matrix (as a CSV file)
+#'
+#' @export
+WriteExposure <- function(exposure.matrix, file) {
+  old.digits <- getOption("digits")
+  options(digits = 22)
+  write.csv(exposure.matrix, file, col.names = NA, row.names = TRUE)
+  options(digits = old.digits)
+}
+
+#' @title Read an exposure matrix to a file
+#'
+#' @param file CSV file containing an exposure matrix
+#'
+#' @return Matrix of exposures
+#'
+#' @export
+ReadExposure <- function(file) {
+  return(read.csv(file, col.names = NA, row.names = TRUE))
+}
 
 #' @title Assess how well extracted signatures match input signatures
 #'
@@ -133,11 +157,19 @@ ReadAndAnalyzeSigs <-
 
   ex.sigs <- read.extracted.sigs.fn(extracted.sigs)
   gt.sigs <- read.ground.truth.sigs.fn(ground.truth.sigs)
-  # TODO(Steve): IMPORTANT Read Exposures and remove signatures
-  # that are not present in the exposures from the
-  # ground.truth signatures.
+  exposure <- ReadExposure(ground.truth.exposures)
+  # Rows are signatures, columns are samples.
 
-  MatchSigsThenWriteAndPlot(ex.sigs, gt.sigs,
-                            plot.fn, file.prefix)
+  # IMPORTANT Remove signatures that are not present in the exposures from the
+  # ground.truth signatures.
+  exposed.sig.names <- rownames(exposure)[rowSums(exposure) > 0]
+  # Make sure we do not have an signatures in exposures that
+  # are not in gt.sigs.
+  stopifnot(setequal(setiff(exposed.sig.names, gt.sig), c()))
+  gt.sigs < gt.sigs[  , exposed.sig.names]
+
+  return(
+    MatchSigsThenWriteAndPlot(ex.sigs, gt.sigs,
+                            plot.fn, file.prefix))
 
 }
