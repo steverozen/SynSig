@@ -169,6 +169,8 @@ fwriteDataFrame <- function(df, file, rowname.name = "mutation.type") {
 # usethis::use_data(.test.extracted.sigs, .test.ground.truth.sigs, .test.match.out, internal = TRUE, overwrite = TRUE)
 #
 # usethis::use_testthat()
+#
+# TODO(Steve): move to test file
 
 #' Test MatchSigs2Directions
 #'
