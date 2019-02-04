@@ -5,7 +5,7 @@
 \alias{SynSig}
 \alias{SynSig-package}
 \title{SynSig: A package for working with synthetic mutational signatures for
-purpose of evalating software packages for extracting and attributing
+purpose of evaluating software packages for extracting and attributing
 mutational signatures.}
 \description{
 The SynSig package provides several categories
@@ -34,6 +34,48 @@ sets of mutational signatures:
 \section{Miscellaneous}{
 
 fwriteDataFrame
+}
+
+\section{Overview}{
+
+
+Generate synthetic mutational spectra (mutations in tumors) from
+\enumerate{
+\item A set of mutational signatures
+
+\item Attribution of mutation counts in each tumor to the responsible mutational
+signatures
+}
+
+
+Typical workflow
+
+\preformatted{
+A <- Read in matrix of attributions (signatures x samples)
+S <- Read the mutational signature profiles.
+
+P <- synsig.parameters.from.attributions (A, ....)
+
+No.noise.exposure <- target.size * generate.synthetic.exposures (P....)
+
+No.noise.specra <- GenSynCatalogs(S, No.noise.exposure)
+
+# Skip for now
+# Noise.spectra <- ... neg binomial resample from No.noise.spectra
+
+Use functions from ICAMS to save spectra
+
+T <-  Results of running extraction package on spectra
+
+MatchSigsThenWriteAndPlot(T, S, ...)
+
+}
+
+For more information, refer to
+
+https://docs.google.com/document/d/183DzzG80BxuAdcnuL1jD1qI_YM-cgtVEdHvkbMLwHGc/edit?usp=sharing
+
+TODO(steve): describe how to evaluate!
 }
 
 \keyword{internal}

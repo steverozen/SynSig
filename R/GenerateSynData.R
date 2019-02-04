@@ -1,49 +1,18 @@
-## SynSigFunctions v0.7
-## 2019 Jan 10
-##
-## Generate synthetic mutational spectra (mutations in tumours) from
-##
-## 1. A set of mutational signatures
-##
-## 2. Attribution of mutation counts in each tumour to the responsible mutational
-## signatures
-##
-##
-## Typical workflow
-##
-## A <- Read in matrix of attributions (signatures x samples)
-## S <- Read the mutational signature profiles.
-##
-## P <- synsig.parameters.from.attributions (A, ....)
-##
-## No.noise.exposure <- target.size * generate.synthetic.exposures (P....)
-##
-## No.noise.specra <- ... some kind of matrix multiplicaiton ... check mSigTools/mSigAct for function
-##
-## Noise.spectra <- ... neg binomial resample from No.noise.spectra
-##
-## Use function from mSigTools to save No.noise.spectra and noise.spectra
-
-
-## mSigTools for functions to read spectra and mutational signatures
-# source('mSigTools.v0.11.R')
-
-## For more information, refer to
-##
-## https://docs.google.com/document/d/183DzzG80BxuAdcnuL1jD1qI_YM-cgtVEdHvkbMLwHGc/edit?usp=sharing
 
 #' @title Extract SynSig parameters for one mutational signature profile
 #'
 #' @param counts     A vector of mutation counts attributed to one signature across
-#'                length(counts) samples.
+#'                length(counts) samples. TODO(Steve): rename to exposures
 #'
 #' @param target.size The length of genomic sequence from which the counts
-#'                were dervived, in megabases TODO:(steve) probably do not need this
+#'                were derived, in megabases TODO:(Steve) probably do not need this
 #'
 #' @return
 #'   A 3-element vector with names "prevalence", "mean", and "stdv"
 #'
 #' @importFrom stats sd
+#'
+#' @export
 #'
 SynSigParamsOneSignature <- function(counts, target.size ) {
 
@@ -59,7 +28,7 @@ SynSigParamsOneSignature <- function(counts, target.size ) {
 }
 
 
-#' @title Determine 3 parameters for synthetic tumours from an exposure matrix
+#' @title Determine 3 parameters for synthetic tumors from an exposure matrix
 #'
 #' @param counts A matrix in which each column is a sample and each row is a mutation
 #'         signature, with each element being the "exposure",
@@ -67,23 +36,24 @@ SynSigParamsOneSignature <- function(counts, target.size ) {
 #'         (sample, signature) pair.
 #'
 #' @param target.size Deprecated - was the length of sequence
-#'         from which the counts were dervived; in the future
+#'         from which the counts were derived; in the future
 #'         make any adjustments (e.g exome to genome) before
 #'         providing the exposure matrix.
 #'
 #' @return A data frame with one row for
 #' each of a subset of the input signatures
 #'  and the following columns. Signatures not present in
-#'  \code{counts} or present only in a single tumour in \code{counts} are removed.
+#'  \code{counts} or present only in a single tumor in \code{counts} are removed.
 #'
 #' \enumerate{
-#' \item the proportion of tumours with the signature
+#' \item the proportion of tumors with the signature
 #' \item mean(log_10(mutations.per.Mb))
-#' \item stddev(log_10(muations.per.Mb))
+#' \item stddev(log_10(mutations.per.Mb))
 #' }
+#'
+#' @export
 
 synsig.params.from.attributions <- function(counts, target.size = 1) {
-
 
   integer.counts <- round(counts, digits=0)
   integer.counts <- integer.counts[rowSums(integer.counts) >0 , ]
@@ -94,7 +64,7 @@ synsig.params.from.attributions <- function(counts, target.size = 1) {
 
   # Some standard deviations can be NA (if there is only one tumor
   # with mutations for that signature). We pretend we did not see
-  # these signatures. TODO(steve): impute from similar signatures.
+  # these signatures. TODO(Steve): impute from similar signatures.
   if(any(is.na(ret1['stdev', ]))) {
     cat("Warning, some signatures present in only one sample, dropping:\n")
     cat(colnames(ret1)[is.na(ret1['stdev', ])], "\n")
@@ -122,7 +92,7 @@ WriteSynSigParams <- function(params, file, append = FALSE) {
               append = append)
 }
 
-#' @title create synthetic exposures based given parameters
+#' @title Create synthetic exposures based given parameters
 #'
 #' @return A matrix with the rows being each signature and the columns being
 #' generated samples. Each entry is the count of mutations due to one
@@ -133,6 +103,8 @@ WriteSynSigParams <- function(params, file, append = FALSE) {
 #' @param num.samples Number of samples to generate
 #'
 #' @param name Prefix for sample identifiers in the simulated dataset
+#'
+#' @export
 
 generate.synthetic.exposures <-
   function(sig.params,
@@ -161,19 +133,22 @@ generate.synthetic.exposures <-
   }
 
 
+# TODO(Steve): IMPORTANT need function to read and write exposures to disk
+
 #' @title Decide which signatures are present in the catalogs of synthetic tumors.
 #'
 #' @param num.tumors Number of tumors to generate
 #'
-#' @param prev.present Vector of prevalences, each the prevalence of 1 mutationa
+#' @param prev.present Vector of prevalences, each the prevalence of 1 mutational
 #'    signature
 #'
 #' @param sigs List(?) maybe vector(?) of signature names (?)
 #'
 #' @details If a tumor ends up with no signature assigned,
-#' signature 1 is added as the only signature. TODO:(steve)
+#' signature 1 is added as the only signature. TODO:(Steve)
 #' needs redesign how to handle 0 sig assigned cases
 #'
+#' @keywords internal
 
 present.sigs <-
   function(num.tumors,   ## number of tumors
@@ -220,6 +195,8 @@ present.sigs <-
 #' using the mean mutation burden per signature and the std dev
 #'
 #' @importFrom stats rbinom rnorm
+#'
+#' @keywords internal
 get.syn.exposure <-
   function(tumor,          ## matrix with present.signatures output
            sig.interest,   ## signatures of interest
@@ -257,3 +234,35 @@ get.syn.exposure <-
     return(tumor)
 
   }
+
+#' @title Generate synthetic spectra catalogs given
+#' signature profiles and synthetic exposures.
+#'
+#' @param signatures The signature profiles.
+#'
+#' @param exposures The synthetic exposures.
+#'
+#' @param profile.info Ill-defined string for tumor labels
+#'
+#' @return Spectra catalog as a numerical matrix.
+#'
+#' @export
+
+
+GenSynCatalogs <- function(signatures, exposures, profile.info = NULL) {
+  # VERY IMPORTANT, the order of signatures in exposures has to be
+  # the same as the order of signatures in signatures. In addition,
+  # the matrix exposure only contains non-0 exosures. Need to
+  # drop un-used signatures from signatures.
+  signatures <- signatures[ , rownames(exposures)]
+  catalog <- signatures %*% exposures
+  i.cat <- round(catalog, digits = 0)
+  if (!is.null(profile.info)) {
+    newcolnames <-
+      gsub(".", paste0("-", profile.info, "."), colnames(i.cat), fixed = TRUE)
+    colnames(i.cat) <- newcolnames
+  }
+  return(i.cat)
+  # TODO(Steve) In future, add noise
+}
+

@@ -20,7 +20,7 @@ A list with one element for each signature in query.sigs. The names
   of the list elements are the colnames of query.sigs. Each list element
   is a vector of length 1, and the name of the vector element is
   the name of the closest matching signature in other.sigs, and the value
-  is the cosine similarily between the given signature in query.sigs and
+  is the cosine similarity between the given signature in query.sigs and
   the matching signature in other.sigs.
 }
 \description{

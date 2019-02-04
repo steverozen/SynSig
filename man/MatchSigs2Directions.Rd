@@ -2,14 +2,14 @@
 % Please edit documentation in R/SigSimilarity.R
 \name{MatchSigs2Directions}
 \alias{MatchSigs2Directions}
-\title{Calculate bidirectional closest similarities bewteen two sets of signatures
+\title{Calculate bidirectional closest similarities between two sets of signatures
 and the average of the similarities.}
 \usage{
 MatchSigs2Directions(sigs1, sigs2)
 }
 \arguments{
 \item{sigs1}{Matrix of signatures; colnames are used as signature
-identifiers, and the colnams in \code{sigs1} should be distinguisable from
+identifiers, and the colnames in \code{sigs1} should be distinguishable from
 those in \code{sigs2}.}
 
 \item{sigs2}{Matrix of signatures; colnames are used as signature identifiers.}
@@ -33,7 +33,7 @@ from \code{sigs2}, the signature identifier of the closest match in
 \code{match1} and \code{match2} might not have the same number of rows.
 }
 \description{
-Calculate bidirectional closest similarities bewteen two sets of signatures
+Calculate bidirectional closest similarities between two sets of signatures
 and the average of the similarities.
 }
 \seealso{
