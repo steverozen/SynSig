@@ -14,4 +14,9 @@ Imports: lsa, data.table
 Depends: R (>= 2.10)
 RoxygenNote: 6.1.1
 Suggests: 
-    testthat
+    testthat,
+    knitr,
+    rmarkdown,
+    ICAMS,
+    Cairo
+VignetteBuilder: knitr

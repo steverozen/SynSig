@@ -1,0 +1,296 @@
+---
+title: "Use SynSig to evaluate the output of signature extraction"
+author: "Steve Rozen"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Use SynSig to evalute the output of signature extraction}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+To evaluate / assess how well extracted signatures
+reflect the ground-truth signatures that went into the 
+synthetic data, do the following steps.  We take as the first
+example SigProfiler output run on synthetic data based on
+SigProfiler 96-channel mutational signature profiles and
+SigProfiler attributions (exposures).
+
+## Temporary patches
+
+```{r, echo=FALSE}
+
+tmpPlotCat96 <-
+  function(catalog, id = colnames(catalog), type = "density", cex = 0.8, grid = TRUE,
+           upper = TRUE, xlabels = TRUE, abundance = NULL) {
+    stopifnot(dim(catalog) == c(96, 1))
+    stopifnot(rownames(catalog) == ICAMS:::.catalog.row.order96)
+
+    class.col <- c("#0000ff",  # dark blue
+                   "#000000",  # black
+                   "#ff4040",  # red
+                   "#838383",  # grey
+                   "#40ff40",  # green
+                   "#ff667f")  # pink
+
+    cols <- rep(class.col, each = 16)
+    maj.class.names <- c("C>A", "C>G", "C>T", "T>A", "T>C", "T>G")
+    num.classes <- length(catalog)
+
+    if (type == "density") {
+      # Calculate rate of mutations per million trinucleotides for the catalog
+      rate <- double(96)
+      for (i in 1 : 96) {
+        rate[i] <-
+          catalog[i] * 1000000 / abundance[substr(rownames(catalog)[i], 1, 3), ]
+      }
+
+      # Get ylim
+      ymax <- max(rate)
+
+      # Barplot
+      bp <- barplot(rate, xaxt = "n", yaxt = "n", xaxs = "i",
+                    xlim = c(-1, 230), lwd = 3, space = 1.35, border = NA,
+                    col = cols, ylab = "mut/million")
+
+      # Write the mutation counts on top of graph
+      for (i in 1 : 6) {
+        j <- 13 + 16 * (i - 1)
+        k <- 1 + 16 * (i - 1)
+        text(bp[j], ymax * 1.15, labels = sum(catalog[k : (16 * i), ]),
+             xpd = NA, cex = cex)
+      }
+    } else if (type == "counts") {
+      # Get ylim
+      ymax <- max(catalog[, 1])
+
+      # Barplot
+      bp <- barplot(catalog[, 1], xaxt = "n", yaxt = "n", xlim = c(-1, 230),
+                    xaxs = "i", lwd = 3, space = 1.35, border = NA,
+                    col = cols, ylab = "counts")
+
+      # Write the mutation counts on top of graph
+      for (i in 1 : 6) {
+        j <- 13 + 16 * (i - 1)
+        k <- 1 + 16 * (i - 1)
+        text(bp[j], ymax * 1.15, labels = sum(catalog[k : (16 * i), ]),
+             xpd = NA, cex = cex)
+      }
+    } else if (type == "signature") {
+      # Calculate mutation signatures of the input catalog
+      sig <- catalog / sum(catalog)
+
+      # Get ylim
+      ymax <- max(sig)
+
+      # Barplot
+      bp <- barplot(sig[, 1], xaxt = "n", yaxt = 'n', xaxs = "i", xlim = c(-1, 230),
+                    lwd = 3, space = 1.35, border = NA,
+                    col = cols, ylab = "proportion")
+    } else {
+      stop('Please specify the correct type: "density", "counts" or "signature"')
+    }
+
+    # Draw grid lines?
+    if (grid) {
+      segments(bp[1] - 1, seq(ymax/4, ymax, ymax/4), bp[num.classes] + 1,
+               seq(ymax/4, ymax, ymax/4), col = 'grey35', lwd = 0.25)
+    }
+
+    # Draw the x axis
+    Axis(side = 1, at = c(bp[seq(1, 93, 4)] - 0.5, bp[96] + 0.5),
+         labels = FALSE, lwd.tick = 0, lwd = 0.5)
+
+    # Draw y axis
+    y.axis.values <- seq(0, ymax, ymax/4)
+    if (type != "counts") {
+      y.axis.labels <- format(round(y.axis.values, 2), nsmall = 2)
+    } else {
+      y.axis.labels <- round(y.axis.values, 0)
+    }
+    if (grid) {
+      text(-0.5, y.axis.values, labels = y.axis.labels,
+           las = 1, adj = 1, xpd = NA, cex = cex)
+    } else {
+      Axis(side = 2, at = y.axis.values, las = 1, cex.axis = cex, labels = FALSE)
+      text(-3.5, y.axis.values, labels = y.axis.labels, cex = cex,
+           las = 1, adj = 1, xpd = NA)
+    }
+
+    cat("writing", id, "\n") # EDIT HERE
+    # Draw the ID information on top of graph
+    text(bp[2] + 10, ymax * 0.7, labels = paste0("x",id), xpd = NA, 
+         font = 2, adj = c(0, 0), cex = 0.8)
+
+    # Draw the labels along x axis?
+    if (xlabels) {
+      xlabel.idx <- seq(1, 96, by = 4)
+      label <- c("A", "C", "G", "T")
+
+      # Draw the first line of x axis label
+      text(bp[xlabel.idx], -ymax / 7, labels = label,
+           cex = cex, adj = 0.5, xpd = NA)
+
+      x <- list(bp[xlabel.idx], bp[xlabel.idx + 1],
+                bp[xlabel.idx + 2], bp[xlabel.idx + 3])
+      y <- c(-ymax / 3.5, -ymax / 2.8, -ymax / 2.5, -ymax / 2.1)
+      # Draw the remaining lines of x axis labels
+      for (i in 1 : 4) {
+        text(x[[i]], y[i], labels = label[i], cex = cex, adj = 0.5, xpd = NA)
+      }
+    }
+
+    # Draw the text on the left plane
+    text(1.5, -ymax / 7, labels = "preceded by 5'",
+         pos = 2, xpd = NA, cex = cex)
+    text(1.5, -ymax / 3.5, labels = "followed by 3'",
+         pos = 2, xpd = NA, cex = cex)
+
+    # Draw horizontal lines and names of major mutation class on top of graph?
+    if (upper) {
+      x.left <- bp[seq(1, 81, 16)]
+      x.right <- bp[seq(16, 96, 16)]
+      rect(xleft = x.left, ymax * 1.28, xright = x.right, ymax * 1.3,
+           col = class.col, border = NA, xpd = NA, adj = 0.5)
+      text((x.left + x.right)/2, ymax * 1.38, labels = maj.class.names, xpd = NA)
+    }
+
+    invisible(TRUE)
+  }
+```
+
+## SigProfiler example
+
+We start by reading in the ground truth signature profiles,
+the ground truth synthetic exposures, and the 
+signature profiles extracted by SigProfiler.
+
+We start with data in files because we assume
+that signature extraction software is not integrated into
+R.
+
+We need the ICAMS package for reading signature profiles.
+
+```{r readSPprofiles}
+library(ICAMS)
+library(SynSig)
+getwd()
+# setwd("vignettes/")
+
+tmp.read.96 <- function(x) ReadCat96(x, strict = FALSE)
+
+# debug(MatchSigsaAndRelabel)
+SP.7.analysis <- 
+  ReadAndAnalyzeSigs(
+    extracted.sigs =
+      "res_sp.sp.syn.2018.12.31.v2_signature_patterns_for_7_sigs.csv",
+    ground.truth.sigs = "sigProfiler_SBS_signatures_2018_03_28.csv",
+    ground.truth.exposures = "sp.syn.exposure.csv",
+    read.ground.truth.sigs.fn = tmp.read.96)
+
+SP.7.analysis$avg
+
+
+```
+
+```{r}
+knitr::kable(
+  SP.7.analysis$match1, 
+  caption = 'Best matches from extracted to ground truth'
+)
+
+knitr::kable(
+  SP.7.analysis$match2,
+  caption = 'Best matches from ground truth to extracted'
+)
+
+```
+
+Plot the input signatures.
+
+```{r, fig.width = 5}
+
+tmp <- 
+  lapply(colnames(SP.7.analysis$gt.sigs),
+        function(x) {
+          PlotCat96(SP.7.analysis$gt.sigs[ ,x, drop = FALSE],
+                       type = "signature",
+                    grid = FALSE, xlabels = FALSE, cex = 0.6,
+                    upper = FALSE)
+        })
+```
+```{r, fig.width = 5}
+tmp <- 
+  lapply(colnames(SP.7.analysis$ex.sigs),
+        function(x) {
+          PlotCat96(SP.7.analysis$ex.sigs[ ,x, drop = FALSE],
+                       type = "signature",
+                    grid = FALSE, xlabels = FALSE, cex = 0.6,
+                    upper = FALSE)
+        })
+```
+
+Try again with 9 extracted signatures.
+
+```{r, fig.width = 5}
+SP.9.analysis <- 
+  ReadAndAnalyzeSigs(
+    extracted.sigs =
+      "res_sp.sp.syn.2018.12.31.v2_signature_patterns_for_9_sigs.csv",
+    ground.truth.sigs = "sigProfiler_SBS_signatures_2018_03_28.csv",
+    ground.truth.exposures = "sp.syn.exposure.csv",
+    read.ground.truth.sigs.fn = tmp.read.96)
+
+SP.9.analysis$avg
+
+```
+
+```{r}
+knitr::kable(
+  SP.9.analysis$match1,
+  caption = 'Best matches from extracted to ground truth'
+)
+
+knitr::kable(
+  SP.9.analysis$match2, 
+  caption = 'Best matches from ground truth to extracted'
+)
+
+```
+
+
+```{r, fig.width = 5}
+tmp <- 
+  lapply(colnames(SP.9.analysis$gt.sigs),
+        function(x) {
+          PlotCat96(SP.9.analysis$gt.sigs[ ,x, drop = FALSE],
+                       type = "signature",
+                    grid = FALSE, xlabels = FALSE, cex = 0.6,
+                    upper = FALSE)
+        })
+```
+
+```{r, fig.width = 5}
+tmp <- 
+  lapply(colnames(SP.9.analysis$ex.sigs),
+        function(x) {
+          PlotCat96(SP.9.analysis$ex.sigs[ ,x, drop = FALSE],
+                       type = "signature",
+                    grid = FALSE, xlabels = FALSE, cex = 0.6,
+                    upper = FALSE)
+        })
+
+```
+
+# Session Info
+
+```{r}
+sessionInfo()
+```

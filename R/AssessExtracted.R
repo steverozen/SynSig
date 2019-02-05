@@ -2,16 +2,12 @@
 #' plot its results and write them as .csv files.
 #'
 #' @param ex.sigs Newly extracted signatures to be compared to gt.sigs
-#            (actually, this is more general)
+#            (actually, this is more general).
 #
-#' @param gt.sigs "Ground truth" signatures
+#' @param gt.sigs "Ground truth" signatures.
 #'
-#' @param plot.fn Function to plot signatures. For "typical" 96-channel
-#            signatures use \code{Cat96ToPdf0}
-#
-#' @param file.prefix A prefix string for output files, can be used to put all
-#                output files in one directory, e.g. by setting file.prefix
-#                to "my_directory/something"
+#' @param exposure "Ground truth" exposures used generate the
+#'   synthetic data from which \code{ex.sigs} were extracted.
 #'
 #' @return A list with the elements \code{avg}, \code{match1},
 #' \code{match2} as for \code{SigSetSimilarity}, with \code{match1}
@@ -22,33 +18,31 @@
 #
 #' @export
 #' @family signature matching functions
-#'
-#' @details Uses \code{plot.fn} to
-#' plot the extracted signatures with identifiers showing the
-#' nearest ground-truth signatures in a location defined by
-#' \code{file.prefix}. Saves the match tables to a
-#' .csv file with suffixes \code{match.extracted.to.gt.csv}
-#' and \code{match.gt.to.extracted.csv}. \strong{IMPORTANT:}
-#' This function does not check that all the \code{gt.sigs}
-#' were "exposed" in generating the synthetic data from
-#' which \code{ex.sigs} were generated. TODO(Steve): Possibly
-#' add this check.
-#'
-MatchSigsThenWriteAndPlot <-
-  function(ex.sigs, gt.sigs, plot.fn, file.prefix = '') {
+
+MatchSigsAndRelabel <-
+  function(ex.sigs, gt.sigs, exposure) {
 
     if (is.null(colnames(ex.sigs))) {
       colnames(ex.sigs) <- paste0("Ex.", 1:ncol(ex.sigs))
     }
+
+    # IMPORTANT Remove signatures that are not present in
+    # the exposure from which the synthetic data were
+    # generated
+    exposed.sig.names <- rownames(exposure)[rowSums(exposure) > 0]
+    # Make sure we do not have an signatures in exposures that
+    # are not in gt.sigs.
+    stopifnot(
+      setequal(setdiff(exposed.sig.names, colnames(gt.sigs)), c()))
+    gt.sigs <- gt.sigs[  , exposed.sig.names]
+
     sim <- MatchSigs2Directions(ex.sigs, gt.sigs)
 
-    # Write the "match" tables as .csv files
-    fwriteDataFrame(sim$match1,
-                    paste0(file.prefix, "match.extracted.to.gt.csv"),
-                    rowname.name = "from")
-    fwriteDataFrame(sim$match2,
-                    paste0(file.prefix, "match.gt.to.extracted.csv"),
-                    rowname.name = "from")
+    sim$extracted.with.no.best.match <-
+      setdiff(colnames(ex.sigs), sim$match2$to)
+
+    sim$ground.truth.with.no.best.match <-
+      setdiff(colnames(gt.sigs), sim$match1$to)
 
     # TODO(Steve) Document the complexity below; mostly it deals
     # with setting up plotting that is easy(?) to interpret.
@@ -73,11 +67,8 @@ MatchSigsThenWriteAndPlot <-
                " (", lag, " ", my.ex.sim, ")")
     }
     colnames(ex.sigs.x) <- init.labels
-    plot.file <- paste0(file.prefix, "extracted.sigs.pdf")
-    # cat("Plotting to", plot.file, "\n")
-    plot.fn(ex.sigs.x, plot.file, type = "signature")
 
-    sim$ex.sigs <- ex.sigs
+    sim$ex.sigs <- ex.sigs.x
     sim$gt.sigs <- gt.sigs
     invisible(sim)
   }
@@ -89,10 +80,13 @@ MatchSigsThenWriteAndPlot <-
 #' @param file File to which to write the exposure matrix (as a CSV file)
 #'
 #' @export
+#'
+#' @importFrom utils write.csv
+#'
 WriteExposure <- function(exposure.matrix, file) {
   old.digits <- getOption("digits")
   options(digits = 22)
-  write.csv(exposure.matrix, file, col.names = NA, row.names = TRUE)
+  write.csv(exposure.matrix, file, row.names = TRUE)
   options(digits = old.digits)
 }
 
@@ -103,8 +97,10 @@ WriteExposure <- function(exposure.matrix, file) {
 #' @return Matrix of exposures
 #'
 #' @export
+#'
+#' @importFrom utils read.csv
 ReadExposure <- function(file) {
-  return(read.csv(file, col.names = NA, row.names = TRUE))
+  return(read.csv(file, row.names = 1))
 }
 
 #' @title Assess how well extracted signatures match input signatures
@@ -129,17 +125,10 @@ ReadExposure <- function(file) {
 #'  assessment to only those signatures in \code{ground.truth.sigs}
 #'  that were actually represented in the exposures.
 #'
-#' @param plot.fn Function to plot signatures. For "typical" 96-channel
-#            signatures use \code{Cat96ToPdf0}
-#
-#' @param file.prefix A prefix string for output files, can be used to put all
-#                output files in one directory, e.g. by setting file.prefix
-#                to "my_directory/something"
-#'
-#' @return See \code{\link{MatchSigsThenWriteAndPlot}}
+#' @return See \code{\link{MatchSigsAndRelabel}}
 #'
 #' @details Generates output files by calling
-#' \code{\link{MatchSigsThenWriteAndPlot}}
+#' \code{\link{MatchSigsAndRelabel}}
 #'
 #' @export
 
@@ -148,10 +137,7 @@ ReadAndAnalyzeSigs <-
            ground.truth.sigs,
            ground.truth.exposures,
            read.extracted.sigs.fn = NULL,
-           read.ground.truth.sigs.fn,
-           plot.fn,
-           file.prefix
-           ) {
+           read.ground.truth.sigs.fn) {
   if (is.null(read.extracted.sigs.fn))
     read.extracted.sigs.fn <- read.ground.truth.sigs.fn
 
@@ -160,16 +146,7 @@ ReadAndAnalyzeSigs <-
   exposure <- ReadExposure(ground.truth.exposures)
   # Rows are signatures, columns are samples.
 
-  # IMPORTANT Remove signatures that are not present in the exposures from the
-  # ground.truth signatures.
-  exposed.sig.names <- rownames(exposure)[rowSums(exposure) > 0]
-  # Make sure we do not have an signatures in exposures that
-  # are not in gt.sigs.
-  stopifnot(setequal(setiff(exposed.sig.names, gt.sig), c()))
-  gt.sigs < gt.sigs[  , exposed.sig.names]
-
   return(
-    MatchSigsThenWriteAndPlot(ex.sigs, gt.sigs,
-                            plot.fn, file.prefix))
-
+    MatchSigsAndRelabel(ex.sigs, gt.sigs, exposure))
 }
+

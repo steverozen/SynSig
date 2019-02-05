@@ -9,7 +9,7 @@ outside of R on file inputs and will generate fill outputs.}
 \usage{
 ReadAndAnalyzeSigs(extracted.sigs, ground.truth.sigs,
   ground.truth.exposures, read.extracted.sigs.fn = NULL,
-  read.ground.truth.sigs.fn, plot.fn, file.prefix)
+  read.ground.truth.sigs.fn)
 }
 \arguments{
 \item{extracted.sigs}{File containing the extracted signature profiles.}
@@ -28,13 +28,9 @@ into the appropriate standard internal representation. If NULL then
 
 \item{read.ground.truth.sigs.fn}{Funtion to read the ground truth
 signatures into the appropriate standard internal reprsenetation.}
-
-\item{plot.fn}{Function to plot signatures. For "typical" 96-channel}
-
-\item{file.prefix}{A prefix string for output files, can be used to put all}
 }
 \value{
-See \code{\link{MatchSigsThenWriteAndPlot}}
+See \code{\link{MatchSigsAndRelabel}}
 }
 \description{
 Assess how well extracted signatures match input signatures
@@ -44,5 +40,5 @@ outside of R on file inputs and will generate fill outputs.
 }
 \details{
 Generates output files by calling
-\code{\link{MatchSigsThenWriteAndPlot}}
+\code{\link{MatchSigsAndRelabel}}
 }

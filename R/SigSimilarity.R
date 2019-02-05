@@ -145,20 +145,3 @@ NumFromId<- function(s) {
     as.numeric(
       sub("[^0123456789]*(\\d+).*", "\\1", s, perl = TRUE)))
 }
-
-#' Write a data.frame including rownames using data.table::fwrite
-#'
-#' @param df The data.frame to write
-#' @param file Character string specifying the path to the file to create
-#' @param rowname.name The colname for the first column on disk, which will
-#' contain the rownames
-#'
-#' @export
-#'
-#' @import data.table
-fwriteDataFrame <- function(df, file, rowname.name = "mutation.type") {
-  df <- as.data.frame(df)
-  df[ , rowname.name] <- rownames(df)
-  df <- df[ , c(ncol(df), 1:(ncol(df)-1))]
-  data.table::fwrite(as.data.table(df), file=file)
-}
