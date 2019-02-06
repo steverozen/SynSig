@@ -1,0 +1,160 @@
+---
+title: "Generate cross-matched SignatureAnalyzer and SigProfiler synthetic data"
+author: "Steve Rozen"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Generate cross-matched SignatureAnalyzer and SigProfiler synthetic data}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+Conceptual challenges arise when comparing extraction of signatures between
+different categorizations of mutation types.  
+
+For example, in PCAWG7, SigProfiler reference signatures are based on
+extraction of 96-channel signatures (i.e. single base substitutions -- SBS or SNS),
+while SignatureAnalyzer reference signatures  are based on extraction of
+"COMPOSITE" signatures consisting of SBS in pentanucleotide context plus
+double base substitutions (DBSs) and indels (IDs).
+
+A second challenge in generating "realistic" synthetic data is deciding
+how many signatures operate in a given tumor time. Here we address
+this challenge by generating different synthetic data sets, one
+based on the larger number of signatures as extracted by
+SignatureAnalyzer, and one based on the smaller number of signatures
+extracted by SigProfiler.
+
+In the end we take the cross product of the two choices, that is,
+\verbatim{
+ {96-channel, COMPOSITE} X {SignatureAnalyzer-attributions, SigProfiler-attributions}
+}
+
+### Required libraries and data
+
+```{r readSPprofiles}
+library(ICAMS)
+library(SynSig)
+```
+
+A utility function
+
+```{r}
+OutFile <- function(file.name) {
+  if (is.null(out.data.root)) return(file.name)
+  else {
+    if (!dir.exists(out.data.root)) {
+      dir.create(out.data.root)
+    }
+    return(paste0(out.data.root, file.name))
+  }
+}
+```
+
+Read SignatureAnalyzer exposures.
+
+```{r signatureanalyzerexposure}
+
+# TODO(Steve): wrap this in a function
+sa.no.hyper.real.exposures <- 
+  read.table(
+    "SignatureAnalyzer_COMPOSITE_SNV.activity.no_POLE_MSI_SKIN_TMZ.031918.txt",
+             sep = "\t", row.names = 1, header = TRUE)
+colnames(sa.no.hyper.real.exposures) <-
+  sub("__", "::", colnames(sa.no.hyper.real.exposures), fixed = TRUE)
+colnames(sa.no.hyper.real.exposures) <-
+  sub("_", "-", colnames(sa.no.hyper.real.exposures), fixed = TRUE)
+```
+
+Read SignatureAnalyzer mutational signature profiles.
+
+```{r signatureanalzyersigs}
+                           
+# COMPOSITE signature profiles
+saCOMPOSITE.sig <- ReadSASigsCOMPOSITE()
+
+# 96-channel signature profiles
+sa.96.sigs <- 
+  ReadSACat96("SignatureAnalyzer_COMPOSITE_SBS_W96.signature.031918.txt")
+```
+
+Read SigProfiler exposures and restrict on "non hyper mutated" as
+defined by the SignatureAnalyzer exposures.
+
+```{r sigprofilerinputs}
+# TODO(Steve): wrap this in a function
+sp.real.exposures <-
+  read.csv("PCAWG_sigProfiler_SBS_signatures_in_samples.csv",
+                  as.is = TRUE, header = T)
+rownames(sp.real.exposures) <-
+  paste0(sp.real.exposures$Cancer.Types, "::", sp.real.exposures$Sample.Names)
+sp.real.exposures <- t(sp.real.exposures[ , -(1:3)])
+sp.no.hyper.real.exposures <- 
+  sp.real.exposures[ , colnames(sa.no.hyper.real.exposures)]
+```
+
+Read SigProfiler signature profiles.
+
+```{r sigprofilerinputprofiles}
+# Read SigProfiler 96-channel signature profiles
+sp.sigs <-
+  ReadCat96("sigProfiler_SBS_signatures_2018_03_28.csv",
+            strict = FALSE)
+```
+
+## Example 1, Kidney-RCC and ovarian adenocarcinoma to explore SBS3, SBS5, and SBS40
+
+
+### 1.1 Kidney-RCC
+
+```{r}
+kidney.RCC <- grep("Kidney-RCC", colnames(sa.no.hyper.real.exposures), fixed = TRUE)
+sa.rcc.exp <- sa.no.hyper.real.exposures[ , kidney.RCC]
+sp.rcc.exp <- sp.no.hyper.real.exposures[ , kidney.RCC]
+stopifnot(colnames(sa.rcc.exp) == colnames(sp.rcc.exp))
+
+GenerateSynFromReal <- function(real.exp, num.syn.tumors, file.prefix) {
+  parms <- GetSynSigParamsFromExposures(sa.rcc.exp)
+  
+  froot <- OutFile(file.prefix)
+  
+  WriteExposure(sa.rcc.exp, paste0(froot, "real-exp.csv"))
+  
+  parm.file <- paste0(froot, "parms.csv")
+  WriteSynSigParams(parms, parm.file)
+
+  syn.exp <- 
+    GenerateSyntheticExposures(parms, num.syn.tumors, "RCC")
+
+  WriteExposure(syn.exp, paste0(froot, "syn-exp.csv"))
+  
+  # Sanity check
+  check.params <- GetSynSigParamsFromExposures(syn.exp)
+  
+  # sa.check.param should be similar to sa.rcc.parms
+  WriteSynSigParams(check.params, parm.file, append = TRUE)
+  WriteSynSigParams(parms - check.params, parm.file, append = TRUE)
+
+  return(list(parms=parms, syn.exp=syn.exp))
+  
+}
+
+out.data.root <<- "syn_sbs3_5_40/"  # Must be a directory; be sure to end in "/"
+set.seed(191905)
+num.syn.tumors <- 500
+
+# debug(GenerateSynFromReal)
+sa.rcc.info <-
+  GenerateSynFromReal(sa.rcc.exp, num.syn.tumors, "sa-rcc-")
+sp.rcc.info <-
+  GenerateSynFromReal(sp.rcc.exp, num.syn.tumors, "sp-rcc-")
+
+```
+TODO Next: match the signature profiles and generate full catalogs
