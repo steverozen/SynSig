@@ -42,6 +42,7 @@ In the end we take the cross product of the two choices, that is,
 ```{r readSPprofiles}
 library(ICAMS)
 library(SynSig)
+library(data.table) # check to see if ReadCat96 imports fread
 ```
 
 A utility function
@@ -162,11 +163,11 @@ sp.rcc.info <-
 
 ```
 
-### 1.2 Synthetic uterine adenocarcinoma exposures
+### 1.2 Synthetic uterus adenocarcinoma exposures
 
 ```{r uterineexposures}
 uterine <-
-  grep("Uterine-Adeno", 
+  grep("Uterus-AdenoCa", 
        colnames(sa.no.hyper.real.exposures),
        fixed = TRUE)
 sa.ute.exp <- sa.no.hyper.real.exposures[ , uterine]
