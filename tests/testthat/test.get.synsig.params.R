@@ -1,25 +1,25 @@
 context("Getting exposure/attribution parameters and generating synthetic tumors")
 
-test_that("synsig.params.from.attributions",
+test_that("GetSynSigParamsFromExposures",
           {
             load("sa.test.param.in.Rdata")
             load("sa.test.param.out.Rdata")
             expect_equal(sa.test.param.out,
-                         synsig.params.from.attributions(
+                         GetSynSigParamsFromExposures(
                            sa.test.param.in))
           })
 
-test_that("generate.synthetic.exposures",
+test_that("GenerateSyntheticExposures",
           {
             load("sa.test.param.out.Rdata")
             load("sa.test.synthetic.exposures.Rdata")
             set.seed(1066)
-            foo <- generate.synthetic.exposures(
+            foo <- GenerateSyntheticExposures(
               sa.test.param.out,
               num.samples = 50)
             expect_equal(foo, sa.test.synthetic.exposures)
             new.param <-
-              synsig.params.from.attributions(foo)
+              GetSynSigParamsFromExposures(foo)
             load("sa.test.param.in.Rdata")
             new.delta <-
               sa.test.param.out - new.param
