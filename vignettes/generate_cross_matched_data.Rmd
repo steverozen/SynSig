@@ -157,4 +157,5 @@ sp.rcc.info <-
   GenerateSynFromReal(sp.rcc.exp, num.syn.tumors, "sp-rcc-")
 
 ```
-TODO Next: match the signature profiles and generate full catalogs
+TODO Next: create uterine addeno, exposures, then merge exposures
+after that match the signature profiles and generate full catalogs
