@@ -251,11 +251,19 @@ get.syn.exposure <-
 
 
 GenSynCatalogs <- function(signatures, exposures, profile.info = NULL) {
-  # VERY IMPORTANT, the order of signatures in exposures has to be
-  # the same as the order of signatures in signatures. In addition,
-  # the matrix exposure only contains non-0 exosures. Need to
-  # drop un-used signatures from signatures.
-  signatures <- signatures[ , rownames(exposures)]
+  exposed.sigs <- rownames(exposures)
+
+  # It is an error if there are signatures in exposures that are not
+  # in signatures.
+  stopifnot(setequal(setdiff(exposed.sigs, colnames(signatures)), c()))
+
+  # VERY IMPORTANT, the next statement guarantees that
+  # the order of signatures in rows of exposures is the same as
+  # the order of columns in signatures. In addition,
+  # it ensure that signatures contains only signatures
+  # that are present in exposures.
+  #
+  signatures <- signatures[ , exposed.sigs]
   catalog <- signatures %*% exposures
   i.cat <- round(catalog, digits = 0)
   if (!is.null(profile.info)) {
