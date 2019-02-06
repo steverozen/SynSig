@@ -117,8 +117,8 @@ ReadExposure <- function(file) {
 #' into the appropriate standard internal representation. If NULL then
 #' \code{read.ground.truth.sigs.fn} is used.
 #'
-#' @param read.ground.truth.sigs.fn Funtion to read the ground truth
-#' signatures into the appropriate standard internal reprsenetation.
+#' @param read.ground.truth.sigs.fn Function to read the ground truth
+#' signatures into the appropriate standard internal representation.
 #'
 #' @param ground.truth.exposures File containing the exposures from which
 #'  the synthetic catalogs were generated.  This file is used to restrict

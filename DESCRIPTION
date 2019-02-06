@@ -10,13 +10,12 @@ Description: A collection of functions for generating synthetic
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
-Imports: lsa, data.table
+Imports: lsa, data.table, ICAMS
 Depends: R (>= 2.10)
 RoxygenNote: 6.1.1
 Suggests: 
     testthat,
     knitr,
     rmarkdown,
-    ICAMS,
     Cairo
 VignetteBuilder: knitr

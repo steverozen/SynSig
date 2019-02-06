@@ -8,7 +8,7 @@
 #'                were derived, in megabases TODO:(Steve) probably do not need this
 #'
 #' @return
-#'   A 3-element vector with names "prevalence", "mean", and "stdv"
+#'   A 3-element vector with names "prevalence", "mean", and "stdev"
 #'
 #' @importFrom stats sd
 #'
@@ -30,7 +30,7 @@ SynSigParamsOneSignature <- function(counts, target.size ) {
 
 #' @title Determine 3 parameters for synthetic tumors from an exposure matrix
 #'
-#' @param counts A matrix in which each column is a sample and each row is a mutation
+#' @param exposures A matrix in which each column is a sample and each row is a mutation
 #'         signature, with each element being the "exposure",
 #'         i.e. mutation count attributed to a
 #'         (sample, signature) pair.
@@ -43,19 +43,20 @@ SynSigParamsOneSignature <- function(counts, target.size ) {
 #' @return A data frame with one row for
 #' each of a subset of the input signatures
 #'  and the following columns. Signatures not present in
-#'  \code{counts} or present only in a single tumor in \code{counts} are removed.
+#'  \code{exposures} or present only in a single tumor in
+#'  \code{exposures} are removed.
 #'
 #' \enumerate{
 #' \item the proportion of tumors with the signature
 #' \item mean(log_10(mutations.per.Mb))
-#' \item stddev(log_10(mutations.per.Mb))
+#' \item stdev(log_10(mutations.per.Mb))
 #' }
 #'
 #' @export
 
-synsig.params.from.attributions <- function(counts, target.size = 1) {
+GetSynSigParamsFromExposures <- function(exposures, target.size = 1) {
 
-  integer.counts <- round(counts, digits=0)
+  integer.counts <- round(exposures, digits=0)
   integer.counts <- integer.counts[rowSums(integer.counts) >0 , ]
   ret1 <- apply(X=integer.counts,
                 MARGIN=1,
@@ -84,10 +85,12 @@ synsig.params.from.attributions <- function(counts, target.size = 1) {
 #'
 #' @importFrom utils write.table
 #'
+#' @export
 WriteSynSigParams <- function(params, file, append = FALSE) {
-  write.table(x = as.data.frame(params), file = file,
+  write.table(x = as.data.frame(params),
+              file = file,
               sep = ",",
-              col.names = NA,
+              col.names = ifelse(append, FALSE, NA),
               row.names = TRUE,
               append = append)
 }
@@ -106,7 +109,7 @@ WriteSynSigParams <- function(params, file, append = FALSE) {
 #'
 #' @export
 
-generate.synthetic.exposures <-
+GenerateSyntheticExposures <-
   function(sig.params,
            num.samples = 10,
            name = 'synthetic') {
@@ -132,8 +135,6 @@ generate.synthetic.exposures <-
 
   }
 
-
-# TODO(Steve): IMPORTANT need function to read and write exposures to disk
 
 #' @title Decide which signatures are present in the catalogs of synthetic tumors.
 #'
@@ -244,7 +245,7 @@ get.syn.exposure <-
 #'
 #' @param profile.info Ill-defined string for tumor labels
 #'
-#' @return Spectra catalog as a numerical matrix.
+#' @return Spectra catalog as a numeric matrix.
 #'
 #' @export
 

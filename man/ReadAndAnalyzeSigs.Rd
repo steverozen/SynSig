@@ -26,8 +26,8 @@ that were actually represented in the exposures.}
 into the appropriate standard internal representation. If NULL then
 \code{read.ground.truth.sigs.fn} is used.}
 
-\item{read.ground.truth.sigs.fn}{Funtion to read the ground truth
-signatures into the appropriate standard internal reprsenetation.}
+\item{read.ground.truth.sigs.fn}{Function to read the ground truth
+signatures into the appropriate standard internal representation.}
 }
 \value{
 See \code{\link{MatchSigsAndRelabel}}

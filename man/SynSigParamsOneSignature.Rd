@@ -14,7 +14,7 @@ length(counts) samples. TODO(Steve): rename to exposures}
 were derived, in megabases TODO:(Steve) probably do not need this}
 }
 \value{
-A 3-element vector with names "prevalence", "mean", and "stdv"
+A 3-element vector with names "prevalence", "mean", and "stdev"
 }
 \description{
 Extract SynSig parameters for one mutational signature profile

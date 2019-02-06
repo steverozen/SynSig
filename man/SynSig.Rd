@@ -50,7 +50,7 @@ S <- Read the mutational signature profiles.
 
 P <- synsig.parameters.from.attributions (A, ....)
 
-No.noise.exposure <- target.size * generate.synthetic.exposures (P....)
+No.noise.exposure <- GenerateSyntheticExposures(P....)
 
 No.noise.specra <- GenSynCatalogs(S, No.noise.exposure)
 
