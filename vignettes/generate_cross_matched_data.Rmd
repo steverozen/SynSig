@@ -187,7 +187,7 @@ sp.ute.info <-
 
 ```
 
-TODO Next: create uterine addeno, exposures, then merge exposures
+TODO Next:  check for sig3, merge exposures
 after that match the signature profiles and generate full catalogs
 
 ```{r} 
