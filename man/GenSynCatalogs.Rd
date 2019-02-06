@@ -15,7 +15,7 @@ GenSynCatalogs(signatures, exposures, profile.info = NULL)
 \item{profile.info}{Ill-defined string for tumor labels}
 }
 \value{
-Spectra catalog as a numerical matrix.
+Spectra catalog as a numeric matrix.
 }
 \description{
 Generate synthetic spectra catalogs given
