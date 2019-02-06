@@ -117,32 +117,33 @@ sp.sigs <-
 
 ```{r}
 kidney.RCC <-
-  grep("Kidney-RCC", 
+  grep("Kidney-", 
        colnames(sa.no.hyper.real.exposures),
        fixed = TRUE)
 sa.rcc.exp <- sa.no.hyper.real.exposures[ , kidney.RCC]
 sp.rcc.exp <- sp.no.hyper.real.exposures[ , kidney.RCC]
 stopifnot(colnames(sa.rcc.exp) == colnames(sp.rcc.exp))
 
-GenerateSynFromReal <- function(real.exp, num.syn.tumors, file.prefix) {
-  parms <- GetSynSigParamsFromExposures(sa.rcc.exp)
+GenerateSynFromReal <-
+  function(real.exp, num.syn.tumors, file.prefix, id.prefix) {
+  parms <- GetSynSigParamsFromExposures(real.exp)
   
   froot <- OutFile(file.prefix)
   
-  WriteExposure(sa.rcc.exp, paste0(froot, "real-exp.csv"))
+  WriteExposure(real.exp, paste0(froot, "real-exp.csv"))
   
   parm.file <- paste0(froot, "parms.csv")
   WriteSynSigParams(parms, parm.file)
 
   syn.exp <- 
-    GenerateSyntheticExposures(parms, num.syn.tumors, "RCC")
+    GenerateSyntheticExposures(parms, num.syn.tumors, id.prefix)
 
   WriteExposure(syn.exp, paste0(froot, "syn-exp.csv"))
   
   # Sanity check
   check.params <- GetSynSigParamsFromExposures(syn.exp)
   
-  # sa.check.param should be similar to sa.rcc.parms
+  # sa.check.param should be similar to parms
   WriteSynSigParams(check.params, parm.file, append = TRUE)
   WriteSynSigParams(parms - check.params, parm.file,
                     append = TRUE)
@@ -157,9 +158,11 @@ num.syn.tumors <- 500
 
 # debug(GenerateSynFromReal)
 sa.rcc.info <-
-  GenerateSynFromReal(sa.rcc.exp, num.syn.tumors, "sa-rcc-")
+  GenerateSynFromReal(sa.rcc.exp, num.syn.tumors, 
+                      "sa-rcc-", "RCC")
 sp.rcc.info <-
-  GenerateSynFromReal(sp.rcc.exp, num.syn.tumors, "sp-rcc-")
+  GenerateSynFromReal(sp.rcc.exp, num.syn.tumors,
+                      "sp-rcc-", "RCC")
 
 ```
 
@@ -167,7 +170,7 @@ sp.rcc.info <-
 
 ```{r uterineexposures}
 uterine <-
-  grep("Uterus-AdenoCa", 
+  grep("Uterus-AdenoCA", 
        colnames(sa.no.hyper.real.exposures),
        fixed = TRUE)
 sa.ute.exp <- sa.no.hyper.real.exposures[ , uterine]
@@ -176,9 +179,11 @@ stopifnot(colnames(sa.ute.exp) == colnames(sp.ute.exp))
 
 
 sa.ute.info <-
-  GenerateSynFromReal(sa.ute.exp, num.syn.tumors, "sa-ute-")
+  GenerateSynFromReal(sa.ute.exp, num.syn.tumors,
+                      "sa-ute-", "UTE")
 sp.ute.info <-
-  GenerateSynFromReal(sp.ute.exp, num.syn.tumors, "sp-ute-")
+  GenerateSynFromReal(sp.ute.exp, num.syn.tumors, 
+                      "sp-ute-", "UTE")
 
 ```
 
