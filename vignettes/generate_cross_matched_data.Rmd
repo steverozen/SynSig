@@ -112,10 +112,13 @@ sp.sigs <-
 ## Example 1, Kidney-RCC and ovarian adenocarcinoma to explore SBS3, SBS5, and SBS40
 
 
-### 1.1 Kidney-RCC
+### 1.1 Synthetic kidney-RCC exposures
 
 ```{r}
-kidney.RCC <- grep("Kidney-RCC", colnames(sa.no.hyper.real.exposures), fixed = TRUE)
+kidney.RCC <-
+  grep("Kidney-RCC", 
+       colnames(sa.no.hyper.real.exposures),
+       fixed = TRUE)
 sa.rcc.exp <- sa.no.hyper.real.exposures[ , kidney.RCC]
 sp.rcc.exp <- sp.no.hyper.real.exposures[ , kidney.RCC]
 stopifnot(colnames(sa.rcc.exp) == colnames(sp.rcc.exp))
@@ -140,7 +143,8 @@ GenerateSynFromReal <- function(real.exp, num.syn.tumors, file.prefix) {
   
   # sa.check.param should be similar to sa.rcc.parms
   WriteSynSigParams(check.params, parm.file, append = TRUE)
-  WriteSynSigParams(parms - check.params, parm.file, append = TRUE)
+  WriteSynSigParams(parms - check.params, parm.file,
+                    append = TRUE)
 
   return(list(parms=parms, syn.exp=syn.exp))
   
@@ -157,5 +161,47 @@ sp.rcc.info <-
   GenerateSynFromReal(sp.rcc.exp, num.syn.tumors, "sp-rcc-")
 
 ```
+
+### 1.2 Synthetic uterine adenocarcinoma exposures
+
+```{r uterineexposures}
+uterine <-
+  grep("Uterine-Adeno", 
+       colnames(sa.no.hyper.real.exposures),
+       fixed = TRUE)
+sa.ute.exp <- sa.no.hyper.real.exposures[ , uterine]
+sp.ute.exp <- sp.no.hyper.real.exposures[ , uterine]
+stopifnot(colnames(sa.ute.exp) == colnames(sp.ute.exp))
+
+
+sa.ute.info <-
+  GenerateSynFromReal(sa.ute.exp, num.syn.tumors, "sa-ute-")
+sp.ute.info <-
+  GenerateSynFromReal(sp.ute.exp, num.syn.tumors, "sp-ute-")
+
+```
+
 TODO Next: create uterine addeno, exposures, then merge exposures
 after that match the signature profiles and generate full catalogs
+
+```{r} 
+Merge2Exposures <- function(exp1, exp2) {
+  # Rows are signatures
+  # exp.m <- merge(exp1, exp2, by = 0, all = TRUE)
+  # is.na(exp.m) <- 0
+  # Return matrix? or DF ok?
+}
+
+MergeExposures <- function(list.of.exposures) {
+  stopifnot(length(list.of.exposures) > 0) 
+  if (length(list.of.exposures) == 1) {
+    return(as.matrix(list.of.exposures[[1]]))
+  }
+  start <- list.of.exposures[[1]]
+  for (i in 2:length(list.of.exposures)) {
+    start <- Merge2Exposures(start, list.of.exposures[[i]])
+  }
+  return(as.matrix(start))
+}
+
+```
