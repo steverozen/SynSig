@@ -225,7 +225,7 @@ SACat96 <- function(cat96) {
 
 #' Plot the SBS96 part of a SignatureAnalyzer COMPOSITE signature or catalog
 #'
-#' @param catalog Catlog or signature matrix
+#' @param catalog Catalog or signature matrix
 #'
 #' @param name Name of file to print to.
 #'

@@ -248,7 +248,7 @@ get.syn.exposure <-
 #'  then SomeCancerType::s1.33 is changed to
 #'  SomeCancerType::s1-abc.33. Actually, this just replaces
 #'  the first "." in the sample id with "-" concatenated
-#'  to sample.id.suffix
+#'  to sample.id.suffix. TODO(Steve): probably drop this
 #'
 #' @return Spectra catalog as a numeric matrix.
 #'

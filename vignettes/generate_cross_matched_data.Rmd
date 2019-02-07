@@ -133,8 +133,8 @@ SAAndSPSynDataOneCAType <-
            sp.real.exp,
            ca.type,
            num.syn.tumors,
-           file.prefix,
-           id.prefix) {
+           file.prefix) {
+    ca.type <- paste0(ca.type, "::")
     samples.to.use <- 
       grep(ca.type, colnames(sa.real.exp), fixed = TRUE)
     sa.exp <- sa.real.exp[ , samples.to.use]
@@ -143,11 +143,11 @@ SAAndSPSynDataOneCAType <-
     sa.info <-
       GenerateSynFromReal(sa.exp, num.syn.tumors, 
                           paste0("sa-", file.prefix),
-                          id.prefix)
+                          paste0("SA_Syn_", ca.type, "S"))
     sp.info <-
       GenerateSynFromReal(sp.exp, num.syn.tumors,
                           paste0("sp-", file.prefix),
-                          id.prefix)
+                          paste0("SP_Syn_", ca.type, "S"))
     return(list(
       sa.parms  = sa.info$parms,
       sa.syn.exp = sa.info$syn.exp,
@@ -169,11 +169,9 @@ rcc.info <-
   SAAndSPSynDataOneCAType(
     sa.no.hyper.real.exposures,
     sp.no.hyper.real.exposures,
-    "Kidney-RCC::",
+    "Kidney-RCC",
     num.syn.tumors,
-    "RCC",
-    "Syn_RCC::"
-  )
+    "RCC")
 ```
 
 ```{r}
@@ -182,11 +180,9 @@ ovary.info <-
   SAAndSPSynDataOneCAType(
     sa.no.hyper.real.exposures,
     sp.no.hyper.real.exposures,
-    "Ovary-AdenoCA::",
+    "Ovary-AdenoCA",
     num.syn.tumors,
-    "OVA",
-    "Syn_Ova::"
-  )
+    "OVA")
 
 ```
 
@@ -255,10 +251,17 @@ colnames(sa.96.sigs) <-
 ```
 
 ```{r}
-debug(GenSynCatalogs)
 sa.sa.COMPOSITE <- 
-  GenSynCatalogs(sa.COMPOSITE.sigs, sa.syn.exp, profile.info = NULL)
+  GenSynCatalogs(sa.COMPOSITE.sigs, sa.syn.exp)
 
-sa.sa.o6 <- GenSynCatalogs(sa.96.sigs, sa.syn.exp, profile.info = NULL)
+sa.sa.96 <- GenSynCatalogs(sa.96.sigs, sa.syn.exp)
+
+WriteCat96(sa.sa.96, OutDir("sa.96.RCC.and.OVA.csv"))
+```
+
+```{r}
+
+ReadSigProfilerSig96("example-SP-signatures.txt")
+
 
 ```

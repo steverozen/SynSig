@@ -7,7 +7,7 @@
 Plot96PartOfComposite(catalog, name, type = "density")
 }
 \arguments{
-\item{catalog}{Catlog or signature matrix}
+\item{catalog}{Catalog or signature matrix}
 
 \item{name}{Name of file to print to.}
 

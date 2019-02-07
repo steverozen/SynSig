@@ -5,14 +5,19 @@
 \title{Generate synthetic spectra catalogs given
 signature profiles and synthetic exposures.}
 \usage{
-GenSynCatalogs(signatures, exposures, profile.info = NULL)
+GenSynCatalogs(signatures, exposures, sample.id.suffix = NULL)
 }
 \arguments{
 \item{signatures}{The signature profiles.}
 
 \item{exposures}{The synthetic exposures.}
 
-\item{profile.info}{Ill-defined string for tumor labels}
+\item{sample.id.suffix}{A string for adding a suffix to
+sample ID. For example, if sample.id.suffix is "abc",
+then SomeCancerType::s1.33 is changed to
+SomeCancerType::s1-abc.33. Actually, this just replaces
+the first "." in the sample id with "-" concatenated
+to sample.id.suffix. TODO(Steve): probably drop this}
 }
 \value{
 Spectra catalog as a numeric matrix.
