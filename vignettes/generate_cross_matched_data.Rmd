@@ -232,7 +232,7 @@ sp.syn.exp <-
   MergeExposures(list(rcc.info$sp.syn.exp, ovary.info$sp.syn.exp))
 
 ```
-TODO Next:  generate full catalogs by multiplying by signature profiles
+
 
 ## Generate synthetic catalogs based on SignatureAnalyzer attributions
 
