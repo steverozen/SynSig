@@ -154,27 +154,21 @@ ReadSASigsCOMPOSITE <- function() {
   return(rbind(sa1536.sig, saDBS.sig, saID.sig))
 }
 
-#####################################################################
-# Convenience function, used for dumping COMPOSITE catalogs
-# to disk without any fancy re-writing of the representation of the
-# mutational signatures.
-#####################################################################
-
-#' Probably not needed
+#' Write a SignatureAnalyzer catalog or signature matrix to disk
 #'
-#' @param df A data.frame
+#' @param ct A catalog or signature matrix
 #'
-#' @param file File to write to
+#' @param path Path to file to write
 #'
 #' @param rowname.name Name of first column in file
 #'
-#' @importFrom data.table fwrite as.data.table
+#' @importFrom utils write.csv
+#'
+#' @export
 
-fwriteDataFrame <- function(df, file, rowname.name = "mutation.type") {
-  df <- as.data.frame(df)
-  df[ , rowname.name] <- rownames(df)
-  df <- df[ , c(ncol(df), 1:(ncol(df)-1))]
-  fwrite(as.data.table(df), file=file)
+WriteCatCOMPOSITE <- function(ct, path) {
+  write.csv(ct, file = path, row.names = TRUE,
+            quote = FALSE)
 }
 
 #####################################################################

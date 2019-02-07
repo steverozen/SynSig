@@ -89,15 +89,6 @@ sp.no.hyper.real.exposures <-
   sp.real.exposures[ , colnames(sa.no.hyper.real.exposures)]
 ```
 
-Read SigProfiler signature profiles.
-
-```{r sigprofilerinputprofiles}
-# Read SigProfiler 96-channel signature profiles
-sp.sigs <-
-  ReadCat96("sigProfiler_SBS_signatures_2018_03_28.csv",
-            strict = FALSE)
-```
-
 ## Functions to generate parallel synthetic data from SA and SP attributions and signature profiles
 
 ```{r}
@@ -232,7 +223,7 @@ sp.syn.exp <-
 
 ## Generate synthetic catalogs based on SignatureAnalyzer attributions
 
-### Read SignatureAnalyzer mutational signature profiles.
+### Read SignatureAnalyzer mutational signature profiles and create synthetic catalogs
 
 ```{r signatureanalzyersigs}
                            
@@ -253,15 +244,74 @@ colnames(sa.96.sigs) <-
 ```{r}
 sa.sa.COMPOSITE <- 
   GenSynCatalogs(sa.COMPOSITE.sigs, sa.syn.exp)
+WriteCatCOMPOSITE(sa.sa.COMPOSITE,
+                  OutDir("sa.sa.COMPOSITE.RCC.and.OVA.csv"))
 
 sa.sa.96 <- GenSynCatalogs(sa.96.sigs, sa.syn.exp)
 
 WriteCat96(sa.sa.96, OutDir("sa.96.RCC.and.OVA.csv"))
 ```
 
+### Read SigProfiler mutational signature profiles and create synthetic catalogs
+
+
+```{r sigprofilerinputprofiles}
+# Read SigProfiler 96-channel signature profiles
+sp.sigs <-
+  ReadCat96("sigProfiler_SBS_signatures_2018_03_28.csv",
+            strict = FALSE)
+```
+
+Create the catalogs. First we need the matching between SigProfiler
+and SignatureAnalyzers signatures.
+
+```{r}
+MapSPToSASignatureNames <- function() {
+  SP.SA.mappings <-
+    MatchSigs2Directions(sp.sigs[ , rownames(sp.syn.exp)], sa.96.sigs)
+  new.syn.exp.rownames <- SP.SA.mappings$match1[rownames(sp.syn.exp), "to"]
+  exp2 <- sp.syn.exp
+  rownames(exp2) <- new.syn.exp.rownames
+  return(list(exp2               = exp2, 
+              sp.to.sa.sig.match = SP.SA.mappings$match1,
+              sa.to.sp.sig.match = SP.SA.mappings$match2))
+}
+
+sp.sa.map.info <- MapSPToSASignatureNames()
+sp.sa.COMPOSITE <- 
+  GenSynCatalogs(sa.COMPOSITE.sigs, sp.sa.map.info$exp2)
+WriteCatCOMPOSITE(sp.sa.COMPOSITE,
+                  OutDir("sp.sa.COMPOSITE.RCC.and.OVA.csv"))
+
+```
+
+knitr::kable(
+  sp.sa.map.info$sp.to.sa.sig.match, 
+  caption = 'Best matches from SP signtures to SA signatures',
+  digits = 4
+)
+
+knitr::kable(
+  sp.sa.map.info$sa.to.sp.sig.match, 
+  caption = 'Best (reverse) matches from SA signtures to SP signatures (for sanity checking)',
+  digits = 4
+)
+
+```{r}
+
+#TODO CREATE AND WRITE THE sp.sp synthetic catalogs here ; the pull out only 3, 5, 40
+# and make new data set.
+
+```
+
+
+## Turn this into a test
+
 ```{r}
 
 ReadSigProfilerSig96("example-SP-signatures.txt")
+
+
 
 
 ```
