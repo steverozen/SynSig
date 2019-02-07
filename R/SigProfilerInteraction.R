@@ -7,6 +7,8 @@
 #' @return The corresponding signature matrix in standard internal
 #' representation.
 #'
+#' @importFrom utils read.table
+#'
 #' @export
 
 ReadSigProfilerSig96 <- function(file) {
