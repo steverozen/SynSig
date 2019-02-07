@@ -243,14 +243,19 @@ get.syn.exposure <-
 #'
 #' @param exposures The synthetic exposures.
 #'
-#' @param profile.info Ill-defined string for tumor labels
+#' @param sample.id.suffix A string for adding a suffix to
+#'  sample ID. For example, if sample.id.suffix is "abc",
+#'  then SomeCancerType::s1.33 is changed to
+#'  SomeCancerType::s1-abc.33. Actually, this just replaces
+#'  the first "." in the sample id with "-" concatenated
+#'  to sample.id.suffix
 #'
 #' @return Spectra catalog as a numeric matrix.
 #'
 #' @export
 
 
-GenSynCatalogs <- function(signatures, exposures, profile.info = NULL) {
+GenSynCatalogs <- function(signatures, exposures, sample.id.suffix = NULL) {
   exposed.sigs <- rownames(exposures)
 
   # It is an error if there are signatures in exposures that are not
@@ -266,9 +271,10 @@ GenSynCatalogs <- function(signatures, exposures, profile.info = NULL) {
   signatures <- signatures[ , exposed.sigs]
   catalog <- signatures %*% exposures
   i.cat <- round(catalog, digits = 0)
-  if (!is.null(profile.info)) {
+  if (!is.null(sample.id.suffix)) {
     newcolnames <-
-      gsub(".", paste0("-", profile.info, "."), colnames(i.cat), fixed = TRUE)
+      gsub(".", paste0("-", sample.id.suffix, "."),
+           colnames(i.cat), fixed = TRUE)
     colnames(i.cat) <- newcolnames
   }
   return(i.cat)
