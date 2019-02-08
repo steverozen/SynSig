@@ -45,20 +45,6 @@ library(SynSig)
 library(data.table) # check to see if ReadCat96 imports fread
 ```
 
-A utility function
-
-```{r}
-OutDir <- function(file.name) {
-  if (is.null(out.data.root)) return(file.name)
-  else {
-    if (!dir.exists(out.data.root)) {
-      dir.create(out.data.root)
-    }
-    return(paste0(out.data.root, file.name))
-  }
-}
-```
-
 Read SignatureAnalyzer exposures.
 
 ```{r signatureanalyzerexposure}
@@ -72,6 +58,8 @@ colnames(sa.no.hyper.real.exposures) <-
   sub("__", "::", colnames(sa.no.hyper.real.exposures), fixed = TRUE)
 colnames(sa.no.hyper.real.exposures) <-
   sub("_", "-", colnames(sa.no.hyper.real.exposures), fixed = TRUE)
+rownames(sa.no.hyper.real.exposures) <-
+  FixSASigNames(rownames(sa.no.hyper.real.exposures))
 ```
 
 Read SigProfiler exposures and restrict on "non hyper mutated" as
@@ -92,33 +80,6 @@ sp.no.hyper.real.exposures <-
 ## Functions to generate parallel synthetic data from SA and SP attributions and signature profiles
 
 ```{r}
-GenerateSynFromReal <-
-  function(real.exp, num.syn.tumors, file.prefix, id.prefix) {
-  parms <- GetSynSigParamsFromExposures(real.exp)
-  
-  froot <- OutDir(file.prefix)
-  
-  WriteExposure(real.exp, paste0(froot, "real-exp.csv"))
-  
-  parm.file <- paste0(froot, "parms.csv")
-  WriteSynSigParams(parms, parm.file)
-
-  syn.exp <- 
-    GenerateSyntheticExposures(parms, num.syn.tumors, id.prefix)
-
-  WriteExposure(syn.exp, paste0(froot, "syn-exp.csv"))
-  
-  # Sanity check
-  check.params <- GetSynSigParamsFromExposures(syn.exp)
-  
-  # sa.check.param should be similar to parms
-  WriteSynSigParams(check.params, parm.file, append = TRUE)
-  WriteSynSigParams(parms - check.params, parm.file,
-                    append = TRUE)
-
-  return(list(parms=parms, syn.exp=syn.exp))
-}
-
 SAAndSPSynDataOneCAType <-
   function(sa.real.exp, 
            sp.real.exp,
@@ -152,7 +113,7 @@ SAAndSPSynDataOneCAType <-
 
 
 ```{r}
-out.data.root <<- "syn_sbs3_5_40/"  # Must be a directory; be sure to end in "/"
+out.data.dir <<- "syn_sbs3_5_40/"  # Must be a directory; be sure to end in "/"
 set.seed(191905)
 num.syn.tumors <- 500
 
@@ -177,43 +138,12 @@ ovary.info <-
 
 ```
 
-
-```{r} 
-Merge2Exposures <- function(exp1, exp2) {
-  # Rows are signatures
-  exp.m <- merge(exp1, exp2, by = 0, all = TRUE)
-  rownames(exp.m) <- exp.m[ ,1]
-  exp.m <- exp.m[ , -1]
-  exp.m[is.na(exp.m)] <- 0
-  return(as.matrix(exp.m))
-}
-
-MergeExposures <- function(list.of.exposures) {
-  stopifnot(length(list.of.exposures) > 0) 
-  if (length(list.of.exposures) == 1) {
-    return(as.matrix(list.of.exposures[[1]]))
-  }
-  start <- list.of.exposures[[1]]
-  for (i in 2:length(list.of.exposures)) {
-    start <- Merge2Exposures(start, list.of.exposures[[i]])
-  }
-  return(as.matrix(start))
-}
-
-```
-
 Combine the RCC and ovarian adenocarcinoma synthetic exposures
 
 ```{r} 
 # debug(MergeExposures)
 sa.syn.exp <-
   MergeExposures(list(rcc.info$sa.syn.exp, ovary.info$sa.syn.exp))
-# Special adjustment -- SignatureAnalyzer signatures in exposures are 
-# named differently than in the signature profile matrix.
-# TODO(Steve): possibly move this to the point at which
-# expsoures are read in.
-rownames(sa.syn.exp) <-
-  gsub("_SNV_", "_", rownames(sa.syn.exp), fixed = TRUE)
 
 sp.syn.exp <-
   MergeExposures(list(rcc.info$sp.syn.exp, ovary.info$sp.syn.exp))
@@ -233,23 +163,18 @@ sa.COMPOSITE.sigs <- ReadSASigsCOMPOSITE()
 # 96-channel signature profiles
 sa.96.sigs <- 
   ReadSACat96("SignatureAnalyzer_COMPOSITE_SBS_W96.signature.031918.txt")
-# Special adjustment -- SignatureAnalyzer signatures in exposures are 
-# named differently than in the signature profile matrix.
-# TODO(Steve): possibly move this to the point at which
-# expsoures are read in.
-colnames(sa.96.sigs) <-
-    gsub("_SNV_", "_", colnames(sa.96.sigs), fixed = TRUE)
+colnames(sa.96.sigs) <- FixSASigNames(colnames(sa.96.sigs))
 ```
 
 ```{r}
 sa.sa.COMPOSITE <- 
   GenSynCatalogs(sa.COMPOSITE.sigs, sa.syn.exp)
 WriteCatCOMPOSITE(sa.sa.COMPOSITE,
-                  OutDir("sa.sa.COMPOSITE.RCC.and.OVA.csv"))
+                  OutDir("sa.sa.COMPOSITE.RCC.and.OVA.syn.data.csv"))
 
 sa.sa.96 <- GenSynCatalogs(sa.96.sigs, sa.syn.exp)
 
-WriteCat96(sa.sa.96, OutDir("sa.96.RCC.and.OVA.csv"))
+WriteCat96(sa.sa.96, OutDir("sa.96.RCC.and.OVA.syn.data.csv"))
 ```
 
 ### Read SigProfiler mutational signature profiles and create synthetic catalogs
@@ -266,50 +191,121 @@ Create the catalogs. First we need the matching between SigProfiler
 and SignatureAnalyzers signatures.
 
 ```{r}
-MapSPToSASignatureNames <- function() {
+MapSPToSASignatureNamesInExposure <-
+  function(sp.exposures, sp.sigs, sa.96.sigs) {
   SP.SA.mappings <-
-    MatchSigs2Directions(sp.sigs[ , rownames(sp.syn.exp)], sa.96.sigs)
-  new.syn.exp.rownames <- SP.SA.mappings$match1[rownames(sp.syn.exp), "to"]
-  exp2 <- sp.syn.exp
+    MatchSigs2Directions(sp.sigs[ , rownames(sp.exposures)], sa.96.sigs)
+  new.syn.exp.rownames <- SP.SA.mappings$match1[rownames(sp.exposures), "to"]
+  exp2 <- sp.exposures
   rownames(exp2) <- new.syn.exp.rownames
   return(list(exp2               = exp2, 
               sp.to.sa.sig.match = SP.SA.mappings$match1,
               sa.to.sp.sig.match = SP.SA.mappings$match2))
 }
 
-sp.sa.map.info <- MapSPToSASignatureNames()
+sp.sa.map.info <-
+  MapSPToSASignatureNamesInExposure(sp.syn.exp, sp.sigs, sa.96.sigs)
 sp.sa.COMPOSITE <- 
   GenSynCatalogs(sa.COMPOSITE.sigs, sp.sa.map.info$exp2)
 WriteCatCOMPOSITE(sp.sa.COMPOSITE,
-                  OutDir("sp.sa.COMPOSITE.RCC.and.OVA.csv"))
+                  OutDir("sp.sa.COMPOSITE.RCC.and.OVA.syn.data.csv"))
 
 ```
-
-knitr::kable(
-  sp.sa.map.info$sp.to.sa.sig.match, 
-  caption = 'Best matches from SP signtures to SA signatures',
-  digits = 4
-)
-
-knitr::kable(
-  sp.sa.map.info$sa.to.sp.sig.match, 
-  caption = 'Best (reverse) matches from SA signtures to SP signatures (for sanity checking)',
-  digits = 4
-)
 
 ```{r}
+knitr::kable(
+  sp.sa.map.info$sp.to.sa.sig.match, 
+  caption = 'Best matches from SP signatures to SA signatures',
+  digits = 4
+)
 
-#TODO CREATE AND WRITE THE sp.sp synthetic catalogs here ; the pull out only 3, 5, 40
-# and make new data set.
-
+if (FALSE) {
+knitr::kable(
+  sp.sa.map.info$sa.to.sp.sig.match, 
+  caption =
+    paste('Best (reverse) matches from SA signatures",
+          "to SP signatures (for sanity checking)'),
+  digits = 4
+)
+}
 ```
 
+
+```{r}
+## Digression, all best matches between SignatureAnalyzer and SigProfier 96-channel signatures
+
+if (FALSE) {
+tmp <- MatchSigs2Directions(sp.sigs, sa.96.sigs)
+knitr::kable(
+  tmp$match1, 
+  caption = 'match1',
+  digits = 4
+)
+
+knitr::kable(
+  tmp$match2, 
+  caption = 'match2',
+  digits = 4
+)
+}
+```
+
+```{r}
+sp.sp <- GenSynCatalogs(sp.sigs, sp.syn.exp)
+
+WriteCat96(sp.sp, OutDir("sp.sp.RCC.and.OVA.syn.data.csv"))
+```
+
+## Pull out only 3, 5, 40 and make a new data set.
+
+
+```{r}
+x.sp.parms <-
+  cbind(rcc.info$sp.parms[ , c("SBS5", "SBS40")],
+        ovary.info$sp.parms[ , "SBS3", drop = FALSE])
+
+# Find mapping from SBS3, SBS5, and SBS40 to SignatureAnalyzer signatures
+# assigned to these tumor types
+
+MatchSigs1Direction(
+  sp.sigs[ , "SBS5", drop = F], 
+  sa.96.sigs[ , FixSASigNames(rownames(rcc.info$sa.syn.exp))])
+
+MatchSigs1Direction(
+  sp.sigs[ , "SBS40", drop = F], 
+  sa.96.sigs[ , FixSASigNames(rownames(rcc.info$sa.syn.exp))])
+
+MatchSigs1Direction(
+  sp.sigs[ , "SBS3", drop = F], 
+  sa.96.sigs[ , FixSASigNames(rownames(ovary.info$sa.syn.exp))])
+
+
+# Both BI..SBS3 and BI..SBS39 are in every ovarian; we select BI..SBS3
+
+x.sa.parms <-
+  cbind(rcc.info$sa.parms[ , c("BI_COMPOSITE_SBS5_P",
+                               "BI_COMPOSITE_SBS40_P")],
+        ovary.info$sa.parms[ , "BI_COMPOSITE_SBS3_P", drop = FALSE])
+
+knitr::kable(
+  x.sp.parms, 
+  caption = 'SigProfiler parameters',
+  digits = 4
+)
+
+knitr::kable(
+  x.sa.parms, 
+  caption = 'SignatureAnalyzer parameters',
+  digits = 4
+)
+
+```
 
 ## Turn this into a test
 
 ```{r}
 
-ReadSigProfilerSig96("example-SP-signatures.txt")
+# ReadSigProfilerSig96("example-SP-signatures.txt")
 
 
 
