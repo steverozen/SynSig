@@ -14,6 +14,9 @@ prefixed by \code{out.data.dir}.}
 \code{file.name} prefixed by \code{out.data.dir}.
 }
 \description{
-The directory is provided by \code{out.data.dir},
-which must be set by the user.
+The directory is provided by the global
+variable \code{out.data.dir},
+which \strong{must} be set by the user. If
+\code{out.data.dir} is NULL then just return
+\code{file.name}.
 }

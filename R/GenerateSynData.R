@@ -288,7 +288,7 @@ GenSynCatalogs <- function(signatures, exposures, sample.id.suffix = NULL) {
 #' @param exp2 An exposure matrix
 #'
 #' @return The column-wise merge of the two input matrices as
-#' with all rownames from either matrix presevered and
+#' with all rownames from either matrix preserved and
 #' corresponding entries filled with 0s.
 #'
 #' @keywords internal
@@ -306,7 +306,7 @@ Merge2Exposures <- function(exp1, exp2) {
 #' @param list.of.exposures A list of exposure matrices
 #'
 #' @return The column-wise merge of all the input matrices
-#' with all rownames from all matrices presevered and
+#' with all rownames from all matrices preserved and
 #' corresponding entries filled with 0s.
 #'
 #' @export

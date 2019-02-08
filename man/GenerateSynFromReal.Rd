@@ -2,7 +2,7 @@
 % Please edit documentation in R/AssessExtracted.R
 \name{GenerateSynFromReal}
 \alias{GenerateSynFromReal}
-\title{Generate syntheic exposures from real exposures.}
+\title{Generate synthetic exposures from real exposures.}
 \usage{
 GenerateSynFromReal(real.exp, num.syn.tumors, file.prefix,
   sample.id.prefix)

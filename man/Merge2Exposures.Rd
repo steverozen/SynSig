@@ -13,7 +13,7 @@ Merge2Exposures(exp1, exp2)
 }
 \value{
 The column-wise merge of the two input matrices as
-with all rownames from either matrix presevered and
+with all rownames from either matrix preserved and
 corresponding entries filled with 0s.
 }
 \description{

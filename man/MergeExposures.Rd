@@ -11,7 +11,7 @@ MergeExposures(list.of.exposures)
 }
 \value{
 The column-wise merge of all the input matrices
-with all rownames from all matrices presevered and
+with all rownames from all matrices preserved and
 corresponding entries filled with 0s.
 }
 \description{

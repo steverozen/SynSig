@@ -17,5 +17,6 @@ Suggests:
     testthat,
     knitr,
     rmarkdown,
-    Cairo
+    Cairo,
+    DelayedArray
 VignetteBuilder: knitr

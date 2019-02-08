@@ -177,7 +177,7 @@ OutDir <- function(file.name) {
   return(paste0(out.data.dir, file.name))
 }
 
-#' Generate syntheic exposures from real exposures.
+#' Generate synthetic exposures from real exposures.
 #'
 #' Checkpoints the parameters and the synthetic
 #' exposures to files. It also checks that the parameters
