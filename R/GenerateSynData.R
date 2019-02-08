@@ -323,3 +323,115 @@ MergeExposures <- function(list.of.exposures) {
   return(as.matrix(start))
 }
 
+#' Create file names in a given directory
+#'
+#' The directory is provided by the global
+#' variable \code{out.data.dir},
+#' which \strong{must} be set by the user. If
+#' \code{out.data.dir} is NULL then just return
+#' \code{file.name}.
+#'
+#' @param file.name The name of the that will be
+#' prefixed by \code{out.data.dir}.
+#'
+#' @return \code{file.name} prefixed by \code{out.data.dir}.
+#'
+#' @export
+#'
+OutDir <- function(file.name) {
+  if (is.null(out.data.dir)) return(file.name)
+  tmp <- out.data.dir
+  n <- nchar(tmp)
+  if (substr(tmp, n, n) != "/")
+    tmp <- paste0(tmp, "/")
+  if (!dir.exists(tmp)) {
+    dir.create(tmp)
+  }
+  return(paste0(tmp, file.name))
+}
+
+#' Generate synthetic exposures from abstract parameters.
+#'
+#' Checkpoints the parameters and the synthetic
+#' exposures to files. It also checks that the parameters
+#' inferred from the synthetic data approximate those
+#' inferred from \code{real.exp}.
+#'
+#' @param parms The actually exposures upon which to base
+#' the parameters and synthetic exposures.
+#'
+#' @param num.syn.tumors Generate this number of synthetic tumors.
+#'
+#' @param file.prefix Prepend this to output filenames
+#'  to indicate the organization of the data.
+#'
+#' @param sample.id.prefix Prefix for sample identifiers for the
+#' synthetic samples.
+#'
+#' @return A list with elements:
+#' \enumerate{
+#'  \item \code{parms} The parameters inferred from \code{real.exp}.
+#'  \item \code{syn.exp} The synthetic exposures generated from \code{parms}.
+#' }
+#'
+#' @export
+GenerateSynAbstract <-
+  function(parms, num.syn.tumors, file.prefix, sample.id.prefix) {
+
+    froot <- OutDir(file.prefix)
+
+    parm.file <- paste0(froot, "parms.csv")
+    WriteSynSigParams(parms, parm.file)
+
+    syn.exp <-
+      GenerateSyntheticExposures(parms, num.syn.tumors, sample.id.prefix)
+
+    WriteExposure(syn.exp, paste0(froot, "syn-exp.csv"))
+
+    # Sanity check
+    check.params <- GetSynSigParamsFromExposures(syn.exp)
+
+    # sa.check.param should be similar to parms
+    WriteSynSigParams(check.params, parm.file, append = TRUE)
+    WriteSynSigParams(parms - check.params, parm.file,
+                      append = TRUE)
+
+    return(list(parms=parms, syn.exp=syn.exp))
+  }
+
+#' Generate synthetic exposures from real exposures.
+#'
+#' Checkpoints the parameters and the synthetic
+#' exposures to files. It also checks that the parameters
+#' inferred from the synthetic data approximate those
+#' inferred from \code{real.exp}.
+#'
+#' @param real.exp The actual (real) exposures upon which to base
+#' the parameters and synthetic exposures.
+#'
+#' @param num.syn.tumors Generate this number of synthetic tumors.
+#'
+#' @param file.prefix Prepend this to output filenames
+#'  to indicate the organization of the data.
+#'
+#' @param sample.id.prefix Prefix for sample identifiers for the
+#' synthetic samples.
+#'
+#' @return A list with elements:
+#' \enumerate{
+#'  \item \code{parms} The parameters inferred from \code{real.exp}.
+#'  \item \code{syn.exp} The synthetic exposures generated from \code{parms}.
+#' }
+#'
+#' @export
+GenerateSynFromReal <-
+  function(real.exp, num.syn.tumors, file.prefix, sample.id.prefix) {
+
+  parms <- GetSynSigParamsFromExposures(real.exp)
+
+  WriteExposure(real.exp, paste0(OutDir(file.prefix), "real-exp.csv"))
+
+  return(
+    GenerateSynAbstract(
+      parms, num.syn.tumors, file.prefix, sample.id.prefix))
+  }

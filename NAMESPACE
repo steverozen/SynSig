@@ -2,6 +2,7 @@
 
 export(FixSASigNames)
 export(GenSynCatalogs)
+export(GenerateSynAbstract)
 export(GenerateSynFromReal)
 export(GenerateSyntheticExposures)
 export(GetSynSigParamsFromExposures)

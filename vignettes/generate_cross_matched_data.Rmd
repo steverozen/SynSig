@@ -37,7 +37,7 @@ In the end we take the cross product of the two choices, that is,
  {96-channel, COMPOSITE} X {SignatureAnalyzer-attributions, SigProfiler-attributions}
 }
 
-### Required libraries and data
+## Required libraries, data, functions
 
 ```{r readSPprofiles}
 library(ICAMS)
@@ -45,7 +45,7 @@ library(SynSig)
 library(data.table) # check to see if ReadCat96 imports fread
 ```
 
-Read SignatureAnalyzer exposures.
+### Read SignatureAnalyzer exposures.
 
 ```{r signatureanalyzerexposure}
 
@@ -62,7 +62,9 @@ rownames(sa.no.hyper.real.exposures) <-
   FixSASigNames(rownames(sa.no.hyper.real.exposures))
 ```
 
-Read SigProfiler exposures and restrict on "non hyper mutated" as
+### Read SigProfiler exposures
+
+Restrict it to "non hyper mutated" as
 defined by the SignatureAnalyzer exposures.
 
 ```{r sigprofilerinputs}
@@ -77,7 +79,7 @@ sp.no.hyper.real.exposures <-
   sp.real.exposures[ , colnames(sa.no.hyper.real.exposures)]
 ```
 
-## Functions to generate parallel synthetic data from SA and SP attributions and signature profiles
+### Function to generate parallel synthetic data from SA and SP attributions and signature profiles
 
 ```{r}
 SAAndSPSynDataOneCAType <-
@@ -113,7 +115,7 @@ SAAndSPSynDataOneCAType <-
 
 
 ```{r}
-out.data.dir <<- "syn_sbs3_5_40/"  # Must be a directory; be sure to end in "/"
+out.data.dir <<- "syn_3_5_40_rcc_and_ovary/"  # Must be a directory; be sure to end in "/"
 set.seed(191905)
 num.syn.tumors <- 500
 
@@ -151,9 +153,9 @@ sp.syn.exp <-
 ```
 
 
-## Generate synthetic catalogs based on SignatureAnalyzer attributions
+### Generate synthetic catalogs for kidney-RCC plus ovary adenocarcinoma
 
-### Read SignatureAnalyzer mutational signature profiles and create synthetic catalogs
+#### Read SignatureAnalyzer mutational signature profiles and create synthetic catalogs
 
 ```{r signatureanalzyersigs}
                            
@@ -174,10 +176,10 @@ WriteCatCOMPOSITE(sa.sa.COMPOSITE,
 
 sa.sa.96 <- GenSynCatalogs(sa.96.sigs, sa.syn.exp)
 
-WriteCat96(sa.sa.96, OutDir("sa.96.RCC.and.OVA.syn.data.csv"))
+WriteCat96(sa.sa.96, OutDir("sa.sa.96.RCC.and.OVA.syn.data.csv"))
 ```
 
-### Read SigProfiler mutational signature profiles and create synthetic catalogs
+#### Read SigProfiler mutational signature profiles and create synthetic catalogs
 
 
 ```{r sigprofilerinputprofiles}
@@ -218,7 +220,8 @@ knitr::kable(
   caption = 'Best matches from SP signatures to SA signatures',
   digits = 4
 )
-
+```
+```{r echo=FALSE}
 if (FALSE) {
 knitr::kable(
   sp.sa.map.info$sa.to.sp.sig.match, 
@@ -231,7 +234,7 @@ knitr::kable(
 ```
 
 
-```{r}
+```{r, echo=F}
 ## Digression, all best matches between SignatureAnalyzer and SigProfier 96-channel signatures
 
 if (FALSE) {
@@ -256,8 +259,9 @@ sp.sp <- GenSynCatalogs(sp.sigs, sp.syn.exp)
 WriteCat96(sp.sp, OutDir("sp.sp.RCC.and.OVA.syn.data.csv"))
 ```
 
-## Pull out only 3, 5, 40 and make a new data set.
+## Example 2: Pull out only 3, 5, 40 and make an "abstract" synthetic data set
 
+### Pull together the parameters
 
 ```{r}
 x.sp.parms <-
@@ -288,26 +292,63 @@ x.sa.parms <-
         ovary.info$sa.parms[ , "BI_COMPOSITE_SBS3_P", drop = FALSE])
 
 knitr::kable(
+  x.sa.parms, 
+  caption = 'SignatureAnalyzer parameters',
+  digits = 4
+)
+
+knitr::kable(
   x.sp.parms, 
   caption = 'SigProfiler parameters',
   digits = 4
 )
 
-knitr::kable(
-  x.sa.parms, 
-  caption = 'SignatureAnalyzer parameters',
-  digits = 4
-)
+out.data.dir <- "syn_3_5_40_abst/"  # Will be a directory
+set.seed(44)
+num.syn.tumors <- 1000
+
+sp.abst.info <-
+  GenerateSynAbstract(
+    x.sp.parms, num.syn.tumors, "sp-3-5-40-abst-", "SP_Syn_Abst")
+
+sa.abst.info <-
+  GenerateSynAbstract(
+    x.sa.parms,
+    num.syn.tumors, "sa-3-5-40-abst-", "SP_Syn_Abst")
+```
+
+#### Generate and write SignatureAnalyzer "abstract" 3, 5, 40 catalogs
+
+```{r}
+sa.sa.COMPOSITE <- 
+  GenSynCatalogs(sa.COMPOSITE.sigs, sa.abst.info$syn.exp)
+WriteCatCOMPOSITE(sa.sa.COMPOSITE,
+                  OutDir("sa.sa.COMPOSITE.abst.syn.data.csv"))
+
+sa.sa.96 <- GenSynCatalogs(sa.96.sigs, sa.abst.info$syn.exp)
+
+WriteCat96(sa.sa.96, OutDir("sa.sa.96.abst.syn.data.csv"))
+```
+
+#### Generate and write SigProfiler "abstract" 3, 5, 40 catalogs
+
+```{r}
+tmp.exp <- copy(sp.abst.info$syn.exp)
+rownames(tmp.exp) <- rownames(sa.abst.info$syn.exp)
+sp.sa.COMPOSITE <- 
+  GenSynCatalogs(sa.COMPOSITE.sigs, tmp.exp)
+WriteCatCOMPOSITE(sp.sa.COMPOSITE,
+                  OutDir("sp.sa.COMPOSITE.abst.syn.data.csv"))
+
+sp.sp <- GenSynCatalogs(sp.sigs, sp.abst.info$syn.exp)
+
+WriteCat96(sp.sp, OutDir("sp.sp.abst.syn.data.csv"))
 
 ```
 
 ## Turn this into a test
 
 ```{r}
-
 # ReadSigProfilerSig96("example-SP-signatures.txt")
-
-
-
 
 ```
