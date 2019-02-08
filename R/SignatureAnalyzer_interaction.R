@@ -160,24 +160,14 @@ ReadSASigsCOMPOSITE <- function() {
 #'
 #' @param path Path to file to write
 #'
-#' @param rowname.name Name of first column in file
-#'
 #' @importFrom utils write.csv
 #'
 #' @export
-
+#'
 WriteCatCOMPOSITE <- function(ct, path) {
   write.csv(ct, file = path, row.names = TRUE,
             quote = FALSE)
 }
-
-#####################################################################
-# Functions to create SignatureAnalyzer in-memory representations
-# from standard in-memory representations.
-#####################################################################
-
-
-# load("SA.96.row.order.Rdata") # Defines SA.96.row.order
 
 #' Prepare input data for SignatureAnalyzer
 #'
@@ -239,4 +229,18 @@ Plot96PartOfComposite <- function(catalog, name, type = "density") {
     colnames(cat96) <- cn
   }
   Cat96ToPdf(catalog = cat96/sum(cat96), name = name, type = type)
+}
+
+#' Standardize SignatureAnalyzer signature names
+#'
+#' For example, change \code{BI_COMPOSITE_SNV_SBS83_P}
+#' to \code{BI_COMPOSITE_SBS83_P}
+#'
+#' @param sig.names Vector of signature names
+#'
+#' @return Vector of signatures names with "_SNV" removed.
+#'
+#' @export
+FixSASigNames <- function(sig.names) {
+  return(gsub("_SNV_", "_", sig.names, fixed = TRUE))
 }

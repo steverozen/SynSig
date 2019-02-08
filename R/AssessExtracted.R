@@ -43,6 +43,10 @@ MatchSigsAndRelabel <-
 
     sim$ground.truth.with.no.best.match <-
       setdiff(colnames(gt.sigs), sim$match1$to)
+    # TODO(Steve) Review documentation / explanation. Note that
+    # e.g. SBS29 might have a best match (BI_COMPOSITE_SBS18_P)
+    # but no BI signatures has SBS29 as its best match
+    #
 
     # TODO(Steve) Document the complexity below; mostly it deals
     # with setting up plotting that is easy(?) to interpret.
@@ -57,7 +61,7 @@ MatchSigsAndRelabel <-
     init.labels <-
       paste0(reordered.ex, " (", bestmatch.id, " ", bestmatch.sim, ")")
     names(init.labels) <- reordered.ex
-    laggards <- setdiff(sim$match2$from, bestmatch.id)
+    laggards <- setdiff(rownames(sim$match2), bestmatch.id)
     # Falling back to a loop here:
     for (lag in laggards) {
       my.ex.id  <- sim$match2[lag, "to"]
@@ -150,3 +154,77 @@ ReadAndAnalyzeSigs <-
     MatchSigsAndRelabel(ex.sigs, gt.sigs, exposure))
 }
 
+#' Create file names in a given directory
+#'
+#' The directory is provided by the global
+#' variable \code{out.data.dir},
+#' which \strong{must} be set by the user. If
+#' \code{out.data.dir} is NULL then just return
+#' \code{file.name}.
+#'
+#' @param file.name The name of the that will be
+#' prefixed by \code{out.data.dir}.
+#'
+#' @return \code{file.name} prefixed by \code{out.data.dir}.
+#'
+#' @export
+#'
+OutDir <- function(file.name) {
+  if (is.null(out.data.dir)) return(file.name)
+  if (!dir.exists(out.data.dir)) {
+      dir.create(out.data.dir)
+  }
+  return(paste0(out.data.dir, file.name))
+}
+
+#' Generate syntheic exposures from real exposures.
+#'
+#' Checkpoints the parameters and the synthetic
+#' exposures to files. It also checks that the parameters
+#' inferred from the synthetic data approximate those
+#' inferred from \code{real.exp}.
+#'
+#' @param real.exp The actually exposures upon which to base
+#' the parameters and synthetic exposures.
+#'
+#' @param num.syn.tumors Generate this number of synthetic tumors.
+#'
+#' @param file.prefix Prepend this to output filenames
+#'  to indicate the organization of the data.
+#'
+#' @param sample.id.prefix Prefix for sample identifiers for the
+#' synthetic samples.
+#'
+#' @return A list with elements:
+#' \enumerate{
+#'  \item \code{parms} The parameters inferred from \code{real.exp}.
+#'  \item \code{syn.exp} The synthetic exposures generated from \code{parms}.
+#' }
+#'
+#' @export
+GenerateSynFromReal <-
+  function(real.exp, num.syn.tumors, file.prefix, sample.id.prefix) {
+    parms <- GetSynSigParamsFromExposures(real.exp)
+
+    froot <- OutDir(file.prefix)
+
+    WriteExposure(real.exp, paste0(froot, "real-exp.csv"))
+
+    parm.file <- paste0(froot, "parms.csv")
+    WriteSynSigParams(parms, parm.file)
+
+    syn.exp <-
+      GenerateSyntheticExposures(parms, num.syn.tumors, sample.id.prefix)
+
+    WriteExposure(syn.exp, paste0(froot, "syn-exp.csv"))
+
+    # Sanity check
+    check.params <- GetSynSigParamsFromExposures(syn.exp)
+
+    # sa.check.param should be similar to parms
+    WriteSynSigParams(check.params, parm.file, append = TRUE)
+    WriteSynSigParams(parms - check.params, parm.file,
+                      append = TRUE)
+
+    return(list(parms=parms, syn.exp=syn.exp))
+  }

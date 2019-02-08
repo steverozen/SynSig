@@ -10,8 +10,6 @@ WriteCatCOMPOSITE(ct, path)
 \item{ct}{A catalog or signature matrix}
 
 \item{path}{Path to file to write}
-
-\item{rowname.name}{Name of first column in file}
 }
 \description{
 Write a SignatureAnalyzer catalog or signature matrix to disk

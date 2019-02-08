@@ -21,7 +21,7 @@
 #' @export
 #' @family signature matching functions
 #'
-#' @import lsa
+#' @importFrom lsa cosine
 Match1Sig <- function(query.sig, other.sigs) {
   sims <-
     apply(other.sigs,

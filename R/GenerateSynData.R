@@ -281,3 +281,45 @@ GenSynCatalogs <- function(signatures, exposures, sample.id.suffix = NULL) {
   # TODO(Steve) In future, add noise
 }
 
+#' Merge 2 exposure matrices
+#'
+#' @param exp1 An exposure matrix
+#'
+#' @param exp2 An exposure matrix
+#'
+#' @return The column-wise merge of the two input matrices as
+#' with all rownames from either matrix presevered and
+#' corresponding entries filled with 0s.
+#'
+#' @keywords internal
+Merge2Exposures <- function(exp1, exp2) {
+  # Rows are signatures
+  exp.m <- merge(exp1, exp2, by = 0, all = TRUE)
+  rownames(exp.m) <- exp.m[ ,1]
+  exp.m <- exp.m[ , -1]
+  exp.m[is.na(exp.m)] <- 0
+  return(as.matrix(exp.m))
+}
+
+#' Merge all exposure matrices in a list of matrices
+#'
+#' @param list.of.exposures A list of exposure matrices
+#'
+#' @return The column-wise merge of all the input matrices
+#' with all rownames from all matrices presevered and
+#' corresponding entries filled with 0s.
+#'
+#' @export
+
+MergeExposures <- function(list.of.exposures) {
+  stopifnot(length(list.of.exposures) > 0)
+  if (length(list.of.exposures) == 1) {
+    return(as.matrix(list.of.exposures[[1]]))
+  }
+  start <- list.of.exposures[[1]]
+  for (i in 2:length(list.of.exposures)) {
+    start <- Merge2Exposures(start, list.of.exposures[[i]])
+  }
+  return(as.matrix(start))
+}
+
