@@ -1,0 +1,89 @@
+# Add this doc to the signature name fixup for SA:
+#
+# . This is necessary because
+#' for COMPOSITE signatures we rbind coordinated
+#' "SNV", "DNP", and "INDEL" signatures. See
+#' \code{\link{ReadSASigsCOMPOSITE}}.
+
+
+#' Function for running SignatureAnalzyer on a file containing
+#' a catalog.
+#'
+#' It is necessary to setwd() to a folder containing
+#' SignatureAnalyzer (right now SignatureAnalzyer.052418)
+#' and then call
+#' \preformatted{
+#' options( warn = 0 )
+#' here <- getwd()
+#' setwd("SignatureAnalzyer.052418/") # Or the appropriate directory
+#' INPUT <- "INPUT_SignatureAnalyzer/"
+#' source("SignatureAnalyzer.PCAWG.function.R")
+#' setwd(here) # This is necessary because the caller
+#'             # as specified input and output locations
+#'             # realtive to here.
+#' RunSignatureAnalyzerOnSyn(...)
+#' }
+#'
+#' TODO(Steve): see if we can do the source of SA inside
+#' this function.
+#'
+#' @param input.catalog File containing input catalog.  Columns are
+#' samples (tumors), rows are signatures.  SignatuerAnalyzer does
+#' not care about the row names (I think) TODO(Steve): check this.
+#'
+#' @param read.catalog.function Function taking a file path as
+#' its only argument and returning a catalog as a numeric matrix.
+#'
+#' @param out.dir Directory that will be created for the output;
+#' abort if it already exits.  Log files will be in
+#' \code{paste0(out.dir, "/tmp")}.
+#'
+#' @param maxK The maximun number of signatures to consider
+#' extracting.
+#'
+#' @param tol Controls when SignatureAnalyzer will terminate
+#' its search; \code{tol} was 1.e-05 for the PCAWG7 analysis.
+#'
+#' @param test.only If true, only analyze the first 10 columns
+#' read in from \code{input.catalog}.
+#'
+#' @return The output of SignatureAnalyzer, invisibily.
+#'
+#' @details Creates the file \code{paste0(out.dir, "/sa.output.rdata")}.
+#'
+#' TODO(Steve): review the output format from SignatureAnalyzer -- names of sigs just come from the input?
+#'
+#' @export
+#'
+#' @importFrom utils write.csv
+RunSignatureAnalyzerOnFile <-
+  function(input.catalog,
+           read.catalog.function,
+           out.dir,
+           maxK = 30, tol = 1e-7, test.only = FALSE) {
+
+    syn.data <- read.catalog.function(input.catalog)
+
+    if (test.only) syn.data <- syn.data[ , 1:10]
+
+    if (dir.exists(out.dir)) stop(out.dir, "already exits")
+    dir.create(out.dir)
+    # TEMPORARY is a global required by SignatureAnalyzer
+    TEMPORARY <<- paste0(out.dir, "/tmp/")
+    dir.create(TEMPORARY)
+
+    # BayesNMF.L1W.L2H is defined by the statement
+    # source("SignatureAnalyzer.PCAWG.function.R") above.
+    out.data <-
+      BayesNMF.L1W.L2H(syn.data, 200000, 10, 5, tol, maxK, maxK, 1)
+
+    sigs <- out.data[[1]]
+    sigs <- sigs[   , colSums(sigs) > 0]
+
+    save(out.data, sigs,
+         file = paste0(out.dir, "sa.output.rdata"))
+
+    write.csv(sigs, file = paste0(out.dir, "sa.output.sigs.csv"))
+
+    invisible(out.data)
+  }
