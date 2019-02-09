@@ -55,7 +55,7 @@
 #'
 #' @details Creates the file \code{paste0(out.dir, "/sa.output.rdata")}.
 #'
-#' TODO(Steve): review the output format from SignatureAnalyzer -- names of sigs just come from the input?
+#' TODO(Steve): review the output format from SignatureAnalyzer -- ? names of sigs just come from the input?
 #'
 #' @export
 #'
