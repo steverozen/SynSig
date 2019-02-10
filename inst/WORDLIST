@@ -5,11 +5,14 @@ cgtVEdHvkbMLwHGc
 csv
 DBSs
 dev
+DNP
 DNS
+DP
 DzzG
 exome
 https
 ICAMS
+INDEL
 indels
 jD
 mb
@@ -23,6 +26,7 @@ RCC
 ReadAndAnalyzeSigs
 SBS
 sd
+setwd
 sig
 SignatureAnalyzer
 sigProfiler

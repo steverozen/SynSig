@@ -42,7 +42,7 @@ In the end we take the cross product of the two choices, that is,
 ```{r readSPprofiles}
 library(ICAMS)
 library(SynSig)
-library(data.table) # check to see if ReadCat96 imports fread
+# library(data.table) # check to see if ReadCat96 imports fread
 ```
 
 ### Read SignatureAnalyzer exposures.
@@ -115,7 +115,7 @@ SAAndSPSynDataOneCAType <-
 
 
 ```{r}
-out.data.dir <<- "syn_3_5_40_rcc_and_ovary/"  # Must be a directory; be sure to end in "/"
+out.data.dir <<- "syn_3_5_40_rcc_and_ovary_v2/"
 set.seed(191905)
 num.syn.tumors <- 500
 
@@ -144,11 +144,15 @@ Combine the RCC and ovarian adenocarcinoma synthetic exposures
 
 ```{r} 
 # debug(MergeExposures)
-sa.syn.exp <-
+sa.rcc.ova.syn.exp <-
   MergeExposures(list(rcc.info$sa.syn.exp, ovary.info$sa.syn.exp))
 
-sp.syn.exp <-
+sp.rcc.ova.syn.exp <-
   MergeExposures(list(rcc.info$sp.syn.exp, ovary.info$sp.syn.exp))
+
+# We will need the exposures later when evaluating the attributed signatures
+WriteExposure(sa.rcc.ova.syn.exp, OutDir("sa.rcc.ova.syn.exposure.csv"))
+WriteExposure(sp.rcc.ova.syn.exp, OutDir("sp.rcc.ova.syn.exposure.csv"))
 
 ```
 
@@ -170,11 +174,11 @@ colnames(sa.96.sigs) <- FixSASigNames(colnames(sa.96.sigs))
 
 ```{r}
 sa.sa.COMPOSITE <- 
-  GenSynCatalogs(sa.COMPOSITE.sigs, sa.syn.exp)
+  GenSynCatalogs(sa.COMPOSITE.sigs, sa.rcc.ova.syn.exp)
 WriteCatCOMPOSITE(sa.sa.COMPOSITE,
                   OutDir("sa.sa.COMPOSITE.RCC.and.OVA.syn.data.csv"))
 
-sa.sa.96 <- GenSynCatalogs(sa.96.sigs, sa.syn.exp)
+sa.sa.96 <- GenSynCatalogs(sa.96.sigs, sa.rcc.ova.syn.exp)
 
 WriteCat96(sa.sa.96, OutDir("sa.sa.96.RCC.and.OVA.syn.data.csv"))
 ```
@@ -206,7 +210,7 @@ MapSPToSASignatureNamesInExposure <-
 }
 
 sp.sa.map.info <-
-  MapSPToSASignatureNamesInExposure(sp.syn.exp, sp.sigs, sa.96.sigs)
+  MapSPToSASignatureNamesInExposure(sp.rcc.ova.syn.exp, sp.sigs, sa.96.sigs)
 sp.sa.COMPOSITE <- 
   GenSynCatalogs(sa.COMPOSITE.sigs, sp.sa.map.info$exp2)
 WriteCatCOMPOSITE(sp.sa.COMPOSITE,
@@ -254,7 +258,7 @@ knitr::kable(
 ```
 
 ```{r}
-sp.sp <- GenSynCatalogs(sp.sigs, sp.syn.exp)
+sp.sp <- GenSynCatalogs(sp.sigs, sp.rcc.ova.syn.exp)
 
 WriteCat96(sp.sp, OutDir("sp.sp.RCC.and.OVA.syn.data.csv"))
 ```
@@ -303,7 +307,7 @@ knitr::kable(
   digits = 4
 )
 
-out.data.dir <- "syn_3_5_40_abst/"  # Will be a directory
+out.data.dir <- "syn_3_5_40_abst_v2/"
 set.seed(44)
 num.syn.tumors <- 1000
 
@@ -314,7 +318,11 @@ sp.abst.info <-
 sa.abst.info <-
   GenerateSynAbstract(
     x.sa.parms,
-    num.syn.tumors, "sa-3-5-40-abst-", "SP_Syn_Abst")
+    num.syn.tumors, "sa-3-5-40-abst-", "SA_Syn_Abst")
+
+# We will need the exposures later when evaluating the attributed signatures
+WriteExposure(sp.abst.info$syn.exp, OutDir("sp.abst.syn.exposure.csv"))
+WriteExposure(sp.abst.info$syn.exp, OutDir("sa.abst.syn.exposure.csv"))
 ```
 
 #### Generate and write SignatureAnalyzer "abstract" 3, 5, 40 catalogs
@@ -333,7 +341,7 @@ WriteCat96(sa.sa.96, OutDir("sa.sa.96.abst.syn.data.csv"))
 #### Generate and write SigProfiler "abstract" 3, 5, 40 catalogs
 
 ```{r}
-tmp.exp <- copy(sp.abst.info$syn.exp)
+tmp.exp <- sp.abst.info$syn.exp
 rownames(tmp.exp) <- rownames(sa.abst.info$syn.exp)
 sp.sa.COMPOSITE <- 
   GenSynCatalogs(sa.COMPOSITE.sigs, tmp.exp)
