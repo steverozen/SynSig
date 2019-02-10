@@ -336,6 +336,11 @@ RunSignatureAnalyzerOnFile <-
     exp <- out.data[[2]]
     exp <- exp[rowSums(exp) > 0, ]
 
+    names(out.data) <- c("signatures.W", "exposures.H",
+                         "likelihood", "evidence",
+                         "relevance", "error")
+
+    # Save in native R format.
     save(out.data, sigs,
          file = paste0(out.dir, "/sa.output.rdata"))
 
@@ -344,7 +349,17 @@ RunSignatureAnalyzerOnFile <-
                              strict = TRUE)
 
     WriteExposure(exp, file = paste0(out.dir, "/sa.output.exp.csv"))
-    # write.csv(exp, file = paste0(out.dir, "/sa.output.exp.csv"))
+
+    other.data <- paste(out.dir, "/sa.output.other.data.csv")
+
+    cat("likelihood,", out.data$likelihood, "\n",
+        sep = "", file = other.data)
+    cat("evidence,", out.data$evidence, "\n",
+        sep = "", file = other.data, append = TRUE)
+    cat("relevance,", out.data$relevance, "\n",
+        sep = "", file = other.data, append = TRUE)
+    cat("error,", out.data$error, "\n",
+        sep = "", file = other.data, append = TRUE)
 
     invisible(out.data)
   }
