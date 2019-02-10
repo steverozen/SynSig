@@ -353,5 +353,5 @@ RunSignatureAnalyzerOnFile <-
 # [[3]] is numeric, length 1, e.g. 56.6531
 # [[4]] -5884.391
 # 5, 30 numbers (length same as maxK?)
-# 5, 1 number, 10545.61
+# 6, 1 number, 10545.61
 
