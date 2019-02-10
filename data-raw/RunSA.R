@@ -16,7 +16,7 @@ for (i in 1:5) {
 sa.ret <-
   RunSignatureAnalyzerOnFile(
     # "syn_sbs3_5_40/sp.sp.RCC.and.OVA.syn.data.csv",
-    "../vignettes//sp.sp.abst.syn.data.csv",
+    "../vignettes/syn_3_5_40_abst_v2/sp.sp.abst.syn.data.csv",
     ReadCat96,
     paste0("../../sa.test.abst.2019.syn_3_5_40_abst_v2.02.10.work", i),
     # paste0("../../sa.test.2019.02.10.home", i),
