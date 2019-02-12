@@ -384,4 +384,44 @@ RunSignatureAnalyzerOnFile <-
     invisible(out.data)
   }
 
+SignatureAnalyzerOneRun <-
+  function(signatureanalyzer.code.dir,
+           input.catalog,
+           read.catalog.function,
+           out.dir,
+           write.signature.function,
+           input.exposures = NULL,
+           maxK = 30,
+           tol = 1e-7,
+           test.only = FALSE,
+           delete.tmp.files = TRUE)
+{
+  library(ICAMS) # ReadCat96, WriteCat96, etc
+  library(SynSig)
+  # library(data.table) # TODO(Steve) Important,
+  # Import this from ReadCat96 or update version of ICAMS in this R
+  options( warn = 0 )
+  here <- getwd()
+  setwd(signatureanalyzer.code.dir)
+  INPUT <- "INPUT_SignatureAnalyzer/"
+  source("SignatureAnalyzer.PCAWG.function.R")
+  setwd(here) # This is necessary because the caller
+  # as specified input and output locations
+  # realtive to here.
+
+  retval <-
+    RunSignatureAnalyzerOnFile(
+      # "syn_sbs3_5_40/sp.sp.RCC.and.OVA.syn.data.csv",
+      "../vignettes/syn_3_5_40_abst_v2/sp.sp.abst.syn.data.csv",
+      ReadCat96,
+      paste0("../../saX.test.abst.2019.syn_3_5_40_abst_v2.02.10.work", i),
+      # paste0("../../sa.test.2019.02.10.home", i),
+      WriteCat96,
+      input.exposures =
+        "../vignettes/syn_3_5_40_abst_v2/sp-3-5-40-abst-syn-exp.csv",
+      test.only = test.only)
+
+  invisible(retval)
+
+}
 
