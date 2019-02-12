@@ -423,7 +423,6 @@ SignatureAnalyzerOneRun <-
       out.dir = out.dir,
       write.signature.function = write.signature.function,
       input.exposures = input.exposures,
-      test.only = test.only,
       maxK = maxK,
       tol = tol,
       test.only = test.only,
