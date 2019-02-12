@@ -326,21 +326,21 @@ MergeExposures <- function(list.of.exposures) {
 #' Create file names in a given directory
 #'
 #' The directory is provided by the global
-#' variable \code{out.data.dir},
+#' variable \code{OutDir.dir},
 #' which \strong{must} be set by the user. If
-#' \code{out.data.dir} is NULL then just return
+#' \code{OutDir.dir} is NULL then just return
 #' \code{file.name}.
 #'
 #' @param file.name The name of the that will be
-#' prefixed by \code{out.data.dir}.
+#' prefixed by \code{OutDir.dir}.
 #'
-#' @return \code{file.name} prefixed by \code{out.data.dir}.
+#' @return \code{file.name} prefixed by \code{OutDir.dir}.
 #'
 #' @export
 #'
 OutDir <- function(file.name) {
-  if (is.null(out.data.dir)) return(file.name)
-  tmp <- out.data.dir
+  if (is.null(OutDir.dir)) return(file.name)
+  tmp <- OutDir.dir
   n <- nchar(tmp)
   if (substr(tmp, n, n) != "/")
     tmp <- paste0(tmp, "/")
@@ -348,6 +348,16 @@ OutDir <- function(file.name) {
     dir.create(tmp)
   }
   return(paste0(tmp, file.name))
+}
+
+#' Globally set the location used by \code{OutDir}.
+#'
+#' @param dir The location
+#'
+#' @export
+SetNewOutDir <- function(dir) {
+  if (dir.exists(dir)) stop(dir, "already exists")
+   OutDir.dir <<- dir
 }
 
 #' Generate synthetic exposures from abstract parameters.
@@ -380,7 +390,7 @@ GenerateSynAbstract <-
 
     froot <- OutDir(file.prefix)
 
-    parm.file <- paste0(froot, "parms.csv")
+    parm.file <- paste0(froot, ".parms.csv")
     WriteSynSigParams(parms, parm.file)
 
     syn.exp <-
@@ -429,7 +439,7 @@ GenerateSynFromReal <-
 
   parms <- GetSynSigParamsFromExposures(real.exp)
 
-  WriteExposure(real.exp, paste0(OutDir(file.prefix), "real-exp.csv"))
+  WriteExposure(real.exp, paste0(OutDir(file.prefix), ".real-exp.csv"))
 
   return(
     GenerateSynAbstract(

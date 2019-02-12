@@ -8,15 +8,15 @@ OutDir(file.name)
 }
 \arguments{
 \item{file.name}{The name of the that will be
-prefixed by \code{out.data.dir}.}
+prefixed by \code{OutDir.dir}.}
 }
 \value{
-\code{file.name} prefixed by \code{out.data.dir}.
+\code{file.name} prefixed by \code{OutDir.dir}.
 }
 \description{
 The directory is provided by the global
-variable \code{out.data.dir},
+variable \code{OutDir.dir},
 which \strong{must} be set by the user. If
-\code{out.data.dir} is NULL then just return
+\code{OutDir.dir} is NULL then just return
 \code{file.name}.
 }

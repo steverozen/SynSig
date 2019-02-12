@@ -81,11 +81,18 @@ sp.no.hyper.real.exposures <-
 
 ### Function to generate parallel synthetic data from SA and SP attributions and signature profiles
 
+on
+This function computes the SynSig parameters (proportion of tumors with
+a given signature, mean of log of number of mutations, and standard
+deviation of log of number of mutations) and the synthetic exposures
+(but \strong{not} the catalogs).  This function also writes
+these to files.
+
 ```{r}
 SAAndSPSynDataOneCAType <-
   function(sa.real.exp, 
            sp.real.exp,
-           ca.type,
+           ca.type, # Used in sample identifiers
            num.syn.tumors,
            file.prefix) {
     ca.type <- paste0(ca.type, "::")
@@ -95,13 +102,15 @@ SAAndSPSynDataOneCAType <-
     sp.exp <- sp.real.exp[ , samples.to.use]
     stopifnot(colnames(sa.exp) == colnames(sp.exp))
     sa.info <-
-      GenerateSynFromReal(sa.exp, num.syn.tumors, 
-                          paste0("sa-", file.prefix),
-                          paste0("SA_Syn_", ca.type, "S"))
+      GenerateSynFromReal(
+        sa.exp, num.syn.tumors, 
+        file.prefix = paste0("sa.", file.prefix),
+        sample.id.prefix = paste0("SA.Syn.", ca.type, "S"))
     sp.info <-
-      GenerateSynFromReal(sp.exp, num.syn.tumors,
-                          paste0("sp-", file.prefix),
-                          paste0("SP_Syn_", ca.type, "S"))
+      GenerateSynFromReal(
+        sp.exp, num.syn.tumors,
+        file.prefix = paste0("sp.", file.prefix),
+        sample.id.prefix = paste0("SP.Syn.", ca.type, "S"))
     return(list(
       sa.parms  = sa.info$parms,
       sa.syn.exp = sa.info$syn.exp,
@@ -114,8 +123,14 @@ SAAndSPSynDataOneCAType <-
 ## Example 1, Kidney-RCC and ovarian adenocarcinoma to explore SBS3, SBS5, and SBS40
 
 
+It is probably easier to manage if the output, which is
+is not in
+a git-managed directory.
 ```{r}
-out.data.dir <<- "syn_3_5_40_rcc_and_ovary_v2/"
+SetNewOutDir("../../syn.3.5.40.rcc.and.ovary.v3/")
+```
+
+```{r}
 set.seed(191905)
 num.syn.tumors <- 500
 
@@ -123,9 +138,9 @@ rcc.info <-
   SAAndSPSynDataOneCAType(
     sa.no.hyper.real.exposures,
     sp.no.hyper.real.exposures,
-    "Kidney-RCC",
+    ca.type = "Kidney-RCC",
     num.syn.tumors,
-    "RCC")
+    file.prefix = "RCC")
 ```
 
 ```{r}
@@ -134,9 +149,9 @@ ovary.info <-
   SAAndSPSynDataOneCAType(
     sa.no.hyper.real.exposures,
     sp.no.hyper.real.exposures,
-    "Ovary-AdenoCA",
+    ca.type = "Ovary-AdenoCA",
     num.syn.tumors,
-    "OVA")
+    file.prefix = "OVA")
 
 ```
 
@@ -151,11 +166,10 @@ sp.rcc.ova.syn.exp <-
   MergeExposures(list(rcc.info$sp.syn.exp, ovary.info$sp.syn.exp))
 
 # We will need the exposures later when evaluating the attributed signatures
-WriteExposure(sa.rcc.ova.syn.exp, OutDir("sa.rcc.ova.syn.exposure.csv"))
-WriteExposure(sp.rcc.ova.syn.exp, OutDir("sp.rcc.ova.syn.exposure.csv"))
+WriteExposure(sa.rcc.ova.syn.exp, OutDir("sa.exposure.csv"))
+WriteExposure(sp.rcc.ova.syn.exp, OutDir("sp.exposure.csv"))
 
 ```
-
 
 ### Generate synthetic catalogs for kidney-RCC plus ovary adenocarcinoma
 
@@ -175,12 +189,17 @@ colnames(sa.96.sigs) <- FixSASigNames(colnames(sa.96.sigs))
 ```{r}
 sa.sa.COMPOSITE <- 
   GenSynCatalogs(sa.COMPOSITE.sigs, sa.rcc.ova.syn.exp)
+
+stopifnot(!dir.exists(OutDir("sa.sa.COMPOSITE/")))
+dir.create(OutDir("sa.sa.COMPOSITE/"))
 WriteCatCOMPOSITE(sa.sa.COMPOSITE,
-                  OutDir("sa.sa.COMPOSITE.RCC.and.OVA.syn.data.csv"))
+                  OutDir("sa.sa.COMPOSITE/syn.data.csv"))
 
 sa.sa.96 <- GenSynCatalogs(sa.96.sigs, sa.rcc.ova.syn.exp)
 
-WriteCat96(sa.sa.96, OutDir("sa.sa.96.RCC.and.OVA.syn.data.csv"))
+stopifnot(!dir.exists(OutDir("sa.sa.96/")))
+dir.create(OutDir("sa.sa.96/"))
+WriteCat96(sa.sa.96, OutDir("sa.sa.96/syn.data.csv"))
 ```
 
 #### Read SigProfiler mutational signature profiles and create synthetic catalogs
@@ -211,10 +230,12 @@ MapSPToSASignatureNamesInExposure <-
 
 sp.sa.map.info <-
   MapSPToSASignatureNamesInExposure(sp.rcc.ova.syn.exp, sp.sigs, sa.96.sigs)
+stopifnot(!dir.exists(OutDir("sp.sa.COMPOSITE/")))
+dir.create(OutDir("sp.sa.COMPOSITE/"))
 sp.sa.COMPOSITE <- 
   GenSynCatalogs(sa.COMPOSITE.sigs, sp.sa.map.info$exp2)
 WriteCatCOMPOSITE(sp.sa.COMPOSITE,
-                  OutDir("sp.sa.COMPOSITE.RCC.and.OVA.syn.data.csv"))
+                  OutDir("sp.sa.COMPOSITE/syn.data.csv"))
 
 ```
 
@@ -260,7 +281,9 @@ knitr::kable(
 ```{r}
 sp.sp <- GenSynCatalogs(sp.sigs, sp.rcc.ova.syn.exp)
 
-WriteCat96(sp.sp, OutDir("sp.sp.RCC.and.OVA.syn.data.csv"))
+stopifnot(!dir.exists(OutDir("sp.sp/")))
+dir.create(OutDir("sp.sp/"))
+WriteCat96(sp.sp, OutDir("sp.sp/syn.data.csv"))
 ```
 
 ## Example 2: Pull out only 3, 5, 40 and make an "abstract" synthetic data set
@@ -306,19 +329,22 @@ knitr::kable(
   caption = 'SigProfiler parameters',
   digits = 4
 )
+```
 
-out.data.dir <- "syn_3_5_40_abst_v2/"
+As above, we do not put the output in a git-managed directory.
+```{r}
+SetNewOutDir("../../syn.3.5.40.abst.v3/")
 set.seed(44)
 num.syn.tumors <- 1000
 
 sp.abst.info <-
   GenerateSynAbstract(
-    x.sp.parms, num.syn.tumors, "sp-3-5-40-abst-", "SP_Syn_Abst")
+    x.sp.parms, num.syn.tumors, "sp.3.5.40.abst.", "SP.Syn.Abst")
 
 sa.abst.info <-
   GenerateSynAbstract(
     x.sa.parms,
-    num.syn.tumors, "sa-3-5-40-abst-", "SA_Syn_Abst")
+    num.syn.tumors, "sa-3-5-40-abst-", "SA.Syn.Abst")
 
 # We will need the exposures later when evaluating the attributed signatures
 WriteExposure(sp.abst.info$syn.exp, OutDir("sp.abst.syn.exposure.csv"))
@@ -330,12 +356,17 @@ WriteExposure(sp.abst.info$syn.exp, OutDir("sa.abst.syn.exposure.csv"))
 ```{r}
 sa.sa.COMPOSITE <- 
   GenSynCatalogs(sa.COMPOSITE.sigs, sa.abst.info$syn.exp)
+
+stopifnot(!dir.exists(OutDir("sa.sa.COMPOSITE/")))
+dir.create(OutDir("sa.sa.COMPOSITE/"))
 WriteCatCOMPOSITE(sa.sa.COMPOSITE,
-                  OutDir("sa.sa.COMPOSITE.abst.syn.data.csv"))
+                  OutDir("sa.sa.COMPOSITE/syn.data.csv"))
 
 sa.sa.96 <- GenSynCatalogs(sa.96.sigs, sa.abst.info$syn.exp)
 
-WriteCat96(sa.sa.96, OutDir("sa.sa.96.abst.syn.data.csv"))
+stopifnot(!dir.exists(OutDir("sa.sa.96/")))
+dir.create(OutDir("sa.sa.96/"))
+WriteCat96(sa.sa.96, OutDir("sa.sa.96/syn.data.csv"))
 ```
 
 #### Generate and write SigProfiler "abstract" 3, 5, 40 catalogs
@@ -345,12 +376,16 @@ tmp.exp <- sp.abst.info$syn.exp
 rownames(tmp.exp) <- rownames(sa.abst.info$syn.exp)
 sp.sa.COMPOSITE <- 
   GenSynCatalogs(sa.COMPOSITE.sigs, tmp.exp)
+stopifnot(!dir.exists(OutDir("sp.sa.COMPOSITE/")))
+dir.create(OutDir("sp.sa.COMPOSITE/"))
 WriteCatCOMPOSITE(sp.sa.COMPOSITE,
-                  OutDir("sp.sa.COMPOSITE.abst.syn.data.csv"))
+                  OutDir("sp.sa.COMPOSITE/syn.data.csv"))
 
 sp.sp <- GenSynCatalogs(sp.sigs, sp.abst.info$syn.exp)
 
-WriteCat96(sp.sp, OutDir("sp.sp.abst.syn.data.csv"))
+stopifnot(!dir.exists(OutDir("sp.sp/")))
+dir.create(OutDir("sp.sp/"))
+WriteCat96(sp.sp, OutDir("sp.sp/syn.data.csv"))
 
 ```
 
