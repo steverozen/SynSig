@@ -76,21 +76,25 @@ GetSynSigParamsFromExposures <- function(exposures, target.size = 1) {
 #' @title Write SynSig parameters --prevalence, mean(log(exposure))
 #'  and sd(log(exposure)) to a file.
 #'
-#' @param params The parameters to write
+#' @param params The parameters to write.
 #'
-#' @param file   The path to the file to write
+#' @param file   The path to the file to write.
 #'
 #' @param append Whether to append to or overwrite \code{file} if it already
 #'        exists.
 #'
+#' @param col.names If NA, add column names.
+#'
 #' @importFrom utils write.table
 #'
 #' @export
-WriteSynSigParams <- function(params, file, append = FALSE) {
+WriteSynSigParams <-
+  function(params, file, append = FALSE,
+           col.names = ifelse(append, FALSE, NA)) {
   write.table(x = as.data.frame(params),
               file = file,
               sep = ",",
-              col.names = ifelse(append, FALSE, NA),
+              col.names = col.names,
               row.names = TRUE,
               append = append)
 }
@@ -392,7 +396,8 @@ GenerateSynAbstract <-
 
     parm.file <- paste0(froot, ".parms.csv")
     cat("# Original paramaters\n", file = parm.file)
-    WriteSynSigParams(parms, parm.file, append = TRUE)
+    WriteSynSigParams(parms, parm.file, append = TRUE,
+                      col.names = NA)
 
     syn.exp <-
       GenerateSyntheticExposures(parms, num.syn.tumors, sample.id.prefix)

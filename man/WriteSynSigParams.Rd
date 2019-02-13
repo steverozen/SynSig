@@ -5,15 +5,18 @@
 \title{Write SynSig parameters --prevalence, mean(log(exposure))
  and sd(log(exposure)) to a file.}
 \usage{
-WriteSynSigParams(params, file, append = FALSE)
+WriteSynSigParams(params, file, append = FALSE,
+  col.names = ifelse(append, FALSE, NA))
 }
 \arguments{
-\item{params}{The parameters to write}
+\item{params}{The parameters to write.}
 
-\item{file}{The path to the file to write}
+\item{file}{The path to the file to write.}
 
 \item{append}{Whether to append to or overwrite \code{file} if it already
 exists.}
+
+\item{col.names}{If NA, add column names.}
 }
 \description{
 Write SynSig parameters --prevalence, mean(log(exposure))
