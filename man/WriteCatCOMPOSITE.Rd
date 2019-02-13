@@ -2,7 +2,7 @@
 % Please edit documentation in R/SignatureAnalyzerInteraction.R
 \name{WriteCatCOMPOSITE}
 \alias{WriteCatCOMPOSITE}
-\title{Write a SignatureAnalyzer catalog or signature matrix to disk}
+\title{Write a COMPOSITE catalog or signature matrix to disk}
 \usage{
 WriteCatCOMPOSITE(ct, path)
 }
@@ -12,5 +12,8 @@ WriteCatCOMPOSITE(ct, path)
 \item{path}{Path to file to write}
 }
 \description{
-Write a SignatureAnalyzer catalog or signature matrix to disk
+Write a COMPOSITE catalog or signature matrix to disk
+}
+\seealso{
+\code{\link{ReadCatCOMPOSITE}}
 }

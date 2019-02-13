@@ -391,20 +391,28 @@ GenerateSynAbstract <-
     froot <- OutDir(file.prefix)
 
     parm.file <- paste0(froot, ".parms.csv")
-    WriteSynSigParams(parms, parm.file)
+    cat("# Original paramaters\n", file = parm.file)
+    WriteSynSigParams(parms, parm.file, append = TRUE)
 
     syn.exp <-
       GenerateSyntheticExposures(parms, num.syn.tumors, sample.id.prefix)
 
-    WriteExposure(syn.exp, paste0(froot, "syn-exp.csv"))
+    WriteExposure(syn.exp, paste0(froot, ".exposure.csv"))
 
     # Sanity check
     check.params <- GetSynSigParamsFromExposures(syn.exp)
 
     # sa.check.param should be similar to parms
+    cat("# Parameters derived from synthetic exposures\n",
+        file = parm.file, append = TRUE)
     WriteSynSigParams(check.params, parm.file, append = TRUE)
+    cat("# Difference between original parameters and parameters",
+        "derived from synthetic exposures\n",
+        file = parm.file, append = TRUE)
     WriteSynSigParams(parms - check.params, parm.file,
                       append = TRUE)
+    cat("# The difference should be small\n",
+        file = parm.file, append = TRUE)
 
     return(list(parms=parms, syn.exp=syn.exp))
   }
@@ -439,7 +447,7 @@ GenerateSynFromReal <-
 
   parms <- GetSynSigParamsFromExposures(real.exp)
 
-  WriteExposure(real.exp, paste0(OutDir(file.prefix), ".real-exp.csv"))
+  WriteExposure(real.exp, paste0(OutDir(file.prefix), ".real.exposure.csv"))
 
   return(
     GenerateSynAbstract(

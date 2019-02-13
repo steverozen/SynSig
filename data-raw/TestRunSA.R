@@ -39,4 +39,11 @@ test2 <- SignatureAnalyzerOneRun(
     "../vignettes/syn_3_5_40_abst_v2/sp-3-5-40-abst-syn-exp.csv",
   test.only = FALSE)
 
+# Run this from data-raw
+debug(RunSignatureAnalyzerOnFile)
+test3 <- SignatureAnalyzer4MatchedCatalogs(
+  num.runs = 20,
+  signatureanalyzer.code.dir = "SignatureAnalzyer.052418/",
+  dir.root = "../../0syn.3.5.40.abst.v3/",
+  test.only = TRUE)
 

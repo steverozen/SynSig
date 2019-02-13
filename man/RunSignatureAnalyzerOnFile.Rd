@@ -4,7 +4,7 @@
 \alias{RunSignatureAnalyzerOnFile}
 \title{for COMPOSITE signatures we rbind coordinated
 "SNV", "DNP", and "INDEL" signatures. See
-\code{\link{ReadSASigsCOMPOSITE}}.
+\code{\link{ReadSASigCOMPOSITE}}.
 Function for running SignatureAnalyzer on a file containing
 a catalog.}
 \usage{
@@ -75,9 +75,6 @@ RunSignatureAnalyzerOnSyn(...)
 }
 }
 \details{
-TODO(Steve): see if we can do the source of SA inside
-this function.
-
 Creates several
  files in \code{paste0(out.dir, "/sa.output.rdata")}. These are
  TODO(Steve): list the files
