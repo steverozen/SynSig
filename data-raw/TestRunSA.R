@@ -40,10 +40,9 @@ test2 <- SignatureAnalyzerOneRun(
   test.only = FALSE)
 
 # Run this from data-raw
-debug(RunSignatureAnalyzerOnFile)
+undebug(RunSignatureAnalyzerOnFile)
 test3 <- SignatureAnalyzer4MatchedCatalogs(
   num.runs = 20,
   signatureanalyzer.code.dir = "SignatureAnalzyer.052418/",
-  dir.root = "../../0syn.3.5.40.abst.v3/",
-  test.only = TRUE)
+  dir.root = "../../0syn.3.5.40.abst.v3/")
 
