@@ -376,10 +376,10 @@ RunSignatureAnalyzerOnFile <-
       BayesNMF.L1W.L2H(syn.data, 200000, 10, 5, tol, maxK, maxK, 1)
 
     sigs <- out.data[[1]]
-    sigs <- sigs[   , colSums(sigs) > 0]
+    sigs <- sigs[   , colSums(sigs) > 1]
 
     exp <- out.data[[2]]
-    exp <- exp[rowSums(exp) > 0, ]
+    exp <- exp[colnames(sigs), ]
 
     names(out.data) <- c("signatures.W", "exposures.H",
                          "likelihood", "evidence",
@@ -402,8 +402,9 @@ RunSignatureAnalyzerOnFile <-
 
     other.data <- paste0(out.dir, "/sa.output.other.data.csv")
 
+    cat("num.sigs,", ncol(sigs), "\n", sep = "", file = other.data)
     cat("likelihood,", out.data$likelihood, "\n",
-        sep = "", file = other.data)
+        sep = "", file = other.data, append = TRUE)
     cat("evidence,", out.data$evidence, "\n",
         sep = "", file = other.data, append = TRUE)
     cat("relevance,",
@@ -411,7 +412,7 @@ RunSignatureAnalyzerOnFile <-
     cat("error,", out.data$error, "\n",
         sep = "", file = other.data, append = TRUE)
 
-    if (delete.tmp.files)
+    if (delete.tmp.files) unlink(TEMPORARY, recursive = TRUE)
 
     invisible(out.data)
   }
@@ -450,6 +451,8 @@ RunSignatureAnalyzerOnFile <-
 #'
 #' @param verbose If > 0, write some tracing and timing information.
 #'
+#' @importFrom tictoc tic toc
+#'
 SignatureAnalyzerOneRun <-
   function(signatureanalyzer.code.dir,
            input.catalog,
@@ -472,7 +475,7 @@ SignatureAnalyzerOneRun <-
   # as specified input and output locations
   # realtive to here.
 
-  if (verbose) cat("Running SignatureAnalyzerOneRun in", out.dir)
+  if (verbose) cat("Running SignatureAnalyzerOneRun in", out.dir, "\n")
   tic("SignatureAnalyzerOneRun")
   retval <-
     RunSignatureAnalyzerOnFile(
@@ -614,7 +617,7 @@ SignatureAnalyzer4MatchedCatalogs <-
           maxK = 30,
           tol = 1e-7,
           test.only = FALSE,
-          delete.tmp.files = TRUE)
+          delete.tmp.files = delete.tmp.files)
     }
 
   retval2 <- mapply(tmp.fn, subdirs, read.fn, write.fn)
