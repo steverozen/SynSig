@@ -390,8 +390,7 @@ RunSignatureAnalyzerOnFile <-
          file = paste0(out.dir, "/sa.output.rdata"))
 
     write.signature.function(sigs,
-                             paste0(out.dir, "/sa.output.sigs.csv"),
-                             strict = TRUE)
+                             paste0(out.dir, "/sa.output.sigs.csv"))
 
     WriteExposure(exp, file = paste0(out.dir, "/sa.output.exp.csv"))
 
