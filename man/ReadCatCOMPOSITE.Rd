@@ -10,7 +10,7 @@ ReadCatCOMPOSITE(path)
 \item{path}{The path of the file to read from.}
 }
 \value{
-An in memory matrix correspoding to the
+An in memory matrix corresponding to the
 contents of the file at \code{path}.
 }
 \description{

@@ -12,7 +12,7 @@ SignatureAnalyzerOneCatalog(num.runs, signatureanalyzer.code.dir,
 }
 \arguments{
 \item{num.runs}{The number of times run SignatureAnalyzer on each
-catalog (matrix of mutational specgtra).}
+catalog (matrix of mutational spectra).}
 
 \item{signatureanalyzer.code.dir}{The directory holding the
 SignatureAnalyzer code.}
