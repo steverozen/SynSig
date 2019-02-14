@@ -170,7 +170,7 @@ ReadSASigCOMPOSITE <- function() {
 #'
 #' @param path The path of the file to read from.
 #'
-#' @return An in memory matrix correspoding to the
+#' @return An in memory matrix corresponding to the
 #' contents of the file at \code{path}.
 #'
 #' @importFrom utils read.csv
@@ -316,7 +316,7 @@ FixSASigNames <- function(sig.names) {
 #' the file to write to.
 #'
 #' @param input.exposures A file with the synthetic exposures used to generate
-#' \code{input.catalot}; if provided here,
+#' \code{input.catalog}; if provided here,
 #' this is copied over to the output directory
 #' for downstream analysis.
 #'
@@ -451,8 +451,6 @@ RunSignatureAnalyzerOnFile <-
 #'
 #' @param verbose If > 0, write some tracing and timing information.
 #'
-#' @importFrom tictoc tic toc
-#'
 SignatureAnalyzerOneRun <-
   function(signatureanalyzer.code.dir,
            input.catalog,
@@ -476,7 +474,6 @@ SignatureAnalyzerOneRun <-
   # realtive to here.
 
   if (verbose) cat("Running SignatureAnalyzerOneRun in", out.dir, "\n")
-  tic("SignatureAnalyzerOneRun")
   retval <-
     RunSignatureAnalyzerOnFile(
       input.catalog = input.catalog,
@@ -488,7 +485,6 @@ SignatureAnalyzerOneRun <-
       tol = tol,
       test.only = test.only,
       delete.tmp.files = delete.tmp.files)
-  toc()
 
   invisible(retval)
 
@@ -498,7 +494,7 @@ SignatureAnalyzerOneRun <-
 #' in specified location.
 #'
 #' @param num.runs The number of times run SignatureAnalyzer on each
-#' catalog (matrix of mutational specgtra).
+#' catalog (matrix of mutational spectra).
 #'
 #' @param signatureanalyzer.code.dir The directory holding the
 #' SignatureAnalyzer code.
