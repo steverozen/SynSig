@@ -125,7 +125,7 @@ It is probably easier to manage if the output, which is
 is not in
 a git-managed directory.
 ```{r}
-SetNewOutDir("../../syn.3.5.40.rcc.and.ovary.v3/")
+SetNewOutDir("../../syn.3.5.40.rcc.and.ovary.v4/")
 ```
 
 ```{r}
@@ -185,18 +185,21 @@ colnames(sa.96.sigs) <- FixSASigNames(colnames(sa.96.sigs))
 ```
 
 ```{r}
+# TODO(Steve): wrap the next lines into a function
 sa.sa.COMPOSITE <- 
   GenSynCatalogs(sa.COMPOSITE.sigs, sa.rcc.ova.syn.exp)
-
 stopifnot(!dir.exists(OutDir("sa.sa.COMPOSITE/")))
 dir.create(OutDir("sa.sa.COMPOSITE/"))
+WriteCatCOMPOSITE(sa.COMPOSITE.sigs, 
+                  path = OutDir("sa.sa.COMPOSITE/input.sigs.csv"))
 WriteCatCOMPOSITE(sa.sa.COMPOSITE,
                   OutDir("sa.sa.COMPOSITE/syn.data.csv"))
 
 sa.sa.96 <- GenSynCatalogs(sa.96.sigs, sa.rcc.ova.syn.exp)
-
 stopifnot(!dir.exists(OutDir("sa.sa.96/")))
 dir.create(OutDir("sa.sa.96/"))
+WriteCat96(sa.sa.96,
+           path = OutDir("sa.sa.96/input.sigs.csv"))
 WriteCat96(sa.sa.96, OutDir("sa.sa.96/syn.data.csv"))
 ```
 
@@ -232,6 +235,8 @@ stopifnot(!dir.exists(OutDir("sp.sa.COMPOSITE/")))
 dir.create(OutDir("sp.sa.COMPOSITE/"))
 sp.sa.COMPOSITE <- 
   GenSynCatalogs(sa.COMPOSITE.sigs, sp.sa.map.info$exp2)
+WriteCatCOMPOSITE(sa.COMPOSITE.sigs,
+                  path = OutDir("sp.sa.COMPOSITE/input.sigs.csv"))
 WriteCatCOMPOSITE(sp.sa.COMPOSITE,
                   OutDir("sp.sa.COMPOSITE/syn.data.csv"))
 
@@ -278,9 +283,9 @@ knitr::kable(
 
 ```{r}
 sp.sp <- GenSynCatalogs(sp.sigs, sp.rcc.ova.syn.exp)
-
 stopifnot(!dir.exists(OutDir("sp.sp/")))
 dir.create(OutDir("sp.sp/"))
+WriteCat96(sp.sigs, OutDir("sp.sp/input.sigs.csv"))
 WriteCat96(sp.sp, OutDir("sp.sp/syn.data.csv"))
 ```
 
@@ -331,7 +336,7 @@ knitr::kable(
 
 As above, we do not put the output in a git-managed directory.
 ```{r}
-SetNewOutDir("../../syn.3.5.40.abst.v3/")
+SetNewOutDir("../../syn.3.5.40.abst.v4/")
 set.seed(44)
 num.syn.tumors <- 1000
 
