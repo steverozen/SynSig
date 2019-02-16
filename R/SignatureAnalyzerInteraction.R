@@ -284,21 +284,8 @@ FixSASigNames <- function(sig.names) {
 #' Function for running SignatureAnalyzer on a file containing
 #' a catalog.
 #'
-#' It is necessary to setwd() to a folder containing
-#' SignatureAnalyzer (right now SignatureAnal\strong{zy}er.052418,
-#' note transposed "zy")
-#' and then call
-#' \preformatted{
-#' options( warn = 0 )
-#' here <- getwd()
-#' setwd("SignatureAnalzyer.052418/") # Or the appropriate directory
-#' INPUT <- "INPUT_SignatureAnalyzer/"
-#' source("SignatureAnalyzer.PCAWG.function.R")
-#' setwd(here) # This is necessary because the caller
-#'             # as specified input and output locations
-#'             # realtive to here.
-#' RunSignatureAnalyzerOnSyn(...)
-#' }
+#' Normally, please call \code{\link{SignatureAnalyzerOneRun}}
+#' instead of this function.
 #'
 #' @param input.catalog File containing input catalog.  Columns are
 #' samples (tumors), rows are signatures.  SignatureAnalyzer does
@@ -466,7 +453,7 @@ SignatureAnalyzerOneRun <-
   options( warn = 0 )
   here <- getwd()
   setwd(signatureanalyzer.code.dir)
-  INPUT <- "INPUT_SignatureAnalyzer/"
+  INPUT <<- "INPUT_SignatureAnalyzer/"
   source("SignatureAnalyzer.PCAWG.function.R")
   setwd(here) # This is necessary because the caller
   # as specified input and output locations
