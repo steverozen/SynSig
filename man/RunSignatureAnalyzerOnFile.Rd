@@ -58,21 +58,8 @@ with five elements (named in this code, not by SignatureAnalyzer):
 }
 }
 \description{
-It is necessary to setwd() to a folder containing
-SignatureAnalyzer (right now SignatureAnal\strong{zy}er.052418,
-note transposed "zy")
-and then call
-\preformatted{
-options( warn = 0 )
-here <- getwd()
-setwd("SignatureAnalzyer.052418/") # Or the appropriate directory
-INPUT <- "INPUT_SignatureAnalyzer/"
-source("SignatureAnalyzer.PCAWG.function.R")
-setwd(here) # This is necessary because the caller
-            # as specified input and output locations
-            # realtive to here.
-RunSignatureAnalyzerOnSyn(...)
-}
+Normally, please call \code{\link{SignatureAnalyzerOne}}
+instead of this function.
 }
 \details{
 Creates several
