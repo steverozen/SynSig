@@ -58,6 +58,8 @@ SAAndSPSynDataOneCAType <-
            ca.type,
            num.syn.tumors,
            file.prefix) {
+    # TODO(Steve): fix this in the package data
+    sp.real.exp <- sp.real.exp[ , colnames(sa.real.exp)]
     ca.type <- paste0(ca.type, "::")
     samples.to.use <-
       grep(ca.type, colnames(sa.real.exp), fixed = TRUE)
