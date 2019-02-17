@@ -238,7 +238,7 @@ CreateAndWriteCatalog(
 #### Generate and write SigProfiler "abstract" 3, 5, 40 catalogs
 
 We need to adjust the signature names in the exposures
-so they match the signature names in \code{sa.COMPOSTE.sigs}.
+so they match the signature names in \code{sa.COMPOSITE.sigs}.
 
 ```{r}
 tmp.exp <- sp.abst.info$syn.exp
