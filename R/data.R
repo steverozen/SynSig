@@ -29,6 +29,8 @@ NULL
 #' types and columns indicating signatures.
 #'
 #' @name SignatureAnalyzerSigs
+#'
+#' @source
 NULL
 
 #' @rdname SignatureAnalyzerSigs
