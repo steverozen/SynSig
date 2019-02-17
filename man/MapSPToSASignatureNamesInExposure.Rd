@@ -12,10 +12,11 @@ MapSPToSASignatureNamesInExposure(sp.exposures)
 }
 \value{
 A list with
-\emumerate {
-\item \item \code{exp2} \code{sp.exposures} with the
+
+\enumerate{
+\item \code{exp2} Copy of \code{sp.exposures} with the
 rownames(signature names) updated according to the
-match
+match.
 
 \item \code{sp.to.sa.sig.match}
 
@@ -27,6 +28,7 @@ With the signatures represented in a matrix of exposures, find the nearest
 SignatureAnalyzer exposure.
 }
 \details{
-IMPORTANT: uses the package globals \code{\link{sa.96.sigs}}
+IMPORTANT: uses the package global
+variables \code{\link{sa.96.sigs}}
 and \code{\link{sp.sigs}}.
 }

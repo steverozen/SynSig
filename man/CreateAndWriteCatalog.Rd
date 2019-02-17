@@ -7,15 +7,15 @@
 CreateAndWriteCatalog(sigs, exp, dir, write.cat.fn)
 }
 \arguments{
+\item{sigs}{Signatures to use}
+
+\item{exp}{(Synthetic) exposures}
+
 \item{dir}{Directory in which to put the signatures;
-NOTE: this will be a subdirectory ased on \link{\code{OutDir}}.}
+NOTE: this will be a subdirectory based on \code{\link{OutDir}}.}
 
 \item{write.cat.fn}{Function to write catalogs \strong{or}
 spectra to files.}
-
-\item{Signatures}{to use}
-
-\item{(Synthetic)}{exposures}
 }
 \value{
 Invisibly, the generated catalog.
@@ -24,6 +24,6 @@ Invisibly, the generated catalog.
 Create and write a mutational spectra catalog
 }
 \details{
-Creats a file with the catalog \code{syn.data.csv}
+Create a file with the catalog \code{syn.data.csv}
  and writes \code{sigs} to \code{input.sigs.csv}.
 }
