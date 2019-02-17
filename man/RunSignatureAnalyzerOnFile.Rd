@@ -58,7 +58,7 @@ with five elements (named in this code, not by SignatureAnalyzer):
 }
 }
 \description{
-Normally, please call \code{\link{SignatureAnalyzerOne}}
+Normally, please call \code{\link{SignatureAnalyzerOneRun}}
 instead of this function.
 }
 \details{
