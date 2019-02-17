@@ -8,6 +8,7 @@ Description: A collection of functions for generating synthetic
  mutational catalogs and assessing the performance of
  mutational signature analysis programs on these.
 License: GPL-3
+Language: en-US
 Encoding: UTF-8
 LazyData: true
 Imports: lsa, data.table, ICAMS
