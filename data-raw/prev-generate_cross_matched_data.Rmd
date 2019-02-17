@@ -44,6 +44,39 @@ library(ICAMS)
 library(SynSig)
 ```
 
+### Read SignatureAnalyzer exposures.
+
+```{r signatureanalyzerexposure}
+
+# TODO(Steve): wrap this in a function
+sa.no.hyper.real.exposures <- 
+  read.table(
+    "SignatureAnalyzer_COMPOSITE_SNV.activity.no_POLE_MSI_SKIN_TMZ.031918.txt",
+             sep = "\t", row.names = 1, header = TRUE)
+colnames(sa.no.hyper.real.exposures) <-
+  sub("__", "::", colnames(sa.no.hyper.real.exposures), fixed = TRUE)
+colnames(sa.no.hyper.real.exposures) <-
+  sub("_", "-", colnames(sa.no.hyper.real.exposures), fixed = TRUE)
+rownames(sa.no.hyper.real.exposures) <-
+  FixSASigNames(rownames(sa.no.hyper.real.exposures))
+```
+
+### Read SigProfiler exposures
+
+Restrict it to "non hyper mutated" as
+defined by the SignatureAnalyzer exposures.
+
+```{r sigprofilerinputs}
+# TODO(Steve): wrap this in a function
+sp.real.exposures <-
+  read.csv("PCAWG_sigProfiler_SBS_signatures_in_samples.csv",
+                  as.is = TRUE, header = TRUE)
+rownames(sp.real.exposures) <-
+  paste0(sp.real.exposures$Cancer.Types, "::", sp.real.exposures$Sample.Names)
+sp.real.exposures <- t(sp.real.exposures[ , -(1:3)])
+sp.no.hyper.real.exposures <- 
+  sp.real.exposures[ , colnames(sa.no.hyper.real.exposures)]
+```
 
 ### Function to generate parallel synthetic data from SA and SP attributions and signature profiles
 
@@ -88,8 +121,9 @@ SAAndSPSynDataOneCAType <-
 ## Example 1, Kidney-RCC and ovarian adenocarcinoma to explore SBS3, SBS5, and SBS40
 
 
-It is easier to manage if the output is
-is not in a git-managed directory.
+It is probably easier to manage if the output, which is
+is not in
+a git-managed directory.
 ```{r}
 SetNewOutDir("../../syn.3.5.40.rcc.and.ovary.v5/")
 ```
@@ -139,6 +173,17 @@ WriteExposure(sp.rcc.ova.syn.exp, OutDir("sp.exposure.csv"))
 
 #### Read SignatureAnalyzer mutational signature profiles and create synthetic catalogs
 
+```{r signatureanalzyersigs}
+                           
+# COMPOSITE signature profiles
+sa.COMPOSITE.sigs <- ReadSASigCOMPOSITE()
+
+# 96-channel signature profiles
+sa.96.sigs <- 
+  ReadSASig96("SignatureAnalyzer_COMPOSITE_SBS_W96.signature.031918.txt")
+colnames(sa.96.sigs) <- FixSASigNames(colnames(sa.96.sigs))
+```
+
 ```{r}
 # TODO(Steve): wrap the next lines into a function
 sa.sa.COMPOSITE <- 
@@ -170,8 +215,6 @@ sp.sigs <-
 
 Create the catalogs. First we need the matching between SigProfiler
 and SignatureAnalyzers signatures.
-
-TODO(Steve): move this to data
 
 ```{r}
 MapSPToSASignatureNamesInExposure <-
