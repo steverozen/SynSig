@@ -1,0 +1,30 @@
+---
+title: "Matching SignatureAnalyzer and SigProfiler signatures"
+author: "Steve Rozen"
+date: "February 17, 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r}
+library(SinSig)
+
+if (FALSE) {
+tmp <- MatchSigs2Directions(sp.sigs, sa.96.sigs)
+knitr::kable(
+  tmp$match1, 
+  caption = 'match1',
+  digits = 4
+)
+
+knitr::kable(
+  tmp$match2, 
+  caption = 'match2',
+  digits = 4
+)
+}
+```

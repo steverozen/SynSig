@@ -28,3 +28,8 @@ ReadSigProfilerSig96 <- function(file) {
 
 }
 
+## Turn this into a test
+## ReadSigProfilerSig96("example-SP-signatures.txt")
+
+
+

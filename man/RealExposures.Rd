@@ -10,6 +10,11 @@
 \title{Real exposure (signature attributions) from SignatureAnalyzer and SigProfiler}
 \format{Numerical matrix with rows indicating signatures and columns indicating
 (tumor) samples.}
+\source{
+\url{https://dx.doi.org/10.7303/syn11761237.4}
+
+\url{https://dx.doi.org/10.7303/syn11761198.4}
+}
 \usage{
 sa.all.real.exposures
 

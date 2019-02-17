@@ -458,3 +458,32 @@ GenerateSynFromReal <-
     GenerateSynAbstract(
       parms, num.syn.tumors, file.prefix, sample.id.prefix))
   }
+
+#' Create and write a mutational spectra catalog
+#'
+#' @param Signatures to use
+#'
+#' @param (Synthetic) exposures
+#'
+#' @param dir Directory in which to put the signatures;
+#' NOTE: this will be a subdirectory ased on \link{\code{OutDir}}.
+#'
+#' @param write.cat.fn Function to write catalogs \strong{or}
+#' spectra to files.
+#'
+#' @return Invisibly, the generated catalog.
+#'
+#' @details Creats a file with the catalog \code{syn.data.csv}
+#'  and writes \code{sigs} to \code{input.sigs.csv}.
+CreateAndWriteCatalog <-
+  function(sigs, exp, dir, write.cat.fn) {
+    ct <- GenSynCatalogs(sigs, exp)
+    stopifnot(!dir.exists(OutDir(dir)))
+    dir.create(OutDir(dir))
+    write.cat.fn(sigs,
+                  OutDir(paste0(dir, "/input.sigs.csv")))
+    write.cat.fn(ct,
+                 OutDir(paste0(dir, "/syn.data.csv")))
+    invisible(ct)
+  }
+

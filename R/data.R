@@ -12,30 +12,34 @@ NULL
 
 
 #' @rdname RealExposures
+#' @source \url{https://dx.doi.org/10.7303/syn11761237.4}
 "sa.all.real.exposures"
 
 #' @rdname RealExposures
 "sp.all.real.exposures"
 
 #' @rdname RealExposures
+#' @source \url{https://dx.doi.org/10.7303/syn11761198.4}
 "sa.no.hyper.real.exposures"
 
 #' @rdname RealExposures
 "sp.no.hyper.real.exposures"
 
-#' Signatures from SignatureAnalyzer
+#' Reference mutational signatures from PCAWG7
 #'
 #' @format Numerical matrix with rows indicating mutation
 #' types and columns indicating signatures.
 #'
-#' @name SignatureAnalyzerSigs
-#'
-#' @source
+#' @name MutationalSignatures
+
 NULL
 
-#' @rdname SignatureAnalyzerSigs
+#' @rdname MutationalSignatures
 "sa.96.sigs"
 
-#' @rdname SignatureAnalyzerSigs
+#' @rdname MutationalSignatures
 "sa.COMPOSITE.sigs"
+
+#' @rdname MutationalSignatures
+"sp.sigs"
 
