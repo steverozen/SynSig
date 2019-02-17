@@ -37,14 +37,14 @@ In the end we take the cross product of the two choices, that is,
  {96-channel, COMPOSITE} X {SignatureAnalyzer-attributions, SigProfiler-attributions}
 }
 
-## Required libraries, data, functions
+## Required libraries
 
 ```{r readSPprofiles}
 library(ICAMS)
 library(SynSig)
 ```
 
-## Example 1, Kidney-RCC and ovarian adenocarcinoma to explore SBS3, SBS5, and SBS40
+## Version 1, Kidney-RCC and ovarian adenocarcinoma to explore SBS3, SBS5, and SBS40
 
 It is easier to manage if the output is
 is not in a git-managed directory.
@@ -156,7 +156,7 @@ CreateAndWriteCatalog(
 
 ```
 
-## Example 2: Pull out only 3, 5, 40 and make an "abstract" synthetic data set
+## Version 2: Pull out only 3, 5, 40 and make an "abstract" synthetic data set
 
 ### Pull together the parameters
 
