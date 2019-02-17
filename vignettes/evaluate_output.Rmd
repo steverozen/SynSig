@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 
 To evaluate / assess how well extracted signatures
 reflect the ground-truth signatures that went into the 
-synthetic data, do the following steps.  We take as the first
+synthetic data, we do the following steps.  We take as the first
 example SigProfiler output run on synthetic data based on
 SigProfiler 96-channel mutational signature profiles and
 SigProfiler attributions (exposures).
@@ -58,7 +58,8 @@ SP.7.analysis <-
   ReadAndAnalyzeSigs(
     extracted.sigs =
       "res_sp.sp.syn.2018.12.31.v2_signature_patterns_for_7_sigs.csv",
-    ground.truth.sigs = "sigProfiler_SBS_signatures_2018_03_28.csv",
+    ground.truth.sigs =
+      "sigProfiler_SBS_signatures_2018_03_28.csv",
     ground.truth.exposures = "sp.syn.exposure.csv",
     read.ground.truth.sigs.fn = tmp.read.96)
 
@@ -124,7 +125,8 @@ SP.9.analysis <-
   ReadAndAnalyzeSigs(
     extracted.sigs =
       "res_sp.sp.syn.2018.12.31.v2_signature_patterns_for_9_sigs.csv",
-    ground.truth.sigs = "sigProfiler_SBS_signatures_2018_03_28.csv",
+    ground.truth.sigs =
+      "sigProfiler_SBS_signatures_2018_03_28.csv",
     ground.truth.exposures = "sp.syn.exposure.csv",
     read.ground.truth.sigs.fn = tmp.read.96)
 
