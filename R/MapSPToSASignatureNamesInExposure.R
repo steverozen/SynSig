@@ -3,19 +3,24 @@
 #'
 #' @param sp.exposures The exposures
 #'
-#' @details IMPORTANT: uses the package globals \code{\link{sa.96.sigs}}
+#' @details IMPORTANT: uses the package global
+#' variables \code{\link{sa.96.sigs}}
 #' and \code{\link{sp.sigs}}.
 #'
 #' @return A list with
-#' \emumerate {
-#' \item \item \code{exp2} \code{sp.exposures} with the
+#'
+#' \enumerate{
+#' \item \code{exp2} Copy of \code{sp.exposures} with the
 #' rownames(signature names) updated according to the
-#' match
+#' match.
 #'
 #' \item \code{sp.to.sa.sig.match}
 #'
 #' \item \code{sa.to.sp.sig.match} Best matches in the opposite direction
 #' }
+#'
+#' @export
+
 MapSPToSASignatureNamesInExposure <-
 function(sp.exposures) {
   SP.SA.mappings <-

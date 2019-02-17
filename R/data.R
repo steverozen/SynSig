@@ -5,7 +5,7 @@
 #'
 #' @note Prefix \code{sa} indicates SignatureAnalyzers, \code{sp} indicates
 #' SigProfiler; \code{all} indicates all samples, \code{no.hyper} means
-#' hypermutated tumours as defined for SignatureAnalyzer have been removed.
+#' hypermutated tumors as defined for SignatureAnalyzer have been removed.
 #'
 #' @name RealExposures
 NULL
@@ -16,6 +16,7 @@ NULL
 "sa.all.real.exposures"
 
 #' @rdname RealExposures
+#' @source \url{https://dx.doi.org/10.7303/syn11738669.5}
 "sp.all.real.exposures"
 
 #' @rdname RealExposures

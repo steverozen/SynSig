@@ -1,51 +1,61 @@
-#' Generate parallel synthetic exposures from SA and SP attributions and signatures
+#' Generate parallel synthetic exposures from SA and SP
+#' attributions and signatures
 #'
-#' @param sa.real.exp Exposure matrix from SignatureAnalzyer.
+#' @export
 #'
-#' @param sp.realexp Exposure matrix from SignatureProfiler.
+#' @param sa.real.exp Exposure matrix from SignatureAnalyzer.
+#'
+#' @param sp.real.exp Exposure matrix from SigProfiler.
 #'
 #' @param ca.type The type the cancer, which is used in sample identifiers,
-#'   which SigProfiler expects. For example if \code{ca.type}
-#'   is \code{Kidney-RCC}, sample identifiers will be of the form
-#'   \code{Kidney-RCC::S9999}.
+#'   which SigProfiler expects.
 #'
 #' @param num.syn.tumors Number of synthetic tumors to generate.
 #'
-#' @param file.prefix A file prefix to add before the exposure and
-#'  parameter file.
+#' @param file.prefix To explain later
 #'
-#'  @return A list with the following elements:
-#'  \enumerate{
+#' @return A list with the following elements
+#'
+#' \enumerate{
 #'
 #'  \item \code{sa.parms} The paramters computed from \code{sa.real.exp}.
 #'  This a matrix with a column for each signature
-#'  and 3 rows: \enumerate{
+#'  and 3 rows:
+#'
+#'  \enumerate{
+#'
 #'    \item The proportion of tumors with
-#'  a given signature (in \code{sa.real.exp})
+#'  a given signature (in sa.real.exp)
+#'
 #'  \item The mean of the log10 of the number of mutations
+#'
 #'  \item The standard
 #'  deviation of log10 of the number of mutations
-
-#'  \item \code{sa.syn.exp} The synthetic exposures computed from
-#'  \code{sa.parms}
-#'  \item \code{sp.parms} The parameters computed from \code{sp.real.exp}.
-#'  \item \code{sp.syn.exp} The synthetic exposures computed from
-#'  \code{sp.parms}
 #'
+#'  \item \code{sa.syn.exp} The synthetic exposures
+#'   computed from \code{sa.parms}.
+#'
+#'  \item \code{sp.parms} The parameters computed from \code{sp.real.exp}.
+#'
+#'  \item \code{sp.syn.exp} The synthetic exposures computed from
+#'  \code{sp.parms}.
+#'
+#'  }
 #'  }
 #'
 #'  @details Creates a bunch of files in location
-#'  governed by \code{\link{OutDir}}. The main raison d'etre of the
-#'  function is to ensure that some convetions regarding file
+#'  governed by \link{OutDir}. The main raison d'etre of the
+#'  function is to ensure that some conventions regarding file
 #'  naming are followed.
 #'
 #'  This function does \strong{not} create the synthetic
 #'  mutational spectra catalogs.
 
+
 SAAndSPSynDataOneCAType <-
   function(sa.real.exp,
            sp.real.exp,
-           ca.type, # Used in sample identifiers
+           ca.type,
            num.syn.tumors,
            file.prefix) {
     ca.type <- paste0(ca.type, "::")
