@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="author" content="Steve Rozen" />
+
+<meta name="date" content="2019-02-18" />
+
+<title>Generate cross-matched SignatureAnalyzer and SigProfiler synthetic data to explore handling overlapping / interferring signatures</title>
+
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' || rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+<link href="data:text/css;charset=utf-8,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23header%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%20code%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Generate cross-matched SignatureAnalyzer and SigProfiler synthetic data to explore handling overlapping / interferring signatures</h1>
+<h4 class="author"><em>Steve Rozen</em></h4>
+<h4 class="date"><em>2019-02-18</em></h4>
+
+
+
+<div id="overview-and-rationale" class="section level2">
+<h2>Overview and rationale</h2>
+<p>Checking for interference between C &gt; T mutation in APOBEC (SBS2) and UV (SBS7a,b).</p>
+</div>
+<div id="required-libraries" class="section level2">
+<h2>Required libraries</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ICAMS)
+<span class="kw">library</span>(SynSig)</code></pre></div>
+</div>
+<div id="data-set-1-kidney-rcc-and-ovarian-adenocarcinoma-to-explore-sbs3-sbs5-and-sbs40" class="section level2">
+<h2>Data set 1, Kidney-RCC and ovarian adenocarcinoma to explore SBS3, SBS5, and SBS40</h2>
+<p>500 synthetic bladder transitional cell carcinomas (high in SBS2 and SBS13) and 500 synthetic skin melanomas (high in SBS7a,b,c,d). The potential interference is between SBS2 (mainly C &gt; T) and SBS7a,b (mainly C &gt; T).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">SetNewOutDir</span>(<span class="st">&quot;../../syn.3.5.40.bladder.and.melanoma.v8/&quot;</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">191906</span>)
+num.syn.tumors &lt;-<span class="st"> </span><span class="dv">500</span>
+
+bladder.info &lt;-<span class="st"> </span>
+<span class="st">  </span><span class="kw">SAAndSPSynDataOneCAType</span>(
+    sa.no.hyper.real.exposures,
+    sp.no.hyper.real.exposures,
+    <span class="dt">ca.type =</span> <span class="st">&quot;Bladder-TCC&quot;</span>,
+    num.syn.tumors,
+    <span class="dt">file.prefix =</span> <span class="st">&quot;BLADDER&quot;</span>)
+<span class="co">#&gt; Warning, some signatures present in only one sample, dropping:</span>
+<span class="co">#&gt; SBS29</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">undebug</span>(SAAndSPSynDataOneCAType)
+<span class="co">#&gt; Warning in undebug(SAAndSPSynDataOneCAType): argument is not being debugged</span>
+skin.info &lt;-<span class="st"> </span>
+<span class="st">  </span><span class="kw">SAAndSPSynDataOneCAType</span>(
+    sa.all.real.exposures,
+    sp.all.real.exposures,
+    <span class="dt">ca.type =</span> <span class="st">&quot;Skin-Melanoma&quot;</span>,
+    num.syn.tumors,
+    <span class="dt">file.prefix =</span> <span class="st">&quot;SKIN&quot;</span>)
+<span class="co">#&gt; Warning, some signatures present in only one sample, dropping:</span>
+<span class="co">#&gt; SBS17a SBS17b SBS58</span></code></pre></div>
+<p>Combine the RCC and ovarian adenocarcinoma synthetic exposures.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># debug(MergeExposures)</span>
+sa.bladder.skin.syn.exp &lt;-
+<span class="st">  </span><span class="kw">MergeExposures</span>(<span class="kw">list</span>(bladder.info<span class="op">$</span>sa.syn.exp, skin.info<span class="op">$</span>sa.syn.exp))
+
+sp.bladder.skin.syn.exp &lt;-
+<span class="st">  </span><span class="kw">MergeExposures</span>(<span class="kw">list</span>(bladder.info<span class="op">$</span>sp.syn.exp, skin.info<span class="op">$</span>sp.syn.exp))
+
+<span class="co"># We will need the exposures later when evaluating the attributed signatures</span>
+<span class="kw">WriteExposure</span>(sa.bladder.skin.syn.exp, <span class="kw">OutDir</span>(<span class="st">&quot;sa.exposure.csv&quot;</span>))
+<span class="kw">WriteExposure</span>(sp.bladder.skin.syn.exp, <span class="kw">OutDir</span>(<span class="st">&quot;sp.exposure.csv&quot;</span>))</code></pre></div>
+<div id="generate-synthetic-catalogs-for-rcc-combined-with-ovary-adenocarcinoma" class="section level3">
+<h3>Generate synthetic catalogs for RCC combined with ovary adenocarcinoma</h3>
+<div id="create-synthetic-mutational-spectra-catalogs-based-on-signatureanalyzer-attributions" class="section level4">
+<h4>Create synthetic mutational spectra catalogs based on SignatureAnalyzer attributions</h4>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">CreateAndWriteCatalog</span>(
+  sa.COMPOSITE.sigs,
+  sa.bladder.skin.syn.exp,
+  <span class="st">&quot;sa.sa.COMPOSITE&quot;</span>,
+  WriteCatCOMPOSITE)
+
+
+<span class="kw">CreateAndWriteCatalog</span>(
+  sa.<span class="fl">96.</span>sigs,
+  sa.bladder.skin.syn.exp,
+  <span class="st">&quot;sa.sa.96&quot;</span>,
+  WriteCat96)</code></pre></div>
+</div>
+<div id="create-synthetic-catalogs-based-on-sigprofiler-attributions" class="section level4">
+<h4>Create synthetic catalogs based on SigProfiler attributions</h4>
+<p>Create the catalogs. First we need the matching between SigProfiler and SignatureAnalyzers signatures.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sp.sa.map.info &lt;-
+<span class="st">  </span><span class="kw">MapSPToSASignatureNamesInExposure</span>(sp.bladder.skin.syn.exp)
+
+<span class="kw">CreateAndWriteCatalog</span>(
+  sa.COMPOSITE.sigs,
+  sp.sa.map.info<span class="op">$</span>exp2,
+  <span class="st">&quot;sp.sa.COMPOSITE&quot;</span>,
+  WriteCatCOMPOSITE)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr<span class="op">::</span><span class="kw">kable</span>(
+  sp.sa.map.info<span class="op">$</span>sp.to.sa.sig.match, 
+  <span class="dt">caption =</span> <span class="st">'Best matches from SP signatures to SA signatures'</span>,
+  <span class="dt">digits =</span> <span class="dv">4</span>)</code></pre></div>
+<table>
+<caption>Best matches from SP signatures to SA signatures</caption>
+<thead>
+<tr class="header">
+<th></th>
+<th align="left">to</th>
+<th align="right">sim</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>SBS1</td>
+<td align="left">BI_COMPOSITE_SBS1_P</td>
+<td align="right">0.9928</td>
+</tr>
+<tr class="even">
+<td>SBS13</td>
+<td align="left">BI_COMPOSITE_SBS13_P</td>
+<td align="right">0.8619</td>
+</tr>
+<tr class="odd">
+<td>SBS2</td>
+<td align="left">BI_COMPOSITE_SBS2_P</td>
+<td align="right">0.9981</td>
+</tr>
+<tr class="even">
+<td>SBS38</td>
+<td align="left">BI_COMPOSITE_SBS38_S</td>
+<td align="right">0.9913</td>
+</tr>
+<tr class="odd">
+<td>SBS40</td>
+<td align="left">BI_COMPOSITE_SBS40_P</td>
+<td align="right">0.8536</td>
+</tr>
+<tr class="even">
+<td>SBS5</td>
+<td align="left">BI_COMPOSITE_SBS5_P</td>
+<td align="right">0.8367</td>
+</tr>
+<tr class="odd">
+<td>SBS7a</td>
+<td align="left">BI_COMPOSITE_SBS7a_S</td>
+<td align="right">0.9993</td>
+</tr>
+<tr class="even">
+<td>SBS7b</td>
+<td align="left">BI_COMPOSITE_SBS7b_S</td>
+<td align="right">0.9944</td>
+</tr>
+<tr class="odd">
+<td>SBS7c</td>
+<td align="left">BI_COMPOSITE_SBS7c_S</td>
+<td align="right">0.8375</td>
+</tr>
+<tr class="even">
+<td>SBS7d</td>
+<td align="left">BI_COMPOSITE_SBS75_S</td>
+<td align="right">0.6094</td>
+</tr>
+<tr class="odd">
+<td>SBS8</td>
+<td align="left">BI_COMPOSITE_SBS8_P</td>
+<td align="right">0.8840</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
+knitr<span class="op">::</span><span class="kw">kable</span>(
+  sp.sa.map.info<span class="op">$</span>sa.to.sp.sig.match, 
+  <span class="dt">caption =</span>
+    <span class="kw">paste</span>(<span class="st">'Best (reverse) matches from SA signatures&quot;,</span>
+<span class="st">          &quot;to SP signatures (for sanity checking)'</span>),
+  <span class="dt">digits =</span> <span class="dv">4</span>)</code></pre></div>
+<table>
+<caption>Best (reverse) matches from SA signatures“,”to SP signatures (for sanity checking)</caption>
+<thead>
+<tr class="header">
+<th></th>
+<th align="left">to</th>
+<th align="right">sim</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>BI_COMPOSITE_SBS1_P</td>
+<td align="left">SBS1</td>
+<td align="right">0.9928</td>
+</tr>
+<tr class="even">
+<td>BI_COMPOSITE_SBS2_P</td>
+<td align="left">SBS2</td>
+<td align="right">0.9981</td>
+</tr>
+<tr class="odd">
+<td>BI_COMPOSITE_SBS3_P</td>
+<td align="left">SBS8</td>
+<td align="right">0.7218</td>
+</tr>
+<tr class="even">
+<td>BI_COMPOSITE_SBS4_P</td>
+<td align="left">SBS8</td>
+<td align="right">0.8125</td>
+</tr>
+<tr class="odd">
+<td>BI_COMPOSITE_SBS5_P</td>
+<td align="left">SBS5</td>
+<td align="right">0.8367</td>
+</tr>
+<tr class="even">
+<td>BI_COMPOSITE_SBS6_S</td>
+<td align="left">SBS1</td>
+<td align="right">0.7248</td>
+</tr>
+<tr class="odd">
+<td>BI_COMPOSITE_SBS7a_S</td>
+<td align="left">SBS7a</td>
+<td align="right">0.9993</td>
+</tr>
+<tr class="even">
+<td>BI_COMPOSITE_SBS7b_S</td>
+<td align="left">SBS7b</td>
+<td align="right">0.9944</td>
+</tr>
+<tr class="odd">
+<td>BI_COMPOSITE_SBS7c_S</td>
+<td align="left">SBS7c</td>
+<td align="right">0.8375</td>
+</tr>
+<tr class="even">
+<td>BI_COMPOSITE_SBS8_P</td>
+<td align="left">SBS8</td>
+<td align="right">0.8840</td>
+</tr>
+<tr class="odd">
+<td>BI_COMPOSITE_SBS9_P</td>
+<td align="left">SBS40</td>
+<td align="right">0.4894</td>
+</tr>
+<tr class="even">
+<td>BI_COMPOSITE_SBS10a_S</td>
+<td align="left">SBS40</td>
+<td align="right">0.3119</td>
+</tr>
+<tr class="odd">
+<td>BI_COMPOSITE_SBS11_S</td>
+<td align="left">SBS7b</td>
+<td align="right">0.8052</td>
+</tr>
+<tr class="even">
+<td>BI_COMPOSITE_SBS12_P</td>
+<td align="left">SBS5</td>
+<td align="right">0.7855</td>
+</tr>
+<tr class="odd">
+<td>BI_COMPOSITE_SBS13_P</td>
+<td align="left">SBS13</td>
+<td align="right">0.8619</td>
+</tr>
+<tr class="even">
+<td>BI_COMPOSITE_SBS14_S</td>
+<td align="left">SBS40</td>
+<td align="right">0.4683</td>
+</tr>
+<tr class="odd">
+<td>BI_COMPOSITE_SBS15_S</td>
+<td align="left">SBS1</td>
+<td align="right">0.6287</td>
+</tr>
+<tr class="even">
+<td>BI_COMPOSITE_SBS16_P</td>
+<td align="left">SBS5</td>
+<td align="right">0.6846</td>
+</tr>
+<tr class="odd">
+<td>BI_COMPOSITE_SBS17a_P</td>
+<td align="left">SBS40</td>
+<td align="right">0.3056</td>
+</tr>
+<tr class="even">
+<td>BI_COMPOSITE_SBS17b_P</td>
+<td align="left">SBS40</td>
+<td align="right">0.2398</td>
+</tr>
+<tr class="odd">
+<td>BI_COMPOSITE_SBS18_P</td>
+<td align="left">SBS8</td>
+<td align="right">0.5241</td>
+</tr>
+<tr class="even">
+<td>BI_COMPOSITE_SBS19_P</td>
+<td align="left">SBS7b</td>
+<td align="right">0.5522</td>
+</tr>
+<tr class="odd">
+<td>BI_COMPOSITE_SBS21_S</td>
+<td align="left">SBS5</td>
+<td align="right">0.6276</td>
+</tr>
+<tr class="even">
+<td>BI_COMPOSITE_SBS22_P</td>
+<td align="left">SBS8</td>
+<td align="right">0.4742</td>
+</tr>
+<tr class="odd">
+<td>BI_COMPOSITE_SBS26_S</td>
+<td align="left">SBS5</td>
+<td align="right">0.6257</td>
+</tr>
+<tr class="even">
+<td>BI_COMPOSITE_SBS28_P</td>
+<td align="left">SBS40</td>
+<td align="right">0.4229</td>
+</tr>
+<tr class="odd">
+<td>BI_COMPOSITE_SBS30_P</td>
+<td align="left">SBS7b</td>
+<td align="right">0.6902</td>
+</tr>
+<tr class="even">
+<td>BI_COMPOSITE_SBS33_P</td>
+<td align="left">SBS5</td>
+<td align="right">0.2402</td>
+</tr>
+<tr class="odd">
+<td>BI_COMPOSITE_SBS35_P</td>
+<td align="left">SBS7b</td>
+<td align="right">0.5070</td>
+</tr>
+<tr class="even">
+<td>BI_COMPOSITE_SBS36_P</td>
+<td align="left">SBS8</td>
+<td align="right">0.4846</td>
+</tr>
+<tr class="odd">
+<td>BI_COMPOSITE_SBS37_P</td>
+<td align="left">SBS5</td>
+<td align="right">0.7516</td>
+</tr>
+<tr class="even">
+<td>BI_COMPOSITE_SBS38_S</td>
+<td align="left">SBS38</td>
+<td align="right">0.9913</td>
+</tr>
+<tr class="odd">
+<td>BI_COMPOSITE_SBS39_P</td>
+<td align="left">SBS40</td>
+<td align="right">0.7581</td>
+</tr>
+<tr class="even">
+<td>BI_COMPOSITE_SBS40_P</td>
+<td align="left">SBS40</td>
+<td align="right">0.8536</td>
+</tr>
+<tr class="odd">
+<td>BI_COMPOSITE_SBS60_P</td>
+<td align="left">SBS5</td>
+<td align="right">0.0423</td>
+</tr>
+<tr class="even">
+<td>BI_COMPOSITE_SBS55_S</td>
+<td align="left">SBS7d</td>
+<td align="right">0.5211</td>
+</tr>
+<tr class="odd">
+<td>BI_COMPOSITE_SBS44_S</td>
+<td align="left">SBS5</td>
+<td align="right">0.5839</td>
+</tr>
+<tr class="even">
+<td>BI_COMPOSITE_SBS61_S</td>
+<td align="left">SBS40</td>
+<td align="right">0.3843</td>
+</tr>
+<tr class="odd">
+<td>BI_COMPOSITE_SBS62_S</td>
+<td align="left">SBS40</td>
+<td align="right">0.3484</td>
+</tr>
+<tr class="even">
+<td>BI_COMPOSITE_SBS63_S</td>
+<td align="left">SBS40</td>
+<td align="right">0.5143</td>
+</tr>
+<tr class="odd">
+<td>BI_COMPOSITE_SBS64_P</td>
+<td align="left">SBS5</td>
+<td align="right">0.6156</td>
+</tr>
+<tr class="even">
+<td>BI_COMPOSITE_SBS65_S</td>
+<td align="left">SBS7a</td>
+<td align="right">0.8982</td>
+</tr>
+<tr class="odd">
+<td>BI_COMPOSITE_SBS66_S</td>
+<td align="left">SBS40</td>
+<td align="right">0.3723</td>
+</tr>
+<tr class="even">
+<td>BI_COMPOSITE_SBS67_S</td>
+<td align="left">SBS7a</td>
+<td align="right">0.8553</td>
+</tr>
+<tr class="odd">
+<td>BI_COMPOSITE_SBS68_P</td>
+<td align="left">SBS7d</td>
+<td align="right">0.5890</td>
+</tr>
+<tr class="even">
+<td>BI_COMPOSITE_SBS69_P</td>
+<td align="left">SBS2</td>
+<td align="right">0.7071</td>
+</tr>
+<tr class="odd">
+<td>BI_COMPOSITE_SBS70_P</td>
+<td align="left">SBS40</td>
+<td align="right">0.7086</td>
+</tr>
+<tr class="even">
+<td>BI_COMPOSITE_SBS71_P</td>
+<td align="left">SBS1</td>
+<td align="right">0.6351</td>
+</tr>
+<tr class="odd">
+<td>BI_COMPOSITE_SBS72_P</td>
+<td align="left">SBS40</td>
+<td align="right">0.5717</td>
+</tr>
+<tr class="even">
+<td>BI_COMPOSITE_SBS73_S</td>
+<td align="left">SBS5</td>
+<td align="right">0.6050</td>
+</tr>
+<tr class="odd">
+<td>BI_COMPOSITE_SBS74_S</td>
+<td align="left">SBS1</td>
+<td align="right">0.9834</td>
+</tr>
+<tr class="even">
+<td>BI_COMPOSITE_SBS75_S</td>
+<td align="left">SBS7d</td>
+<td align="right">0.6094</td>
+</tr>
+<tr class="odd">
+<td>BI_COMPOSITE_SBS76_S</td>
+<td align="left">SBS5</td>
+<td align="right">0.6564</td>
+</tr>
+<tr class="even">
+<td>BI_COMPOSITE_SBS77_P</td>
+<td align="left">SBS40</td>
+<td align="right">0.4353</td>
+</tr>
+<tr class="odd">
+<td>BI_COMPOSITE_SBS78_S</td>
+<td align="left">SBS40</td>
+<td align="right">0.3924</td>
+</tr>
+<tr class="even">
+<td>BI_COMPOSITE_SBS79_S</td>
+<td align="left">SBS5</td>
+<td align="right">0.3794</td>
+</tr>
+<tr class="odd">
+<td>BI_COMPOSITE_SBS80_P</td>
+<td align="left">SBS5</td>
+<td align="right">0.7985</td>
+</tr>
+<tr class="even">
+<td>BI_COMPOSITE_SBS81_P</td>
+<td align="left">SBS5</td>
+<td align="right">0.3411</td>
+</tr>
+<tr class="odd">
+<td>BI_COMPOSITE_SBS82_P</td>
+<td align="left">SBS40</td>
+<td align="right">0.6452</td>
+</tr>
+<tr class="even">
+<td>BI_COMPOSITE_SBS83_P</td>
+<td align="left">SBS5</td>
+<td align="right">0.0342</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">CreateAndWriteCatalog</span>(
+  sp.sigs,
+  sp.bladder.skin.syn.exp,
+  <span class="st">&quot;sp.sp&quot;</span>,
+  WriteCat96)</code></pre></div>
+</div>
+</div>
+</div>
+<div id="version-2-abstract-synthetic-data-set-from-only-sbs2-sbs7a-and-sbs7b" class="section level2">
+<h2>Version 2: “abstract” synthetic data set from only SBS2, SBS7a, and SBS7b</h2>
+<p>1000 synthetic tumours composed from SBS2 and SBS7a,b Mutation load distributions drawn from bladder transitional cell carcinoma (SBS2) and from skin melanoma (SBS7a,b). Most spectra contain both signatures. The potential interference is between SBS2 (mainly C &gt; T) and SBS7a,b (mainly C &gt; T).</p>
+<div id="pull-together-the-parameters" class="section level3">
+<h3>Pull together the parameters</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x.sp.parms &lt;-
+<span class="st">  </span><span class="kw">cbind</span>(bladder.info<span class="op">$</span>sp.parms[ , <span class="st">&quot;SBS2&quot;</span>, <span class="dt">drop =</span> <span class="ot">FALSE</span>],
+        skin.info<span class="op">$</span>sp.parms[ , <span class="kw">c</span>(<span class="st">&quot;SBS7a&quot;</span>, <span class="st">&quot;SBS7b&quot;</span>)])
+
+<span class="co"># Find mapping from SBS2, SBS7a, and SBS7b to SignatureAnalyzer signatures</span>
+<span class="co"># assigned to these tumor types</span>
+
+<span class="kw">MatchSigs1Direction</span>(
+  sp.sigs[ , <span class="st">&quot;SBS2&quot;</span>, <span class="dt">drop =</span> F], 
+  sa.<span class="fl">96.</span>sigs[ , <span class="kw">FixSASigNames</span>(<span class="kw">rownames</span>(bladder.info<span class="op">$</span>sa.syn.exp))])
+<span class="co">#&gt; $SBS2</span>
+<span class="co">#&gt; BI_COMPOSITE_SBS2_P </span>
+<span class="co">#&gt;           0.9980595</span>
+
+<span class="kw">MatchSigs1Direction</span>(
+  sp.sigs[ , <span class="st">&quot;SBS7a&quot;</span>, <span class="dt">drop =</span> F], 
+  sa.<span class="fl">96.</span>sigs[ , <span class="kw">FixSASigNames</span>(<span class="kw">rownames</span>(skin.info<span class="op">$</span>sa.syn.exp))])
+<span class="co">#&gt; $SBS7a</span>
+<span class="co">#&gt; BI_COMPOSITE_SBS7a_S </span>
+<span class="co">#&gt;            0.9993382</span>
+
+<span class="kw">MatchSigs1Direction</span>(
+  sp.sigs[ , <span class="st">&quot;SBS7b&quot;</span>, <span class="dt">drop =</span> F], 
+  sa.<span class="fl">96.</span>sigs[ , <span class="kw">FixSASigNames</span>(<span class="kw">rownames</span>(skin.info<span class="op">$</span>sa.syn.exp))])
+<span class="co">#&gt; $SBS7b</span>
+<span class="co">#&gt; BI_COMPOSITE_SBS7b_S </span>
+<span class="co">#&gt;            0.9943775</span>
+
+
+<span class="co"># We select BI..SBS2, BI....SBS7a, BI.....SBS7b from</span>
+<span class="co"># the SignatureAnalyzer parameters.</span>
+
+x.sa.parms &lt;-
+<span class="st">  </span><span class="kw">cbind</span>(bladder.info<span class="op">$</span>sa.parms[ , <span class="st">&quot;BI_COMPOSITE_SBS2_P&quot;</span>, <span class="dt">drop =</span> <span class="ot">FALSE</span>],
+        skin.info<span class="op">$</span>sa.parms[ , <span class="kw">c</span>(<span class="st">&quot;BI_COMPOSITE_SBS7a_S&quot;</span>, 
+                                <span class="st">&quot;BI_COMPOSITE_SBS7b_S&quot;</span>)])
+
+knitr<span class="op">::</span><span class="kw">kable</span>(
+  x.sa.parms, 
+  <span class="dt">caption =</span> <span class="st">'SignatureAnalyzer parameters'</span>,
+  <span class="dt">digits =</span> <span class="dv">4</span>
+)</code></pre></div>
+<table>
+<caption>SignatureAnalyzer parameters</caption>
+<thead>
+<tr class="header">
+<th></th>
+<th align="right">BI_COMPOSITE_SBS2_P</th>
+<th align="right">BI_COMPOSITE_SBS7a_S</th>
+<th align="right">BI_COMPOSITE_SBS7b_S</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>prob</td>
+<td align="right">0.9565</td>
+<td align="right">0.8972</td>
+<td align="right">0.8224</td>
+</tr>
+<tr class="even">
+<td>mean</td>
+<td align="right">3.2858</td>
+<td align="right">4.3940</td>
+<td align="right">3.8450</td>
+</tr>
+<tr class="odd">
+<td>stdev</td>
+<td align="right">0.4133</td>
+<td align="right">0.9681</td>
+<td align="right">0.7811</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
+knitr<span class="op">::</span><span class="kw">kable</span>(
+  x.sp.parms, 
+  <span class="dt">caption =</span> <span class="st">'SigProfiler parameters'</span>,
+  <span class="dt">digits =</span> <span class="dv">4</span>
+)</code></pre></div>
+<table>
+<caption>SigProfiler parameters</caption>
+<thead>
+<tr class="header">
+<th></th>
+<th align="right">SBS2</th>
+<th align="right">SBS7a</th>
+<th align="right">SBS7b</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>prob</td>
+<td align="right">1.0000</td>
+<td align="right">0.8224</td>
+<td align="right">0.8224</td>
+</tr>
+<tr class="even">
+<td>mean</td>
+<td align="right">3.4203</td>
+<td align="right">4.6535</td>
+<td align="right">4.1269</td>
+</tr>
+<tr class="odd">
+<td>stdev</td>
+<td align="right">0.5207</td>
+<td align="right">0.7050</td>
+<td align="right">0.6036</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="generate-synthetic-exposures" class="section level3">
+<h3>Generate synthetic exposures</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">SetNewOutDir</span>(<span class="st">&quot;../../syn.2.7a.7b.abst.v8/&quot;</span>)
+<span class="kw">set.seed</span>(<span class="dv">55</span>)
+num.syn.tumors &lt;-<span class="st"> </span><span class="dv">1000</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sp.abst.info &lt;-
+<span class="st">  </span><span class="kw">GenerateSynAbstract</span>(
+    x.sp.parms, num.syn.tumors, <span class="st">&quot;sp&quot;</span>, <span class="st">&quot;SP.Syn.Abst&quot;</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># debug(present.sigs)</span>
+<span class="co"># debug(GenerateSyntheticExposures)</span>
+sa.abst.info &lt;-
+<span class="st">  </span><span class="kw">GenerateSynAbstract</span>(
+    x.sa.parms, num.syn.tumors, <span class="st">&quot;sa&quot;</span>, <span class="st">&quot;SA.Syn.Abst&quot;</span>)
+<span class="co">#&gt; Warning in AssignPresentAbsentOneSample(prev.present): returning 111</span>
+
+<span class="co">#&gt; Warning in AssignPresentAbsentOneSample(prev.present): returning 111</span></code></pre></div>
+</div>
+<div id="generate-and-write-signatureanalyzer-abstract-2-7a-7b-catalogs" class="section level3">
+<h3>Generate and write SignatureAnalyzer “abstract” 2, 7a, 7b catalogs</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">CreateAndWriteCatalog</span>(
+  sa.COMPOSITE.sigs,
+  sa.abst.info<span class="op">$</span>syn.exp,
+  <span class="st">&quot;sa.sa.COMPOSITE&quot;</span>,
+  WriteCatCOMPOSITE)
+
+<span class="kw">CreateAndWriteCatalog</span>(
+  sa.<span class="fl">96.</span>sigs, 
+  sa.abst.info<span class="op">$</span>syn.exp,
+  <span class="st">&quot;sa.sa.96&quot;</span>,
+  WriteCat96)</code></pre></div>
+<div id="generate-and-write-sigprofiler-abstract-3-5-40-catalogs" class="section level4">
+<h4>Generate and write SigProfiler “abstract” 3, 5, 40 catalogs</h4>
+<p>We need to adjust the signature names in the exposures so they match the signature names in .</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tmp.exp &lt;-<span class="st"> </span>sp.abst.info<span class="op">$</span>syn.exp
+<span class="kw">rownames</span>(tmp.exp) &lt;-<span class="st"> </span><span class="kw">rownames</span>(sa.abst.info<span class="op">$</span>syn.exp)
+
+<span class="kw">CreateAndWriteCatalog</span>(
+  sa.COMPOSITE.sigs,
+  tmp.exp,
+  <span class="st">&quot;sp.sa.COMPOSITE&quot;</span>,
+  WriteCatCOMPOSITE)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
+<span class="kw">CreateAndWriteCatalog</span>(
+  sp.sigs, 
+  sp.abst.info<span class="op">$</span>syn.exp,
+  <span class="st">&quot;sp.sp&quot;</span>,
+  WriteCat96)</code></pre></div>
+</div>
+</div>
+</div>
+
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

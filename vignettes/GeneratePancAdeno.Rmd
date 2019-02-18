@@ -1,0 +1,111 @@
+---
+title: "Generate cross-matched SignatureAnalyzer and SigProfiler synthetic data similar to pancreatic adenocarcinomas"
+author: "Steve Rozen"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Generate cross-matched SignatureAnalyzer and SigProfiler synthetic data similar to pancreatic adenocarcinomas}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Required libraries and set ouput path
+
+```{r librariesEtc}
+library(ICAMS)
+library(SynSig)
+SetNewOutDir("../../syn.pancreas.v8/")
+```
+
+## Generate synthetic exposures
+
+```{r GenExposures}
+set.seed(191907)
+num.syn.tumors <- 1000
+
+panc.info <- 
+  SAAndSPSynDataOneCAType(
+    sa.no.hyper.real.exposures,
+    sp.no.hyper.real.exposures,
+    ca.type = "Panc-AdenoCA",
+    num.syn.tumors,
+    file.prefix = "PANC")
+```
+
+#### Create synthetic mutational spectra catalogs based on SignatureAnalyzer attributions
+
+```{r}
+CreateAndWriteCatalog(
+  sa.COMPOSITE.sigs,
+  panc.info$sa.syn.exp,
+  "sa.sa.COMPOSITE",
+  WriteCatCOMPOSITE)
+
+
+CreateAndWriteCatalog(
+  sa.96.sigs,
+  panc.info$sa.syn.exp,
+  "sa.sa.96",
+  WriteCat96)
+
+```
+
+#### Create synthetic catalogs based on SigProfiler attributions
+
+First we need the matching between SigProfiler
+and SignatureAnalyzers signatures.
+
+```{r}
+sp.sa.map.info <-
+  MapSPToSASignatureNamesInExposure(panc.info$sp.syn.exp)
+
+CreateAndWriteCatalog(
+  sa.COMPOSITE.sigs,
+  sp.sa.map.info$exp2,
+  "sp.sa.COMPOSITE",
+  WriteCatCOMPOSITE)
+```
+
+### The mapping from SP signatures to SA signatures
+
+```{r}
+knitr::kable(
+  sp.sa.map.info$sp.to.sa.sig.match, 
+  caption = 'Best matches from SP signatures to SA signatures',
+  digits = 4
+)
+```
+```{r echo=FALSE}
+if (FALSE) {
+knitr::kable(
+  sp.sa.map.info$sa.to.sp.sig.match, 
+  caption =
+    paste('Best (reverse) matches from SA signatures",
+          "to SP signatures (for sanity checking)'),
+  digits = 4
+)
+}
+```
+
+
+```{r}
+CreateAndWriteCatalog(
+  sp.sigs,
+  panc.info$sp.syn.exp,
+  "sp.sp",
+  WriteCat96)
+
+```
+
+## Session Info
+
+```{r}
+sessionInfo()
+```

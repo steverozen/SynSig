@@ -1,10 +1,10 @@
 ---
-title: "Generate cross-matched SignatureAnalyzer and SigProfiler synthetic data to explore handling overlapping / interferring signatures"
+title: "Generate cross-matched SignatureAnalyzer and SigProfiler synthetic data to explore handling overlapping / interfering signatures"
 author: "Steve Rozen"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Generate cross-matched SignatureAnalyzer and SigProfiler synthetic data to explore handling overlapping / interferring signatures}
+  %\VignetteIndexEntry{Generate cross-matched SignatureAnalyzer and SigProfiler synthetic data to explore handling overlapping / interfering signatures}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -18,9 +18,8 @@ knitr::opts_chunk$set(
 
 ## Overview and rationale
 
-500 synthetic bladder transitional cell carcinomas (high in SBS2 and SBS13) and 500 synthetic skin melanomas (high in SBS7a,b,c,d).  The potential interference is between 
-SBS2 (mainly C > T) and SBS7a,b (mainly C > T)
-
+Checking for interference between C > T mutation in 
+APOBEC (SBS2) and UV (SBS7a,b).
 
 ## Required libraries
 
@@ -29,12 +28,14 @@ library(ICAMS)
 library(SynSig)
 ```
 
-## Data set 1, Kidney-RCC and ovarian adenocarcinoma to explore SBS3, SBS5, and SBS40
+## Data set 1, bladder and skin melanoma to explore SBS2 and SBS7a,b
 
-It is easier to manage if the output is
-is not in a git-managed directory.
+500 synthetic bladder transitional cell carcinomas (high in SBS2 and SBS13) 
+and 500 synthetic skin melanomas (high in SBS7a,b,c,d).  The potential interference is between 
+SBS2 (mainly C > T) and SBS7a,b (mainly C > T).
+
 ```{r}
-SetNewOutDir("../../syn.3.5.40.bladder.and.melanoma.v8/")
+SetNewOutDir("../../syn.2.7a.7b.bladder.and.melanoma.v8/")
 ```
 
 ```{r}
@@ -61,7 +62,7 @@ skin.info <-
     file.prefix = "SKIN")
 ```
 
-Combine the RCC and ovarian adenocarcinoma synthetic exposures.
+Combine the bladder and skin melanoma synthetic exposures.
 
 ```{r} 
 # debug(MergeExposures)
@@ -77,7 +78,7 @@ WriteExposure(sp.bladder.skin.syn.exp, OutDir("sp.exposure.csv"))
 
 ```
 
-### Generate synthetic catalogs for RCC combined with ovary adenocarcinoma
+### Generate synthetic catalogs for bladder combined with skin melanoma
 
 #### Create synthetic mutational spectra catalogs based on SignatureAnalyzer attributions
 
@@ -119,15 +120,15 @@ knitr::kable(
   caption = 'Best matches from SP signatures to SA signatures',
   digits = 4)
 ```
-```{r}
-
+```{r, echo = F}
+if (FALSE) {
 knitr::kable(
   sp.sa.map.info$sa.to.sp.sig.match, 
   caption =
     paste('Best (reverse) matches from SA signatures",
           "to SP signatures (for sanity checking)'),
   digits = 4)
-
+}
 ```
 
 
@@ -140,11 +141,12 @@ CreateAndWriteCatalog(
 
 ```
 
-## Version 2: Pull out only SBS2, SBS7a, and SBS7band make an "abstract" synthetic data set
+## Version 2: "abstract" synthetic data set from only SBS2, SBS7a, and SBS7b 
 
-1000 synthetic tumours composed from SBS2 and SBS7a,b  Mutation load distributions drawn from bladder transitional cell carcinoma (SBS2) and from skin melanoma (SBS7a,b).  Most spectra contain both signatures.
+1000 synthetic tumors composed from SBS2 and SBS7a,b  Mutation load distributions 
+drawn from bladder transitional cell carcinoma (SBS2) and from skin melanoma (SBS7a,b).
+Most spectra contain both signatures.
 The potential interference is between SBS2 (mainly C > T) and SBS7a,b (mainly C > T).
-
 
 ### Pull together the parameters
 
@@ -169,7 +171,8 @@ MatchSigs1Direction(
   sa.96.sigs[ , FixSASigNames(rownames(skin.info$sa.syn.exp))])
 
 
-# We select BI..SBS2, BI....SBS7a, BI.....SBS7b
+# We select BI..SBS2, BI....SBS7a, BI.....SBS7b from
+# the SignatureAnalyzer parameters.
 
 x.sa.parms <-
   cbind(bladder.info$sa.parms[ , "BI_COMPOSITE_SBS2_P", drop = FALSE],
@@ -189,26 +192,32 @@ knitr::kable(
 )
 ```
 
-As above, we do not put the output in a git-managed directory.
+### Generate synthetic exposures
+
 ```{r}
 SetNewOutDir("../../syn.2.7a.7b.abst.v8/")
-set.seed(44)
+set.seed(55)
 num.syn.tumors <- 1000
+```
 
+```{r SP-abs-syn-exp}
 sp.abst.info <-
   GenerateSynAbstract(
     x.sp.parms, num.syn.tumors, "sp", "SP.Syn.Abst")
+```
 
+```{r SA-abs-syn-exp}
+# debug(present.sigs)
+# debug(GenerateSyntheticExposures)
 sa.abst.info <-
   GenerateSynAbstract(
-    x.sa.parms,
-    num.syn.tumors, "sa", "SA.Syn.Abst")
+    x.sa.parms, num.syn.tumors, "sa", "SA.Syn.Abst")
 
 ```
 
-#### Generate and write SignatureAnalyzer "abstract" 2, 7a, 7b catalogs
+### Generate and write SignatureAnalyzer "abstract" 2, 7a, 7b catalogs
 
-```{r}
+```{r SA-abs-syn-cat}
 CreateAndWriteCatalog(
   sa.COMPOSITE.sigs,
   sa.abst.info$syn.exp,
@@ -228,7 +237,7 @@ CreateAndWriteCatalog(
 We need to adjust the signature names in the exposures
 so they match the signature names in \code{sa.COMPOSITE.sigs}.
 
-```{r}
+```{r SP-abs-syn-cat-COMP}
 tmp.exp <- sp.abst.info$syn.exp
 rownames(tmp.exp) <- rownames(sa.abst.info$syn.exp)
 
@@ -237,6 +246,9 @@ CreateAndWriteCatalog(
   tmp.exp,
   "sp.sa.COMPOSITE",
   WriteCatCOMPOSITE)
+```
+
+```{r SP-abs-syn-cat-96}
 
 CreateAndWriteCatalog(
   sp.sigs, 

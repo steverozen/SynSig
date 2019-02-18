@@ -33,9 +33,9 @@ SignatureAnalyzer, and one based on the smaller number of signatures
 extracted by SigProfiler.
 
 In the end we take the cross product of the two choices, that is,
-\verbatim{
+```
  {96-channel, COMPOSITE} X {SignatureAnalyzer-attributions, SigProfiler-attributions}
-}
+```
 
 ## Required libraries
 
@@ -127,6 +127,8 @@ CreateAndWriteCatalog(
   WriteCatCOMPOSITE)
 ```
 
+### The mapping from SP signatures to SA signatures
+
 ```{r}
 knitr::kable(
   sp.sa.map.info$sp.to.sa.sig.match, 
@@ -156,7 +158,7 @@ CreateAndWriteCatalog(
 
 ```
 
-## Version 2: Pull out only 3, 5, 40 and make an "abstract" synthetic data set
+## Version 2: An "abstract" synthetic data set with only SBS3, 5, and 40
 
 ### Pull together the parameters
 
