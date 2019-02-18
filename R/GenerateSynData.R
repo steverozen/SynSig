@@ -91,13 +91,17 @@ GetSynSigParamsFromExposures <- function(exposures, target.size = 1) {
 WriteSynSigParams <-
   function(params, file, append = FALSE,
            col.names = ifelse(append, FALSE, NA)) {
-  write.table(x = as.data.frame(params),
-              file = file,
-              sep = ",",
-              col.names = col.names,
-              row.names = TRUE,
-              append = append)
-}
+    # Suppress warning about writing column names
+    # on an append.
+    suppressWarnings(
+      write.table(x = as.data.frame(params),
+                  file = file,
+                  sep = ",",
+                  col.names = col.names,
+                  row.names = TRUE,
+                  append = append)
+    )
+  }
 
 #' @title Create synthetic exposures based given parameters
 #'
@@ -119,71 +123,98 @@ GenerateSyntheticExposures <-
            name = 'synthetic') {
 
     sigs <- colnames(sig.params)
-    sig.probs <- sig.params['prob', , drop = F]
+    stopifnot(!is.null(sigs))
+    prev.present <- sig.params['prob', ] # Note, get a vector
     sig.burden <- sig.params['mean', , drop = F]
     sig.sd <- sig.params['stdev', , drop = F]
 
-    sig.present <- present.sigs(num.samples,
-                                sig.probs,
-                                sigs)
+    sig.present <- present.sigs(num.samples, prev.present)
+
     colnames(sig.present) <- paste(name, seq(1, num.samples), sep='.')
 
-    ## generate a matrix of tumors with values denoting if each signature being
-    ## present
-    apply(sig.present,
-          2,
-          get.syn.exposure,
-          sigs,
-          sig.burden, ## burden is in mutation per megabase
-          sig.sd)
-
+    # Create a synthetic exposures for each column (sample)
+    # in sig.present.
+    retval <-
+      apply(sig.present,
+            2,
+            GenerateSynExposureOneSample,
+            sigs,
+            sig.burden, ## burden is in mutation per megabase
+            sig.sd)
+    return(retval)
   }
 
 
-#' @title Decide which signatures are present in the catalogs of synthetic tumors.
+#' Randomly assign present / absent to each of a set of signatures, and
+#' keep trying until at least one is present
+#'
+#' @param prev.present  Vector of prevalences,
+#'   each the prevalence of 1 mutational
+#'   signature.
+#'
+#' @return a vector of 0s and 1s of length
+#' \code{length(prev.present)}, and for which
+#' \code{sum(prev.present) > 0}.
+#'
+#' @keywords internal
+AssignPresentAbsentOneSample <- function(prev.present) {
+  v <- numeric(length(prev.present))
+  while (sum(v) < 1) {
+    v <- rbinom(length(prev.present), 1, prev.present)
+  }
+  warning("returning ", v)
+  return(v)
+}
+
+
+#' @title Decide which signatures will be present in
+#'  the catalogs of synthetic tumors.
 #'
 #' @param num.tumors Number of tumors to generate
 #'
-#' @param prev.present Vector of prevalences, each the prevalence of 1 mutational
-#'    signature
+#' @param prev.present Vector of prevalences,
+#'   each the prevalence of 1 mutational
+#'   signature. The names are the names of the
+#'   signatures.
 #'
-#' @param sigs List(?) maybe vector(?) of signature names (?)
-#'
-#' @details If a tumor ends up with no signature assigned,
-#' signature 1 is added as the only signature. TODO:(Steve)
-#' needs redesign how to handle 0 sig assigned cases
+#' @return A matrix with one row
+#' per signature and one column per tumor, with
+#' 1 in a cell indicated the presence of a signature
+#' and 0 indicating absence.
 #'
 #' @keywords internal
 
 present.sigs <-
-  function(num.tumors,   ## number of tumors
-           prev.present, ## prevalence(frequency) of a signature being present
-           sigs   ){     ## list of signatures to generate tumors with
-
+  function(num.tumors, prev.present){
 
     num.process <- length(prev.present)
 
     present.list <- list()
 
-  for (i in 1:num.process){
-    present.each <- rbinom(num.tumors,
-                           1,
-                           prob = prev.present[,i])
-    present.list[[i]] <-  present.each
-  }
-
-  present <- do.call(rbind,present.list)
-
-  rownames(present) <- sigs
-
-  ## check if the vector has all 0s, add signature 1 to it
-  for (tumor in 1:ncol(present)){
-    if (all(present[,tumor] == rep(0,length(nrow(present))))){
-      present['SBS1',tumor] = 1
+    for (i in 1:num.process){
+      present.each <- rbinom(num.tumors,
+                             1,
+                             prob = prev.present[i])
+      present.list[[i]] <-  present.each
     }
+
+    present <- do.call(rbind,present.list)
+
+    rownames(present) <- names(prev.present)
+
+    # If the column for one tumor has only 0s,
+    # re-sample until there is at least on non-0
+    # signature.
+    for (tumor in 1:ncol(present)){
+      if (all(present[,tumor] == rep(0,length(nrow(present))))){
+        # present['SBS1',tumor] = 1
+        present[ , tumor] <-
+          AssignPresentAbsentOneSample(prev.present)
+      }
+    }
+    return(present)
   }
-  return(present)
-}
+
 
 #' @title TODO(steve) trace this to be sure we understand what it does.
 #'
@@ -202,7 +233,7 @@ present.sigs <-
 #' @importFrom stats rbinom rnorm
 #'
 #' @keywords internal
-get.syn.exposure <-
+GenerateSynExposureOneSample <-
   function(tumor,          ## matrix with present.signatures output
            sig.interest,   ## signatures of interest
            burden.per.sig, ## mutation burden in log10(muts/mb)
@@ -324,7 +355,8 @@ MergeExposures <- function(list.of.exposures) {
   for (i in 2:length(list.of.exposures)) {
     start <- Merge2Exposures(start, list.of.exposures[[i]])
   }
-  return(as.matrix(start))
+  start2 <- start[order(rownames(start)), ]
+  return(as.matrix(start2))
 }
 
 #' Create file names in a given directory

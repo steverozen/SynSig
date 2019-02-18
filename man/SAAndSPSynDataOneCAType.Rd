@@ -25,19 +25,19 @@ A list with the following elements
 
 \enumerate{
 
- \item \code{sa.parms} The paramters computed from \code{sa.real.exp}.
+ \item \code{sa.parms} The parameters computed from \code{sa.real.exp}.
  This a matrix with a column for each signature
  and 3 rows:
 
  \enumerate{
 
    \item The proportion of tumors with
- a given signature (in sa.real.exp)
+ a given signature (in sa.real.exp).
 
- \item The mean of the log10 of the number of mutations
+ \item The mean of the log10 of the number of mutations.
 
  \item The standard
- deviation of log10 of the number of mutations
+ deviation of log10 of the number of mutations.
 
  \item \code{sa.syn.exp} The synthetic exposures
   computed from \code{sa.parms}.
@@ -51,8 +51,8 @@ A list with the following elements
  }
 
  @details Creates a bunch of files in location
- governed by \link{OutDir}. The main raison d'etre of the
- function is to ensure that some conventions regarding file
+ governed by \code{\link{OutDir}}. The main rationale for packaging this
+ as one function is to ensure that some conventions regarding file
  naming are followed.
 
  This function does \strong{not} create the synthetic

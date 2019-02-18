@@ -2,24 +2,27 @@
 % Please edit documentation in R/GenerateSynData.R
 \name{present.sigs}
 \alias{present.sigs}
-\title{Decide which signatures are present in the catalogs of synthetic tumors.}
+\title{Decide which signatures will be present in
+ the catalogs of synthetic tumors.}
 \usage{
-present.sigs(num.tumors, prev.present, sigs)
+present.sigs(num.tumors, prev.present)
 }
 \arguments{
 \item{num.tumors}{Number of tumors to generate}
 
-\item{prev.present}{Vector of prevalences, each the prevalence of 1 mutational
-signature}
-
-\item{sigs}{List(?) maybe vector(?) of signature names (?)}
+\item{prev.present}{Vector of prevalences,
+each the prevalence of 1 mutational
+signature. The names are the names of the
+signatures.}
+}
+\value{
+A matrix with one row
+per signature and one column per tumor, with
+1 in a cell indicated the presence of a signature
+and 0 indicating absence.
 }
 \description{
-Decide which signatures are present in the catalogs of synthetic tumors.
-}
-\details{
-If a tumor ends up with no signature assigned,
-signature 1 is added as the only signature. TODO:(Steve)
-needs redesign how to handle 0 sig assigned cases
+Decide which signatures will be present in
+ the catalogs of synthetic tumors.
 }
 \keyword{internal}
