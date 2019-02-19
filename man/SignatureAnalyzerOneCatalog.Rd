@@ -8,7 +8,7 @@ in specified location.}
 SignatureAnalyzerOneCatalog(num.runs, signatureanalyzer.code.dir,
   input.catalog, read.catalog.function, out.dir, write.signature.function,
   maxK = 30, tol = 1e-07, test.only = FALSE,
-  delete.tmp.files = TRUE)
+  delete.tmp.files = TRUE, overwrite = FALSE)
 }
 \arguments{
 \item{num.runs}{The number of times run SignatureAnalyzer on each
