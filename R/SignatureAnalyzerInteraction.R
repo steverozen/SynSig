@@ -336,6 +336,8 @@ FixSASigNames <- function(sig.names) {
 #'
 #' @export
 #'
+#' @importFrom utils capture.output
+#'
 RunSignatureAnalyzerOnFile <-
   function(input.catalog,
            read.catalog.function,
@@ -359,8 +361,10 @@ RunSignatureAnalyzerOnFile <-
 
     # BayesNMF.L1W.L2H is defined by the statement
     # source("SignatureAnalyzer.PCAWG.function.R") above.
+    capture.output(
     out.data <-
-      BayesNMF.L1W.L2H(syn.data, 200000, 10, 5, tol, maxK, maxK, 1)
+      BayesNMF.L1W.L2H(syn.data, 200000, 10, 5, tol, maxK, maxK, 1),
+    file = paste0(TEMPORARY, "captured.output.txt"))
 
     sigs <- out.data[[1]]
     sigs <- sigs[   , colSums(sigs) > 1]
@@ -459,7 +463,8 @@ SignatureAnalyzerOneRun <-
   # as specified input and output locations
   # realtive to here.
 
-  if (verbose) cat("Running SignatureAnalyzerOneRun in", out.dir, "\n")
+  if (verbose)
+    cat("Running SignatureAnalyzerOneRun in", here, out.dir, "\n")
   retval <-
     RunSignatureAnalyzerOnFile(
       input.catalog = input.catalog,
@@ -621,5 +626,5 @@ SignatureAnalyzer4MatchedCatalogs <-
   retval2 <-
     mapply(tmp.fn, subdirs[slice], read.fn[slice], write.fn[slice])
 
-  invisible(retvatl2)
+  invisible(retval2)
   }
