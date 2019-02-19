@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-## Required libraries and set ouput path
+## Required libraries and set output path
 
 ```{r librariesEtc}
 library(ICAMS)
