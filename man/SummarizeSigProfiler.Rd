@@ -4,12 +4,18 @@
 \alias{SummarizeSigProfiler}
 \title{Summarize SigProfiler results in the sa.sa.96 and sp.sp subdirectories}
 \usage{
-SummarizeSigProfiler(top.dir, write.png = FALSE)
+SummarizeSigProfiler(top.dir, sub.dir = c("sa.sa.96", "sp.sp"),
+  write.png = FALSE)
 }
 \arguments{
 \item{top.dir}{The top directory of a conventional data structure containing
-subdirectories sa.sa.96/sp.results and sp.sp/sp.results; see further
-documentation elsewhere.}
+at least one of the subdirectories: sa.sa.96/sp.results and sp.sp/sp.results;
+see further documentation elsewhere.}
+
+\item{sub.dir}{The subdirectory under \code{top.dir}, and containing a folder
+named sp.results. By default, it equals to \code{c("sa.sa.96","sp.sp")}. But
+you should specify \code{sub.dir = "sp.sp"} for clock-like SBS1-and-SBS5-containing
+datasets.}
 
 \item{write.png}{If TRUE create png plots of the signatures.}
 }
