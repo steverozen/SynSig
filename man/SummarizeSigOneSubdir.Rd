@@ -4,8 +4,8 @@
 \alias{SummarizeSigOneSubdir}
 \title{Assess/evaluate results from SigProfiler or SignatureAnalyzer}
 \usage{
-SummarizeSigOneSubdir(path, ground.truth.exposures, ground.truth.sigs,
-  write.png = FALSE)
+SummarizeSigOneSubdir(path, software.name, ground.truth.exposures,
+  ground.truth.sigs, write.png = FALSE)
 }
 \arguments{
 \item{path}{Lowest level path to results, e.g.
@@ -13,6 +13,11 @@ ATopLevelDir/sa.sa.96/sp.results/.
 This code depends on a conventional directory structure documented
 elsewhere. However there should be a directory <path>/SBS96 which
 stores SigProfiler results.}
+
+\item{software.name}{Name of the software from which the results are generated.
+It can be the full name of the software (e.g. One in \code{c("sigproextractor","SigProfiler","SignatureAnalyzer")});
+it can also be the acronym of the software (e.g. \code{c("sp","sa")} is short for
+\code{c("SigProfiler","SignatureAnalyzer")}.}
 
 \item{ground.truth.exposures}{One of "sa.exposure.csv" or "sp.exposure.csv".}
 
