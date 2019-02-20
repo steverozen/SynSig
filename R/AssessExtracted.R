@@ -82,7 +82,7 @@ MatchSigsAndRelabel <-
 #' We assume that in many cases extraction programs will be run
 #' outside of R on file inputs and will generate fill outputs.
 #'
-#' @param extracted.sigs File containing the extracted signature profiles.
+#' @param extracted.sigs Path to file containing the extracted signature profiles.
 #'
 #' @param ground.truth.sigs File containing signature profiles from which the
 #'  synthetic data were generated.
