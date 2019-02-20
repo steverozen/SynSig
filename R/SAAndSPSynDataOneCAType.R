@@ -58,8 +58,11 @@ SAAndSPSynDataOneCAType <-
            ca.type,
            num.syn.tumors,
            file.prefix) {
-    # TODO(Steve): fix this in the package data
+    # TODO(Steve): fix this in the package data; neither
+    # exposure data set is sorted lexicographically, and
+    # the two data sets have columns in different orders.
     sp.real.exp <- sp.real.exp[ , colnames(sa.real.exp)]
+    stopifnot(colnames(sp.real.exp) == colnames(sa.real.exp))
     ca.type <- paste0(ca.type, "::")
     samples.to.use <-
       grep(ca.type, colnames(sa.real.exp), fixed = TRUE)
