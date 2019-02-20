@@ -285,7 +285,7 @@ GenerateSynExposureOneSample <-
 #'  the first "." in the sample id with "-" concatenated
 #'  to sample.id.suffix. TODO(Steve): probably drop this
 #'
-#' @return Spectra catalog as a numeric matrix.
+#' @return A lsit of three elements TODO(Steve): FINISH Spectra catalog as a numeric matrix.
 #'
 #' @export
 
@@ -310,9 +310,13 @@ GenSynCatalogs <- function(signatures, exposures, sample.id.suffix = NULL) {
     newcolnames <-
       gsub(".", paste0("-", sample.id.suffix, "."),
            colnames(i.cat), fixed = TRUE)
+    stopifnot(colnames(i.cat == colnames(exposures))) #NEW
     colnames(i.cat) <- newcolnames
+    colnames(exposures) <- newcolnames
   }
-  return(i.cat)
+  return(list(catalog=i.cat,
+              ground.truth.signatures=signatures,
+              ground.truth.exposures=exposures))
   # TODO(Steve) In future, add noise
 }
 
