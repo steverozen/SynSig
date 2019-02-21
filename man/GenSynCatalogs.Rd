@@ -20,7 +20,7 @@ the first "." in the sample id with "-" concatenated
 to sample.id.suffix. TODO(Steve): probably drop this}
 }
 \value{
-Spectra catalog as a numeric matrix.
+A lsit of three elements TODO(Steve): FINISH Spectra catalog as a numeric matrix.
 }
 \description{
 Generate synthetic spectra catalogs given

@@ -12,7 +12,7 @@ ReadAndAnalyzeSigs(extracted.sigs, ground.truth.sigs,
   read.ground.truth.sigs.fn)
 }
 \arguments{
-\item{extracted.sigs}{File containing the extracted signature profiles.}
+\item{extracted.sigs}{Path to file containing the extracted signature profiles.}
 
 \item{ground.truth.sigs}{File containing signature profiles from which the
 synthetic data were generated.}
