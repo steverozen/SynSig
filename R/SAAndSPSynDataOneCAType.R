@@ -69,12 +69,6 @@ SAAndSPSynDataOneCAType <-
     sa.exp <- sa.real.exp[ , samples.to.use]
     sp.exp <- sp.real.exp[ , samples.to.use]
     stopifnot(colnames(sa.exp) == colnames(sp.exp))
-    WriteExposure(
-      paste0("sa.", file.prefix, ".input.real.exposures.csv"),
-      sa.exp)
-    WriteExposure(
-      paste0("sp.", file.prefix, ".input.real.exposures.csv"),
-      sp.exp)
 
     sa.info <-
       GenerateSynFromReal(

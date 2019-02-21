@@ -21,7 +21,7 @@ knitr::opts_chunk$set(
 ```{r librariesEtc}
 library(ICAMS)
 library(SynSig)
-SetNewOutDir("../../syn.pancreas.v8/")
+SetNewOutDir("../../Xsyn.pancreas.v8/")
 ```
 
 ## Generate synthetic exposures
@@ -29,7 +29,9 @@ SetNewOutDir("../../syn.pancreas.v8/")
 ```{r GenExposures}
 set.seed(191907)
 num.syn.tumors <- 1000
+```
 
+```{r GenSynExp}
 panc.info <- 
   SAAndSPSynDataOneCAType(
     sa.no.hyper.real.exposures,
@@ -37,6 +39,8 @@ panc.info <-
     ca.type = "Panc-AdenoCA",
     num.syn.tumors,
     file.prefix = "PANC")
+WriteSynSigParams(panc.info$sa.parms, OutDir("sa.parms.csv"))
+WriteSynSigParams(panc.info$sp.parms, OutDir("sp.parms.csv"))
 ```
 
 #### Create synthetic mutational spectra catalogs based on SignatureAnalyzer attributions

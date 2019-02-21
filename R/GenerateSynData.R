@@ -290,7 +290,7 @@ GenerateSynExposureOneSample <-
 #' @export
 
 
-GenSynCatalogs <- function(signatures, exposures, sample.id.suffix = NULL) {
+CreateSynCatalogs <- function(signatures, exposures, sample.id.suffix = NULL) {
   exposed.sigs <- rownames(exposures)
 
   # It is an error if there are signatures in exposures that are not
@@ -488,7 +488,8 @@ GenerateSynFromReal <-
 
   parms <- GetSynSigParamsFromExposures(real.exp)
 
-  # WriteExposure(real.exp, paste0(OutDir(file.prefix), ".real.exposure.csv"))
+  WriteExposure(real.exp,
+                paste0(OutDir(file.prefix), ".real.input.exposure.csv"))
 
   return(
     GenerateSynAbstract(
@@ -516,7 +517,7 @@ GenerateSynFromReal <-
 #'
 CreateAndWriteCatalog <-
   function(sigs, exp, dir, write.cat.fn) {
-    info <- GenSynCatalogs(sigs, exp)
+    info <- CreateSynCatalogs(sigs, exp)
     stopifnot(!dir.exists(OutDir(dir)))
     dir.create(OutDir(dir))
     write.cat.fn(info$ground.truth.signatures,
@@ -526,7 +527,7 @@ CreateAndWriteCatalog <-
     write.cat.fn(info$ground.truth.catalog,
                  OutDir(paste0(dir, "/ground.truth.syn.catalog.csv")))
     WriteExposure(info$ground.truth.exposures,
-                  OutDir(paste0(dir, "/ground.truth.syn.exposures")))
+                  OutDir(paste0(dir, "/ground.truth.syn.exposures.csv")))
     invisible(info$ground.truth.catalog)
   }
 

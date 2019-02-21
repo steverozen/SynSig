@@ -35,7 +35,7 @@ and 500 synthetic skin melanomas (high in SBS7a,b,c,d).  The potential interfere
 SBS2 (mainly C > T) and SBS7a,b (mainly C > T).
 
 ```{r}
-SetNewOutDir("../../syn.2.7a.7b.bladder.and.melanoma.v8/")
+SetNewOutDir("../../Xsyn.2.7a.7b.bladder.and.melanoma.v8/")
 ```
 
 ```{r}
@@ -195,7 +195,7 @@ knitr::kable(
 ### Generate synthetic exposures
 
 ```{r}
-SetNewOutDir("../../syn.2.7a.7b.abst.v8/")
+SetNewOutDir("../../Xsyn.2.7a.7b.abst.v8/")
 set.seed(55)
 num.syn.tumors <- 1000
 ```
