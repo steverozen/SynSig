@@ -1,27 +1,18 @@
 #' Assess/evaluate results from SigProfiler or SignatureAnalyzer
 #'
 #' @param third.level.dir Lowest level path to results, e.g.
-#' \code{top.dir}/sa.sa.96/sp.results/. or
-#' \code{top.dir}/sa.sa.96/sa.results/
-#' Here, \code{top.dir} refers to a top-level directory which contains the
-#' full information of a synthetic dataset. (e.g. syn.2.7a.7b.abst.v8)
+#' ATopLevelDir/sa.sa.96/sp.results/.
 #' This code depends on a conventional directory structure documented
-#' elsewhere. However there should be a directory within the \code{third.level.dir}
-#' which stores the software output.
+#' elsewhere. However there should be a directory <third.level.dir>/SBS96 which
+#' stores SigProfiler results.
 #'
-#' @param ground.truth.exposure.name File name which stores ground-truth exposures.
-#' It defaults to be "ground.truth.syn.exposures.csv". This file can be found
-#' in the \code{sub.dir}, i.e. \code{third.level.dir}/../
+#' @param ground.truth.exposure.name One of "sa.exposure.csv" or "sp.exposure.csv".
 #'
-#' @param extracted.sigs.path Full path of extracted sigs file, e.g.
-#' <third.level.dir>/SBS96/Selected_Solution/De_Novo_Solution/signatures.PCAWG.format.csv
+#' @param extracted.sigs.path XXXXX
 #'
+#' @param read.extracted.sigs.fn XXXXXX
 #'
-#' @param read.extracted.sigs.fn Function to read the extracted sigs file.
-#' e.g. \code{ReadCat96}
-#'
-#' @param read.ground.truth.sigs.fn Function to read the ground-truth sigs file.
-#' e.g. \code{ReadCat96}
+#' @param read.ground.truth.sigs.fn XXXXXXX
 #'
 #' @param write.png If TRUE create png plots of the signatures.
 #'
@@ -41,16 +32,15 @@ SummarizeSigOneSubdir <-
            write.png = FALSE) {
 
     ## Output path - path to dump the ReadAndAnalyzeSigs() results
-    outputPath <- paste0(third.level.dir, "/summary")
+    outputPath <- paste0(third.level.dir, "/evaluation")
 
     sigAnalysis <-
       ReadAndAnalyzeSigs(
         extracted.sigs = extracted.sigs.path,
         ground.truth.sigs =
-          paste0(third.level.dir,"/../ground.truth.syn.sigs.csv"),
+          paste0(third.level.dir,"/../ground.truth.sigs.csv"),
         ground.truth.exposures =
-          paste0(third.level.dir,"/../", ground.truth.exposure.name),
-        read.extracted.sigs.fn = read.ground.truth.sigs.fn,
+          paste0(third.level.dir,"/../../", ground.truth.exposure.name),
         read.ground.truth.sigs.fn = read.ground.truth.sigs.fn)
 
     dir.create(outputPath)
@@ -68,7 +58,7 @@ SummarizeSigOneSubdir <-
       sigAnalysis$extracted.with.no.best.match,
       cat("\nsigAnalysis$ground.truth.with.no.best.match\n"),
       sigAnalysis$ground.truth.with.no.best.match,
-      file = paste0(outputPath,"/other.results.txt"))
+      file = paste0(outputPath,"other.results.txt"))
 
     ### Plot the input signatures
     dir.create(paste0(outputPath,"/ground.truth.sigs/"))
@@ -108,46 +98,18 @@ SummarizeSigOneSubdir <-
                       "/ground.truth.sigs/extracted.sigs.pdf"),
                type = "signature")
 
-    ## Logs
-    # Session Info
+    ### Session Info
     capture.output(sessionInfo(),
                    file = paste0(outputPath,"/sessionInfo.log"))
-    # Date and time to finish the analysis
-    capture.output(Sys.time(),
-                   file = paste0(outputPath,"/finish.time.log"))
   }
 
-#' Assess/evaluate results from SigProfiler-python (a.k.a. sigproextractor)
-#'
-#' @param third.level.dir Lowest level path to results, e.g.
-#' \code{top.dir}/sa.sa.96/sp.results/. or
-#' \code{top.dir}/sa.sa.96/sa.results/
-#' Here, \code{top.dir} refers to a top-level directory which contains the
-#' full information of a synthetic dataset. (e.g. syn.2.7a.7b.abst.v8)
-#' This code depends on a conventional directory structure documented
-#' elsewhere. However there should be a directory \code{third.level.dir}/SBS96 which
-#' stores SigProfiler results.
-#'
-#' @param ground.truth.exposure.name File name which stores ground-truth exposures.
-#' It defaults to be "ground.truth.syn.exposures.csv".
-#' This file can be found in the \code{sub.dir}, i.e. \code{third.level.dir}/../
-#'
-#' @param write.png If TRUE create png plots of the signatures.
-#'
-#' @export
-#'
-#' @importFrom ICAMS WriteCat96 ReadCat96 PlotCat96
-#' @importFrom utils capture.output sessionInfo
-#' @importFrom grDevices png dev.off
-#' @importFrom graphics par
-#'
+
 SummarizeSigOneSPSubdir <-
   function(third.level.dir,
-           ground.truth.exposure.name = "ground.truth.syn.exposures.csv",
+           ground.truth.exposure.name,
            write.png = FALSE) {
 
     # Location of SigProfiler output, which is our input
-    # inputPath may change if sigproextractor updates!
     inputPath <- paste0(third.level.dir,"/SBS96/Selected_Solution/De_Novo_Solution")
     # for SA inputPath <- paste0(path, "/sa.best.run/")
 
@@ -159,22 +121,17 @@ SummarizeSigOneSPSubdir <-
     SummarizeSigOneSubdir(
       third.level.dir = third.level.dir,
       ground.truth.exposure.name = ground.truth.exposure.name,
-      extracted.sigs.path = extracted.sigs.path,
+      extracted.sigs = extracted.sigs.path,
       read.extracted.sigs.fn = ReadCat96,
       read.ground.truth.sigs.fn = ReadCat96,
       write.png = write.png)
 }
 
-#' Summarize SigProfiler results in the sa.sa.96 and/or sp.sp subdirectories
+#' Summarize SigProfiler results in the sa.sa.96 and sp.sp subdirectories
 #'
 #' @param top.dir The top directory of a conventional data structure containing
-#' at least one of the subdirectories: sa.sa.96/sp.results and sp.sp/sp.results;
-#' see further documentation elsewhere.
-#'
-#' @param sub.dir The subdirectory under \code{top.dir}, and containing a folder
-#' named sp.results. By default, it contains both \code{c("sa.sa","sp.sp")}.
-#' But you should specify \code{sub.dir = "sp.sp"} for \code{top.dir} with only
-#' \code{sp.sp} sub.dir. (e.g., clock-like SBS1-and-SBS5-containing datasets)
+#' subdirectories sa.sa.96/sp.results and sp.sp/sp.results; see further
+#' documentation elsewhere.
 #'
 #' @param write.png If TRUE create png plots of the signatures.
 #'
@@ -182,47 +139,16 @@ SummarizeSigOneSPSubdir <-
 #'
 #' @details Results are put in standardized subdirectories of \code{top.dir}.
 
-SummarizeSigProfiler <- function (top.dir, sub.dir = c("sa.sa.96","sp.sp"), write.png = FALSE) {
-
-  ## If sub.dir are unexpected, throw an error
-  expected.sub.dir <- c("sa.sa.96","sp.sp")
-  if( !all(sub.dir %in% expected.sub.dir) ){ ## There are other sub-dirs than sa.sa.96 and sp.sp
-    stop("sub.dir can only be one or two of c(\"sa.sa\",\"sp.sp\")!\n")
-  }
+SummarizeSigProfiler <- function (top.dir, write.png = FALSE) {
 
   SummarizeSigOneSPSubdir(
     third.level.dir = paste0(top.dir, "/sa.sa.96/sp.results"),
-    ground.truth.exposure.name = "ground.truth.syn.exposures.csv",
+    ground.truth.exposure.name = "sa.expsoure.csv",
     write.png = write.png)
 
   SummarizeSigOneSPSubdir(
-    third.level.dir = paste0(top.dir, "/sp.sp/sp.results"),
-    ground.truth.exposure.name = "ground.truth.syn.exposures.csv",
+    paste0(top.dir, "/sp.sp/sp.results"),
+    "sp.expsoure.csv",
+    sp.sigs,
     write.png = write.png)
-}
-
-
-SummarizeSigOneSASubdir <-
-  function(third.level.dir,
-           ground.truth.exposure.name = "ground.truth.syn.exposures.csv",
-           write.png = FALSE) {
-
-    # Location of SignatureAnalyzer output, which is our input
-    # inputPath may change if SignatureAnalyzer updates!
-    inputPath <- paste0(third.level.dir,"/sa.best.run")
-
-    # Need special function to read in extracted signatures
-    extractedSigs <- ReadSigProfilerSig96(paste0(inputPath,"/signatures.txt"))
-    extracted.sigs.path <- paste0(inputPath,"/signatures.PCAWG.format.csv")
-    WriteCat96(ct = extractedSigs, extracted.sigs.path)
-
-    SummarizeSigOneSubdir(
-      third.level.dir = third.level.dir,
-      ground.truth.exposure.name = ground.truth.exposure.name,
-      extracted.sigs.path = extracted.sigs.path,
-      read.extracted.sigs.fn = ReadCat96,
-      read.ground.truth.sigs.fn = ReadCat96,
-      write.png = write.png)
   }
-
-
