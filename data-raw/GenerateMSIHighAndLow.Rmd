@@ -218,13 +218,16 @@ sp.hyper.exp <- sp.hyper.exp[ , sp.to.keep]
 #### Create catalogs based on SignatureAnalyzer attributions
 
 ```{r}
+overwrite = TRUE
+
 sa.sa.COMPOSITE.no.hyper <-
   CreateAndWriteCatalog(
     sa.COMPOSITE.sigs,
     no.MSI.info$sa.syn.exp,
     "sa.sa.COMPOSITE",
     WriteCatCOMPOSITE,
-    extra.file.suffix = "no.hyper")
+    extra.file.suffix = "no.hyper",
+    overwrite = overwrite)
 
 sa.sa.96.no.hyper <-
   CreateAndWriteCatalog(
@@ -232,7 +235,8 @@ sa.sa.96.no.hyper <-
     no.MSI.info$sa.syn.exp,
     "sa.sa.96",
     WriteCat96,
-    extra.file.suffix = "no.hyper")
+    extra.file.suffix = "no.hyper",
+    overwrite = overwrite)
 ```
 
 #### Create synthetic catalogs based on SigProfiler attributions
@@ -243,10 +247,11 @@ rownames(sp.no.hyper.exp.renamed) <- rownames(no.MSI.info$sa.syn.exp)
 sp.sa.COMPOSITE.no.msi <- 
   CreateAndWriteCatalog(
     sa.COMPOSITE.sigs,
-    sp.no.hyper.renamed,
+    sp.no.hyper.exp.renamed,
     "sp.sa.COMPOSITE",
     WriteCatCOMPOSITE,
-    extra.file.suffix = "no.hyper")
+    extra.file.suffix = "no.hyper",
+    overwrite = overwrite)
 ```
 
 
@@ -257,7 +262,8 @@ CreateAndWriteCatalog(
   no.MSI.info$sp.syn.exp,
   "sp.sp",
   WriteCat96,
-  extra.file.suffix = "no.hyper")
+  extra.file.suffix = "no.hyper",
+    overwrite = overwrite)
 ```
 
 
@@ -272,7 +278,8 @@ sa.sa.COMPOSITE.hyper <-
     sa.hyper.exp,
     "sa.sa.COMPOSITE",
     WriteCatCOMPOSITE,
-    extra.file.suffix = "hyper")
+    extra.file.suffix = "hyper",
+    overwrite = overwrite)
 
 sa.sa.96.hyper <-
   CreateAndWriteCatalog(
@@ -280,7 +287,8 @@ sa.sa.96.hyper <-
     sa.hyper.exp,
     "sa.sa.96",
     WriteCat96,
-    extra.file.suffix = "hyper")
+    extra.file.suffix = "hyper",
+    overwrite = overwrite)
 
 ```
 
@@ -292,10 +300,11 @@ rownames(sp.hyper.exp.renamed) <- rownames(sp.hyper.exp)
 sp.sa.COMPOSITE.hyper <- 
   CreateAndWriteCatalog(
     sa.COMPOSITE.sigs,
-    sp.hyper.renamed,
+    sp.hyper.exp.renamed,
     "sp.sa.COMPOSITE",
     WriteCatCOMPOSITE,
-    extra.file.suffix = "hyper")
+    extra.file.suffix = "hyper",
+    overwrite = overwrite)
 ```
 
 
@@ -306,7 +315,8 @@ CreateAndWriteCatalog(
   sp.hyper,
   "sp.sp",
   WriteCat96,
-  extra.file.suffix = "hyper")
+  extra.file.suffix = "hyper",
+    overwrite = overwrite)
 ```
 
 
