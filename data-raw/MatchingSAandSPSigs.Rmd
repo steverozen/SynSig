@@ -11,9 +11,8 @@ knitr::opts_chunk$set(echo = TRUE)
 
 
 ```{r}
-library(SinSig)
+library(SynSig)
 
-if (FALSE) {
 tmp <- MatchSigs2Directions(sp.sigs, sa.96.sigs)
 knitr::kable(
   tmp$match1, 
@@ -26,5 +25,5 @@ knitr::kable(
   caption = 'match2',
   digits = 4
 )
-}
+
 ```
