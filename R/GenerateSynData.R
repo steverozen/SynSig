@@ -410,7 +410,7 @@ SetNewOutDir <- function(dir, overwrite = FALSE) {
       warning("\nOverwriting ", dir)
     } else stop(dir, "already exists")
   } else {
-    create.dir(dir)
+    dir.create(dir)
   }
   OutDir.dir <<- dir
 }
@@ -529,15 +529,25 @@ GenerateSynFromReal <-
 #'
 #' @param extra.file.suffix Extra string to put before ".csv".
 #'
+#' @param overwrite If TRUE, overwite existing directory; useful for
+#' debugging / tesing.
+#'
 #' @return Invisibly, the generated catalog.
 #'
 #' @details Create a file with the catalog \code{syn.data.csv}
 #'  and writes \code{sigs} to \code{input.sigs.csv}.
 #'
 CreateAndWriteCatalog <-
-  function(sigs, exp, dir, write.cat.fn, extra.file.suffix = "") {
+  function(sigs, exp, dir, write.cat.fn, extra.file.suffix = "",
+           overwrite = FALSE) {
     info <- CreateSynCatalogs(sigs, exp)
-    stopifnot(dir.exists(OutDir(dir)))
+
+    if (dir.exists(OutDir(dir))) {
+      if (!overwrite) stop("\nDirectory ", OutDir(dir), " exists\n")
+    } else {
+      dir.create(OutDir(dir))
+    }
+
     suffix = paste0(".", extra.file.suffix, "csv")
     write.cat.fn(info$ground.truth.signatures,
                   OutDir(paste0(dir, "/ground.truth.syn.sigs", suffix)))
