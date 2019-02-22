@@ -190,15 +190,19 @@ SummarizeSigProfiler <- function (top.dir, sub.dir = c("sa.sa.96","sp.sp"), writ
     stop("sub.dir can only be one or two of c(\"sa.sa\",\"sp.sp\")!\n")
   }
 
-  SummarizeSigOneSPSubdir(
-    third.level.dir = paste0(top.dir, "/sa.sa.96/sp.results"),
-    ground.truth.exposure.name = "ground.truth.syn.exposures.csv",
-    write.png = write.png)
+  if("sa.sa.96" %in% sub.dir) {
+    SummarizeSigOneSPSubdir(
+      third.level.dir = paste0(top.dir, "/sa.sa.96/sp.results"),
+      ground.truth.exposure.name = "ground.truth.syn.exposures.csv",
+      write.png = write.png)
+  }
 
-  SummarizeSigOneSPSubdir(
-    third.level.dir = paste0(top.dir, "/sp.sp/sp.results"),
-    ground.truth.exposure.name = "ground.truth.syn.exposures.csv",
-    write.png = write.png)
+  if("sp.sp" %in% sub.dir) {
+    SummarizeSigOneSPSubdir(
+      third.level.dir = paste0(top.dir, "/sp.sp/sp.results"),
+      ground.truth.exposure.name = "ground.truth.syn.exposures.csv",
+      write.png = write.png)
+  }
 }
 
 
