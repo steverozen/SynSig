@@ -156,17 +156,20 @@ GenerateSyntheticExposures <-
 #'   each the prevalence of 1 mutational
 #'   signature.
 #'
+#' @param verbos If > 0, cat some possibly informative messages
+#'
 #' @return a vector of 0s and 1s of length
 #' \code{length(prev.present)}, and for which
 #' \code{sum(prev.present) > 0}.
 #'
 #' @keywords internal
-AssignPresentAbsentOneSample <- function(prev.present) {
+AssignPresentAbsentOneSample <- function(prev.present, verbose = 0) {
   v <- numeric(length(prev.present))
   while (sum(v) < 1) {
     v <- rbinom(length(prev.present), 1, prev.present)
   }
-  warning("returning ", v)
+  if (verbose > 0)
+    cat("\nAssignPresentAbsentOneSample returning ", v, "\n\n")
   return(v)
 }
 
@@ -396,12 +399,20 @@ OutDir <- function(file.name) {
 
 #' Globally set the location used by \code{OutDir}.
 #'
-#' @param dir The location
+#' @param dir The location of the top level directory
+#'
+#' @param overwrite If TRUE allow overwriting of existing directory
 #'
 #' @export
-SetNewOutDir <- function(dir) {
-  if (dir.exists(dir)) stop(dir, "already exists")
-   OutDir.dir <<- dir
+SetNewOutDir <- function(dir, overwrite = FALSE) {
+  if (dir.exists(dir)) {
+    if (overwrite) {
+      warning("\nOverwriting ", dir)
+    } else stop(dir, "already exists")
+  } else {
+    create.dir(dir)
+  }
+  OutDir.dir <<- dir
 }
 
 #' Generate synthetic exposures from abstract parameters.
@@ -436,8 +447,9 @@ GenerateSynAbstract <-
 
     parm.file <- paste0(froot, ".parms.csv")
     cat("# Original paramaters\n", file = parm.file)
-    WriteSynSigParams(parms, parm.file, append = TRUE,
-                      col.names = NA)
+    suppressWarnings( # Suppress warning on column names on append
+      WriteSynSigParams(parms, parm.file, append = TRUE,
+                      col.names = NA))
 
     syn.exp <-
       GenerateSyntheticExposures(parms, num.syn.tumors, sample.id.prefix)
@@ -450,7 +462,8 @@ GenerateSynAbstract <-
     # sa.check.param should be similar to parms
     cat("# Parameters derived from synthetic exposures\n",
         file = parm.file, append = TRUE)
-    WriteSynSigParams(check.params, parm.file, append = TRUE)
+    suppressWarnings(
+    WriteSynSigParams(check.params, parm.file, append = TRUE))
     cat("# Difference between original parameters and parameters",
         "derived from synthetic exposures\n",
         file = parm.file, append = TRUE)
@@ -504,9 +517,9 @@ GenerateSynFromReal <-
 #'
 #' @export
 #'
-#' @param sigs Signatures to use
+#' @param sigs Signatures to use.
 #'
-#' @param exp (Synthetic) exposures
+#' @param exp (Synthetic) exposures.
 #'
 #' @param dir Directory in which to put the signatures;
 #' NOTE: this will be a subdirectory based on \code{\link{OutDir}}.
@@ -514,24 +527,26 @@ GenerateSynFromReal <-
 #' @param write.cat.fn Function to write catalogs \strong{or}
 #' spectra to files.
 #'
+#' @param extra.file.suffix Extra string to put before ".csv".
+#'
 #' @return Invisibly, the generated catalog.
 #'
 #' @details Create a file with the catalog \code{syn.data.csv}
 #'  and writes \code{sigs} to \code{input.sigs.csv}.
 #'
 CreateAndWriteCatalog <-
-  function(sigs, exp, dir, write.cat.fn) {
+  function(sigs, exp, dir, write.cat.fn, extra.file.suffix = "") {
     info <- CreateSynCatalogs(sigs, exp)
-    stopifnot(!dir.exists(OutDir(dir)))
-    dir.create(OutDir(dir))
+    stopifnot(dir.exists(OutDir(dir)))
+    suffix = paste0(".", extra.file.suffix, "csv")
     write.cat.fn(info$ground.truth.signatures,
-                  OutDir(paste0(dir, "/ground.truth.syn.sigs.csv")))
+                  OutDir(paste0(dir, "/ground.truth.syn.sigs", suffix)))
     write.cat.fn(info$ground.truth.catalog,
-                 OutDir(paste0(dir, "/syn.data.csv")))
+                 OutDir(paste0(dir, "/syn.data", suffix)))
     write.cat.fn(info$ground.truth.catalog,
-                 OutDir(paste0(dir, "/ground.truth.syn.catalog.csv")))
+                 OutDir(paste0(dir, "/ground.truth.syn.catalog", suffix)))
     WriteExposure(info$ground.truth.exposures,
-                  OutDir(paste0(dir, "/ground.truth.syn.exposures.csv")))
+                  OutDir(paste0(dir, "/ground.truth.syn.exposures", suffix)))
     invisible(info$ground.truth.catalog)
   }
 
