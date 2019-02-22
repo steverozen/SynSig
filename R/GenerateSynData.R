@@ -290,7 +290,7 @@ GenerateSynExposureOneSample <-
 #' @export
 
 
-GenSynCatalogs <- function(signatures, exposures, sample.id.suffix = NULL) {
+CreateSynCatalogs <- function(signatures, exposures, sample.id.suffix = NULL) {
   exposed.sigs <- rownames(exposures)
 
   # It is an error if there are signatures in exposures that are not
@@ -314,7 +314,7 @@ GenSynCatalogs <- function(signatures, exposures, sample.id.suffix = NULL) {
     colnames(i.cat) <- newcolnames
     colnames(exposures) <- newcolnames
   }
-  return(list(catalog=i.cat,
+  return(list(ground.truth.catalog=i.cat,
               ground.truth.signatures=signatures,
               ground.truth.exposures=exposures))
   # TODO(Steve) In future, add noise
@@ -438,7 +438,7 @@ GenerateSynAbstract <-
     syn.exp <-
       GenerateSyntheticExposures(parms, num.syn.tumors, sample.id.prefix)
 
-    WriteExposure(syn.exp, paste0(froot, ".exposure.csv"))
+    WriteExposure(syn.exp, paste0(froot, ".generic.syn.exposure.csv"))
 
     # Sanity check
     check.params <- GetSynSigParamsFromExposures(syn.exp)
@@ -488,7 +488,8 @@ GenerateSynFromReal <-
 
   parms <- GetSynSigParamsFromExposures(real.exp)
 
-  WriteExposure(real.exp, paste0(OutDir(file.prefix), ".real.exposure.csv"))
+  WriteExposure(real.exp,
+                paste0(OutDir(file.prefix), ".real.input.exposure.csv"))
 
   return(
     GenerateSynAbstract(
@@ -516,13 +517,17 @@ GenerateSynFromReal <-
 #'
 CreateAndWriteCatalog <-
   function(sigs, exp, dir, write.cat.fn) {
-    ct <- GenSynCatalogs(sigs, exp)
+    info <- CreateSynCatalogs(sigs, exp)
     stopifnot(!dir.exists(OutDir(dir)))
     dir.create(OutDir(dir))
-    write.cat.fn(sigs,
-                  OutDir(paste0(dir, "/input.sigs.csv")))
-    write.cat.fn(ct,
+    write.cat.fn(info$ground.truth.signatures,
+                  OutDir(paste0(dir, "/ground.truth.syn.sigs.csv")))
+    write.cat.fn(info$ground.truth.catalog,
                  OutDir(paste0(dir, "/syn.data.csv")))
-    invisible(ct)
+    write.cat.fn(info$ground.truth.catalog,
+                 OutDir(paste0(dir, "/ground.truth.syn.catalog.csv")))
+    WriteExposure(info$ground.truth.exposures,
+                  OutDir(paste0(dir, "/ground.truth.syn.exposures.csv")))
+    invisible(info$ground.truth.catalog)
   }
 

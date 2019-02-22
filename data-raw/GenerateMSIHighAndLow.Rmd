@@ -51,14 +51,33 @@ maybe.msi.uterus <-
 
 maybe.msi <- sp.all.real.exposures[ , c(maybe.msi.colorectal, maybe.msi.uterus)]
 maybe.msi2 <- maybe.msi[    , maybe.msi["SBS10a", ] < 10]
+maybe.msi2 <- maybe.msi2[    , maybe.msi2["SBS14", ] < 10] # SBS14 is Combined POLE and MSI
 
 # Look for SBS44, SBS26; SBS6 is rare
 
 sa.maybe.msi2 <- sa.all.real.exposures[ , colnames(maybe.msi2)]
 
+no.msi.colorectal <-
+  grep("ColoRect-AdenoCA::", colnames(sa.no.hyper.real.exposures),
+       fixed = TRUE, value = TRUE)
+
+sp.no.msi.colorectal <- sp.all.real.exposures[ , no.msi.colorectal]
+mean(sp.no.msi.colorectal["SBS1", ])
+mean(sp.no.msi.colorectal["SBS5", ])
+
+no.msi.uterus <-
+  grep("Uterus-AdenoCA::", colnames(sa.no.hyper.real.exposures),
+       fixed = TRUE, value = TRUE)
+sp.no.msi.uterus <- sp.all.real.exposures[ , no.msi.uterus]
+mean(sp.no.msi.uterus["SBS1", ])
+mean(sp.no.msi.uterus["SBS5", ])
+
+
+
 ```
 
 
+# Make sure to use similar signatures to 26 and 44 for sa exposures
 
 
 ```{r}

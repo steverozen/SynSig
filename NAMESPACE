@@ -2,8 +2,8 @@
 
 export(BestSignatureAnalyzerResult)
 export(CreateAndWriteCatalog)
+export(CreateSynCatalogs)
 export(FixSASigNames)
-export(GenSynCatalogs)
 export(GenerateSynAbstract)
 export(GenerateSynFromReal)
 export(GenerateSyntheticExposures)

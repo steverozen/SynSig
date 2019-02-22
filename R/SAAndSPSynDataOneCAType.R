@@ -69,6 +69,7 @@ SAAndSPSynDataOneCAType <-
     sa.exp <- sa.real.exp[ , samples.to.use]
     sp.exp <- sp.real.exp[ , samples.to.use]
     stopifnot(colnames(sa.exp) == colnames(sp.exp))
+
     sa.info <-
       GenerateSynFromReal(
         sa.exp, num.syn.tumors,

@@ -26,6 +26,15 @@ function(sp.exposures) {
   SP.SA.mappings <-
     MatchSigs2Directions(sp.sigs[ , rownames(sp.exposures)], sa.96.sigs)
   new.syn.exp.rownames <- SP.SA.mappings$match1[rownames(sp.exposures), "to"]
+
+  if(duplicated(new.syn.exp.rownames)) {
+    print(SP.SA.mappings$match1)
+    stop("Cannot handle this situation:\n",
+         "> 1 SigProfiler signature maps to the same SignatureAnalyzer signature")
+    # Presumably this would die a few lines below when we
+    # set rownames(exp2)
+  }
+
   exp2 <- sp.exposures
   rownames(exp2) <- new.syn.exp.rownames
   return(list(exp2               = exp2,
