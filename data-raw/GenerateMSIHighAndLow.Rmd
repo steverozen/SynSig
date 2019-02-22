@@ -28,12 +28,8 @@ library(ICAMS)
 library(SynSig)
 ```
 
-## Data set 1.1, MSI high tumours from ColoRect-AdenoCA, Uterus-AdenoCA
+## Get actual exposures for high-mutational burden signatures, SBS26 and SBS44
 
-
-```{r}
-SetNewOutDir("../../syn.MSI.high.and.low.v8/")
-```
 
 ```{r}
 
@@ -51,11 +47,44 @@ maybe.msi.uterus <-
 
 maybe.msi <- sp.all.real.exposures[ , c(maybe.msi.colorectal, maybe.msi.uterus)]
 maybe.msi2 <- maybe.msi[    , maybe.msi["SBS10a", ] < 10]
-maybe.msi2 <- maybe.msi2[    , maybe.msi2["SBS14", ] < 10] # SBS14 is Combined POLE and MSI
 
+ # SBS14 is Combined POLE and MSI, so we do not use it.
+sp.msi.exp <- maybe.msi2[    , maybe.msi2["SBS14", ] < 10]
 # Look for SBS44, SBS26; SBS6 is rare
 
-sa.maybe.msi2 <- sa.all.real.exposures[ , colnames(maybe.msi2)]
+sa.msi.exp <- sa.all.real.exposures[ , colnames(sp.msi.exp)]
+
+sp.msi.exp <- sp.msi.exp[c("SBS26", "SBS44"), ]
+sa.msi.exp <- sa.msi.exp[c("BI_COMPOSITE_SBS26_S", "BI_COMPOSITE_SBS44_S"), ]
+
+```
+
+## Compute parameters and create synthetic expsoures for high-burden signtures
+
+\code{SAAndSPSynDataOneCAType} will always include at least 1 non-zero exposure
+in the the synthetic exposure output.
+
+```{r}
+
+SetNewOutDir("../../syn.MSI.high.with.low.v8/")
+
+set.seed(191908)
+num.syn.tumors <- 500
+
+MSI.info <- 
+  SAAndSPSynDataOneCAType(
+    sa.msi.exp,
+    sp.msi.exp,
+    ca.type = NULL, # Do not filter by cancer type
+    num.syn.tumors,
+    file.prefix = "MSI")
+```
+
+## TO DO, triple the exposures of the MSI high tumors.
+
+## Get actual exposures for low-mutational burden signatures, SBS1 and SBS2
+
+```{r}
 
 no.msi.colorectal <-
   grep("ColoRect-AdenoCA::", colnames(sa.no.hyper.real.exposures),
@@ -72,58 +101,88 @@ sp.no.msi.uterus <- sp.all.real.exposures[ , no.msi.uterus]
 mean(sp.no.msi.uterus["SBS1", ])
 mean(sp.no.msi.uterus["SBS5", ])
 
+no.msi.colnames <- c(no.msi.colorectal, no.msi.uterus)
 
+sp.no.msi.exp <-
+  sp.all.real.exposures[c("SBS1", "SBS5"), no.msi.colnames]
+stopifnot(dim(sp.no.msi.exp) == c(2, 81)) # sanity check
 
+sa.no.msi.exp1 <-
+  sa.all.real.exposures[, no.msi.colnames]
+sa.no.msi.exp2 <- sa.no.msi.exp1[rowSums(sa.no.msi.exp1) > 0, ]
+
+sp.sa.map.info <-
+  MapSPToSASignatureNamesInExposure(
+    sp.exposures = sp.no.msi.exp,
+    sa.sig.names.to.consider = rownames(sa.no.msi.exp2))
+```
+
+```{r}
+knitr::kable(
+  sp.sa.map.info$sp.to.sa.sig.match, 
+  caption = 'Best matches from SP signatures to SA signatures with exposures in MSI tumors',
+  digits = 4)
 ```
 
 
-# Make sure to use similar signatures to 26 and 44 for sa exposures
 
+```{r SetSANoMSIExposures}
+sa.no.msi.exp3 <- sa.no.msi.exp2[sp.sa.map.info$sp.to.sa.sig.match$to, ]
+
+# View(sa.all.real.exposures[ , no.msi.colnames])
+stopifnot(dim(sa.no.msi.exp3) == c(2, 81)) # sanity check
+
+```
+
+## Compute parameters and create synthetic expsoures for low-burden signtures
 
 ```{r}
 
-set.seed(191908)
 num.syn.tumors <- 500
 
-
-
-bladder.info <- 
+no.MSI.info <- 
   SAAndSPSynDataOneCAType(
-    sa.no.hyper.real.exposures,
-    sp.no.hyper.real.exposures,
-    ca.type = "Bladder-TCC",
+    sa.no.msi.exp3,
+    sp.no.msi.exp,
+    ca.type = NULL, # Do not filter by cancer type
     num.syn.tumors,
-    file.prefix = "BLADDER")
+    file.prefix = "MSI")
 ```
 
-```{r}
-undebug(SAAndSPSynDataOneCAType)
-skin.info <- 
-  SAAndSPSynDataOneCAType(
-    sa.all.real.exposures,
-    sp.all.real.exposures,
-    ca.type = "Skin-Melanoma",
-    num.syn.tumors,
-    file.prefix = "SKIN")
-```
+## Exposures for a set of ~500 tumours with SBS1, SBS5, SBS26, and SBS44
 
-Combine the bladder and skin melanoma synthetic exposures.
+Most tumors have a mix of all 4 signatures. This reflects
+the SignatureAnalyzer strategy of dealing with the
+"hypermutated" tumours separately.
+
+Combine the high and low burden synthetic exposures.
 
 ```{r} 
-# debug(MergeExposures)
-sa.bladder.skin.syn.exp <-
-  MergeExposures(list(bladder.info$sa.syn.exp, skin.info$sa.syn.exp))
+sa.hyper.exp <-
+  rbind(MSI.info$sa.syn.exp,
+        no.MSI.info$sa.syn.exp)
 
-sp.bladder.skin.syn.exp <-
-  MergeExposures(list(bladder.info$sp.syn.exp, skin.info$sp.syn.exp))
-
-# We will need the exposures later when evaluating the attributed signatures
-WriteExposure(sa.bladder.skin.syn.exp, OutDir("sa.exposure.csv"))
-WriteExposure(sp.bladder.skin.syn.exp, OutDir("sp.exposure.csv"))
+sp.hyper.exp <-
+  rbind(MSI.info$sp.syn.exp,
+        no.MSI.info$sp.syn.exp)
 
 ```
 
-### Generate synthetic catalogs for bladder combined with skin melanoma
+# NOT DONE
+
+## TO remove "hyper" exposures that contain neither SBS26 nor SBS44
+
+## TO DO catalogs for 500 tumors with neither SBS26 nor SBS44
+
+## TO DO catalogs for ~500 tumor with SBS26 and SBS44
+
+## TO DO Run SignatureAnalyzer first on the 500 tumors with neither SBS26 nor SBS44, and then on the "hyper-mutated tumors"
+
+## TO DO Run SigProfiler on the rbind of the first and second catalogs.
+
+## TO DO maybe Run SigProfiler on the second catalog alone
+
+# FROM HERE DOWN -- OLD
 
 #### Create synthetic mutational spectra catalogs based on SignatureAnalyzer attributions
 
@@ -157,23 +216,6 @@ CreateAndWriteCatalog(
   sp.sa.map.info$exp2,
   "sp.sa.COMPOSITE",
   WriteCatCOMPOSITE)
-```
-
-```{r}
-knitr::kable(
-  sp.sa.map.info$sp.to.sa.sig.match, 
-  caption = 'Best matches from SP signatures to SA signatures',
-  digits = 4)
-```
-```{r, echo = F}
-if (FALSE) {
-knitr::kable(
-  sp.sa.map.info$sa.to.sp.sig.match, 
-  caption =
-    paste('Best (reverse) matches from SA signatures",
-          "to SP signatures (for sanity checking)'),
-  digits = 4)
-}
 ```
 
 

@@ -70,7 +70,11 @@ GetSynSigParamsFromExposures <- function(exposures, target.size = 1) {
     cat("Warning, some signatures present in only one sample, dropping:\n")
     cat(colnames(ret1)[is.na(ret1['stdev', ])], "\n")
   }
-  return(ret1[,!is.na(ret1['stdev',])])
+  retval <- ret1[,!is.na(ret1['stdev',]) , drop = FALSE]
+  if (ncol(retval) == 0) {
+    stop("No signatures with usable parameters (> 1 sample with exposure)")
+  }
+  return(retval)
 }
 
 #' @title Write SynSig parameters --prevalence, mean(log(exposure))
@@ -427,7 +431,7 @@ SetNewOutDir <- function(dir) {
 #' @export
 GenerateSynAbstract <-
   function(parms, num.syn.tumors, file.prefix, sample.id.prefix) {
-
+    stopifnot(!is.null(parms))
     froot <- OutDir(file.prefix)
 
     parm.file <- paste0(froot, ".parms.csv")

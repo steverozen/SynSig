@@ -63,21 +63,23 @@ SAAndSPSynDataOneCAType <-
     # the two data sets have columns in different orders.
     sp.real.exp <- sp.real.exp[ , colnames(sa.real.exp)]
     stopifnot(colnames(sp.real.exp) == colnames(sa.real.exp))
-    ca.type <- paste0(ca.type, "::")
-    samples.to.use <-
-      grep(ca.type, colnames(sa.real.exp), fixed = TRUE)
-    sa.exp <- sa.real.exp[ , samples.to.use]
-    sp.exp <- sp.real.exp[ , samples.to.use]
-    stopifnot(colnames(sa.exp) == colnames(sp.exp))
+    if (!is.null(ca.type)) {
+      ca.type <- paste0(ca.type, "::")
+      samples.to.use <-
+        grep(ca.type, colnames(sa.real.exp), fixed = TRUE)
+      sa.real.exp <- sa.real.exp[ , samples.to.use]
+      sp.real.exp <- sp.real.exp[ , samples.to.use]
+    }
+    stopifnot(colnames(sa.real.exp) == colnames(sp.real.exp))
 
     sa.info <-
       GenerateSynFromReal(
-        sa.exp, num.syn.tumors,
+        sa.real.exp, num.syn.tumors,
         file.prefix = paste0("sa.", file.prefix),
         sample.id.prefix = paste0("SA.Syn.", ca.type, "S"))
     sp.info <-
       GenerateSynFromReal(
-        sp.exp, num.syn.tumors,
+        sp.real.exp, num.syn.tumors,
         file.prefix = paste0("sp.", file.prefix),
         sample.id.prefix = paste0("SP.Syn.", ca.type, "S"))
     return(list(
