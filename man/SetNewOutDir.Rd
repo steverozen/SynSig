@@ -4,10 +4,12 @@
 \alias{SetNewOutDir}
 \title{Globally set the location used by \code{OutDir}.}
 \usage{
-SetNewOutDir(dir)
+SetNewOutDir(dir, overwrite = FALSE)
 }
 \arguments{
-\item{dir}{The location}
+\item{dir}{The location of the top level directory}
+
+\item{overwrite}{If TRUE allow overwriting of existing directory}
 }
 \description{
 Globally set the location used by \code{OutDir}.
