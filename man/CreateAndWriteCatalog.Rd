@@ -4,18 +4,24 @@
 \alias{CreateAndWriteCatalog}
 \title{Create and write a mutational spectra catalog}
 \usage{
-CreateAndWriteCatalog(sigs, exp, dir, write.cat.fn)
+CreateAndWriteCatalog(sigs, exp, dir, write.cat.fn,
+  extra.file.suffix = "", overwrite = FALSE)
 }
 \arguments{
-\item{sigs}{Signatures to use}
+\item{sigs}{Signatures to use.}
 
-\item{exp}{(Synthetic) exposures}
+\item{exp}{(Synthetic) exposures.}
 
 \item{dir}{Directory in which to put the signatures;
 NOTE: this will be a subdirectory based on \code{\link{OutDir}}.}
 
 \item{write.cat.fn}{Function to write catalogs \strong{or}
 spectra to files.}
+
+\item{extra.file.suffix}{Extra string to put before ".csv".}
+
+\item{overwrite}{If TRUE, overwite existing directory; useful for
+debugging / tesing.}
 }
 \value{
 Invisibly, the generated catalog.
