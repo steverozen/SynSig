@@ -547,8 +547,11 @@ CreateAndWriteCatalog <-
     } else {
       dir.create(OutDir(dir))
     }
-
-    suffix = paste0(".", extra.file.suffix, "csv")
+    if (extra.file.suffix == "") {
+      suffix <- ".csv"
+    } else {
+      suffix = paste0(".", extra.file.suffix, ".csv")
+    }
     write.cat.fn(info$ground.truth.signatures,
                   OutDir(paste0(dir, "/ground.truth.syn.sigs", suffix)))
     write.cat.fn(info$ground.truth.catalog,
