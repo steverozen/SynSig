@@ -138,7 +138,7 @@ sa.no.hyper.real.exp["BI_COMPOSITE_SBS5_P", ] <- sp.no.hyper.real.exp["SBS5", ]
 
 ```
 
-```{r MapSPToSA echo = FALSE}
+```{r MapSPToSA, echo = FALSE}
 # Alternative approach, not used
 if (FALSE) {
   sa.no.hyper.real.exp2 <- sa.no.hyper.real.exp[rowSums(sa.no.hyper.real.exp) > 0, ]
@@ -269,7 +269,7 @@ CreateAndWriteCatalog(
 ```
 
 
-### Catalogs for 500 tumors with SBS1, 5, 26, 4 TO DO
+### Catalogs for 500 tumors with SBS1, 5, 26, 4
 
 #### Create catalogs based on SignatureAnalyzer attributions
 
