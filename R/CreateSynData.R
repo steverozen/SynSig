@@ -156,7 +156,7 @@ GenerateSyntheticExposures <-
 #'   each the prevalence of 1 mutational
 #'   signature.
 #'
-#' @param verbos If > 0, cat some possibly informative messages
+#' @param verbose If > 0, cat some possibly informative messages
 #'
 #' @return a vector of 0s and 1s of length
 #' \code{length(prev.present)}, and for which

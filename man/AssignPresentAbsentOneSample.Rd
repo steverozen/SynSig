@@ -5,12 +5,14 @@
 \title{Randomly assign present / absent to each of a set of signatures, and
 keep trying until at least one is present}
 \usage{
-AssignPresentAbsentOneSample(prev.present)
+AssignPresentAbsentOneSample(prev.present, verbose = 0)
 }
 \arguments{
 \item{prev.present}{Vector of prevalences,
 each the prevalence of 1 mutational
 signature.}
+
+\item{verbos}{If > 0, cat some possibly informative messages}
 }
 \value{
 a vector of 0s and 1s of length
