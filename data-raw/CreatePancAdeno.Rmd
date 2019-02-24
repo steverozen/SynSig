@@ -1,10 +1,10 @@
 ---
-title: "Generate cross-matched SignatureAnalyzer and SigProfiler synthetic data similar to pancreatic adenocarcinomas"
+title: "Create cross-matched SignatureAnalyzer and SigProfiler synthetic data similar to pancreatic adenocarcinomas"
 author: "Steve Rozen"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Generate cross-matched SignatureAnalyzer and SigProfiler synthetic data similar to pancreatic adenocarcinomas}
+  %\VignetteIndexEntry{Create cross-matched SignatureAnalyzer and SigProfiler synthetic data similar to pancreatic adenocarcinomas}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
