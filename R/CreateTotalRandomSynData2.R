@@ -6,8 +6,8 @@
 #' @param row.headers One of the \code{\link{ICAMS}} package variable such as
 #'  \code{\link{.catalog.row.order96}}.
 #'
-#' @return A single column matrix with rownames \code{row.headers} and
-#'   colname \code{RandSig}.
+#' @return A single column matrix with \code{rownames} \code{row.headers} and
+#'   \code{colnames} \code{"RandSig"}.
 #'
 #' @keywords internal
 
@@ -25,7 +25,7 @@ CreateOneRandomMutSigProfile <- function(row.headers) {
 #' @param row.headers One of the \code{\link{ICAMS}} package variable such as
 #'  \code{\link{.catalog.row.order96}}.
 #'
-#' @param num.signatures Number of signaures to create.
+#' @param num.signatures Number of signatures to create.
 #'
 #' @param sig.name.prefix The signatures will be named \code{<sig.name.prefix>1},
 #' \code{<sig.name.prefix>2}, etc.
@@ -75,7 +75,8 @@ CreateExposuresNums <- function(num.exposures, mean, sd) {
   return(retval[1:num.exposures])
 }
 
-#' Select \code{num.exp} from the elemtns of \code{sig.names}.
+#' Select \code{num.exp} signatures from the members of \code{sig.names} and
+#' create one column of an exposure matrix (as a vector).
 #'
 #' @param target.num.exp Number of signatures to which sample "was" exposed.
 #'
@@ -119,11 +120,11 @@ ExposureNums2Exposures <-
 #' string) to form an identifier for a synthetic signature.
 #' @param sample.name.prefix String to put in front of an integer (as
 #' string) to form an identifier for a synthetic sample (tumor).
-#' @param composite.dir.name string indicating the name of the COMPOISTE
-#' subdir; probably one of \code{"sa.sa.COMPOSITE"} or
+#' @param composite.dir.name string indicating the name of the COMPOSITE
+#' subdirectory; probably one of \code{"sa.sa.COMPOSITE"} or
 #' \code{"sp.sa.COMPOSITE"}.
 #' @param x96.dir.name A string indicating the name of the 96-channel
-#' subdirecto; probably one of \code{"sa.sa.COMPOSITE"} or
+#' subdirectory; probably one of \code{"sa.sa.COMPOSITE"} or
 #' \code{"sp.sa.COMPOSITE"}.
 #' @param COMPOSITE.features Character vector containing
 #' rownames for a COMPOSITE signature or catalog.

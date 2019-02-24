@@ -292,10 +292,9 @@ GenerateSynExposureOneSample <-
 #'  the first "." in the sample id with "-" concatenated
 #'  to sample.id.suffix. TODO(Steve): probably drop this
 #'
-#' @return A lsit of three elements TODO(Steve): FINISH Spectra catalog as a numeric matrix.
+#' @return A list of three elements TODO(Steve): FINISH Spectra catalog as a numeric matrix.
 #'
 #' @export
-
 
 CreateSynCatalogs <- function(signatures, exposures, sample.id.suffix = NULL) {
   exposed.sigs <- rownames(exposures)
@@ -529,8 +528,8 @@ GenerateSynFromReal <-
 #'
 #' @param extra.file.suffix Extra string to put before ".csv".
 #'
-#' @param overwrite If TRUE, overwite existing directory; useful for
-#' debugging / tesing.
+#' @param overwrite If TRUE, overwrite existing directory; useful for
+#' debugging / testing.
 #'
 #' @return Invisibly, the generated catalog.
 #'

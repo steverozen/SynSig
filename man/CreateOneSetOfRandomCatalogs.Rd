@@ -33,12 +33,12 @@ string) to form an identifier for a synthetic signature.}
 \item{sample.name.prefix}{String to put in front of an integer (as
 string) to form an identifier for a synthetic sample (tumor).}
 
-\item{composite.dir.name}{string indicating the name of the COMPOISTE
-subdir; probably one of \code{"sa.sa.COMPOSITE"} or
+\item{composite.dir.name}{string indicating the name of the COMPOSITE
+subdirectory; probably one of \code{"sa.sa.COMPOSITE"} or
 \code{"sp.sa.COMPOSITE"}.}
 
 \item{x96.dir.name}{A string indicating the name of the 96-channel
-subdirecto; probably one of \code{"sa.sa.COMPOSITE"} or
+subdirectory; probably one of \code{"sa.sa.COMPOSITE"} or
 \code{"sp.sa.COMPOSITE"}.}
 
 \item{COMPOSITE.features}{Character vector containing

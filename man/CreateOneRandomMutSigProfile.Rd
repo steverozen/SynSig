@@ -11,8 +11,8 @@ CreateOneRandomMutSigProfile(row.headers)
 \code{\link{.catalog.row.order96}}.}
 }
 \value{
-A single column matrix with rownames \code{row.headers} and
-  colname \code{RandSig}.
+A single column matrix with \code{rownames} \code{row.headers} and
+  \code{colnames} \code{"RandSig"}.
 }
 \description{
 Create one "random" artificial signature profile.

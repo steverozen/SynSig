@@ -10,17 +10,18 @@ SummarizeSigOneSPSubdir(third.level.dir,
 }
 \arguments{
 \item{third.level.dir}{Lowest level path to results, e.g.
-\code{top.dir}/sa.sa.96/sp.results/. or
-\code{top.dir}/sa.sa.96/sa.results/
-Here, \code{top.dir} refers to a top-level directory which contains the
-full information of a synthetic dataset. (e.g. syn.2.7a.7b.abst.v8)
+\code{<top.dir>}\code{/sa.sa.96/sp.results/} or
+\code{<top.dir>}\code{/sa.sa.96/sa.results/}
+Here, \code{<top.dir>} refers to a top-level directory which contains the
+full information of a synthetic dataset. (e.g. \code{syn.2.7a.7b.abst.v8})
 This code depends on a conventional directory structure documented
-elsewhere. However there should be a directory \code{third.level.dir}/SBS96 which
+elsewhere. However there should be a directory
+\code{<third.level.dir>}\code{/SBS96} which
 stores SigProfiler results.}
 
-\item{ground.truth.exposure.name}{File name which stores ground-truth exposures.
-It defaults to be "ground.truth.syn.exposures.csv".
-This file can be found in the \code{sub.dir}, i.e. \code{third.level.dir}/../}
+\item{ground.truth.exposure.name}{File name which stores ground-truth exposures;
+defaults to \code{"ground.truth.syn.exposures.csv"}.
+This file can be found in the \code{sub.dir}, i.e. \code{<third.level.dir>/../}}
 
 \item{write.png}{If TRUE create png plots of the signatures.}
 }

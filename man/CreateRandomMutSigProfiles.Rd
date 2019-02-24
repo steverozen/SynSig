@@ -10,7 +10,7 @@ CreateRandomMutSigProfiles(row.headers, num.signatures, sig.name.prefix)
 \item{row.headers}{One of the \code{\link{ICAMS}} package variable such as
 \code{\link{.catalog.row.order96}}.}
 
-\item{num.signatures}{Number of signaures to create.}
+\item{num.signatures}{Number of signatures to create.}
 
 \item{sig.name.prefix}{The signatures will be named \code{<sig.name.prefix>1},
 \code{<sig.name.prefix>2}, etc.}

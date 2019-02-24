@@ -38,6 +38,7 @@ setwd
 sig
 SignatureAnal
 SignatureAnalyzer
+sigproextractor
 sigProfiler
 SigProfiler
 sigs

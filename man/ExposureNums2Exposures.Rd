@@ -2,7 +2,8 @@
 % Please edit documentation in R/CreateTotalRandomSynData2.R
 \name{ExposureNums2Exposures}
 \alias{ExposureNums2Exposures}
-\title{Select \code{num.exp} from the elemtns of \code{sig.names}.}
+\title{Select \code{num.exp} signatures from the members of \code{sig.names} and
+create one column of an exposure matrix (as a vector).}
 \usage{
 ExposureNums2Exposures(target.num.exp, all.sig.names, target.sig.means,
   target.sig.sds)
@@ -20,5 +21,6 @@ ExposureNums2Exposures(target.num.exp, all.sig.names, target.sig.means,
 A subset of \code{sig.names} of size \code{num.exp}.
 }
 \description{
-Select \code{num.exp} from the elemtns of \code{sig.names}.
+Select \code{num.exp} signatures from the members of \code{sig.names} and
+create one column of an exposure matrix (as a vector).
 }

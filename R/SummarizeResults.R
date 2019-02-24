@@ -4,7 +4,7 @@
 #' \code{top.dir}/sa.sa.96/sp.results/. or
 #' \code{top.dir}/sa.sa.96/sa.results/
 #' Here, \code{top.dir} refers to a top-level directory which contains the
-#' full information of a synthetic dataset. (e.g. syn.2.7a.7b.abst.v8)
+#' full information of a synthetic dataset. (e.g. \code{syn.2.7a.7b.abst.v8})
 #' This code depends on a conventional directory structure documented
 #' elsewhere. However there should be a directory within the \code{third.level.dir}
 #' which stores the software output.
@@ -14,8 +14,7 @@
 #' in the \code{sub.dir}, i.e. \code{third.level.dir}/../
 #'
 #' @param extracted.sigs.path Full path of extracted sigs file, e.g.
-#' <third.level.dir>/SBS96/Selected_Solution/De_Novo_Solution/signatures.PCAWG.format.csv
-#'
+#' \code{<third.level.dir>/SBS96/Selected_Solution/De_Novo_Solution/signatures.PCAWG.format.csv}.
 #'
 #' @param read.extracted.sigs.fn Function to read the extracted sigs file.
 #' e.g. \code{ReadCat96}
@@ -120,17 +119,18 @@ SummarizeSigOneSubdir <-
 #' Assess/evaluate results from SigProfiler-python (a.k.a. sigproextractor)
 #'
 #' @param third.level.dir Lowest level path to results, e.g.
-#' \code{top.dir}/sa.sa.96/sp.results/. or
-#' \code{top.dir}/sa.sa.96/sa.results/
-#' Here, \code{top.dir} refers to a top-level directory which contains the
-#' full information of a synthetic dataset. (e.g. syn.2.7a.7b.abst.v8)
+#' \code{<top.dir>}\code{/sa.sa.96/sp.results/} or
+#' \code{<top.dir>}\code{/sa.sa.96/sa.results/}
+#' Here, \code{<top.dir>} refers to a top-level directory which contains the
+#' full information of a synthetic dataset. (e.g. \code{syn.2.7a.7b.abst.v8})
 #' This code depends on a conventional directory structure documented
-#' elsewhere. However there should be a directory \code{third.level.dir}/SBS96 which
+#' elsewhere. However there should be a directory
+#' \code{<third.level.dir>}\code{/SBS96} which
 #' stores SigProfiler results.
 #'
-#' @param ground.truth.exposure.name File name which stores ground-truth exposures.
-#' It defaults to be "ground.truth.syn.exposures.csv".
-#' This file can be found in the \code{sub.dir}, i.e. \code{third.level.dir}/../
+#' @param ground.truth.exposure.name File name which stores ground-truth exposures;
+#' defaults to \code{"ground.truth.syn.exposures.csv"}.
+#' This file can be found in the \code{sub.dir}, i.e. \code{<third.level.dir>/../}
 #'
 #' @param write.png If TRUE create png plots of the signatures.
 #'
@@ -174,7 +174,8 @@ SummarizeSigOneSPSubdir <-
 #' @param sub.dir The subdirectory under \code{top.dir}, and containing a folder
 #' named sp.results. By default, it contains both \code{c("sa.sa","sp.sp")}.
 #' But you should specify \code{sub.dir = "sp.sp"} for \code{top.dir} with only
-#' \code{sp.sp} sub.dir. (e.g., clock-like SBS1-and-SBS5-containing datasets)
+#' the \code{sp.sp} subdirectory
+#' (as is the case for the correlated SBS1-and-SBS5-containing data sets).
 #'
 #' @param write.png If TRUE create png plots of the signatures.
 #'

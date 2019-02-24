@@ -15,7 +15,8 @@ see further documentation elsewhere.}
 \item{sub.dir}{The subdirectory under \code{top.dir}, and containing a folder
 named sp.results. By default, it contains both \code{c("sa.sa","sp.sp")}.
 But you should specify \code{sub.dir = "sp.sp"} for \code{top.dir} with only
-\code{sp.sp} sub.dir. (e.g., clock-like SBS1-and-SBS5-containing datasets)}
+the \code{sp.sp} subdirectory
+(as is the case for the correlated SBS1-and-SBS5-containing data sets).}
 
 \item{write.png}{If TRUE create png plots of the signatures.}
 }

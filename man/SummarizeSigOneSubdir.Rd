@@ -13,7 +13,7 @@ SummarizeSigOneSubdir(third.level.dir, ground.truth.exposure.name,
 \code{top.dir}/sa.sa.96/sp.results/. or
 \code{top.dir}/sa.sa.96/sa.results/
 Here, \code{top.dir} refers to a top-level directory which contains the
-full information of a synthetic dataset. (e.g. syn.2.7a.7b.abst.v8)
+full information of a synthetic dataset. (e.g. \code{syn.2.7a.7b.abst.v8})
 This code depends on a conventional directory structure documented
 elsewhere. However there should be a directory within the \code{third.level.dir}
 which stores the software output.}
@@ -23,7 +23,7 @@ It defaults to be "ground.truth.syn.exposures.csv". This file can be found
 in the \code{sub.dir}, i.e. \code{third.level.dir}/../}
 
 \item{extracted.sigs.path}{Full path of extracted sigs file, e.g.
-<third.level.dir>/SBS96/Selected_Solution/De_Novo_Solution/signatures.PCAWG.format.csv}
+\code{<third.level.dir>/SBS96/Selected_Solution/De_Novo_Solution/signatures.PCAWG.format.csv}.}
 
 \item{read.extracted.sigs.fn}{Function to read the extracted sigs file.
 e.g. \code{ReadCat96}}

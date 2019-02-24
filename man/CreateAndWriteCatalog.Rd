@@ -20,8 +20,8 @@ spectra to files.}
 
 \item{extra.file.suffix}{Extra string to put before ".csv".}
 
-\item{overwrite}{If TRUE, overwite existing directory; useful for
-debugging / tesing.}
+\item{overwrite}{If TRUE, overwrite existing directory; useful for
+debugging / testing.}
 }
 \value{
 Invisibly, the generated catalog.
