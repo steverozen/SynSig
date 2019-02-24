@@ -175,7 +175,7 @@ ReadSASigCOMPOSITE <- function() {
 #'
 #' @importFrom utils read.csv
 #' @export
-ReadCatCOMPOSITE <- function(path) {
+ReadCatCOMPOSITE <- function(path, strict = FALSE) {
   retval <- read.csv(path, header = T, row.names = 1)
   return(as.matrix(retval))
 }
