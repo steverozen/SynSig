@@ -85,7 +85,7 @@ CreateExposuresNums <- function(num.exposures, mean, sd) {
 #'
 #' @param target.sig.sds Target standard deviations for creating mutation counts.
 #'
-#' @retun A subset of \code{sig.names} of size \code{num.exp}.
+#' @return A subset of \code{sig.names} of size \code{num.exp}.
 #'
 ExposureNums2Exposures <-
   function(target.num.exp, all.sig.names, target.sig.means, target.sig.sds) {
@@ -101,6 +101,34 @@ ExposureNums2Exposures <-
     names(retval) <- all.sig.names
     return(retval)
   }
+
+#' A pair of "random" synthetic catalogs, one for 96-channel
+#' feature and one for COMPOSITE features, for one set
+#' of signatures.
+
+#' @param num.syn.tumors Total number of synthetic tumors to create.
+#' @param total.num.sigs Total number of signatures in the universe.
+#' @param mut.mean Mean of the log10 of the
+#' number of mutations due to each signature.
+#' @param mut.sd Standard deviation of the log10 of
+#'  the number of mutations due to each signature.
+#' @param num.sigs.mean Mean number of signatures contributing to each tumor
+#' @param num.sigs.sd Standard deviation the number number of signatures
+#' contribution to each tumor.
+#' @param sig.name.prefix String to put in front of an integer (as
+#' string) to form an identifier for a synthetic signature.
+#' @param sample.name.prefix String to put in front of an integer (as
+#' string) to form an identifier for a synthetic sample (tumor).
+#' @param composite.dir.name string indicating the name of the COMPOISTE
+#' subdir; probably one of \code{"sa.sa.COMPOSITE"} or
+#' \code{"sp.sa.COMPOSITE"}.
+#' @param x96.dir.name A string indicating the name of the 96-channel
+#' subdirecto; probably one of \code{"sa.sa.COMPOSITE"} or
+#' \code{"sp.sa.COMPOSITE"}.
+#' @param COMPOSITE.features Character vector containing
+#' rownames for a COMPOSITE signature or catalog.
+#' @param overwrite = FALSE
+
 
 CreateOneSetOfRandomCatalogs <-
   function(num.syn.tumors,
@@ -211,6 +239,6 @@ CreateSAAndSPSynCatalogs <-
 
 MakeAllRandom <- function() {
   set.seed(1443196)
-  CreateSAAndSPSynCatalogs("C:/Users/steve/Documents/RandomSigsV2/",
+  CreateSAAndSPSynCatalogs("C:/Users/rozen/Documents/RandomSigsV3/",
                            1000, overwrite = TRUE)
 }
