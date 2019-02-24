@@ -9,7 +9,7 @@ test.abst <- SignatureAnalyzer4MatchedCatalogs(
   num.runs = 20,
   signatureanalyzer.code.dir = "/home/gmssgr/bin/SignatureAnalzyer.052418/",
   dir.root = ".",
-  slice = 1,
+  slice = 3,
   overwrite = FALSE,
   mc.cores = 10)
 
