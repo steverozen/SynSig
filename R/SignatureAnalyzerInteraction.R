@@ -352,7 +352,8 @@ RunSignatureAnalyzerOnFile <-
            delete.tmp.files = TRUE,
            overwrite = FALSE) {
 
-    syn.data <- read.catalog.function(input.catalog)
+    syn.data <- read.catalog.function(input.catalog,
+                                      strict = FALSE)
 
     if (test.only) syn.data <- syn.data[ , 1:10]
 
@@ -651,7 +652,7 @@ SignatureAnalyzer4MatchedCatalogs <-
         SignatureAnalyzerOneCatalog(
           num.runs = num.runs,
           signatureanalyzer.code.dir = signatureanalyzer.code.dir,
-          input.catalog = paste0(dir.root, "/", subdir, "/syn.data.csv"),
+          input.catalog = paste0(dir.root, "/", subdir, "/ground.truth.syn.catalog.csv"),
           read.catalog.function = read.fn,
           out.dir = paste0(dir.root, "/", subdir, "/sa.results/"),
           write.signature.function = write.fn,
