@@ -4,7 +4,7 @@
 \alias{ReadCatCOMPOSITE}
 \title{Read a COMPOSITE catalog}
 \usage{
-ReadCatCOMPOSITE(path)
+ReadCatCOMPOSITE(path, strict = FALSE)
 }
 \arguments{
 \item{path}{The path of the file to read from.}
