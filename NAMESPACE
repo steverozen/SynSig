@@ -2,6 +2,7 @@
 
 export(BestSignatureAnalyzerResult)
 export(CreateAndWriteCatalog)
+export(CreateRandomSAAndSPSynCatalogs)
 export(CreateSynCatalogs)
 export(FixSASigNames)
 export(GenerateSynAbstract)

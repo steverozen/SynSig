@@ -2,7 +2,7 @@
 % Please edit documentation in R/CreateTotalRandomSynData2.R
 \name{CreateOneRandomMutSigProfile}
 \alias{CreateOneRandomMutSigProfile}
-\title{Create one "random" signature profile.}
+\title{Create one "random" artificial signature profile.}
 \usage{
 CreateOneRandomMutSigProfile(row.headers)
 }
@@ -15,6 +15,6 @@ A single column matrix with rownames \code{row.headers} and
   colname \code{RandSig}.
 }
 \description{
-Create one "random" signature profile.
+Create one "random" artificial signature profile.
 }
 \keyword{internal}

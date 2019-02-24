@@ -1,7 +1,7 @@
-# Create "completely random" signatures
+# Create "completely random" artificial signatures
 
 
-#' Create one "random" signature profile.
+#' Create one "random" artificial signature profile.
 #'
 #' @param row.headers One of the \code{\link{ICAMS}} package variable such as
 #'  \code{\link{.catalog.row.order96}}.
@@ -180,7 +180,8 @@ CreateOneSetOfRandomCatalogs <-
       overwrite = overwrite)
 }
 
-#' Create a full SignatureAnalyzer / SigProfiler test data set.
+#' Create a full SignatureAnalyzer / SigProfiler test data set for "random"
+#' artificial signatures.
 #'
 #' @param top.level.dir Path to top level of directory structure to be created.
 #'
@@ -190,7 +191,7 @@ CreateOneSetOfRandomCatalogs <-
 #'
 #' @export
 
-CreateSAAndSPSynCatalogs <-
+CreateRandomSAAndSPSynCatalogs <-
   function(top.level.dir, num.syn.tumors, overwrite = FALSE) {
   SetNewOutDir(top.level.dir, overwrite)
 
