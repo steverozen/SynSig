@@ -1,10 +1,10 @@
 ---
-title: "Generate cross-matched SignatureAnalyzer and SigProfiler synthetic data to explore handling of flat signatures"
+title: "Create cross-matched SignatureAnalyzer and SigProfiler synthetic data to explore handling of flat signatures"
 author: "Steve Rozen"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Generate cross-matched SignatureAnalyzer and SigProfiler synthetic data to explore handling of flat signatures}
+  %\VignetteIndexEntry{Create cross-matched SignatureAnalyzer and SigProfiler synthetic data to explore handling of flat signatures}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
