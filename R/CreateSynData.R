@@ -553,8 +553,8 @@ CreateAndWriteCatalog <-
     }
     write.cat.fn(info$ground.truth.signatures,
                   OutDir(paste0(dir, "/ground.truth.syn.sigs", suffix)))
-    write.cat.fn(info$ground.truth.catalog,
-                 OutDir(paste0(dir, "/syn.data", suffix)))
+    # write.cat.fn(info$ground.truth.catalog,
+    #             OutDir(paste0(dir, "/syn.data", suffix)))
     write.cat.fn(info$ground.truth.catalog,
                  OutDir(paste0(dir, "/ground.truth.syn.catalog", suffix)))
     WriteExposure(info$ground.truth.exposures,
