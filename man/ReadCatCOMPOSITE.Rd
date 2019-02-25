@@ -7,7 +7,9 @@
 ReadCatCOMPOSITE(path, strict = FALSE)
 }
 \arguments{
-\item{path}{The path of the file to read from.}
+\item{path}{Path of the file to read from.}
+
+\item{strict}{For comaptibility with other ReadCat functions; ignored.}
 }
 \value{
 An in memory matrix corresponding to the

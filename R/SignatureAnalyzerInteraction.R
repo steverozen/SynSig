@@ -168,7 +168,9 @@ ReadSASigCOMPOSITE <- function() {
 #'
 #' @seealso \code{\link{WriteCatCOMPOSITE}}
 #'
-#' @param path The path of the file to read from.
+#' @param path Path of the file to read from.
+#'
+#' @param strict For comaptibility with other ReadCat functions; ignored.
 #'
 #' @return An in memory matrix corresponding to the
 #' contents of the file at \code{path}.

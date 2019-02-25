@@ -8,7 +8,7 @@ CreateOneRandomMutSigProfile(row.headers)
 }
 \arguments{
 \item{row.headers}{One of the \code{\link{ICAMS}} package variable such as
-\code{\link{.catalog.row.order96}}.}
+\code{.catalog.row.order96}.}
 }
 \value{
 A single column matrix with \code{rownames} \code{row.headers} and

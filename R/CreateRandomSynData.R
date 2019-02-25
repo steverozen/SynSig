@@ -4,10 +4,12 @@
 #' Create one "random" artificial signature profile.
 #'
 #' @param row.headers One of the \code{\link{ICAMS}} package variable such as
-#'  \code{\link{.catalog.row.order96}}.
+#'  \code{.catalog.row.order96}.
 #'
 #' @return A single column matrix with \code{rownames} \code{row.headers} and
 #'   \code{colnames} \code{"RandSig"}.
+#'
+#' @importFrom stats runif
 #'
 #' @keywords internal
 
@@ -23,7 +25,7 @@ CreateOneRandomMutSigProfile <- function(row.headers) {
 #' Create a matrix of "random" signature profiles.
 #'
 #' @param row.headers One of the \code{\link{ICAMS}} package variable such as
-#'  \code{\link{.catalog.row.order96}}.
+#'  \code{.catalog.row.order96}.
 #'
 #' @param num.signatures Number of signatures to create.
 #'
@@ -186,7 +188,7 @@ CreateOneSetOfRandomCatalogs <-
 #'
 #' @param top.level.dir Path to top level of directory structure to be created.
 #'
-#' @param num.sig.tumors Number of synthetic tumors to create.
+#' @param num.syn.tumors Number of synthetic tumors to create.
 #'
 #' @param overwrite If TRUE, overwrite existing directories / files.
 #'
@@ -212,7 +214,7 @@ CreateRandomSAAndSPSynCatalogs <-
 
   CreateOneSetOfRandomCatalogs(
     num.syn.tumors     = num.syn.tumors,
-    total.num.sigs     = ncol(sa.96.sigs), # Take from actual number of SA signatures.
+    total.num.sigs     = ncol(SynSig::sa.96.sigs), # Take from actual number of SA signatures.
     mut.mean           = sa.mut.mean,
     mut.sd             = sa.mut.sd,
     num.sigs.mean      = sa.num.sigs.mean,
@@ -241,6 +243,6 @@ CreateRandomSAAndSPSynCatalogs <-
 
 MakeAllRandom <- function() {
   set.seed(1443196)
-  CreateSAAndSPSynCatalogs("C:/Users/rozen/Documents/RandomSigsV3/",
+  CreateRandomSAAndSPSynCatalogs("./RandomSigsV3/",
                            1000, overwrite = TRUE)
 }

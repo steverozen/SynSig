@@ -11,9 +11,9 @@ CreateRandomSAAndSPSynCatalogs(top.level.dir, num.syn.tumors,
 \arguments{
 \item{top.level.dir}{Path to top level of directory structure to be created.}
 
-\item{overwrite}{If TRUE, overwrite existing directories / files.}
+\item{num.syn.tumors}{Number of synthetic tumors to create.}
 
-\item{num.sig.tumors}{Number of synthetic tumors to create.}
+\item{overwrite}{If TRUE, overwrite existing directories / files.}
 }
 \description{
 Create a full SignatureAnalyzer / SigProfiler test data set for "random"
