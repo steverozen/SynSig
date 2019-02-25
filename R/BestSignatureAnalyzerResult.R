@@ -28,6 +28,8 @@
 #'  the output from the best SignatureAnalyzer run, e.g.
 #' \preformatted{"../syn.3.5.40.abst.v3/sa.sa.96/sa.results/sa.run.3/"}
 #'
+#' @param verbose If true print informative messages to stdout.
+#'
 #' @return The path to the directory with the best output.
 #'
 #' @details As per Jaegil, we first find the most common number
@@ -36,15 +38,17 @@
 #' \code{evidence} (which is the negative posterior probability).
 #'
 #' @export
-BestSignatureAnalyzerResult <- function(root.dir) {
-
+BestSignatureAnalyzerResult <- function(root.dir,
+                                        verbose = FALSE) {
+  me <- match.call()[[1]]
   run.summaries <-
     list.files(path = root.dir,
              pattern = "sa.output.other.data.csv",
              full.names = TRUE,
              recursive = TRUE,
              include.dirs = TRUE)
-  names(run.summaries) <- sub(".*(sa\\.run\\.[0-9]+).*", "\\1", run.summaries, perl = TRUE)
+  names(run.summaries) <-
+    sub(".*(sa\\.run\\.[0-9]+).*", "\\1", run.summaries, perl = TRUE)
 
   process.one.summary <- function(f) {
     d <- read.csv(f, header = FALSE, row.names = 1, fill = TRUE)
@@ -53,7 +57,15 @@ BestSignatureAnalyzerResult <- function(root.dir) {
 
   summaries <- data.frame(lapply(run.summaries, process.one.summary))
   num.sigs <- unlist(summaries[1, ])
+  if (verbose) {
+    cat("\n", me, "vector of K:\n")
+    print(num.sigs)
+    cat("\n\n")}
   evidence <- unlist(summaries[2, ])
+  if (verbose) {
+    cat("\n", me, "vector of evidence:\n")
+    print(evidence)
+    cat("\n\n")}
 
   num.sigs.table <- data.frame(table(num.sigs))
   num.sigs.table$num.sigs <- as.numeric(as.character(num.sigs.table$num.sigs))
@@ -63,11 +75,20 @@ BestSignatureAnalyzerResult <- function(root.dir) {
 
   # There can be more than one most-common K
   most.common.Ks <- num.sigs.table[num.sigs.table$Freq == max.runs.for.1.K, "num.sigs"]
+  if (verbose)
+    cat("\n", me,
+        " most common numbers of extracted signatures:",
+        most.common.Ks, "\n\n")
 
   most.common.K.indices <- which(num.sigs %in% most.common.Ks)
 
   num.sigs <- num.sigs[most.common.K.indices]
   evidence <- evidence[most.common.K.indices]
+  if (verbose) {
+    cat("\n", me, "evidences for most common Ks:\n")
+    print(evidence)
+    cat("\n\n")
+  }
 
   best.evidence.indices <- which(evidence == min(evidence))
   num.sigs <- num.sigs[best.evidence.indices]
@@ -86,7 +107,8 @@ BestSignatureAnalyzerResult <- function(root.dir) {
   # lowest numbered run.
 
   names.as.numbers <-
-    as.numeric(sub(".*(\\d+).*", "\\1", names(num.sigs)))
+    as.numeric(sub("[^\\d]*(\\d+).*", "\\1", names(num.sigs),
+                   perl = TRUE))
 
   ordered.runs <- names(num.sigs)[order(names.as.numbers)]
 
@@ -96,6 +118,36 @@ BestSignatureAnalyzerResult <- function(root.dir) {
 
 }
 
-# debug(BestSignatureAnalyzerResult)
-# BestSignatureAnalyzerResult("../0syn.3.5.40.abst.v3/sa.sa.96/sa.results")
+#' Function 1 to test BestSignatureAnalyzerResult
+#' Should return path to sa.run.12
+Besttest1 <- function() {
+ best.dir <-
+   BestSignatureAnalyzerResult("data-raw/test.sa.results1/", verbose = TRUE)
+ cat("\n", best.dir, "\n")
+ }
 
+#' Function 2 to test BestSignatureAnalyzerResult
+#' Should return path to sa.run.12
+Besttest2 <- function() {
+  best.dir <-
+    BestSignatureAnalyzerResult("data-raw/test.sa.results2/", verbose = TRUE)
+  cat("\n", best.dir, "\n")
+}
+
+#' Function 3 to test BestSignatureAnalyzerResult
+#' Should return path to sa.run.3
+Besttest3 <- function() {
+  debug(BestSignatureAnalyzerResult)
+  best.dir <-
+    BestSignatureAnalyzerResult("data-raw/test.sa.results3/", verbose = TRUE)
+  cat("\n", best.dir, "\n")
+}
+
+#' Function 4 to test BestSignatureAnalyzerResult
+#' Should return path to sa.run.1
+Besttest4 <- function() {
+  debug(BestSignatureAnalyzerResult)
+  best.dir <-
+    BestSignatureAnalyzerResult("data-raw/test.sa.results4/", verbose = TRUE)
+  cat("\n", best.dir, "\n")
+}
