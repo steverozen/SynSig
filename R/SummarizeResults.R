@@ -1,7 +1,7 @@
 #' Assess/evaluate results from SigProfiler or SignatureAnalyzer
 #'
-#' @param third.level.dir Lowest level path to results, e.g.
-#' \code{top.dir}/sa.sa.96/sp.results/. or
+#' @param third.level.dir Lowest level path to results, that is,
+#' \code{top.dir}/sp.sp/sa.results/. or
 #' \code{top.dir}/sa.sa.96/sa.results/
 #' Here, \code{top.dir} refers to a top-level directory which contains the
 #' full information of a synthetic dataset. (e.g. \code{syn.2.7a.7b.abst.v8})
@@ -248,4 +248,59 @@ SummarizeSigOneSASubdir <-
       write.png = write.png)
   }
 
+### From here sketch
+#' Assess/evaluate results from SignatureAnalyzer
+#'
+#' @param third.level.dir Lowest level path to results, that is
+#' \code{<top.dir>}\code{/sa.sa.96/sa.results/},
+#' \code{<top.dir>}\code{/sp.sp/sa.results/},
+#'\code{<top.dir>}\code{/sa.sa.COMPOSITE/sa.results/}, or
+#' \code{<top.dir>}\code{/sp.sa.COMPOSITE/sa.results/}.
+#' Here, \code{<top.dir>} refers to a top-level directory which contains the
+#' full information of a synthetic dataset. (e.g. \code{syn.2.7a.7b.abst.v8})
+#' This code depends on a conventional directory structure documented
+#' elsewhere. However there should be a directory
+#' \code{<third.level.dir>}\code{/SBS96} which
+#' stores SigProfiler results.
+#'
+#' @param ground.truth.exposure.name File name which stores ground-truth exposures;
+#' defaults to \code{"ground.truth.syn.exposures.csv"}.
+#' This file can be found in the \code{sub.dir}, i.e. \code{<third.level.dir>/../}
+#'
+#' @param which.run XXXXX Wu Yang finish
+#'
+#' @param write.png If TRUE create png plots of the signatures.
+#'
+#' @export
+#'
+#' @importFrom ICAMS WriteCat96 ReadCat96 PlotCat96
+#' @importFrom utils capture.output sessionInfo
+#' @importFrom grDevices png dev.off
+#' @importFrom graphics par
+#
+SummarizeSigOneSASubdir <-
+  function(third.level.dir,
+           ground.truth.exposure.name = "ground.truth.syn.exposures.csv",
+           which.run = "/sa.best.run/",
+           read.sigs.fn,
+           plot.sigs.png.fn, # if NULL, do not plot; in future, maybe create, or maybe collapse 1536 part to 96 and plot (code exist)
+           plot.sig.pdf.fn,  # if NULL do not plot; in future, maybe create
+           write.png = FALSE) {
+
+    # Location of SigProfiler output, which is our input
+    # inputPath may change if sigproextractor updates!
+    inputPath <- paste0(third.level.dir, which.run)
+
+    SummarizeSigOneSubdir(
+      third.level.dir = third.level.dir,
+      ground.truth.exposure.name = ground.truth.exposure.name,
+      extracted.sigs.path = paste0(inputPath,"/sa.output.sigs.csv"),
+      read.extracted.sigs.fn = read.sigs.fn,
+      read.ground.truth.sigs.fn = read.sigs.fn,
+      # Need to provide write.png funciton; if null, don't write
+
+      write.png = write.png) # then get rid of this boolean
+
+    invisible(NULL)
+  }
 
