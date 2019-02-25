@@ -599,7 +599,7 @@ SignatureAnalyzerOneCatalog <-
 #' which are described elsewhere.
 #'
 #'
-#' @param num.runs Number Signature.Analyzer runs per data set.
+#' @param num.runs Number of SignatureAnalyzer runs per data set.
 #'
 #' @param signatureanalyzer.code.dir The directory holding the
 #' SignatureAnalyzer code.
