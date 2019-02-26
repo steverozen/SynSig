@@ -117,22 +117,3 @@ BestSignatureAnalyzerResult <- function(root.dir,
   return(dir.path)
 
 }
-
-
-
-#' Function 3 to test BestSignatureAnalyzerResult
-#' Should return path to sa.run.3
-Besttest3 <- function() {
-  best.dir <-
-    BestSignatureAnalyzerResult("data-raw/test.sa.results3/", verbose = TRUE)
-  cat("\n", best.dir, "\n")
-}
-
-#' Function 4 to test BestSignatureAnalyzerResult
-#' Should return path to sa.run.1
-Besttest4 <- function() {
-  debug(BestSignatureAnalyzerResult)
-  best.dir <-
-    BestSignatureAnalyzerResult("data-raw/test.sa.results4/", verbose = TRUE)
-  cat("\n", best.dir, "\n")
-}
