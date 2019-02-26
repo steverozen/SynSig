@@ -22,7 +22,11 @@
 #' @param read.ground.truth.sigs.fn Function to read the ground-truth sigs file.
 #' e.g. \code{ReadCat96}
 #'
-#' @param write.png If TRUE create png plots of the signatures.
+#' @param plot.pdf.fn If not NULL, use this function to plot PDFs of the ground truth and
+#' extracted signatures.
+#'
+#' @param plot.png.fn If not NULL, use this function to plot PNGs of the ground truth and
+#' extracted signatures.
 #'
 #' @export
 #'
@@ -37,7 +41,9 @@ SummarizeSigOneSubdir <-
            extracted.sigs.path,
            read.extracted.sigs.fn,
            read.ground.truth.sigs.fn,
-           write.png = FALSE) {
+           write.cat.fn,
+           plot.pdf.fn,
+           plot.png.fn) {
 
     ## Output path - path to dump the ReadAndAnalyzeSigs() results
     outputPath <- paste0(third.level.dir, "/summary")
@@ -57,8 +63,8 @@ SummarizeSigOneSubdir <-
     write.csv(sigAnalysis$match1, file = paste(outputPath,"match1.csv",sep = "/"))
     write.csv(sigAnalysis$match2, file = paste(outputPath,"match2.csv",sep = "/"))
 
-    WriteCat96(sigAnalysis$gt.sigs, path = paste(outputPath,"ground.truth.sigs.csv",sep = "/"))
-    WriteCat96(sigAnalysis$ex.sigs, path = paste(outputPath,"extracted.sigs.csv",sep = "/"))
+    write.cat.fn(sigAnalysis$gt.sigs, path = paste(outputPath,"ground.truth.sigs.csv",sep = "/"))
+    write.cat.fn(sigAnalysis$ex.sigs, path = paste(outputPath,"extracted.sigs.csv",sep = "/"))
 
     capture.output(
       cat("Average cosine similarity\n"),
@@ -73,48 +79,65 @@ SummarizeSigOneSubdir <-
       sigAnalysis$ground.truth.with.no.best.match,
       file = paste0(outputPath,"/other.results.txt"))
 
-    ### Plot the input signatures
-    ## Optional: Output ground-truth sigs to PNG files
-    if(write.png) {
-      PngOneGtSig <-  function(x) {
-        png(paste0(outputPath,"/ground.truth.sigs/",x,".png"))
-        par("mfrow"=c(1,1))
-        PlotCat96(sigAnalysis$gt.sigs[ ,x, drop = FALSE],
-                  type = "signature",
-                  grid = FALSE, xlabels = FALSE, cex = 0.6,
-                  upper = FALSE)
-        dev.off()
-      }
-      dir.create(paste0(outputPath,"/ground.truth.sigs/"))
-      tmp <- lapply(colnames(sigAnalysis$gt.sigs), PngOneGtSig)
+    if (!is.null(plot.pdf.fn)) {
+      # Output ground-truth sigs to a PDF file
+      plot.pdf.fn(sigAnalysis$gt.sigs,
+                  paste0(outputPath,"/ground.truth.sigs.pdf"),
+                  type = "signature")
+
+      # Output extracted sigs to a PDF file
+      plot.pdf.fn(sigAnalysis$ex.sigs,
+                  paste0(outputPath,"/extracted.sigs.pdf"),
+                  type = "signature")
     }
 
-    ## Output ground-truth sigs to a PDF file
-    Cat96ToPdf(sigAnalysis$gt.sigs,
-               paste0(outputPath,"/ground.truth.sigs.pdf"),
-               type = "signature")
+    if(!is.null(plot.png.fn)) {
+      # Output ground truth and extracted sigs to PNG files
 
-    ### Plot the extracted signatures
-    ## Optional: Output extracted sigs to PNG files
-    if(write.png) {
-      PngOneExSig <-  function(x) {
-        png(paste0(outputPath,"/extracted.sigs/",x,".png"))
-        par("mfrow"=c(1,1))
-        PlotCat96(sigAnalysis$ex.sigs[ ,x, drop = FALSE],
-                  type = "signature",
-                  grid = FALSE, xlabels = FALSE, cex = 0.6,
-                  upper = FALSE)
-        dev.off()
+      PngSigs <- function(sigs, sub.path) {
+        out.sub.path <- paste0(outputPath,"/", sub.path, "/")
+        dir.create(out.sub.path)
+
+        PngOneSig <-  function(x) {
+          png(paste0(out.sub.path, x, ".png"))
+          par("mfrow"=c(1,1))
+          plot.png.fn(sigs[ ,x, drop = FALSE], type = "signature",
+                      grid = FALSE, xlabels = FALSE, cex = 0.6,
+                      upper = FALSE)
+          dev.off()
+        }
+        tmp <- lapply(colnames(sigs), PngOneSig)
       }
-      dir.create(paste0(outputPath,"/extracted.sigs/"))
-      tmp <- lapply(colnames(sigAnalysis$ex.sigs), PngOneExSig)
+
+      PngSigs(sigAnalysis$gt.sigs, "ground.truth.sigs")
+      PngSigs(sigAnalysis$ex.sigs, "extracted.sigs")
+
+      if (FALSE) {
+        PngOneGtSig <-  function(x) {
+          png(paste0(outputPath,"/ground.truth.sigs/",x,".png"))
+          par("mfrow"=c(1,1))
+          plot.png.fn(sigAnalysis$gt.sigs[ ,x, drop = FALSE],
+                      type = "signature",
+                      grid = FALSE, xlabels = FALSE, cex = 0.6,
+                      upper = FALSE)
+          dev.off()
+        }
+        dir.create(paste0(outputPath,"/ground.truth.sigs/"))
+        tmp <- lapply(colnames(sigAnalysis$gt.sigs), PngOneGtSig)
+
+        PngOneExSig <-  function(x) {
+          png(paste0(outputPath,"/extracted.sigs/",x,".png"))
+          par("mfrow"=c(1,1))
+          PlotCat96(sigAnalysis$ex.sigs[ ,x, drop = FALSE],
+                    type = "signature",
+                    grid = FALSE, xlabels = FALSE, cex = 0.6,
+                    upper = FALSE)
+          dev.off()
+        }
+        dir.create(paste0(outputPath,"/extracted.sigs/"))
+        tmp <- lapply(colnames(sigAnalysis$ex.sigs), PngOneExSig)
+      }
     }
-
-    ## Output extracted sigs to a PDF file
-
-    Cat96ToPdf(sigAnalysis$ex.sigs,
-               paste0(outputPath,"/extracted.sigs.pdf"),
-               type = "signature")
 
     ## Logs
     # Session Info
@@ -123,7 +146,9 @@ SummarizeSigOneSubdir <-
     # Date and time to finish the analysis
     capture.output(Sys.time(),
                    file = paste0(outputPath,"/finish.time.log"))
-}
+
+    invisible(sigAnalysis) # So we have something to check in tests
+  }
 
 #' Assess/evaluate results from SigProfiler-python (a.k.a. sigproextractor)
 #'
@@ -171,7 +196,9 @@ SummarizeSigOneSPSubdir <-
       extracted.sigs.path = extracted.sigs.path,
       read.extracted.sigs.fn = ReadCat96,
       read.ground.truth.sigs.fn = ReadCat96,
-      write.png = write.png)
+      write.cat.fn = WriteCat96,
+      plot.png.fn = ifelse(write.png, PlotCat96, NULL),
+      plot.pdf.fn = Cat96ToPdf)
 
     # Copy stability.pdf generated by SigProfiler to summary/ folder
     # file.copy will return an "okay" flag, which equals to be TRUE if properly executed.
@@ -224,8 +251,8 @@ SummarizeSigProfiler <- function (top.dir, sub.dir = c("sa.sa.96","sp.sp"), writ
   }
 }
 
-
-SummarizeSigOneSASubdir <-
+if (FALSE) {
+SummarizeSigOneSPSubdir <-
   function(third.level.dir,
            ground.truth.exposure.name = "ground.truth.syn.exposures.csv",
            write.png = FALSE) {
@@ -245,11 +272,12 @@ SummarizeSigOneSASubdir <-
       extracted.sigs.path = extracted.sigs.path,
       read.extracted.sigs.fn = ReadCat96,
       read.ground.truth.sigs.fn = ReadCat96,
+      write.cat.fn = WriteCat96,
       write.png = write.png)
   }
+}
 
-### From here sketch
-#' Assess/evaluate results from SignatureAnalyzer
+#' Summarize COMPOSITE results from SignatureAnalyzer
 #'
 #' @param third.level.dir Lowest level path to results, that is
 #' \code{<top.dir>}\code{/sa.sa.96/sa.results/},
@@ -267,7 +295,58 @@ SummarizeSigOneSASubdir <-
 #' defaults to \code{"ground.truth.syn.exposures.csv"}.
 #' This file can be found in the \code{sub.dir}, i.e. \code{<third.level.dir>/../}
 #'
-#' @param which.run XXXXX Wu Yang finish
+#' @param which.run Name of subdirectory containing the run to summarize.
+#'
+#' @export
+#'
+#' @importFrom ICAMS WriteCat96 ReadCat96 PlotCat96
+#' @importFrom utils capture.output sessionInfo
+#' @importFrom grDevices png dev.off
+#' @importFrom graphics par
+#
+SummarizeSigOneSACOMPOSITESubdir <-
+  function(third.level.dir,
+           ground.truth.exposure.name = "ground.truth.syn.exposures.csv",
+           which.run = "/sa.best.run/") {
+    # Location of SigProfiler output, which is our input
+    # inputPath may change if sigproextractor updates!
+    inputPath <- paste0(third.level.dir, which.run)
+    stopifnot(dir.exists(inputPath))
+
+    retval <-
+      SummarizeSigOneSubdir(
+        third.level.dir = third.level.dir,
+        ground.truth.exposure.name = ground.truth.exposure.name,
+        extracted.sigs.path = paste0(inputPath,"/sa.output.sigs.csv"),
+        read.extracted.sigs.fn = ReadCatCOMPOSITE,
+        read.ground.truth.sigs.fn = ReadCatCOMPOSITE,
+        write.cat.fn = WriteCatCOMPOSITE,
+        plot.pdf.fn = NULL, # Does not exist for COMPOSITE # maybe Plot96PartOfComposite
+        plot.png.fn = NULL) # Does not exist for COMPOSITE
+
+    invisible(retval)
+  }
+
+
+#' Summarize 96-channel results from SignatureAnalyzer
+#'
+#' @param third.level.dir Lowest level path to results, that is
+#' \code{<top.dir>}\code{/sa.sa.96/sa.results/},
+#' \code{<top.dir>}\code{/sp.sp/sa.results/},
+#'\code{<top.dir>}\code{/sa.sa.COMPOSITE/sa.results/}, or
+#' \code{<top.dir>}\code{/sp.sa.COMPOSITE/sa.results/}.
+#' Here, \code{<top.dir>} refers to a top-level directory which contains the
+#' full information of a synthetic dataset. (e.g. \code{syn.2.7a.7b.abst.v8})
+#' This code depends on a conventional directory structure documented
+#' elsewhere. However there should be a directory
+#' \code{<third.level.dir>}\code{/SBS96} which
+#' stores SigProfiler results.
+#'
+#' @param ground.truth.exposure.name File name which stores ground-truth exposures;
+#' defaults to \code{"ground.truth.syn.exposures.csv"}.
+#' This file can be found in the \code{sub.dir}, i.e. \code{<third.level.dir>/../}
+#'
+#' @param which.run Name of subdirectory containing the run to summarize.
 #'
 #' @param write.png If TRUE create png plots of the signatures.
 #'
@@ -278,29 +357,27 @@ SummarizeSigOneSASubdir <-
 #' @importFrom grDevices png dev.off
 #' @importFrom graphics par
 #
-SummarizeSigOneSASubdir <-
+SummarizeSigOneSA96Subdir <-
   function(third.level.dir,
            ground.truth.exposure.name = "ground.truth.syn.exposures.csv",
            which.run = "/sa.best.run/",
-           read.sigs.fn,
-           plot.sigs.png.fn, # if NULL, do not plot; in future, maybe create, or maybe collapse 1536 part to 96 and plot (code exist)
-           plot.sig.pdf.fn,  # if NULL do not plot; in future, maybe create
            write.png = FALSE) {
-
     # Location of SigProfiler output, which is our input
     # inputPath may change if sigproextractor updates!
     inputPath <- paste0(third.level.dir, which.run)
+    stopifnot(dir.exists(inputPath))
 
-    SummarizeSigOneSubdir(
-      third.level.dir = third.level.dir,
-      ground.truth.exposure.name = ground.truth.exposure.name,
-      extracted.sigs.path = paste0(inputPath,"/sa.output.sigs.csv"),
-      read.extracted.sigs.fn = read.sigs.fn,
-      read.ground.truth.sigs.fn = read.sigs.fn,
-      # Need to provide write.png funciton; if null, don't write
+    retval <-
+      SummarizeSigOneSubdir(
+        third.level.dir = third.level.dir,
+        ground.truth.exposure.name = ground.truth.exposure.name,
+        extracted.sigs.path = paste0(inputPath,"/sa.output.sigs.csv"),
+        read.extracted.sigs.fn = ReadCat96,
+        read.ground.truth.sigs.fn = ReadCat96,
+        write.cat.fn = WriteCat96,
+        plot.pdf.fn = Cat96ToPdf,
+        plot.png.fn = NULL) # Temporary
 
-      write.png = write.png) # then get rid of this boolean
-
-    invisible(NULL)
+    invisible(retval)
   }
 

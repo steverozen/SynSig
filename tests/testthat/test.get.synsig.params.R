@@ -23,7 +23,7 @@ test_that("GenerateSyntheticExposures",
             load("sa.test.param.in.Rdata")
             new.delta <-
               sa.test.param.out - new.param
-            print(new.delta)
+            # print(new.delta)
             load("sa.test.param.delta.Rdata")
             expect_equal(new.delta, sa.test.param.delta)
           })

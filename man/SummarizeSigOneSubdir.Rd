@@ -6,7 +6,7 @@
 \usage{
 SummarizeSigOneSubdir(third.level.dir, ground.truth.exposure.name,
   extracted.sigs.path, read.extracted.sigs.fn, read.ground.truth.sigs.fn,
-  write.png = FALSE)
+  write.cat.fn, plot.pdf.fn, plot.png.fn)
 }
 \arguments{
 \item{third.level.dir}{Lowest level path to results, that is,
@@ -31,7 +31,11 @@ e.g. \code{ReadCat96}}
 \item{read.ground.truth.sigs.fn}{Function to read the ground-truth sigs file.
 e.g. \code{ReadCat96}}
 
-\item{write.png}{If TRUE create png plots of the signatures.}
+\item{plot.pdf.fn}{If not NULL, use this function to plot PDFs of the ground truth and
+extracted signatures.}
+
+\item{plot.png.fn}{If not NULL, use this function to plot PNGs of the ground truth and
+extracted signatures.}
 }
 \description{
 Assess/evaluate results from SigProfiler or SignatureAnalyzer

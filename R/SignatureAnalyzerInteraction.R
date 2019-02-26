@@ -239,18 +239,20 @@ SACat96 <- function(cat96) {
 
 #' Plot the SBS96 part of a SignatureAnalyzer COMPOSITE signature or catalog
 #'
+#' TODO(Steve): Deal with Collapse1536to96
+#'
 #' @param catalog Catalog or signature matrix
 #'
 #' @param name Name of file to print to.
 #'
 #' @param type See \code{\link[ICAMS]{Cat96ToPdf}}.
 #'
-#' @importFrom ICAMS Collapse1536To96 Cat96ToPdf
+#' @importFrom ICAMS Cat96ToPdf
 #' @export
 #'
 Plot96PartOfComposite <- function(catalog, name, type = "density") {
   cat1536 <- catalog[1:1536, ]
-  cat96 <- Collapse1536To96(cat1536)
+  cat96 <- ICAMS:::Collapse1536To96(cat1536)
   all.0 <- which(colSums(cat96) == 0)
   if (length(all.0) > 0 ) {
     cat96[ , all.0] <- 1
