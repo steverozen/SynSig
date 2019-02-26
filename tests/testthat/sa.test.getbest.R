@@ -23,12 +23,11 @@ test_that(
   )
 )
 
-
-#' Function 4 to test BestSignatureAnalyzerResult
 #' Should return path to sa.run.1
-Besttest4 <- function() {
-  debug(BestSignatureAnalyzerResult)
-  best.dir <-
-    BestSignatureAnalyzerResult("data-raw/test.sa.results4/", verbose = TRUE)
-  cat("\n", best.dir, "\n")
-}
+test_that(
+  "Test 4 for BestSignatureAnalyzerResult",
+  expect_equivalent(
+    BestSignatureAnalyzerResult("test.sa.results4/", verbose = TRUE),
+    "test.sa.results4//sa.run.1/"
+  )
+)
