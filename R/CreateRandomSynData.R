@@ -211,10 +211,11 @@ CreateRandomSAAndSPSynCatalogs <-
   sp.num.sigs.mean <-  3.947 # mean(colSums((sp.all.real.exposures > 0)))
   sp.num.sigs.sd   <-  1.331 # sd(colSums((sp.all.real.exposures > 0)))
 
+  num.sigs.to.create <- 30
 
   CreateOneSetOfRandomCatalogs(
     num.syn.tumors     = num.syn.tumors,
-    total.num.sigs     = ncol(SynSig::sa.96.sigs), # Take from actual number of SA signatures.
+    total.num.sigs     = num.sigs.to.create, # was 60, too many! ncol(SynSig::sa.96.sigs), # Take from actual number of SA signatures.
     mut.mean           = sa.mut.mean,
     mut.sd             = sa.mut.sd,
     num.sigs.mean      = sa.num.sigs.mean,
@@ -228,7 +229,7 @@ CreateRandomSAAndSPSynCatalogs <-
 
   CreateOneSetOfRandomCatalogs(
     num.syn.tumors     = num.syn.tumors,
-    total.num.sigs     = ncol(sp.sigs), # Take from actual number of SP signatures.
+    total.num.sigs     = num.sigs.to.create,    # was 65 -- too many! ncol(sp.sigs), # Take from actual number of SP signatures.
     mut.mean           = sp.mut.mean,
     mut.sd             = sp.mut.sd,
     num.sigs.mean      = sp.num.sigs.mean,
@@ -243,6 +244,6 @@ CreateRandomSAAndSPSynCatalogs <-
 
 MakeAllRandom <- function() {
   set.seed(1443196)
-  CreateRandomSAAndSPSynCatalogs("./RandomSigsV3/",
+  CreateRandomSAAndSPSynCatalogs("./0syn.30.random.sigs/",
                            1000, overwrite = TRUE)
 }
