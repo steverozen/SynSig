@@ -11,7 +11,7 @@ SignatureAnalyzer4MatchedCatalogs(num.runs = 20,
   overwrite = FALSE, mc.cores = 1)
 }
 \arguments{
-\item{num.runs}{Number Signature.Analyzer runs per data set.}
+\item{num.runs}{Number of SignatureAnalyzer runs per data set.}
 
 \item{signatureanalyzer.code.dir}{The directory holding the
 SignatureAnalyzer code.}

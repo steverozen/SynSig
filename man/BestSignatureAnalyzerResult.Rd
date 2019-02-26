@@ -4,7 +4,7 @@
 \alias{BestSignatureAnalyzerResult}
 \title{Find the best SignatureAnalyzer result over a set of output directories.}
 \usage{
-BestSignatureAnalyzerResult(root.dir)
+BestSignatureAnalyzerResult(root.dir, verbose = FALSE)
 }
 \arguments{
 \item{root.dir}{The directory containing the \code{sa.run.<n>} output directories.
@@ -34,6 +34,8 @@ Then
  returns the path to the sa.run.<n> directory with
  the output from the best SignatureAnalyzer run, e.g.
 \preformatted{"../syn.3.5.40.abst.v3/sa.sa.96/sa.results/sa.run.3/"}}
+
+\item{verbose}{If true print informative messages to stdout.}
 }
 \value{
 The path to the directory with the best output.

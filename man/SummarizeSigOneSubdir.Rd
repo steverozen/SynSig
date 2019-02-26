@@ -9,8 +9,8 @@ SummarizeSigOneSubdir(third.level.dir, ground.truth.exposure.name,
   write.png = FALSE)
 }
 \arguments{
-\item{third.level.dir}{Lowest level path to results, e.g.
-\code{top.dir}/sa.sa.96/sp.results/. or
+\item{third.level.dir}{Lowest level path to results, that is,
+\code{top.dir}/sp.sp/sa.results/. or
 \code{top.dir}/sa.sa.96/sa.results/
 Here, \code{top.dir} refers to a top-level directory which contains the
 full information of a synthetic dataset. (e.g. \code{syn.2.7a.7b.abst.v8})
