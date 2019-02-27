@@ -1,5 +1,6 @@
 context("Test summarizing extraction results in one directory")
 
+# TODO (Steve): clean up
 singature.analyzer.sa.sa.COMPOSITE.out <-
   SummarizeSigOneSACOMPOSITESubdir(
     third.level.dir = "./test.sa.sa.COMPOSITE/sa.results/",
@@ -12,6 +13,7 @@ singature.analyzer.sa.sa.96.out <-
     ground.truth.exposure.name = "ground.truth.syn.exposures.csv",
     which.run = "1.run.sa.sa.96",
     write.png = FALSE) # ICAMS version skew / Set to false for some OS?
+# TODO (Steve): clean up
 
 test_that("SummarizeSigOneSPSubdir",
           {
