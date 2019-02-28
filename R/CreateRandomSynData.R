@@ -13,6 +13,7 @@
 #'
 #' @keywords internal
 
+# TODO(Steve): change variable name to row.names!
 CreateOneRandomMutSigProfile <- function(row.headers) {
   retval <- matrix(10^runif(length(row.headers)), ncol = 1)
   # retval <- matrix(10^rnorm(length(row.headers)), ncol = 1) # Too spiky
@@ -71,9 +72,30 @@ CreateMeanAndStdevForSigs <-
   return(list(syn.mean = syn.mean, syn.sd = syn.sd))
 }
 
-CreateExposuresNums <- function(num.exposures, mean, sd) {
-  retval <- round(rnorm(3*num.exposures, mean = mean, sd = sd))
-  retval <- retval[retval > 0]
+#' Create a \code{num.exposures} random exposures
+#' from a normal distribution with \code{mean} and
+#' \code{sd}.
+#'
+#' Discard 0 exposures and exposures > than \code{max.exposures}.
+#'
+#' @param num.exposures Number of exposures to create.
+#'
+#' @param mean Mean of distribution to draw from.
+#'
+#' @param sd Stadard deviation of distribution to draw from.
+#'
+#' @param total.num.sigs Numer of signatures in the "universe".
+
+CreateExposuresNums <- function(num.exposures, mean,
+                                sd, total.num.sigs) {
+  retval <- numeric(0)
+  num.exposures.to.try <- num.exposures
+  while (length(retval) < num.exposures) {
+    num.exposures.to.try <- 3 * num.exposures.to.try
+    retval <- round(rnorm(num.exposures.to.try, mean = mean, sd = sd))
+    retval <- retval[retval > 0]
+    retval <- retval[retval <= total.num.sigs]
+  }
   return(retval[1:num.exposures])
 }
 
@@ -110,7 +132,9 @@ ExposureNums2Exposures <-
 #' of signatures.
 
 #' @param num.syn.tumors Total number of synthetic tumors to create.
+#'
 #' @param total.num.sigs Total number of signatures in the universe.
+#'
 #' @param mut.mean Mean of the log10 of the
 #' number of mutations due to each signature.
 #' @param mut.sd Standard deviation of the log10 of
@@ -159,7 +183,9 @@ CreateOneSetOfRandomCatalogs <-
       total.num.sigs, mut.mean, mut.sd, colnames(syn.96.sigs))
 
     exp.nums <-
-      CreateExposuresNums(num.syn.tumors, num.sigs.mean, num.sigs.sd)
+      CreateExposuresNums(
+        num.exposures = num.syn.tumors, mean = num.sigs.mean,
+        sd = num.sigs.sd, total.num.sigs = total.num.sigs)
 
     exp <-
       sapply(exp.nums,
@@ -246,4 +272,7 @@ MakeAllRandom <- function() {
   set.seed(1443196)
   CreateRandomSAAndSPSynCatalogs("./0syn.30.random.sigs/",
                            1000, overwrite = TRUE)
+  cat("\n\ncreated", getwd(),
+      list.files(pattern = "0syn.30.random.sigs"))
+
 }
