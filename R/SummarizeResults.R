@@ -111,32 +111,6 @@ SummarizeSigOneSubdir <-
 
       PngSigs(sigAnalysis$gt.sigs, "ground.truth.sigs")
       PngSigs(sigAnalysis$ex.sigs, "extracted.sigs")
-
-      if (FALSE) {
-        PngOneGtSig <-  function(x) {
-          png(paste0(outputPath,"/ground.truth.sigs/",x,".png"))
-          par("mfrow"=c(1,1))
-          plot.png.fn(sigAnalysis$gt.sigs[ ,x, drop = FALSE],
-                      type = "signature",
-                      grid = FALSE, xlabels = FALSE, cex = 0.6,
-                      upper = FALSE)
-          dev.off()
-        }
-        dir.create(paste0(outputPath,"/ground.truth.sigs/"))
-        tmp <- lapply(colnames(sigAnalysis$gt.sigs), PngOneGtSig)
-
-        PngOneExSig <-  function(x) {
-          png(paste0(outputPath,"/extracted.sigs/",x,".png"))
-          par("mfrow"=c(1,1))
-          PlotCat96(sigAnalysis$ex.sigs[ ,x, drop = FALSE],
-                    type = "signature",
-                    grid = FALSE, xlabels = FALSE, cex = 0.6,
-                    upper = FALSE)
-          dev.off()
-        }
-        dir.create(paste0(outputPath,"/extracted.sigs/"))
-        tmp <- lapply(colnames(sigAnalysis$ex.sigs), PngOneExSig)
-      }
     }
 
     ## Logs
