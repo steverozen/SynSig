@@ -12,10 +12,9 @@ singature.analyzer.sa.sa.96.out <-
     third.level.dir = "./test.sa.sa.96/sa.results/",
     ground.truth.exposure.name = "ground.truth.syn.exposures.csv",
     which.run = "1.run.sa.sa.96",
-    write.png = FALSE) # ICAMS version skew / Set to false for some OS?
+    write.png = FALSE) # Set to false for some operating systems
 # TODO (Steve): clean up
 
-debug(SummarizeSigOneSubdir)
 test_that("SummarizeSigOneSPSubdir",
           {
             load("./test.sigprofiler.sp.sp.out.Rdata")
