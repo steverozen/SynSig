@@ -15,23 +15,24 @@ singature.analyzer.sa.sa.96.out <-
     write.png = FALSE) # ICAMS version skew / Set to false for some OS?
 # TODO (Steve): clean up
 
+debug(SummarizeSigOneSubdir)
 test_that("SummarizeSigOneSPSubdir",
           {
             load("./test.sigprofiler.sp.sp.out.Rdata")
             expect_equal(
               SummarizeSigOneSPSubdir(
                 third.level.dir =
-                  "./sigprofiler.sp.sp.summary.test.input/sp.results/",
+                  "./sp.sum.test.in/sp.results/",
                 ground.truth.exposure.name = "ground.truth.syn.exposures.csv",
                 write.png = FALSE), # Set this to FALSE to speed up the test.
               sigprofiler.sp.sp.out)
             if (TRUE) # Set this to FALSE to inspect the file and directory output
             {
               # Clean up
-              unlink("./sigprofiler.sp.sp.summary.test.input/sp.results/summary",
+              unlink("./sp.sum.test.in/sp.results/summary",
                      recursive = TRUE, force = TRUE)
               unlink(
-                paste0("./sigprofiler.sp.sp.summary.test.input/",
+                paste0("./sp.sum.test.in/",
                        "sp.results/SBS96/Selected_Solution/",
                        "De_Novo_Solution/signatures.PCAWG.format.csv"))
             }
