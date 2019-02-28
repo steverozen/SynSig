@@ -718,5 +718,5 @@ SignatureAnalyzerSummarizeTopLevel <-
              SummarizeSigOneSACOMPOSITESubdir(sp.sa.COMPOSITE.dir))
 
     capture.output(print(retval), file = paste0(top.level.dir, "/summary.txt"))
-    return(retval)
+    invisible(retval)
   }
