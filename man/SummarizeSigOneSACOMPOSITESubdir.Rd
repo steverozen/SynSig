@@ -6,7 +6,7 @@
 \usage{
 SummarizeSigOneSACOMPOSITESubdir(third.level.dir,
   ground.truth.exposure.name = "ground.truth.syn.exposures.csv",
-  which.run = "/sa.best.run/")
+  which.run = "/best.run/")
 }
 \arguments{
 \item{third.level.dir}{Lowest level path to results, that is

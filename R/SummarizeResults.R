@@ -258,32 +258,6 @@ SummarizeSigProfiler <- function (top.dir, sub.dir = c("sa.sa.96","sp.sp"), writ
   }
 }
 
-if (FALSE) {
-SummarizeSigOneSPSubdir <-
-  function(third.level.dir,
-           ground.truth.exposure.name = "ground.truth.syn.exposures.csv",
-           write.png = FALSE) {
-
-    # Location of SignatureAnalyzer output, which is our input
-    # inputPath may change if SignatureAnalyzer updates!
-    inputPath <- paste0(third.level.dir,"/sa.best.run")
-
-    # Need special function to read in extracted signatures
-    extractedSigs <- ReadSigProfilerSig96(paste0(inputPath,"/signatures.txt"))
-    extracted.sigs.path <- paste0(inputPath,"/signatures.PCAWG.format.csv")
-    WriteCat96(ct = extractedSigs, extracted.sigs.path)
-
-    SummarizeSigOneSubdir(
-      third.level.dir = third.level.dir,
-      ground.truth.exposure.name = ground.truth.exposure.name,
-      extracted.sigs.path = extracted.sigs.path,
-      read.extracted.sigs.fn = ReadCat96,
-      read.ground.truth.sigs.fn = ReadCat96,
-      write.cat.fn = WriteCat96,
-      write.png = write.png)
-  }
-}
-
 #' Summarize COMPOSITE results from SignatureAnalyzer
 #'
 #' @param third.level.dir Lowest level path to results, that is
@@ -314,7 +288,7 @@ SummarizeSigOneSPSubdir <-
 SummarizeSigOneSACOMPOSITESubdir <-
   function(third.level.dir,
            ground.truth.exposure.name = "ground.truth.syn.exposures.csv",
-           which.run = "/sa.best.run/") {
+           which.run = "/best.run/") {
     # Location of SigProfiler output, which is our input
     # inputPath may change if sigproextractor updates!
     inputPath <- paste0(third.level.dir, which.run)
@@ -367,7 +341,7 @@ SummarizeSigOneSACOMPOSITESubdir <-
 SummarizeSigOneSA96Subdir <-
   function(third.level.dir,
            ground.truth.exposure.name = "ground.truth.syn.exposures.csv",
-           which.run = "/sa.best.run/",
+           which.run = "/best.run/",
            write.png = FALSE) {
     # Location of SigProfiler output, which is our input
     # inputPath may change if sigproextractor updates!

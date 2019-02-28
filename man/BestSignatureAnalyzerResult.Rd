@@ -4,10 +4,10 @@
 \alias{BestSignatureAnalyzerResult}
 \title{Find the best SignatureAnalyzer result over a set of output directories.}
 \usage{
-BestSignatureAnalyzerResult(root.dir, verbose = FALSE)
+BestSignatureAnalyzerResult(sa.results.dir, verbose = FALSE)
 }
 \arguments{
-\item{root.dir}{The directory containing the \code{sa.run.<n>} output directories.
+\item{sa.results.dir}{The directory containing the \code{sa.run.<n>} output directories.
  For example, contents of \code{../syn.3.5.40.abst.v3/sa.sa.96/sa.results/}
  must be the directories
  \preformatted{

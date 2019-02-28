@@ -1,6 +1,6 @@
 #' Find the best SignatureAnalyzer result over a set of output directories.
 #'
-#' @param root.dir The directory containing the \code{sa.run.<n>} output directories.
+#' @param sa.results.dir The directory containing the \code{sa.run.<n>} output directories.
 #'  For example, contents of \code{../syn.3.5.40.abst.v3/sa.sa.96/sa.results/}
 #'  must be the directories
 #'  \preformatted{
@@ -38,11 +38,11 @@
 #' \code{evidence} (which is the negative posterior probability).
 #'
 #' @export
-BestSignatureAnalyzerResult <- function(root.dir,
+BestSignatureAnalyzerResult <- function(sa.results.dir,
                                         verbose = FALSE) {
   me <- match.call()[[1]]
   run.summaries <-
-    list.files(path = root.dir,
+    list.files(path = sa.results.dir,
              pattern = "sa.output.other.data.csv",
              full.names = TRUE,
              recursive = TRUE,
@@ -117,3 +117,29 @@ BestSignatureAnalyzerResult <- function(root.dir,
   return(dir.path)
 
 }
+
+#' Find best result and make a copy of the folder
+#'
+#' @param sa.results.dir See \code{\link{BestSignatureAnalyzerResult}}
+#'
+#' @param verbose See \code{\link{BestSignatureAnalyzerResult}}
+#'
+#' @param overwrite If TRUE overwrite existing "best.run"
+#'
+#' @return The path of the best directory that was copied.
+#'
+#' @export
+#'
+#' @importFrom R.utils copyDirectory
+
+CopyBestSignatureAnalyzerResult <-
+  function(sa.results.dir,
+           verbose = FALSE,
+           overwrite = FALSE) {
+    best <- BestSignatureAnalyzerResult(sa.results.dir, verbose)
+    target.dir <- paste0(sa.results.dir, "/best.run")
+    copyDirectory(
+      from = best, to = target.dir, overwrite = overwrite, recursive = TRUE)
+    cat("This is a copy of", best, file = paste0(target.dir, "/info.txt"))
+    return(best)
+  }

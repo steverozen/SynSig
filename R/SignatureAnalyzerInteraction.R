@@ -412,7 +412,8 @@ RunSignatureAnalyzerOnFile <-
     cat("evidence,", out.data$evidence, "\n",
         sep = "", file = other.data, append = TRUE)
     cat("relevance,",
-        paste(out.data$relevance, collapse = ","), "\n", sep = "", file = other.data, append = TRUE)
+        paste(out.data$relevance, collapse = ","), "\n",
+        sep = "", file = other.data, append = TRUE)
     cat("error,", out.data$error, "\n",
         sep = "", file = other.data, append = TRUE)
 
@@ -560,17 +561,19 @@ SignatureAnalyzerOneCatalog <-
     else warning(out.dir, "exists, overwriting")
 
     RunOneIndex <- function(i) {
+      out.dir2 <- paste0(out.dir, "sa.run.", i)
       SignatureAnalyzerOneRun(
         signatureanalyzer.code.dir = signatureanalyzer.code.dir,
         input.catalog = input.catalog,
         read.catalog.function = read.catalog.function,
-        out.dir = paste0(out.dir, "sa.run.", i),
+        out.dir = out.dir2,
         write.signature.function = write.signature.function,
         maxK = maxK,
         tol = tol,
         test.only = test.only,
         delete.tmp.files = delete.tmp.files,
         overwrite = overwrite)
+      return(paste0("Success for ", out.dir, out.dir2))
     }
 
     mc.cores.to.use <-
@@ -578,7 +581,10 @@ SignatureAnalyzerOneCatalog <-
 
     cat("Using", mc.cores.to.use, " cores\n")
 
-    mclapply(1:num.runs, FUN = RunOneIndex, mc.cores = mc.cores.to.use)
+    mc.output <-
+      mclapply(1:num.runs, FUN = RunOneIndex, mc.cores = mc.cores.to.use)
+
+    print(str(mc.output))
 
     return(paste0("results in ",  out.dir, "sa.run.*"))
   }
@@ -673,3 +679,41 @@ SignatureAnalyzer4MatchedCatalogs <-
 
   invisible(retval2)
   }
+
+#' Summarize all subdirs of a major dataset
+#'
+#' @param top.level.dir Path to top level directory
+#'
+#' @export
+SignatureAnalyzerSummarizeTopLevel <- function(top.level.dir) {
+  stopifnot(dir.exists(top.level.dir))
+
+  sa.sa.96.dir <- paste0(top.level.dir, "/sa.sa.96/sa.results")
+  stopifnot(dir.exists(sa.sa.96.dir))
+  sp.sp.dir <- paste0(top.level.dir, "/sp.sp/sa.results")
+  stopifnot(dir.exists(sp.sp.dir))
+  sa.sa.COMPOSITE.dir <-
+    paste0(top.level.dir, "/sa.sa.COMPOSITE/sa.results")
+  stopifnot(dir.exists(sa.sa.COMPOSITE.dir))
+  sp.sa.COMPOSITE.dir <-
+    paste0(top.level.dir, "/sp.sa.COMPOSITE/sa.results")
+  stopifnot(dir.exists(sa.sa.COMPOSITE.dir))
+
+  CopyBestSignatureAnalyzerResult(sa.sa.96.dir)
+  CopyBestSignatureAnalyzerResult(sp.sp.dir)
+  CopyBestSignatureAnalyzerResult(sa.sa.COMPOSITE.dir)
+  CopyBestSignatureAnalyzerResult(sp.sa.COMPOSITE.dir)
+
+  retval <-
+    list(sa.sa.96 =
+           SummarizeSigOneSA96Subdir(sa.sa.96.dir),
+         sp.sp =
+           SummarizeSigOneSA96Subdir(sp.sp.dir),
+         sa.sa.COMPOSITE =
+           SummarizeSigOneSACOMPOSITESubdir(sa.sa.COMPOSITE.dir),
+         sp.sp.COMPOSITE =
+           SummarizeSigOneSACOMPOSITESubdir(sp.sa.COMPOSITE.dir))
+
+  capture.output(print(retval), file = paste0(top.level.dir, "/summary.txt"))
+  return(retval)
+}

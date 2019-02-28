@@ -31,10 +31,10 @@ e.g. \code{ReadCat96}}
 \item{read.ground.truth.sigs.fn}{Function to read the ground-truth sigs file.
 e.g. \code{ReadCat96}}
 
-\item{plot.pdf.fn}{If not NULL, use this function to plot PDFs of the ground truth and
+\item{plot.pdf.fn}{If a function, use it to plot PDFs of the ground truth and
 extracted signatures.}
 
-\item{plot.png.fn}{If not NULL, use this function to plot PNGs of the ground truth and
+\item{plot.png.fn}{If a function, use it to plot PNGs of the ground truth and
 extracted signatures.}
 }
 \description{
