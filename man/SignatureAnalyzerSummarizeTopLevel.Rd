@@ -2,13 +2,15 @@
 % Please edit documentation in R/SignatureAnalyzerInteraction.R
 \name{SignatureAnalyzerSummarizeTopLevel}
 \alias{SignatureAnalyzerSummarizeTopLevel}
-\title{Summarize all subdirs of a major dataset}
+\title{Summarize all subdirs of a major dataset.}
 \usage{
-SignatureAnalyzerSummarizeTopLevel(top.level.dir)
+SignatureAnalyzerSummarizeTopLevel(top.level.dir, overwrite = FALSE)
 }
 \arguments{
-\item{top.level.dir}{Path to top level directory}
+\item{top.level.dir}{Path to top level directory.}
+
+\item{overwrite}{If true overwite existing summary files.}
 }
 \description{
-Summarize all subdirs of a major dataset
+Summarize all subdirs of a major dataset.
 }

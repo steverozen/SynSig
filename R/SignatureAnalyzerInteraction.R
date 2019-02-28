@@ -700,7 +700,7 @@ SignatureAnalyzerSummarizeTopLevel <-
     stopifnot(dir.exists(sa.sa.COMPOSITE.dir))
     sp.sa.COMPOSITE.dir <-
       paste0(top.level.dir, "/sp.sa.COMPOSITE/sa.results")
-    stopifnot(dir.exists(sa.sa.COMPOSITE.dir))
+    stopifnot(dir.exists(sp.sa.COMPOSITE.dir))
 
     CopyBestSignatureAnalyzerResult(sa.sa.96.dir, overwrite = overwrite)
     CopyBestSignatureAnalyzerResult(sp.sp.dir, overwrite = overwrite)
