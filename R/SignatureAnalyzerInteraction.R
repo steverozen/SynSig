@@ -391,8 +391,8 @@ RunSignatureAnalyzerOnFile <-
                          "relevance", "error")
 
     # Save in native R format.
-    save(out.data, sigs,
-         file = paste0(out.dir, "/sa.output.rdata"))
+    # save(out.data, sigs,
+    #     file = paste0(out.dir, "/sa.output.rdata"))
 
     write.signature.function(sigs,
                              paste0(out.dir, "/sa.output.sigs.csv"))
@@ -458,6 +458,17 @@ RunSignatureAnalyzerOnFile <-
 #'
 #' @param overwrite If TRUE overwrite preexisting results.
 #'
+#' #' @return The output of SignatureAnalyzer, invisibly. This is a list
+#' with five elements (named in this code, not by SignatureAnalyzer):
+#' \enumerate{
+#'  \item \code{signatures.W} The signature matrix
+#'  \item \code{exposures.H} The corresponding exposures
+#'  \item \code{likelihood} The likelihood
+#'  \item \code{evidence} -1 * the posterior probability
+#'  \item \code{relevance} One for each column of the \code{signatures.W}
+#'  \item \code{error} A measure of reconstruction error (?)
+#' }
+
 SignatureAnalyzerOneRun <-
   function(signatureanalyzer.code.dir,
            input.catalog,
@@ -562,18 +573,21 @@ SignatureAnalyzerOneCatalog <-
 
     RunOneIndex <- function(i) {
       out.dir2 <- paste0(out.dir, "sa.run.", i)
-      SignatureAnalyzerOneRun(
-        signatureanalyzer.code.dir = signatureanalyzer.code.dir,
-        input.catalog = input.catalog,
-        read.catalog.function = read.catalog.function,
-        out.dir = out.dir2,
-        write.signature.function = write.signature.function,
-        maxK = maxK,
-        tol = tol,
-        test.only = test.only,
-        delete.tmp.files = delete.tmp.files,
-        overwrite = overwrite)
-      return(paste0("Success for ", out.dir, out.dir2))
+      signature.analyzer.output <-
+        SignatureAnalyzerOneRun(
+          signatureanalyzer.code.dir = signatureanalyzer.code.dir,
+          input.catalog = input.catalog,
+          read.catalog.function = read.catalog.function,
+          out.dir = out.dir2,
+          write.signature.function = write.signature.function,
+          maxK = maxK,
+          tol = tol,
+          test.only = test.only,
+          delete.tmp.files = delete.tmp.files,
+          overwrite = overwrite)
+      attr(signature.analyzer.output, "message") <-
+        paste0("Success for ", out.dir2)
+      return(signature.analyzer.output)
     }
 
     mc.cores.to.use <-
@@ -584,9 +598,14 @@ SignatureAnalyzerOneCatalog <-
     mc.output <-
       mclapply(1:num.runs, FUN = RunOneIndex, mc.cores = mc.cores.to.use)
 
-    print(str(mc.output))
+    capture.output(
+      print(mc.output),
+      file = paste0(out.dir, "/verbose.txt"))
 
-    return(paste0("results in ",  out.dir, "sa.run.*"))
+    attr(mc.output, "wd") <- getwd()
+    attr(mc.output, "out.dir") <- out.dir
+    attr(mc.output, "mc.cores") <- mc.cores.to.use
+    return(mc.output)
   }
 
 #' Run SignatureAnalyzer on 4 coordinated data sets and put results
@@ -672,6 +691,7 @@ SignatureAnalyzer4MatchedCatalogs <-
           delete.tmp.files = delete.tmp.files,
           overwrite = overwrite,
           mc.cores = mc.cores)
+      return(retval1)
     }
 
   retval2 <-
