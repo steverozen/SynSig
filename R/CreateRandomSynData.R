@@ -137,21 +137,29 @@ ExposureNums2Exposures <-
 #'
 #' @param mut.mean Mean of the log10 of the
 #' number of mutations due to each signature.
+#'
 #' @param mut.sd Standard deviation of the log10 of
 #'  the number of mutations due to each signature.
-#' @param num.sigs.mean Mean number of signatures contributing to each tumor
+#'
+#' @param num.sigs.mean Mean number of signatures contributing to each tumor.
+#'
 #' @param num.sigs.sd Standard deviation the number number of signatures
 #' contribution to each tumor.
+#'
 #' @param sig.name.prefix String to put in front of an integer (as
 #' string) to form an identifier for a synthetic signature.
+#'
 #' @param sample.name.prefix String to put in front of an integer (as
 #' string) to form an identifier for a synthetic sample (tumor).
+#'
 #' @param composite.dir.name string indicating the name of the COMPOSITE
 #' subdirectory; probably one of \code{"sa.sa.COMPOSITE"} or
 #' \code{"sp.sa.COMPOSITE"}.
+#'
 #' @param x96.dir.name A string indicating the name of the 96-channel
 #' subdirectory; probably one of \code{"sa.sa.COMPOSITE"} or
 #' \code{"sp.sa.COMPOSITE"}.
+#'
 #' @param COMPOSITE.features Character vector containing
 #' rownames for a COMPOSITE signature or catalog.
 #' @param overwrite = FALSE
