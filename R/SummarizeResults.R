@@ -336,3 +336,44 @@ SummarizeSigOneSA96Subdir <-
     invisible(retval)
   }
 
+#' Summarize all subdirs of a major dataset.
+#'
+#' @param top.level.dir Path to top level directory.
+#'
+#' @param overwrite If true overwite existing summary files.
+#'
+#' @export
+SignatureAnalyzerSummarizeTopLevel <-
+  function(top.level.dir, overwrite = FALSE) {
+    stopifnot(dir.exists(top.level.dir))
+
+    sa.sa.96.dir <- paste0(top.level.dir, "/sa.sa.96/sa.results")
+    stopifnot(dir.exists(sa.sa.96.dir))
+    sp.sp.dir <- paste0(top.level.dir, "/sp.sp/sa.results")
+    stopifnot(dir.exists(sp.sp.dir))
+    sa.sa.COMPOSITE.dir <-
+      paste0(top.level.dir, "/sa.sa.COMPOSITE/sa.results")
+    stopifnot(dir.exists(sa.sa.COMPOSITE.dir))
+    sp.sa.COMPOSITE.dir <-
+      paste0(top.level.dir, "/sp.sa.COMPOSITE/sa.results")
+    stopifnot(dir.exists(sp.sa.COMPOSITE.dir))
+
+    CopyBestSignatureAnalyzerResult(sa.sa.96.dir, overwrite = overwrite)
+    CopyBestSignatureAnalyzerResult(sp.sp.dir, overwrite = overwrite)
+    CopyBestSignatureAnalyzerResult(sa.sa.COMPOSITE.dir, overwrite = overwrite)
+    CopyBestSignatureAnalyzerResult(sp.sa.COMPOSITE.dir, overwrite = overwrite)
+
+    retval <-
+      list(sa.sa.96 =
+             SummarizeSigOneSA96Subdir(sa.sa.96.dir),
+           sp.sp =
+             SummarizeSigOneSA96Subdir(sp.sp.dir),
+           sa.sa.COMPOSITE =
+             SummarizeSigOneSACOMPOSITESubdir(sa.sa.COMPOSITE.dir),
+           sp.sa.COMPOSITE =
+             SummarizeSigOneSACOMPOSITESubdir(sp.sa.COMPOSITE.dir))
+
+    capture.output(print(retval), file = paste0(top.level.dir, "/summary.txt"))
+    invisible(retval)
+  }
+
