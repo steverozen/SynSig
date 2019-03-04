@@ -227,21 +227,30 @@ CreateRandomSAAndSPSynCatalogs <-
   COMPOSITE.features <- c(ICAMS:::.catalog.row.order1536,
                           ICAMS:::.catalog.row.order.DNS.78,
                           ICAMS:::.catalog.row.order.ID)
+
+  # The following are for choosing the mean number of mutations due to each
+  # synthetic signature.
   sa.mut.mean <- 2.349  # mean(log10(sa.all.real.exposures[sa.all.real.exposures >= 1]))
   sa.mut.sd   <- 0.6641 # sd(log10(sa.all.real.exposures[sa.all.real.exposures >= 1]))
   sp.mut.mean <- 2.97   # mean(log10(sp.all.real.exposures[sp.all.real.exposures >= 1]))
   sp.mut.sd   <- 0.7047 # sd(log10(sp.all.real.exposures[sp.all.real.exposures >= 1]))
 
-  sa.num.sigs.mean <- 15.525 # mean(colSums((sa.all.real.exposures > 0)))
-  sa.num.sigs.sd   <-  6.172 # sd(colSums((sa.all.real.exposures > 0)))
-  sp.num.sigs.mean <-  3.947 # mean(colSums((sp.all.real.exposures > 0)))
-  sp.num.sigs.sd   <-  1.331 # sd(colSums((sp.all.real.exposures > 0)))
+  # An alternative would be:
+  # per.sig.mean <- apply(sa.all.real.exposures, 1, function(x) mean(log10(x[ x > 1])
+  # sa.mut.mean  <- mean(per.sig.mean, na.rm = TRUE)
+  # sa.mut.sd    <- sd(per.sig.mean, na.rm = TRUE)
 
-  num.sigs.to.create <- 30
+  sa.num.sigs.mean <- 15.525 # mean(colSums(sa.all.real.exposures > 0))
+  sa.num.sigs.sd   <-  6.172 # sd(colSums(sa.all.real.exposures > 0))
+  sp.num.sigs.mean <-  3.947 # mean(colSums(sp.all.real.exposures > 0))
+  sp.num.sigs.sd   <-  1.331 # sd(colSums(sp.all.real.exposures > 0))
+
+  num.sigs.to.create <- 30 # Also tired, 60 (ncol(SynSig::sa.96.sigs));
+                           # this is too many.
 
   CreateOneSetOfRandomCatalogs(
     num.syn.tumors     = num.syn.tumors,
-    total.num.sigs     = num.sigs.to.create, # was 60, too many! ncol(SynSig::sa.96.sigs), # Take from actual number of SA signatures.
+    total.num.sigs     = num.sigs.to.create,
     mut.mean           = sa.mut.mean,
     mut.sd             = sa.mut.sd,
     num.sigs.mean      = sa.num.sigs.mean,
