@@ -41,12 +41,25 @@
 BestSignatureAnalyzerResult <- function(sa.results.dir,
                                         verbose = FALSE) {
   me <- match.call()[[1]]
+
+  run.directories <-
+    list.files(path = sa.results.dir,
+               pattern = "run",
+               full.names = TRUE,
+               recursive = FALSE,
+               include.dirs = TRUE)
+  if (length(run.directories) == 0) {
+    stop("No *run* directories in", sa.results.dir)
+  }
+
   run.summaries <-
     list.files(path = sa.results.dir,
              pattern = "sa.output.other.data.csv",
              full.names = TRUE,
              recursive = TRUE,
              include.dirs = TRUE)
+  run.summaries <-
+    grep("sa.run.\\d+", run.summaries, value = TRUE, perl = TRUE)
   names(run.summaries) <-
     sub(".*(sa\\.run\\.[0-9]+).*", "\\1", run.summaries, perl = TRUE)
 
@@ -138,6 +151,13 @@ CopyBestSignatureAnalyzerResult <-
            overwrite = FALSE) {
     best <- BestSignatureAnalyzerResult(sa.results.dir, verbose)
     target.dir <- paste0(sa.results.dir, "/best.run")
+    if (dir.exists(target.dir) && overwrite) {
+      cat("\nInformation: overwriting", target.dir, "\n")
+      unlink.ret <- unlink(target.dir, recursive = TRUE, force = TRUE)
+      if (unlink.ret != 0) stop("Unable to unlink", target.dir)
+    }
+    # file.copy.ret <- file.copy(
+    #  from = best, to = target.dir, overwrite = TRUE)
     copyDirectory(
       from = best, to = target.dir, overwrite = overwrite, recursive = TRUE)
     cat("This is a copy of", best, file = paste0(target.dir, "/info.txt"))
