@@ -6,7 +6,7 @@
 \usage{
 SummarizeSigOneSPSubdir(third.level.dir,
   ground.truth.exposure.name = "ground.truth.syn.exposures.csv",
-  write.png = FALSE)
+  write.png = FALSE, overwrite = FALSE)
 }
 \arguments{
 \item{third.level.dir}{Lowest level path to results, e.g.
@@ -24,6 +24,8 @@ defaults to \code{"ground.truth.syn.exposures.csv"}.
 This file can be found in the \code{sub.dir}, i.e. \code{<third.level.dir>/../}}
 
 \item{write.png}{If TRUE create png plots of the signatures.}
+
+\item{overwrite}{If true overwite existing directories and files.}
 }
 \description{
 Assess/evaluate results from SigProfiler-python (a.k.a. sigproextractor)

@@ -480,7 +480,7 @@ SignatureAnalyzerOneRun <-
            tol = 1e-7,
            test.only = FALSE,
            delete.tmp.files = TRUE,
-           verbose = 1,
+           verbose = 0,
            overwrite = FALSE)
 {
   options( warn = 0 )
@@ -551,6 +551,8 @@ SignatureAnalyzerOneRun <-
 #' @param mc.cores Number of cores to use for \code{mclapply}; ignored on
 #' Windows.
 #'
+#' @param verbose If TRUE cat a message regarding progress.
+#'
 #' @importFrom parallel mclapply
 #'
 #' @export
@@ -566,7 +568,8 @@ SignatureAnalyzerOneCatalog <-
            test.only = FALSE,
            delete.tmp.files = TRUE,
            overwrite = FALSE,
-           mc.cores = 1) {
+           mc.cores = 1,
+           verbose = FALSE) {
 
     if (!dir.exists(out.dir)) dir.create(out.dir)
     else warning(out.dir, "exists, overwriting")
@@ -593,7 +596,9 @@ SignatureAnalyzerOneCatalog <-
     mc.cores.to.use <-
       ifelse(Sys.info()["sysname"] == "Windows", 1, mc.cores)
 
-    cat("Using", mc.cores.to.use, " cores\n")
+    if (verbose) {
+      cat("Using", mc.cores.to.use, " cores\n")
+    }
 
     mc.output <-
       mclapply(1:num.runs, FUN = RunOneIndex, mc.cores = mc.cores.to.use)

@@ -143,7 +143,6 @@ BestSignatureAnalyzerResult <- function(sa.results.dir,
 #'
 #' @export
 #'
-#' @importFrom R.utils copyDirectory
 
 CopyBestSignatureAnalyzerResult <-
   function(sa.results.dir,

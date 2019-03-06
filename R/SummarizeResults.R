@@ -28,11 +28,13 @@
 #' @param plot.png.fn If a function, use it to plot PNGs of the ground truth and
 #' extracted signatures.
 #'
+#' @param write.cat.fn Function to write a catalog to disk, for example
+#' [ICAMS]{WriteCat96}
+#'
 #' @param overwrite If TRUE overwrite existing directories and files.
 #'
 #' @export
 #'
-#' @importFrom ICAMS WriteCat96 ReadCat96 PlotCat96
 #' @importFrom utils capture.output sessionInfo
 #' @importFrom grDevices png dev.off
 #' @importFrom graphics par
@@ -66,8 +68,10 @@ SummarizeSigOneSubdir <-
     }
     suppressWarnings(dir.create(outputPath))
 
-    write.csv(sigAnalysis$match1, file = paste(outputPath,"match1.csv",sep = "/"))
-    write.csv(sigAnalysis$match2, file = paste(outputPath,"match2.csv",sep = "/"))
+    write.csv(sigAnalysis$match1,
+              file = paste(outputPath,"match1.csv",sep = "/"))
+    write.csv(sigAnalysis$match2,
+              file = paste(outputPath,"match2.csv",sep = "/"))
 
     write.cat.fn(sigAnalysis$gt.sigs,
                  path = paste(outputPath,"ground.truth.sigs.csv",sep = "/"))
@@ -149,6 +153,8 @@ SummarizeSigOneSubdir <-
 #' This file can be found in the \code{sub.dir}, i.e. \code{<third.level.dir>/../}
 #'
 #' @param write.png If TRUE create png plots of the signatures.
+#'
+#'@param overwrite If true overwite existing directories and files.
 #'
 #' @export
 #'
@@ -262,6 +268,8 @@ SummarizeSigProfiler <- function (top.dir, sub.dir = c("sa.sa.96","sp.sp"), writ
 #'
 #' @param which.run Name of subdirectory containing the run to summarize.
 #'
+#' @param overwrite If true overwite existing directories and files.
+#'
 #' @export
 #'
 #' @importFrom ICAMS WriteCat96 ReadCat96 PlotCat96
@@ -316,6 +324,8 @@ SummarizeSigOneSACOMPOSITESubdir <-
 #' @param which.run Name of subdirectory containing the run to summarize.
 #'
 #' @param write.png If TRUE create png plots of the signatures.
+#'
+#' @param overwrite If true overwite existing directories and files.
 #'
 #' @export
 #'
@@ -400,10 +410,10 @@ SignatureAnalyzerSummarizeTopLevel <-
 #'
 #' @param top.level.dir Path to top level directory.
 #'
-#' @param overwrite If true overwite existing summary files.
+#' @param overwrite If true overwite existing directories and files.
 #'
 #' @export
-SignatureAnalyzerSummarizeTopLevel <-
+SignatureAnalyzerSummarizeSBS1SBS5 <-
   function(top.level.dir, overwrite = FALSE) {
     stopifnot(dir.exists(top.level.dir))
 

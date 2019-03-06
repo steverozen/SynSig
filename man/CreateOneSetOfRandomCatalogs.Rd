@@ -22,7 +22,7 @@ number of mutations due to each signature.}
 \item{mut.sd}{Standard deviation of the log10 of
 the number of mutations due to each signature.}
 
-\item{num.sigs.mean}{Mean number of signatures contributing to each tumor}
+\item{num.sigs.mean}{Mean number of signatures contributing to each tumor.}
 
 \item{num.sigs.sd}{Standard deviation the number number of signatures
 contribution to each tumor.}
