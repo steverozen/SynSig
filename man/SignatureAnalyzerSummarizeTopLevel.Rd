@@ -2,15 +2,15 @@
 % Please edit documentation in R/SummarizeResults.R
 \name{SignatureAnalyzerSummarizeTopLevel}
 \alias{SignatureAnalyzerSummarizeTopLevel}
-\title{Summarize all subdirs of a major dataset.}
+\title{Summarize all subdirectories of a major dataset.}
 \usage{
 SignatureAnalyzerSummarizeTopLevel(top.level.dir, overwrite = FALSE)
 }
 \arguments{
 \item{top.level.dir}{Path to top level directory.}
 
-\item{overwrite}{If true overwite existing summary files.}
+\item{overwrite}{If TRUE overwrite existing summary files.}
 }
 \description{
-Summarize all subdirs of a major dataset.
+Summarize all subdirectories of a major dataset.
 }

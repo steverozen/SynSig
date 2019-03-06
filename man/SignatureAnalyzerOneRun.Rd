@@ -8,7 +8,7 @@ in specified location.}
 SignatureAnalyzerOneRun(signatureanalyzer.code.dir, input.catalog,
   read.catalog.function, out.dir, write.signature.function,
   input.exposures = NULL, maxK = 30, tol = 1e-07,
-  test.only = FALSE, delete.tmp.files = TRUE, verbose = 1,
+  test.only = FALSE, delete.tmp.files = TRUE, verbose = 0,
   overwrite = FALSE)
 }
 \arguments{

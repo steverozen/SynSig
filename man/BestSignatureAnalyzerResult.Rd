@@ -35,7 +35,7 @@ Then
  the output from the best SignatureAnalyzer run, e.g.
 \preformatted{"../syn.3.5.40.abst.v3/sa.sa.96/sa.results/sa.run.3/"}}
 
-\item{verbose}{If true print informative messages to stdout.}
+\item{verbose}{If TRUE print informative messages to standard output.}
 }
 \value{
 The path to the directory with the best output.

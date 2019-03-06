@@ -82,9 +82,9 @@ CreateMeanAndStdevForSigs <-
 #'
 #' @param mean Mean of distribution to draw from.
 #'
-#' @param sd Stadard deviation of distribution to draw from.
+#' @param sd Standard deviation of distribution to draw from.
 #'
-#' @param total.num.sigs Numer of signatures in the "universe".
+#' @param total.num.sigs Number of signatures in the "universe".
 
 CreateExposuresNums <- function(num.exposures, mean,
                                 sd, total.num.sigs) {

@@ -2,15 +2,15 @@
 % Please edit documentation in R/SummarizeResults.R
 \name{SignatureAnalyzerSummarizeSBS1SBS5}
 \alias{SignatureAnalyzerSummarizeSBS1SBS5}
-\title{Summarize all subdirs of the correlated SBS1 / SBS5.}
+\title{Summarize all subdirectories of the correlated SBS1 / SBS5.}
 \usage{
 SignatureAnalyzerSummarizeSBS1SBS5(top.level.dir, overwrite = FALSE)
 }
 \arguments{
 \item{top.level.dir}{Path to top level directory.}
 
-\item{overwrite}{If true overwite existing directories and files.}
+\item{overwrite}{If TRUE overwrite existing directories and files.}
 }
 \description{
-Summarize all subdirs of the correlated SBS1 / SBS5.
+Summarize all subdirectories of the correlated SBS1 / SBS5.
 }

@@ -154,7 +154,7 @@ SummarizeSigOneSubdir <-
 #'
 #' @param write.png If TRUE create png plots of the signatures.
 #'
-#'@param overwrite If true overwite existing directories and files.
+#'@param overwrite If TRUE overwrite existing directories and files.
 #'
 #' @export
 #'
@@ -204,7 +204,7 @@ SummarizeSigOneSPSubdir <-
         overwrite = TRUE)
     }
 
-    invisible(retval) # So we can test without looking a file.
+    invisible(retval) # So we can test without looking at a file.
 }
 
 #' Summarize SigProfiler results in the sa.sa.96 and/or sp.sp subdirectories
@@ -268,7 +268,7 @@ SummarizeSigProfiler <- function (top.dir, sub.dir = c("sa.sa.96","sp.sp"), writ
 #'
 #' @param which.run Name of subdirectory containing the run to summarize.
 #'
-#' @param overwrite If true overwite existing directories and files.
+#' @param overwrite If TRUE overwrite existing directories and files.
 #'
 #' @export
 #'
@@ -325,7 +325,7 @@ SummarizeSigOneSACOMPOSITESubdir <-
 #'
 #' @param write.png If TRUE create png plots of the signatures.
 #'
-#' @param overwrite If true overwite existing directories and files.
+#' @param overwrite If TRUE overwrite existing directories and files.
 #'
 #' @export
 #'
@@ -361,11 +361,11 @@ SummarizeSigOneSA96Subdir <-
     invisible(retval)
   }
 
-#' Summarize all subdirs of a major dataset.
+#' Summarize all subdirectories of a major dataset.
 #'
 #' @param top.level.dir Path to top level directory.
 #'
-#' @param overwrite If true overwite existing summary files.
+#' @param overwrite If TRUE overwrite existing summary files.
 #'
 #' @export
 SignatureAnalyzerSummarizeTopLevel <-
@@ -406,11 +406,11 @@ SignatureAnalyzerSummarizeTopLevel <-
     invisible(retval)
   }
 
-#' Summarize all subdirs of the correlated SBS1 / SBS5.
+#' Summarize all subdirectories of the correlated SBS1 / SBS5.
 #'
 #' @param top.level.dir Path to top level directory.
 #'
-#' @param overwrite If true overwite existing directories and files.
+#' @param overwrite If TRUE overwrite existing directories and files.
 #'
 #' @export
 SignatureAnalyzerSummarizeSBS1SBS5 <-

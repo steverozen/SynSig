@@ -27,7 +27,7 @@ This file can be found in the \code{sub.dir}, i.e. \code{<third.level.dir>/../}}
 
 \item{which.run}{Name of subdirectory containing the run to summarize.}
 
-\item{overwrite}{If true overwite existing directories and files.}
+\item{overwrite}{If TRUE overwrite existing directories and files.}
 }
 \description{
 Summarize COMPOSITE results from SignatureAnalyzer

@@ -25,7 +25,7 @@ This file can be found in the \code{sub.dir}, i.e. \code{<third.level.dir>/../}}
 
 \item{write.png}{If TRUE create png plots of the signatures.}
 
-\item{overwrite}{If true overwite existing directories and files.}
+\item{overwrite}{If TRUE overwrite existing directories and files.}
 }
 \description{
 Assess/evaluate results from SigProfiler-python (a.k.a. sigproextractor)

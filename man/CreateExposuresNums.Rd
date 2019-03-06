@@ -13,9 +13,9 @@ CreateExposuresNums(num.exposures, mean, sd, total.num.sigs)
 
 \item{mean}{Mean of distribution to draw from.}
 
-\item{sd}{Stadard deviation of distribution to draw from.}
+\item{sd}{Standard deviation of distribution to draw from.}
 
-\item{total.num.sigs}{Numer of signatures in the "universe".}
+\item{total.num.sigs}{Number of signatures in the "universe".}
 }
 \description{
 Discard 0 exposures and exposures > than \code{max.exposures}.
