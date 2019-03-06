@@ -15,7 +15,12 @@ test_that("SignatureAnalyzer4MatchedCatalogs", {
       overwrite = TRUE,
       mc.cores = 1)
   # save(SignatureAnalyzer4MatchedCatalogs.out,
-  #     file = "SignatureAnalyzer4MatchedCatalogs.out.Rdata")
+  #     file = "SignatureAnalyzer4MatchedCatalogs.out.Rdata")]
+
+  # Clean up
+  dir.to.unlink <- "test.random.sigs/sa.sa.96/sa.results"
+  unlink.ret <- unlink(dir.to.unlink, recursive = TRUE, force = TRUE)
+  if (0 != unlink.ret) warning("failed to unlink", dir.to.unlink)
   expect_equal(
     tmp.result,
     SignatureAnalyzer4MatchedCatalogs.out)
