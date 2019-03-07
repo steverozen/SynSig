@@ -4,11 +4,11 @@
 \alias{CreateOneRandomMutSigProfile}
 \title{Create one "random" artificial signature profile.}
 \usage{
-CreateOneRandomMutSigProfile(row.headers)
+CreateOneRandomMutSigProfile(row.names)
 }
 \arguments{
-\item{row.headers}{One of the \code{\link{ICAMS}} package variable such as
-\code{.catalog.row.order96}.}
+\item{row.names}{One of the \code{\link{ICAMS}} package variable such as
+\code{catalog.row.order[["SNS96"]]}.}
 }
 \value{
 A single column matrix with \code{rownames} \code{row.headers} and

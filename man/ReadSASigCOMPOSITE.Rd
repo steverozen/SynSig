@@ -10,5 +10,7 @@ ReadSASigCOMPOSITE()
 A matrix (data.frame?) of COMPOSITE signatures
 }
 \description{
-Read SignatureAnalyzer COMPOSITE signatures from fixed files
+This function was used in loading SignatureAnalyzer
+signatures from PCAWG7 / Synapse, and has not been
+tested since.
 }

@@ -104,31 +104,32 @@ NULL
 #' @rdname ReadSASig
 #' @export
 ReadSASig96 <- function(path) {
-  ReadAnySASig(path, CanonicalizeSAx, 96, ICAMS:::.catalog.row.order96)
+  ReadAnySASig(path, CanonicalizeSAx, 96, ICAMS::catalog.row.order[["SNS96"]])
 }
 
 #' @rdname ReadSASig
 #' @export
 ReadSASig1536 <- function(path) {
-  ReadAnySASig(path, CanonicalizeSAx, 1536,
-               ICAMS:::.catalog.row.order1536)
+  ReadAnySASig(path, CanonicalizeSAx, 1536, ICAMS::catalog.row.order[["SNS1536"]])
 }
 
 #' @rdname ReadSASig
 #' @export
 ReadSASigDBS <- function(path) {
-  ReadAnySASig(path, CanonicalizeSADBS, 78,
-               ICAMS:::.catalog.row.order.DNS.78)
+  ReadAnySASig(path, CanonicalizeSADBS, 78, ICAMS::catalog.row.order[["DNS78"]])
 }
 
 #' @rdname ReadSASig
 #' @export
 ReadSASigID <- function(path) {
-  ReadAnySASig(path, CanonicalizeSAID, 83,
-               ICAMS:::.catalog.row.order.ID)
+  ReadAnySASig(path, CanonicalizeSAID, 83, ICAMS::catalog.row.order[["ID"]])
 }
 
 #' Read SignatureAnalyzer COMPOSITE signatures from fixed files
+#'
+#' This function was used in loading SignatureAnalyzer
+#' signatures from PCAWG7 / Synapse, and has not been
+#' tested since.
 #'
 #' @return A matrix (data.frame?) of COMPOSITE signatures
 #'
@@ -245,14 +246,14 @@ SACat96 <- function(cat96) {
 #'
 #' @param name Name of file to print to.
 #'
-#' @param type See \code{\link[ICAMS]{Cat96ToPdf}}.
+#' @param type See \code{\link[ICAMS]{PlotCatSNS96ToPdf}}.
 #'
-#' @importFrom ICAMS Cat96ToPdf
+#' @importFrom ICAMS PlotCatSNS96ToPdf Collapse1536To96
 #' @export
 #'
 Plot96PartOfComposite <- function(catalog, name, type = "density") {
   cat1536 <- catalog[1:1536, ]
-  cat96 <- ICAMS:::Collapse1536To96(cat1536)
+  cat96 <- Collapse1536To96(cat1536)
   all.0 <- which(colSums(cat96) == 0)
   if (length(all.0) > 0 ) {
     cat96[ , all.0] <- 1
@@ -260,7 +261,7 @@ Plot96PartOfComposite <- function(catalog, name, type = "density") {
     cn[all.0] <- paste(cn[all.0], "WARNING all 0")
     colnames(cat96) <- cn
   }
-  Cat96ToPdf(catalog = cat96/sum(cat96), name = name, type = type)
+  PlotCatSNS96ToPdf(catalog = cat96/sum(cat96), name = name, type = type)
 }
 
 #' Standardize SignatureAnalyzer signature names
@@ -661,7 +662,7 @@ SignatureAnalyzerOneCatalog <-
 #'
 #' @export
 #'
-#' @importFrom ICAMS WriteCat96
+#' @importFrom ICAMS WriteCatSNS96 ReadCatSNS96
 SignatureAnalyzer4MatchedCatalogs <-
   function(
     num.runs = 20,
@@ -678,8 +679,8 @@ SignatureAnalyzer4MatchedCatalogs <-
     if (!dir.exists(dir.root)) stop(dir.root, "does not exist")
 
     subdirs <- c("sa.sa.96", "sp.sp", "sa.sa.COMPOSITE", "sp.sa.COMPOSITE")
-    read.fn <- c(ReadCat96, ReadCat96, ReadCatCOMPOSITE, ReadCatCOMPOSITE)
-    write.fn <- c(WriteCat96, WriteCat96, WriteCatCOMPOSITE, WriteCatCOMPOSITE)
+    read.fn <- c(ReadCatSNS96, ReadCatSNS96, ReadCatCOMPOSITE, ReadCatCOMPOSITE)
+    write.fn <- c(WriteCatSNS96, WriteCatSNS96, WriteCatCOMPOSITE, WriteCatCOMPOSITE)
 
     tmp.fn <- function(subdir, read.fn, write.fn) {
       retval1 <-

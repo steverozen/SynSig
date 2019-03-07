@@ -3,8 +3,8 @@
 
 #' Create one "random" artificial signature profile.
 #'
-#' @param row.headers One of the \code{\link{ICAMS}} package variable such as
-#'  \code{.catalog.row.order96}.
+#' @param row.names One of the \code{\link{ICAMS}} package variable such as
+#'  \code{catalog.row.order[["SNS96"]]}.
 #'
 #' @return A single column matrix with \code{rownames} \code{row.headers} and
 #'   \code{colnames} \code{"RandSig"}.
@@ -13,12 +13,11 @@
 #'
 #' @keywords internal
 
-# TODO(Steve): change variable name to row.names!
-CreateOneRandomMutSigProfile <- function(row.headers) {
-  retval <- matrix(10^runif(length(row.headers)), ncol = 1)
-  # retval <- matrix(10^rnorm(length(row.headers)), ncol = 1) # Too spiky
+CreateOneRandomMutSigProfile <- function(row.names) {
+  retval <- matrix(10^runif(length(row.names)), ncol = 1)
+  # retval <- matrix(10^rnorm(length(row.names)), ncol = 1) # Too spiky
   retval <- retval / sum(retval)
-  rownames(retval) <- row.headers
+  rownames(retval) <- row.names
   colnames(retval) <- "RandSig"
   return(retval)
  }
@@ -26,7 +25,7 @@ CreateOneRandomMutSigProfile <- function(row.headers) {
 #' Create a matrix of "random" signature profiles.
 #'
 #' @param row.headers One of the \code{\link{ICAMS}} package variable such as
-#'  \code{.catalog.row.order96}.
+#'  \code{catalog.row.order[["SNS96"]]}.
 #'
 #' @param num.signatures Number of signatures to create.
 #'
@@ -181,7 +180,7 @@ CreateOneSetOfRandomCatalogs <-
 
     syn.96.sigs <-
       CreateRandomMutSigProfiles(
-        ICAMS:::.catalog.row.order96, total.num.sigs, sig.name.prefix)
+        ICAMS::catalog.row.order[["SNS96"]], total.num.sigs, sig.name.prefix)
 
     syn.COMPOSITE.sigs <-
       CreateRandomMutSigProfiles(
@@ -232,9 +231,9 @@ CreateRandomSAAndSPSynCatalogs <-
   function(top.level.dir, num.syn.tumors, overwrite = FALSE) {
   SetNewOutDir(top.level.dir, overwrite)
 
-  COMPOSITE.features <- c(ICAMS:::.catalog.row.order1536,
-                          ICAMS:::.catalog.row.order.DNS.78,
-                          ICAMS:::.catalog.row.order.ID)
+  COMPOSITE.features <- c(ICAMS::catalog.row.order[["DNS1536"]],
+                          ICAMS::catalog.row.order[["DNS78"]],
+                          ICAMS::catalog.row.order[["ID"]])
 
   # The following are for choosing the mean number of mutations due to each
   # synthetic signature.

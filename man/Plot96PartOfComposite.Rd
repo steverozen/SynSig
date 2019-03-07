@@ -11,7 +11,7 @@ Plot96PartOfComposite(catalog, name, type = "density")
 
 \item{name}{Name of file to print to.}
 
-\item{type}{See \code{\link[ICAMS]{Cat96ToPdf}}.}
+\item{type}{See \code{\link[ICAMS]{PlotCatSNS96ToPdf}}.}
 }
 \description{
 TODO(Steve): Deal with Collapse1536to96

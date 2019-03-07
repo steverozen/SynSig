@@ -141,6 +141,7 @@ BestSignatureAnalyzerResult <- function(sa.results.dir,
 #'
 #' @return The path of the best directory that was copied.
 #'
+#' @importFrom R.utils copyDirectory
 #' @export
 #'
 

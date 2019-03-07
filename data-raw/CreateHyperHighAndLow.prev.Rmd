@@ -25,13 +25,6 @@ We will need to run SignatureAnalyzer first on the 500 tumors with
 neither SBS26 nor SBS44, and then on the "hyper-mutated tumors,
 which contain SBS1, SBS5, SBS26 and and SBS44.
 
-We create two directories for SignatureAnayzer:
-one directory for the SBS1 and SBS5-only tumors, one for the
-"hypermutated" tumors with SBS1, SBS5, SBS27, and SBS44.
-
-We create one directory for SigProfiler, containing a synthetic
-catlog containing  both the non-hyper and hyper tumors.
-
 ## Required libraries
 
 ```{r readSPprofiles}
@@ -76,11 +69,11 @@ sa.hyper.real.exp <-
 \code{SAAndSPSynDataOneCAType} will always include at least 1 non-zero exposure
 in the the synthetic exposure output.
 
-```{r GetParamHighBurden}
-SetNewOutDir("../../syn.hyper.START/",
+```{r}
+
+SetNewOutDir("../../syn.hyper.high.low/",
              overwrite = TRUE # For testing and development
              )
-
 
 set.seed(191908)
 num.syn.tumors <- 500
@@ -229,11 +222,7 @@ sp.hyper.syn.exp <- sp.hyper.syn.exp[ , sp.to.keep]
 
 #### Create catalogs based on SignatureAnalyzer attributions
 
-```{r CreateAndWriteLowBurden}
-SetNewOutDir("../../syn.SA.hyper.low/",
-             overwrite = TRUE # For testing and development
-             )
-
+```{r}
 overwrite = TRUE
 
 CreateAndWriteCatalog(
@@ -241,13 +230,15 @@ CreateAndWriteCatalog(
   no.hyper.syn.info$sa.syn.exp,
   "sa.sa.COMPOSITE",
   WriteCatCOMPOSITE,
+  extra.file.suffix = "no.hyper",
   overwrite = overwrite)
 
 CreateAndWriteCatalog(
   sa.96.sigs,
   no.hyper.syn.info$sa.syn.exp,
   "sa.sa.96",
-  WriteCatSNS96,
+  WriteCat96,
+  extra.file.suffix = "no.hyper",
   overwrite = overwrite)
 ```
 
@@ -262,6 +253,7 @@ CreateAndWriteCatalog(
   sp.no.hyper.exp.renamed,
   "sp.sa.COMPOSITE",
   WriteCatCOMPOSITE,
+  extra.file.suffix = "no.hyper",
   overwrite = overwrite)
 ```
 
@@ -271,7 +263,8 @@ CreateAndWriteCatalog(
   sp.sigs,
   no.hyper.syn.info$sp.syn.exp,
   "sp.sp",
-  WriteCatSNS96,
+  WriteCat96,
+  extra.file.suffix = "no.hyper",
   overwrite = overwrite)
 ```
 
@@ -281,25 +274,22 @@ CreateAndWriteCatalog(
 #### Create catalogs based on SignatureAnalyzer attributions
 
 ```{r}
-SetNewOutDir("../../syn.SA.hyper.mixed/",
-             overwrite = TRUE # For testing and development
-             )
-
 CreateAndWriteCatalog(
   sa.COMPOSITE.sigs,
   sa.hyper.syn.exp,
   "sa.sa.COMPOSITE",
   WriteCatCOMPOSITE,
+  extra.file.suffix = "hyper",
   overwrite = overwrite)
 
 CreateAndWriteCatalog(
   sa.96.sigs,
   sa.hyper.syn.exp,
   "sa.sa.96",
-  WriteCatSNS96,
+  WriteCat96,
+  extra.file.suffix = "hyper",
   overwrite = overwrite)
 ```
-
 
 #### Create synthetic catalogs based on SigProfiler attributions
 
@@ -311,6 +301,7 @@ CreateAndWriteCatalog(
   sp.hyper.exp.renamed,
   "sp.sa.COMPOSITE",
   WriteCatCOMPOSITE,
+  extra.file.suffix = "hyper",
   overwrite = overwrite)
 ```
 
@@ -320,7 +311,8 @@ CreateAndWriteCatalog(
   sp.sigs,
   sp.hyper.syn.exp,
   "sp.sp",
-  WriteCatSNS96,
+  WriteCat96,
+  extra.file.suffix = "hyper",
   overwrite = overwrite)
 ```
 
@@ -329,11 +321,6 @@ CreateAndWriteCatalog(
 ### Write the catalogs for SP
 
 ```{r}
-SetNewOutDir("../../syn.SP.hyper.mixed/",
-             overwrite = TRUE # For testing and development
-             )
-
-
 sa.merge.syn.exp <-
   MergeExposures(
     list(no.hyper.syn.info$sa.syn.exp, sa.hyper.syn.exp))
@@ -342,7 +329,8 @@ CreateAndWriteCatalog(
   sa.96.sigs,
   sa.merge.syn.exp,
   "sa.sa.96",
-  WriteCatSNS96,
+  WriteCat96,
+  extra.file.suffix = "", # <- Note
   overwrite = overwrite)
 ```
 
@@ -356,7 +344,8 @@ CreateAndWriteCatalog(
   sp.sigs,
   sp.merge.syn.exp,
   "sp.sp",
-  WriteCatSNS96,
+  WriteCat96,
+  extra.file.suffix = "", # <- Note
   overwrite = overwrite)
 ```
 

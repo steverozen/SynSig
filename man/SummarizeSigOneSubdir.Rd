@@ -6,7 +6,7 @@
 \usage{
 SummarizeSigOneSubdir(third.level.dir, ground.truth.exposure.name,
   extracted.sigs.path, read.extracted.sigs.fn, read.ground.truth.sigs.fn,
-  write.cat.fn, plot.pdf.fn, plot.png.fn, overwrite = FALSE)
+  write.cat.fn, plot.pdf.fn, overwrite = FALSE)
 }
 \arguments{
 \item{third.level.dir}{Lowest level path to results, that is,
@@ -26,18 +26,15 @@ in the \code{sub.dir}, i.e. \code{third.level.dir}/../}
 \code{<third.level.dir>/SBS96/Selected_Solution/De_Novo_Solution/signatures.PCAWG.format.csv}.}
 
 \item{read.extracted.sigs.fn}{Function to read the extracted sigs file.
-e.g. \code{ReadCat96}}
+e.g. \code{ReadCatSNS96}}
 
 \item{read.ground.truth.sigs.fn}{Function to read the ground-truth sigs file.
-e.g. \code{ReadCat96}}
+e.g. \code{ReadCatSNS96}}
 
 \item{write.cat.fn}{Function to write a catalog to disk, for example
-[ICAMS]{WriteCat96}}
+[ICAMS]{WriteCatSNS96}}
 
 \item{plot.pdf.fn}{If a function, use it to plot PDFs of the ground truth and
-extracted signatures.}
-
-\item{plot.png.fn}{If a function, use it to plot PNGs of the ground truth and
 extracted signatures.}
 
 \item{overwrite}{If TRUE overwrite existing directories and files.}

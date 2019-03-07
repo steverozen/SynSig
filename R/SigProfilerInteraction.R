@@ -22,7 +22,7 @@ ReadSigProfilerSig96 <- function(file) {
 
   rownames(x) <- new.n
 
-  x <- x[ICAMS:::.catalog.row.order96, ]
+  x <- x[ICAMS::catalog.row.order[["SNS96"]], ]
 
   return(x)
 
@@ -30,6 +30,3 @@ ReadSigProfilerSig96 <- function(file) {
 
 ## Turn this into a test
 ## ReadSigProfilerSig96("example-SP-signatures.txt")
-
-
-
