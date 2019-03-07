@@ -1,7 +1,7 @@
 Package: SynSig
 Type: Package
 Title: Dealing with Synthetic Mutational Signatures
-Version: 0.1.0.9007
+Version: 0.2.0.9000
 Author: Steven G. Rozen
 Maintainer: Steven G. Rozen <steverozen@gmail.com>
 Description: A collection of functions for generating synthetic
