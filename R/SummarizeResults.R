@@ -71,12 +71,10 @@ SummarizeSigOneSubdir <-
 
     write.cat.fn(
       sigAnalysis$gt.sigs,
-      path = paste(outputPath,"ground.truth.sigs.csv",sep = "/"),
-      strict = FALSE)
+      path = paste(outputPath,"ground.truth.sigs.csv",sep = "/"))
     write.cat.fn(
       sigAnalysis$ex.sigs,
-      path = paste(outputPath,"extracted.sigs.csv",sep = "/"),
-      strict = FALSE)
+      path = paste(outputPath,"extracted.sigs.csv",sep = "/"))
 
     capture.output(
       cat("Average cosine similarity\n"),
