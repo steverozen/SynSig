@@ -26,7 +26,7 @@
 #' extracted signatures.
 #'
 #' @param write.cat.fn Function to write a catalog to disk, for example
-#' [ICAMS]{WriteCatSNS96}
+#' [ICAMS]\code{WriteCatSNS96}
 #'
 #' @param overwrite If TRUE overwrite existing directories and files.
 #'
@@ -69,10 +69,14 @@ SummarizeSigOneSubdir <-
     write.csv(sigAnalysis$match2,
               file = paste(outputPath,"match2.csv",sep = "/"))
 
-    write.cat.fn(sigAnalysis$gt.sigs,
-                 path = paste(outputPath,"ground.truth.sigs.csv",sep = "/"))
-    write.cat.fn(sigAnalysis$ex.sigs,
-                 path = paste(outputPath,"extracted.sigs.csv",sep = "/"))
+    write.cat.fn(
+      sigAnalysis$gt.sigs,
+      path = paste(outputPath,"ground.truth.sigs.csv",sep = "/"),
+      strict = FALSE)
+    write.cat.fn(
+      sigAnalysis$ex.sigs,
+      path = paste(outputPath,"extracted.sigs.csv",sep = "/"),
+      strict = FALSE)
 
     capture.output(
       cat("Average cosine similarity\n"),

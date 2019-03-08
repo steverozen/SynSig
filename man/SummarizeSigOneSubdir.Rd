@@ -32,7 +32,7 @@ e.g. \code{ReadCatSNS96}}
 e.g. \code{ReadCatSNS96}}
 
 \item{write.cat.fn}{Function to write a catalog to disk, for example
-[ICAMS]{WriteCatSNS96}}
+[ICAMS]\code{WriteCatSNS96}}
 
 \item{plot.pdf.fn}{If a function, use it to plot PDFs of the ground truth and
 extracted signatures.}

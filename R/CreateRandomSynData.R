@@ -212,7 +212,7 @@ CreateOneSetOfRandomCatalogs <-
       syn.96.sigs,
       exp,
       x96.dir.name,
-      WriteCat96,
+      WriteCatSNS96,
       overwrite = overwrite)
 }
 
@@ -286,9 +286,9 @@ CreateRandomSAAndSPSynCatalogs <-
 
 MakeAllRandom <- function() {
   set.seed(1443196)
-  CreateRandomSAAndSPSynCatalogs("./0syn.30.random.sigs/",
+  CreateRandomSAAndSPSynCatalogs("./tmp2.syn.30.random.sigs/",
                            1000, overwrite = TRUE)
   cat("\n\ncreated", getwd(),
-      list.files(pattern = "0syn.30.random.sigs"))
+      list.files(pattern = "tmp2.0syn.30.random.sigs"))
 
 }

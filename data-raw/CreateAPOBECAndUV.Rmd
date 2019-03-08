@@ -94,7 +94,7 @@ CreateAndWriteCatalog(
   sa.96.sigs,
   sa.bladder.skin.syn.exp,
   "sa.sa.96",
-  WriteCat96)
+  WriteCatSNS96)
 
 ```
 
@@ -137,7 +137,7 @@ CreateAndWriteCatalog(
   sp.sigs,
   sp.bladder.skin.syn.exp,
   "sp.sp",
-  WriteCat96)
+  WriteCatSNS96)
 
 ```
 
@@ -195,7 +195,7 @@ knitr::kable(
 ### Generate synthetic exposures
 
 ```{r}
-SetNewOutDir("../../Xsyn.2.7a.7b.abst.v8/")
+SetNewOutDir("../../tmp.syn.2.7a.7b.abst.v8/")
 set.seed(55)
 num.syn.tumors <- 1000
 ```
@@ -228,7 +228,7 @@ CreateAndWriteCatalog(
   sa.96.sigs, 
   sa.abst.info$syn.exp,
   "sa.sa.96",
-  WriteCat96)
+  WriteCatSNS96)
 
 ```
 
@@ -254,7 +254,7 @@ CreateAndWriteCatalog(
   sp.sigs, 
   sp.abst.info$syn.exp,
   "sp.sp",
-  WriteCat96)
+  WriteCatSNS96)
 
 ```
 

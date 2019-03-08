@@ -141,7 +141,6 @@ BestSignatureAnalyzerResult <- function(sa.results.dir,
 #'
 #' @return The path of the best directory that was copied.
 #'
-#' @importFrom R.utils copyDirectory
 #' @export
 #'
 
@@ -158,8 +157,15 @@ CopyBestSignatureAnalyzerResult <-
     }
     # file.copy.ret <- file.copy(
     #  from = best, to = target.dir, overwrite = TRUE)
-    copyDirectory(
-      from = best, to = target.dir, overwrite = overwrite, recursive = TRUE)
+    #copyDirectory(
+    #  from = best, to = target.dir, overwrite = overwrite, recursive = TRUE)
+    if (dir.exists(target.dir)) {
+      if (!overwrite) stop("Directory", target.dir, "exists and !overwrite")
+    } else {
+      create.result <- dir.create(target.dir)
+      if (!create.result) warning("problem creating", target.dir)
+    }
+    file.copy(from = best, to = target.dir, recursive = TRUE)
     cat("This is a copy of", best, file = paste0(target.dir, "/info.txt"))
     return(best)
   }

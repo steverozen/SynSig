@@ -555,6 +555,13 @@ CreateAndWriteCatalog <-
                   OutDir(paste0(dir, "/ground.truth.syn.sigs", suffix)))
     # write.cat.fn(info$ground.truth.catalog,
     #             OutDir(paste0(dir, "/syn.data", suffix)))
+    zero.mutation <- which(colSums(info$ground.truth.catalog) == 0)
+
+    if (length(zero.mutation) > 0) {
+      warning("Tumors with no mutation:\n\n",
+              colnames(info$ground.truth.catalog)[zero.mutation],
+              "in", OutDir(dir))
+    }
     write.cat.fn(info$ground.truth.catalog,
                  OutDir(paste0(dir, "/ground.truth.syn.catalog", suffix)))
     WriteExposure(info$ground.truth.exposures,

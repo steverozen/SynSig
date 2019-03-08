@@ -1,4 +1,4 @@
-context("Test generation of ranodom signatures")
+context("Test generation of random signatures")
 
 test_that("CreateRandomMutSigProfiles", {
   load("rand.syn.96.sigs.Rdata")
