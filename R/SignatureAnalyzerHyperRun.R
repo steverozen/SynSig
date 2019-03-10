@@ -54,6 +54,9 @@ SignatureAnalyzerPrepHyper4 <- function(parent.dir, overwrite = FALSE) {
     hyper.catalog <- read.fn(paste0(dir2, "/ground.truth.syn.catalog"))
     hyper.catalog.plus <- cbind(hyper.catalog, pseudo.catalog)
 
+    # mv ground.truth.syn.catalog
+    # save hyper.catalog.plus as ground.truth.syn.catalog.
+
   }
 
 
