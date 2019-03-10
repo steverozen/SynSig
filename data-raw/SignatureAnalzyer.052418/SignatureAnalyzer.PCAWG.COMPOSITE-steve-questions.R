@@ -64,7 +64,8 @@ load(file=paste(INPUT,"lego1536.INDEL.091217.RData",sep="")) ### INDEL lego-matr
 
 lego1536.PAN <- rbind(lego1536.SNV,lego1536.DNP,lego1536.INDEL) ### COMPOSITE lego-matrix in 1697 features (1536 SNV + 78 DNP + 83 INDEL)
 
-###### loading information on hyper- or ultra-mutated samples; POLE (n=9), MSI (n=39), all SKIN (n=107), and single TMZ (CNS_GBM__SP25494)
+###### loading information on hyper- or ultra-mutated samples; POLE (n=9), MSI
+###### (n=39), all SKIN (n=107), and single TMZ (CNS_GBM__SP25494)
 load(file=paste(INPUT,"sample.POLE.RData",sep=""))
 load(file=paste(INPUT,"sample.MSI1.RData",sep=""))
 load(file=paste(INPUT,"sample.remove.RData",sep=""))
@@ -74,13 +75,16 @@ sample.TMZ <- c("CNS_GBM__SP25494")
 lego.PRIMARY <- lego1536.PAN[,!colnames(lego1536.PAN)%in%sample.remove]
 lego.SECONDARY <- lego1536.PAN[,colnames(lego1536.PAN)%in%sample.remove]
 
-######################
-####### First step: Signature Extraction for the PRIMARY 2624 sample set
-####### Execute several Bayesian NMF runs and select the solution with the lowest value of res[[4]] (-log(posterior)) at the lowest number of signatures.
-####### Bayesian NMF begins with the maximum number of signatures (Kcol) and irrelevant columns and rows in both W and H, respectively,  are iteratively removed through
-####### the automatic relevance determination techinique and the final number of signatures is determined
-####### by counting non-zero columns in W (res[[1]]).
-######################
+
+####### First step: Signature Extraction for the PRIMARY 2624 sample set Execute
+####### several Bayesian NMF runs and select the solution with the lowest value
+####### of res[[4]] (-log(posterior)) at the lowest number of signatures.
+####### Bayesian NMF begins with the maximum number of signatures (Kcol) and
+####### irrelevant columns and rows in both W and H, respectively,  are
+####### iteratively removed through the automatic relevance determination
+####### techinique and the final number of signatures is determined by counting
+####### non-zero columns in W (res[[1]]).
+
 	if (FALSE) {
 		Kcol <- 50
 		method <- "L1W.L2H.LEGO1536.COMPOSITE_FIRST"
@@ -90,16 +94,19 @@ lego.SECONDARY <- lego1536.PAN[,colnames(lego1536.PAN)%in%sample.remove]
 		}
 	}
 
-######################
-####### Second step: Signature Extraction for the SECONDARY 156 sample set
-####### Execute several Bayesian NMF runs and select the solution with the lowest value of res[[4]] (-log(posterior)) at the lowest number of signatures
-######################
-	load(file=paste(OUTPUT,"L1W.L2H.LEGO1536.COMPOSITE_FIRST.RData",sep="")) ### loading BayesNMF solution for the primary data set (example RData file).
-	W <- res[[1]]
+####### Second step: Signature Extraction for the SECONDARY 156
+####### sample set Execute several Bayesian NMF runs and select the solution with
+####### the lowest value of res[[4]] (-log(posterior)) at the lowest number of
+####### signatures
+	load(file=paste(OUTPUT,"L1W.L2H.LEGO1536.COMPOSITE_FIRST.RData",sep=""))
+	### loading BayesNMF solution for the primary data set (example RData file).
+  # Steve: W contains the signtures extracted from the "primary" data set.
+		W <- res[[1]]
         H <- res[[2]]
         index <- colSums(W) > 1 ### sum(index) is the number of signatures in the primary data set
 
-	###### All mutation burdens of the primary dataset are now included in the W matrix (signature-loading) and the H matrix (activity-loading).
+	###### All mutation burdens of the primary dataset are now included in the W
+	###### matrix (signature-loading) and the H matrix (activity-loading).
         W <- W[,index]
         H <- H[index,]
 	W1536.PRIMARY <- W
@@ -112,11 +119,15 @@ lego.SECONDARY <- lego1536.PAN[,colnames(lego1536.PAN)%in%sample.remove]
 	rownames(H1536.PRIMARY) <- colnames(W1536.PRIMARY)
 	W1536.PRIMARY.norm <- apply(W1536.PRIMARY,2,function(x) x/sum(x)) ## Normalized primary signatures
 
-	###### PRIMARY signatures (W1536.PRIMARY) with all mutation burdens were added to the muation count matrix of the secondary data set.
-	###### Thus all PRIMARY signatures are now treated as extra fake samples with keeping mutation burdens in the PRIMARY 2624 samples.
-	###### This process enforces the primary signatures to be reatined in the secondary signature extraction,
-	###### while enablling a discovery of novel signatures unique to the second primary data set.
-        lego.PRIMARY.SECONDARY <- cbind(W1536.PRIMARY,lego.SECONDARY) # Jaegil, it looks like the result of the cbind will serve as the V matrix for the secondary extraction, correct?
+	###### PRIMARY signatures (W1536.PRIMARY) with all mutation burdens were added
+	###### to the muation count matrix of the secondary data set. Thus all PRIMARY
+	###### signatures are now treated as extra fake samples with keeping mutation
+	###### burdens in the PRIMARY 2624 samples. This process enforces the primary
+	###### signatures to be reatined in the secondary signature extraction, while
+	###### enablling a discovery of novel signatures unique to the second primary
+	###### data set.
+        lego.PRIMARY.SECONDARY <- cbind(W1536.PRIMARY,lego.SECONDARY)
+        # Jaegil, it looks like the result of the cbind will serve as the V matrix for the secondary extraction, correct?
         method <- "L1W.L2H.LEGO1536.COMPOSITE_SECOND"
 	if (FALSE) {
         Kcol <- 96
@@ -126,7 +137,8 @@ lego.SECONDARY <- lego1536.PAN[,colnames(lego1536.PAN)%in%sample.remove]
 	}
 	}
 
-	load(file=paste(OUTPUT,"L1W.L2H.LEGO1536.COMPOSITE_SECOND.RData",sep="")) ### loading BayesNMF solution for the primary data set (example RData file)
+	load(file=paste(OUTPUT,"L1W.L2H.LEGO1536.COMPOSITE_SECOND.RData",sep=""))
+	### loading BayesNMF solution for the primary data set (example RData file)
 	W <- res[[1]]
         H <- res[[2]]
         index <- colSums(W) > 1 ### sum(index) is the number of extracted signatures in the primary data set
