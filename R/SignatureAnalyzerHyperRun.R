@@ -12,6 +12,7 @@
 #'
 #' @param overwrite If \code{TRUE} overwrite existing directories and fies.
 #'
+#' @importFrom ICAMS ReadCatSNS96, WriteCatSNS96
 
 SignatureAnalyzerPrepHyper4 <- function(parent.dir, overwrite = FALSE) {
   if (!dir.exists(parent.dir)) stop(parent.dir, "does not exist")
@@ -23,7 +24,6 @@ SignatureAnalyzerPrepHyper4 <- function(parent.dir, overwrite = FALSE) {
   subdirs <- c("sa.sa.96", "sp.sp", "sa.sa.COMPOSITE", "sp.sa.COMPOSITE")
   read.fn <- c(ReadCatSNS96, ReadCatSNS96, ReadCatCOMPOSITE, ReadCatCOMPOSITE)
   write.fn <- c(WriteCatSNS96, WriteCatSNS96, WriteCatCOMPOSITE, WriteCatCOMPOSITE)
-  slice <- 1:4
 
   tmp.fn <- function(subdir, read.fn, write.fn) {
     dir1 <- paste0(non.h.prefix, "/", subdir)
@@ -33,7 +33,7 @@ SignatureAnalyzerPrepHyper4 <- function(parent.dir, overwrite = FALSE) {
     non.hyper.results <-paste0(dir1, "/sa.results")
     if (!dir.exists(non.hyper.results)) stop(non.hyper.results, "does not exist")
     # Find the best run in the non-hyper-mutated data.
-    best.run <- BestSignatureAnalyzerResult(non.hyper.results, overwrite = overwrite)
+    best.run <- CopyBestSignatureAnalyzerResult(non.hyper.results, overwrite = overwrite)
     best.sigs <- read.fn(paste0(best.run, "/sa.output.sigs.csv"))
 
     best.exp  <- ReadExposure(paste0(best.run, "/sa.output.exp.csv"))
@@ -42,6 +42,7 @@ SignatureAnalyzerPrepHyper4 <- function(parent.dir, overwrite = FALSE) {
                  ### but are arbitrarily scaled, but
                  ### best.sigs %*% best.exp should still approximate
                  ### the orignal catalog.
+    stopifnot(ncol(best.sigs) == nrow(best.exp))
     pseudo.catalog <- best.sigs %*% rowSums(best.exp) # This should work if
                                                       # rowSums(best.exp) is
                                                       # interpreted as a 1-column
@@ -54,14 +55,22 @@ SignatureAnalyzerPrepHyper4 <- function(parent.dir, overwrite = FALSE) {
     hyper.catalog <- read.fn(paste0(dir2, "/ground.truth.syn.catalog"))
     hyper.catalog.plus <- cbind(hyper.catalog, pseudo.catalog)
 
-    # mv ground.truth.syn.catalog
-    # save hyper.catalog.plus as ground.truth.syn.catalog.
+    file.rename(from = hyper.catalog, to = paste0("prev.", hyper.catalog))
+    write.fn(hyper.catalog, hyper.catalog)
+
+    # We don't deal with the exposures, because we will remove the
+    # pseudo-catalog from the input before assessing the extracted signatures.
+    # (Must remember to do this.)
+
+    return(NULL)
 
   }
 
+  mapply(tmp.fn, subdirs, read.fn, write.fn)
 
-  retval2 <-
-    mapply(tmp.fn, subdirs[slice], read.fn[slice], write.fn[slice])
-
+  return(NULL)
 
 }
+
+debug(SignatureAnalyzerPrepHyper4)
+SignatureAnalyzerPrepHyper4("../syn.hyper.4.folders/")

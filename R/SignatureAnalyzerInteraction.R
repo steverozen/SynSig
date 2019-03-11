@@ -384,6 +384,7 @@ RunSignatureAnalyzerOnFile <-
     sigs <- out.data[[1]]
     sigs <- sigs[   , colSums(sigs) > 1]
 
+    stop("DEBUG HERE, exp has no rows????")
     exp <- out.data[[2]]
     exp <- exp[colnames(sigs), ]
 
