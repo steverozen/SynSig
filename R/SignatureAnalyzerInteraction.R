@@ -382,11 +382,15 @@ RunSignatureAnalyzerOnFile <-
       file = paste0(TEMPORARY, "captured.output.txt"))
 
     sigs <- out.data[[1]]
-    sigs <- sigs[   , colSums(sigs) > 1]
+    sigs.to.use <- which(colSums(sigs) > 1 )
+    sigs <- sigs[   , sigs.to.use]
 
-    stop("DEBUG HERE, exp has no rows????")
+    new.names <- paste0("W.", 1:ncol(sigs))
+    colnames(sigs) <- new.names
+
     exp <- out.data[[2]]
-    exp <- exp[colnames(sigs), ]
+    exp <- exp[sigs.to.use, ]
+    rownames(exp) <- new.names
 
     names(out.data) <- c("signatures.W", "exposures.H",
                          "likelihood", "evidence",
@@ -664,6 +668,10 @@ SignatureAnalyzerOneCatalog <-
 #' @export
 #'
 #' @importFrom ICAMS WriteCatSNS96 ReadCatSNS96
+#'
+
+# TODO(Steve): Why is there an issue finding catalog.row.order from
+# inside of ReadCatSNS96?
 SignatureAnalyzer4MatchedCatalogs <-
   function(
     num.runs = 20,
