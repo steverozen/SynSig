@@ -286,9 +286,6 @@ CreateRandomSAAndSPSynCatalogs <-
 
 MakeAllRandom <- function() {
   set.seed(1443196)
-  CreateRandomSAAndSPSynCatalogs("./tmp2.syn.30.random.sigs/",
+  CreateRandomSAAndSPSynCatalogs("./x30.random.sigs.2019.03.12/",
                            1000, overwrite = TRUE)
-  cat("\n\ncreated", getwd(),
-      list.files(pattern = "tmp2.0syn.30.random.sigs"))
-
 }
