@@ -25,13 +25,14 @@ CreateMixedTumorTypeSyntheticData <-
     info.list <-
       lapply(cancer.type.strings,
              function(ca.type.str) {
+               cat("\n\nProcessing", ca.type.str, "\n\n\n")
                retval <-
                  SAAndSPSynDataOneCAType(
                    sa.all.real.exposures,
                    sp.all.real.exposures,
                    ca.type = ca.type.str,
                    num.syn.tumors,
-                   file.prefix = "ca.type.str")
+                   file.prefix = ca.type.str)
                return(retval)
              })
 
@@ -40,8 +41,13 @@ CreateMixedTumorTypeSyntheticData <-
 
     sa.exposures <- lapply(info.list, function(x) x$sa.syn.exp)
     sa.exp <- MergeExposures(sa.exposures)
+    cat("Dimension sa.exp", dim(sa.exp), "\n")
+
     sp.exposures <- lapply(info.list, function(x) x$sp.syn.exp)
     sp.exp <- MergeExposures(sp.exposures)
+    cat("Dimension sp.exp", dim(sp.exp), "\n")
+
+
     # We will need the exposures later when evaluating the attributed signatures
     WriteExposure(sa.exp, OutDir("sa.exposure.csv"))
     WriteExposure(sp.exp, OutDir("sp.exposure.csv"))
@@ -53,13 +59,15 @@ CreateMixedTumorTypeSyntheticData <-
       sa.COMPOSITE.sigs,
       sa.exp,
       "sa.sa.COMPOSITE",
-      WriteCatCOMPOSITE)
+      WriteCatCOMPOSITE,
+      overwrite = overwrite)
 
     CreateAndWriteCatalog(
       sa.96.sigs,
       sa.exp,
       "sa.sa.96",
-      WriteCatSNS96)
+      WriteCatSNS96,
+      overwrite = overwrite)
 
     # Create synthetic mutational spectra catalogs based on SigProfiler
     # attributions
@@ -74,7 +82,8 @@ CreateMixedTumorTypeSyntheticData <-
       sa.COMPOSITE.sigs,
       sp.sa.map.info$exp2,
       "sp.sa.COMPOSITE",
-      WriteCatCOMPOSITE)
+      WriteCatCOMPOSITE,
+      overwrite = overwrite)
 
 
     print(sp.sa.map.info$sp.to.sa.sig.match)
@@ -83,9 +92,11 @@ CreateMixedTumorTypeSyntheticData <-
       sp.sigs,
       sp.exp,
       "sp.sp",
-      WriteCatSNS96)
+      WriteCatSNS96,
+      overwrite = overwrite)
 
-    invisible(info.list = info.list,  sp.sa.map.info =  sp.sa.map.info)
+    invisible(list(info.list = info.list,
+                   sp.sa.map.info =  sp.sa.map.info))
 
   }
 
@@ -101,4 +112,41 @@ BladderAndUV <- function() {
       num.syn.tumors = num.syn.tumors,
       overwrite = TRUE
     )
-  }
+  invisible(retval)
+}
+
+# unique(sub("::.*", "", colnames(sp.all.real.exposures), perl = T))
+
+Mix2 <- function() {
+  set.seed(191906)
+  num.syn.tumors <- 300
+  top.level.dir <- "../mixed.test"
+  cancer.types <- c("Bladder-TCC", "Eso-AdenoCA", # "Prost-AdenoCA",
+                    "Breast-AdenoCA", "Lung-SCC",
+                    "Kidney-RCC",   "Ovary-AdenoCA",
+                    "Bone-Osteosarc", "Cervix-AdenoCA",
+                    "Stomach-AdenoCA") # "Liver-HCC" )
+  retval <-
+    CreateMixedTumorTypeSyntheticData(
+      top.level.dir = top.level.dir,
+      cancer.type.strings = cancer.types,
+      num.syn.tumors = num.syn.tumors,
+      overwrite = TRUE
+    )
+
+  file.copy(
+    from = "data-raw/1run.signatureanalyzer.on.monster.R",
+    to = paste0(top.level.dir, "/sa.sa.96/"))
+  file.copy(
+    from = "data-raw/2run.signatureanalyzer.on.monster.R",
+    to = paste0(top.level.dir, "/sp.sp/"))
+  file.copy(
+    from = "data-raw/3run.signatureanalyzer.on.monster.R",
+    to = paste0(top.level.dir, "/sa.sa.COMPOSITE/"))
+  file.copy(
+    from = "data-raw/4run.signatureanalyzer.on.monster.R",
+    to = paste0(top.level.dir, "/sp.sa.COMPOSITE/"))
+
+
+  invisible(retval)
+}

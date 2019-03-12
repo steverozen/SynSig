@@ -3,6 +3,7 @@
 export(BestSignatureAnalyzerResult)
 export(CopyBestSignatureAnalyzerResult)
 export(CreateAndWriteCatalog)
+export(CreateMixedTumorTypeSyntheticData)
 export(CreateRandomSAAndSPSynCatalogs)
 export(CreateSynCatalogs)
 export(FixSASigNames)
