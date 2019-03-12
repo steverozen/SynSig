@@ -150,22 +150,24 @@ CopyBestSignatureAnalyzerResult <-
            overwrite = FALSE) {
     best <- BestSignatureAnalyzerResult(sa.results.dir, verbose)
     target.dir <- paste0(sa.results.dir, "/best.run")
-    if (dir.exists(target.dir) && overwrite) {
-      cat("\nInformation: overwriting", target.dir, "\n")
-      unlink.ret <- unlink(target.dir, recursive = TRUE, force = TRUE)
-      if (unlink.ret != 0) stop("Unable to unlink", target.dir)
-    }
-    # file.copy.ret <- file.copy(
+     # file.copy.ret <- file.copy(
     #  from = best, to = target.dir, overwrite = TRUE)
     #copyDirectory(
     #  from = best, to = target.dir, overwrite = overwrite, recursive = TRUE)
     if (dir.exists(target.dir)) {
-      if (!overwrite) stop("Directory", target.dir, "exists and !overwrite")
+      if (!overwrite) stop("Directory", target.dir, " exists and !overwrite")
     } else {
       create.result <- dir.create(target.dir)
       if (!create.result) warning("problem creating", target.dir)
     }
-    file.copy(from = best, to = target.dir, recursive = TRUE)
+    best.exp <- paste0(best, "sa.output.exp.csv")
+    if (!file.exists(best.exp)) stop(best.exp, " does not exist")
+    file.copy(from = best.exp, to = target.dir, overwrite = overwrite)
+    file.copy(from = paste0(best, "sa.output.sigs.csv"),
+              to = target.dir, overwrite = overwrite)
+    file.copy(from = paste0(best, "sa.output.other.data.csv"),
+              to = target.dir, overwrite = overwrite)
+
     cat("This is a copy of", best, file = paste0(target.dir, "/info.txt"))
     return(best)
   }

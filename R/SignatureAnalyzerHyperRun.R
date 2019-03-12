@@ -12,9 +12,12 @@
 #'
 #' @param overwrite If \code{TRUE} overwrite existing directories and fies.
 #'
-#' @importFrom ICAMS ReadCatSNS96 WriteCatSNS96
+#' @export
+#'
+#' @importFrom ICAMS ReadCatSNS96 WriteCatSNS96 PlotCatSNS96ToPdf
 
-SignatureAnalyzerPrepHyper4 <- function(parent.dir, overwrite = FALSE) {
+SignatureAnalyzerPrepHyper4 <-
+  function(parent.dir, overwrite = FALSE) {
   if (!dir.exists(parent.dir)) stop(parent.dir, "does not exist")
   non.h.prefix <- paste0(parent.dir, "/syn.SA.hyper.low")
   h.prefix <- paste0(parent.dir, "/syn.SA.hyper.mixed")
@@ -22,8 +25,10 @@ SignatureAnalyzerPrepHyper4 <- function(parent.dir, overwrite = FALSE) {
   if (!dir.exists(h.prefix)) stop(h.prefix, "does not exist")
 
   subdirs <- c("sa.sa.96", "sp.sp", "sa.sa.COMPOSITE", "sp.sa.COMPOSITE")
-  read.fn <- c(ReadCatSNS96, ReadCatSNS96, ReadCatCOMPOSITE, ReadCatCOMPOSITE)
-  write.fn <- c(WriteCatSNS96, WriteCatSNS96, WriteCatCOMPOSITE, WriteCatCOMPOSITE)
+  read.fn <- c(ReadCatSNS96, ReadCatSNS96,
+               ReadCatCOMPOSITE, ReadCatCOMPOSITE)
+  write.fn <- c(WriteCatSNS96, WriteCatSNS96,
+                WriteCatCOMPOSITE, WriteCatCOMPOSITE)
 
   tmp.fn <- function(subdir, read.fn, write.fn) {
     dir1 <- paste0(non.h.prefix, "/", subdir)
@@ -33,30 +38,48 @@ SignatureAnalyzerPrepHyper4 <- function(parent.dir, overwrite = FALSE) {
     non.hyper.results <-paste0(dir1, "/sa.results")
     if (!dir.exists(non.hyper.results)) stop(non.hyper.results, "does not exist")
     # Find the best run in the non-hyper-mutated data.
-    best.run <- CopyBestSignatureAnalyzerResult(non.hyper.results, overwrite = overwrite)
-    best.sigs <- read.fn(paste0(best.run, "/sa.output.sigs.csv"))
+    best.run <-
+      CopyBestSignatureAnalyzerResult(
+        non.hyper.results, overwrite = overwrite)
+    best.run.file <- paste0(dir1, "/sa.results/best.run/sa.output.sigs.csv")
+    if (!file.exists(best.run.file)) stop(best.run.file, " does not exist")
+    best.sigs <- read.fn(best.run.file)
 
-    best.exp  <- ReadExposure(paste0(best.run, "/sa.output.exp.csv"))
+    best.exp.file <- paste0(dir1, "/sa.results/best.run/sa.output.exp.csv")
+    if (!file.exists(best.exp.file)) stop(best.exp.file, " does not exist")
+    best.exp  <- ReadExposure(best.exp.file)
+
     exp.sums <- rowSums(best.exp) # Sum for each signature.
-                 ### IMPORTANT, I think signatures are not proportions,
-                 ### but are arbitrarily scaled, but
-                 ### best.sigs %*% best.exp should still approximate
+                 ### best.sigs not proportions, but rather are
+                 ### arbitrarily scaled. However, the total number of mutations
+                 ### in best.sigs %*% diag(best.exp) should still approximate
                  ### the orignal catalog.
     stopifnot(ncol(best.sigs) == nrow(best.exp))
-    pseudo.catalog <- best.sigs %*% rowSums(best.exp) # This should work if
-                                                      # rowSums(best.exp) is
-                                                      # interpreted as a 1-column
-                                                      # matrix.
-    # Add check to make sure the number of mutations n pseudo.catalog is close
+    pseudo.catalog <- best.sigs %*% diag(exp.sums)
+    colnames(pseudo.catalog) <-
+      paste0("pseudo.sample.", 1:ncol(pseudo.catalog))
+
+    if (nrow(best.sigs) == 96) {
+      # This would break on composite signatures
+      PlotCatSNS96ToPdf(
+        pseudo.catalog,
+        paste0(dir2, "/pseudo.catalog.pdf"),
+        type = "counts")
+    }
+
+    # Make sure the number of mutations in pseudo.catalog is close
     # to the number in the input catalog.
+    ground.truth.catalog <-
+      read.fn(paste0(dir1, "/ground.truth.syn.catalog.csv"))
+    cat(sum(pseudo.catalog), sum(ground.truth.catalog), "\n")
 
-    colnames(pseudo.catalog) <- paste0("pseudo.sample.", colnames(pseudo.catalog))
-
-    hyper.catalog <- read.fn(paste0(dir2, "/ground.truth.syn.catalog"))
+    hyper.catalog.name <- paste0(dir2, "/ground.truth.syn.catalog.csv")
+    hyper.catalog <- read.fn(hyper.catalog.name)
     hyper.catalog.plus <- cbind(hyper.catalog, pseudo.catalog)
 
-    file.rename(from = hyper.catalog, to = paste0("prev.", hyper.catalog))
-    write.fn(hyper.catalog, hyper.catalog)
+    file.rename(from = hyper.catalog.name,
+                to = paste0("prev.", hyper.catalog.name))
+    write.fn(hyper.catalog, hyper.catalog.name)
 
     # We don't deal with the exposures, because we will remove the
     # pseudo-catalog from the input before assessing the extracted signatures.
