@@ -12,7 +12,7 @@
 #'
 #' @param overwrite If \code{TRUE} overwrite existing directories and fies.
 #'
-#' @importFrom ICAMS ReadCatSNS96, WriteCatSNS96
+#' @importFrom ICAMS ReadCatSNS96 WriteCatSNS96
 
 SignatureAnalyzerPrepHyper4 <- function(parent.dir, overwrite = FALSE) {
   if (!dir.exists(parent.dir)) stop(parent.dir, "does not exist")
@@ -50,7 +50,7 @@ SignatureAnalyzerPrepHyper4 <- function(parent.dir, overwrite = FALSE) {
     # Add check to make sure the number of mutations n pseudo.catalog is close
     # to the number in the input catalog.
 
-    colnames(pseudo.catalog) <- paste0("pseudo.sample.", conames(pseudo.catalog))
+    colnames(pseudo.catalog) <- paste0("pseudo.sample.", colnames(pseudo.catalog))
 
     hyper.catalog <- read.fn(paste0(dir2, "/ground.truth.syn.catalog"))
     hyper.catalog.plus <- cbind(hyper.catalog, pseudo.catalog)
@@ -72,5 +72,5 @@ SignatureAnalyzerPrepHyper4 <- function(parent.dir, overwrite = FALSE) {
 
 }
 
-debug(SignatureAnalyzerPrepHyper4)
-SignatureAnalyzerPrepHyper4("../syn.hyper.4.folders/")
+# debug(SignatureAnalyzerPrepHyper4)
+# SignatureAnalyzerPrepHyper4("../syn.hyper.4.folders/")
