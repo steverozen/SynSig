@@ -78,8 +78,11 @@ SignatureAnalyzerPrepHyper4 <-
     hyper.catalog <- read.fn(hyper.catalog.name)
     hyper.catalog.plus <- cbind(hyper.catalog, pseudo.catalog)
 
-    file.rename(from = hyper.catalog.name,
-                to = paste0("prev.", hyper.catalog.name))
+    new.name <- paste0(dir2, "/prev.ground.truth.syn.catalog.csv")
+    res <- file.rename(from = hyper.catalog.name, to = new.name)
+    if (!res) { stop("Did not rename from ", hyper.catalog.name,
+                     " to ", new.name )}
+
     cat("dim of hyper.catalog.plus is", dim(hyper.catalog.plus))
     write.fn(hyper.catalog.plus, hyper.catalog.name)
 
