@@ -64,11 +64,25 @@ SummarizeSigOneSubdir <-
     }
     suppressWarnings(dir.create(outputPath))
 
+    # Copies ground.truth exposures and from second.level.dir
+    # to third.level.dir/summary
+    copy.from <- paste0(third.level.dir,"/../ground.truth.syn.exposures.csv")
+    if (!file.exists(copy.from)) {
+      warning("Cannot find", copy.from, "\n\nSkipping\n\n")
+    } else {
+      file.copy(# from = paste0(third.level.dir,"/SBS96/All_Solution_Layer/L1/stability.pdf"),
+        from = copy.from,
+        to = paste0(third.level.dir,"/summary/"),
+        overwrite = TRUE)
+    }
+
+    # Writes bi-directional matching and cos.sim calculation
     write.csv(sigAnalysis$match1,
               file = paste(outputPath,"match1.csv",sep = "/"))
     write.csv(sigAnalysis$match2,
               file = paste(outputPath,"match2.csv",sep = "/"))
 
+    # Writes ground truth and extracted signatures
     write.cat.fn(
       sigAnalysis$gt.sigs,
       path = paste(outputPath,"ground.truth.sigs.csv",sep = "/"))
@@ -76,6 +90,7 @@ SummarizeSigOneSubdir <-
       sigAnalysis$ex.sigs,
       path = paste(outputPath,"extracted.sigs.csv",sep = "/"))
 
+    # Dumps other outputs into "other.results.txt"
     capture.output(
       cat("Average cosine similarity\n"),
       sigAnalysis$avg,
