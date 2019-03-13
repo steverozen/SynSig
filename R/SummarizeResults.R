@@ -155,7 +155,7 @@ SummarizeSigOneSPSubdir <-
     # Need special function to read in extracted signatures
     # Converted signatures will be included in the /summary folder.
     extractedSigs <- ReadSigProfilerSig96(paste0(inputPath,"/De_Novo_Solution_Signatures.txt"))
-    extracted.sigs.path <- paste0(inputPath,"/signatures.PCAWG.format.csv")
+    extracted.sigs.path <- paste0(inputPath,"/extracted.signatures.PCAWG.format.csv")
     WriteCatSNS96(ct = extractedSigs, extracted.sigs.path)
 
     retval <-
