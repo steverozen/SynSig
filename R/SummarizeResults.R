@@ -151,7 +151,7 @@ SummarizeSigOneSPSubdir <-
     stopifnot(dir.exists(inputPath))
 
     # Need special function to read in extracted signatures
-    extractedSigs <- ReadSigProfilerSig96(paste0(inputPath,"/signatures.txt"))
+    extractedSigs <- ReadSigProfilerSig96(paste0(inputPath,"/De_Novo_Solution_Signatures.txt"))
     extracted.sigs.path <- paste0(inputPath,"/signatures.PCAWG.format.csv")
     WriteCatSNS96(ct = extractedSigs, extracted.sigs.path)
 
