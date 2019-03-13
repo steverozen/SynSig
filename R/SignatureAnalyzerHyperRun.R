@@ -32,6 +32,7 @@ SignatureAnalyzerPrepHyper4 <-
 
   tmp.fn <- function(subdir, read.fn, write.fn) {
     dir1 <- paste0(non.h.prefix, "/", subdir)
+    cat("\n\nProcessing", dir1, "\n\n")
     if (!dir.exists(dir1)) stop(dir1, "does not exist")
     dir2 <- paste0(h.prefix, "/", subdir)
     if (!dir.exists(dir2)) stop(dir2, "does not exist")
@@ -79,7 +80,8 @@ SignatureAnalyzerPrepHyper4 <-
 
     file.rename(from = hyper.catalog.name,
                 to = paste0("prev.", hyper.catalog.name))
-    write.fn(hyper.catalog, hyper.catalog.name)
+    cat("dim of hyper.catalog.plus is", dim(hyper.catalog.plus))
+    write.fn(hyper.catalog.plus, hyper.catalog.name)
 
     # We don't deal with the exposures, because we will remove the
     # pseudo-catalog from the input before assessing the extracted signatures.
@@ -91,7 +93,7 @@ SignatureAnalyzerPrepHyper4 <-
 
   mapply(tmp.fn, subdirs, read.fn, write.fn)
 
-  return(NULL)
+  invisible(NULL)
 
 }
 
