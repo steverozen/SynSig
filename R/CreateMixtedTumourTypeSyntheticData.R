@@ -116,16 +116,17 @@ BladderAndUV <- function() {
 }
 
 # unique(sub("::.*", "", colnames(sp.all.real.exposures), perl = T))
+# TODO: test  "Prost-AdenoCA",  "Liver-HCC"
 
 Mix2 <- function() {
   set.seed(191906)
   num.syn.tumors <- 300
   top.level.dir <- "../mixed.test"
-  cancer.types <- c("Bladder-TCC", "Eso-AdenoCA", # "Prost-AdenoCA",
+  cancer.types <- c("Bladder-TCC", "Eso-AdenoCA",
                     "Breast-AdenoCA", "Lung-SCC",
                     "Kidney-RCC",   "Ovary-AdenoCA",
                     "Bone-Osteosarc", "Cervix-AdenoCA",
-                    "Stomach-AdenoCA") # "Liver-HCC" )
+                    "Stomach-AdenoCA")
   retval <-
     CreateMixedTumorTypeSyntheticData(
       top.level.dir = top.level.dir,
