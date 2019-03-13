@@ -150,7 +150,10 @@ SummarizeSigOneSPSubdir <-
     inputPath <- paste0(third.level.dir,"/SBS96/Selected_Solution/De_Novo_Solution")
     stopifnot(dir.exists(inputPath))
 
+    # Read in extracted signatures in sigproextractor txt format,
+    # and convert it to ICAMS csv format.
     # Need special function to read in extracted signatures
+    # Converted signatures will be included in the /summary folder.
     extractedSigs <- ReadSigProfilerSig96(paste0(inputPath,"/De_Novo_Solution_Signatures.txt"))
     extracted.sigs.path <- paste0(inputPath,"/signatures.PCAWG.format.csv")
     WriteCatSNS96(ct = extractedSigs, extracted.sigs.path)
