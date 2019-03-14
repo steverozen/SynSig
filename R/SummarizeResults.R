@@ -35,6 +35,8 @@
 #' @importFrom utils capture.output sessionInfo
 #' @importFrom grDevices png dev.off
 #' @importFrom graphics par
+#' @importFrom ICAMS catalog.row.order
+#'
 #'
 SummarizeSigOneSubdir <-
   function(third.level.dir,
@@ -149,7 +151,7 @@ SummarizeSigOneSubdir <-
 #'
 #' @export
 #'
-#' @importFrom ICAMS WriteCatSNS96 ReadCatSNS96
+#' @importFrom ICAMS WriteCatSNS96 ReadCatSNS96 catalog.row.order
 #' @importFrom utils capture.output sessionInfo
 #' @importFrom grDevices png dev.off
 #' @importFrom graphics par
@@ -171,7 +173,7 @@ SummarizeSigOneSPSubdir <-
     # Converted signatures will be included in the /summary folder.
     extractedSigs <- ReadSigProfilerSig96(paste0(inputPath,"/De_Novo_Solution_Signatures.txt"))
     extracted.sigs.path <- paste0(inputPath,"/extracted.signatures.PCAWG.format.csv")
-    WriteCatSNS96(ct = extractedSigs, extracted.sigs.path)
+    ICAMS::WriteCatSNS96(ct = extractedSigs, extracted.sigs.path)
 
     retval <-
       SummarizeSigOneSubdir(
@@ -218,6 +220,8 @@ SummarizeSigOneSPSubdir <-
 #' (as is the case for the correlated SBS1-and-SBS5-containing data sets).
 #'
 #' @param write.png If TRUE create png plots of the signatures.
+#'
+#' @importFrom ICAMS catalog.row.order
 #'
 #' @export
 #'
@@ -270,7 +274,7 @@ SummarizeSigProfiler <- function (top.dir, sub.dir = c("sa.sa.96","sp.sp"), writ
 #'
 #' @export
 #'
-#' @importFrom ICAMS WriteCatSNS96 ReadCatSNS96
+#' @importFrom ICAMS WriteCatSNS96 ReadCatSNS96 catalog.row.order
 #' @importFrom utils capture.output sessionInfo
 #' @importFrom grDevices png dev.off
 #' @importFrom graphics par
@@ -326,7 +330,7 @@ SummarizeSigOneSACOMPOSITESubdir <-
 #'
 #' @export
 #'
-#' @importFrom ICAMS WriteCatSNS96 ReadCatSNS96
+#' @importFrom ICAMS WriteCatSNS96 ReadCatSNS96 catalog.row.order
 #' @importFrom utils capture.output sessionInfo
 #' @importFrom grDevices png dev.off
 #' @importFrom graphics par
