@@ -48,12 +48,15 @@ test_that("SummarizeSigOneSPSubdir", {
   if (TRUE) # Set this to FALSE to inspect the file and directory output
   {
     # Clean up
-    unlink("./sp.sum.test.in/sp.results/summary",
-           recursive = TRUE, force = TRUE)
-    unlink(
+    file1 <- "./sp.sum.test.in/sp.results/summary"
+    if (!file.exists(file1)) cat("coding error, wrong file\n")
+    res <- unlink(file1, recursive = TRUE, force = TRUE)
+    if (!res) cat("Failed to unlink", file1, "\n")
+    res <- unlink(
       paste0("./sp.sum.test.in/",
              "sp.results/SBS96/Selected_Solution/",
              "De_Novo_Solution/signatures.PCAWG.format.csv"))
+    if (!res) cat("Failed to unlink several files\n")
   }
 })
 
