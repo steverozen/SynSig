@@ -30,14 +30,16 @@
 #'
 #' @param verbose If TRUE print informative messages to standard output.
 #'
-#' @return The path to the directory with the best output.
+#' @return The path to the directory with the best output as a
+#' string, with the list directories examined as the attribute
+#' \code{run.directories}.
 #'
 #' @details As per Jaegil, we first find the most common number
 #' of signatures across all the runs, and then among those
 #' runs with that number of signatures, we choose the lowest
 #' \code{evidence} (which is the negative posterior probability).
 #'
-#' @export
+#' @keywords internal
 BestSignatureAnalyzerResult <- function(sa.results.dir,
                                         verbose = FALSE) {
   me <- match.call()[[1]]
@@ -127,6 +129,11 @@ BestSignatureAnalyzerResult <- function(sa.results.dir,
 
   other.data <- run.summaries[ordered.runs[1]]
   dir.path <- sub("sa.output.other.data.csv", "", other.data, fixed = TRUE)
+
+  # Do not want to change the interface, but this information
+  # is useful downstream
+  attr(dir.path, "run.directories") <- run.directories
+
   return(dir.path)
 
 }
@@ -139,7 +146,9 @@ BestSignatureAnalyzerResult <- function(sa.results.dir,
 #'
 #' @param overwrite If TRUE overwrite existing "best.run"
 #'
-#' @return The path of the best directory that was copied.
+#' @return The path of the best directory that was copied as a
+#' string, with the list directories examined as the attribute
+#' \code{run.directories}.
 #'
 #' @export
 #'
@@ -168,6 +177,12 @@ CopyBestSignatureAnalyzerResult <-
     file.copy(from = paste0(best, "sa.output.other.data.csv"),
               to = target.dir, overwrite = overwrite)
 
-    cat("This is a copy of", best, file = paste0(target.dir, "/info.txt"))
+    info.file.name <- paste0(target.dir, "/info.txt")
+    cat("This is a copy of", best, "\n\n", file = info.file.name)
+    run.directories <- attr(best, "run.directories")
+    cat("Based on", length(run.directories), "runs:\n",
+        file = info.file.name, append = TRUE)
+    cat(run.directories, "\n", file = info.file.name, append = TRUE)
+
     return(best)
   }
