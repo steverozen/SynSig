@@ -35,7 +35,7 @@ and 500 synthetic skin melanomas (high in SBS7a,b,c,d).  The potential interfere
 SBS2 (mainly C > T) and SBS7a,b (mainly C > T).
 
 ```{r}
-SetNewOutDir("../../Xsyn.2.7a.7b.bladder.and.melanoma.v8/")
+SetNewOutDir("../../2.7a.7b.bladder.and.melanoma.2019.03.16/")
 ```
 
 ```{r}
@@ -141,6 +141,29 @@ CreateAndWriteCatalog(
 
 ```
 
+### Copy in the scripts
+
+```{r}
+CopyScripts <- function() {
+  res <- file.copy(from = "1run.signatureanalyzer.on.monster.R",
+                   to = OutDir("sa.sa.96"))
+  if (!res) cat("Copy failed\n")
+  res <- file.copy(from = "2run.signatureanalyzer.on.monster.R",
+                   to = OutDir("sp.sp/"))
+  if (!res) cat("Copy failed\n")
+  res <- file.copy(from = "3run.signatureanalyzer.on.monster.R",
+                   to = OutDir("sa.sa.COMPOSITE/"))
+  if (!res) cat("Copy failed\n")
+  res <- file.copy(from = "4run.signatureanalyzer.on.monster.R",
+                   to = OutDir("sp.sa.COMPOSITE/"))
+  if (!res) cat("Copy failed\n")
+  
+}
+
+CopyScripts()
+
+```
+
 ## Version 2: "abstract" synthetic data set from only SBS2, SBS7a, and SBS7b 
 
 1000 synthetic tumors composed from SBS2 and SBS7a,b  Mutation load distributions 
@@ -195,7 +218,7 @@ knitr::kable(
 ### Generate synthetic exposures
 
 ```{r}
-SetNewOutDir("../../tmp.syn.2.7a.7b.abst.v8/")
+SetNewOutDir("../../2.7a.7b.abst.2019.03.16/")
 set.seed(55)
 num.syn.tumors <- 1000
 ```
