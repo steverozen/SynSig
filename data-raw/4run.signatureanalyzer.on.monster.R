@@ -14,6 +14,6 @@ test.abst <- SignatureAnalyzer4MatchedCatalogs(
   dir.root = "..",
   slice = 4,
   overwrite = FALSE,
-  maxk = maxK.for.SA,
+  maxK = maxK.for.SA,
   mc.cores = 20)
 
