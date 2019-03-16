@@ -297,7 +297,7 @@ SummarizeSigOneSACOMPOSITESubdir <-
         read.extracted.sigs.fn = ReadCatCOMPOSITE,
         read.ground.truth.sigs.fn = ReadCatCOMPOSITE,
         write.cat.fn = WriteCatCOMPOSITE,
-        plot.pdf.fn = NA, # Does not exist for COMPOSITE # maybe Plot96PartOfComposite
+        plot.pdf.fn =  Plot96PartOfComposite, # NA, # Does not exist for COMPOSITE # maybe Plot96PartOfComposite
         overwrite = overwrite)
 
     invisible(retval)
@@ -368,6 +368,7 @@ SummarizeSigOneSA96Subdir <-
 #' @param overwrite If TRUE overwrite existing summary files.
 #'
 #' @export
+
 SignatureAnalyzerSummarizeTopLevel <-
   function(top.level.dir, overwrite = FALSE) {
     stopifnot(dir.exists(top.level.dir))
@@ -394,19 +395,28 @@ SignatureAnalyzerSummarizeTopLevel <-
 
     retval <-
       list(sa.sa.96 =
-             SummarizeSigOneSA96Subdir(sa.sa.96.dir),
+             SummarizeSigOneSA96Subdir(
+               sa.sa.96.dir, overwrite = overwrite),
            sp.sp =
-             SummarizeSigOneSA96Subdir(sp.sp.dir),
+             SummarizeSigOneSA96Subdir(
+               sp.sp.dir, overwrite = overwrite),
            sa.sa.COMPOSITE =
-             SummarizeSigOneSACOMPOSITESubdir(sa.sa.COMPOSITE.dir),
+             SummarizeSigOneSACOMPOSITESubdir(
+               sa.sa.COMPOSITE.dir, overwrite = overwrite),
            sp.sa.COMPOSITE =
-             SummarizeSigOneSACOMPOSITESubdir(sp.sa.COMPOSITE.dir))
+             SummarizeSigOneSACOMPOSITESubdir(
+               sp.sa.COMPOSITE.dir, overwrite = overwrite))
 
     capture.output(print(retval), file = paste0(top.level.dir, "/retval.txt"))
     invisible(retval)
   }
 
 #' Summarize all subdirectories of the correlated SBS1 / SBS5.
+#'
+#' This is special-purpose function to summarize results
+#' from one in-silico experiment that examines how well
+#' signatures can be extracted from synthetic tumors with
+#' correlated SBS1 and SBS5.
 #'
 #' @param top.level.dir Path to top level directory.
 #'
