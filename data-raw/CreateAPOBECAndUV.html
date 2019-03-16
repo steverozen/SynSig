@@ -12,7 +12,7 @@
 
 <meta name="author" content="Steve Rozen" />
 
-<meta name="date" content="2019-03-08" />
+<meta name="date" content="2019-03-16" />
 
 <title>Create cross-matched SignatureAnalyzer and SigProfiler synthetic data to explore handling overlapping / interfering signatures</title>
 
@@ -92,7 +92,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">Create cross-matched SignatureAnalyzer and SigProfiler synthetic data to explore handling overlapping / interfering signatures</h1>
 <h4 class="author"><em>Steve Rozen</em></h4>
-<h4 class="date"><em>2019-03-08</em></h4>
+<h4 class="date"><em>2019-03-16</em></h4>
 
 
 
@@ -108,7 +108,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="data-set-1-bladder-and-skin-melanoma-to-explore-sbs2-and-sbs7ab" class="section level2">
 <h2>Data set 1, bladder and skin melanoma to explore SBS2 and SBS7a,b</h2>
 <p>500 synthetic bladder transitional cell carcinomas (high in SBS2 and SBS13) and 500 synthetic skin melanomas (high in SBS7a,b,c,d). The potential interference is between SBS2 (mainly C &gt; T) and SBS7a,b (mainly C &gt; T).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">SetNewOutDir</span>(<span class="st">&quot;../../Xsyn.2.7a.7b.bladder.and.melanoma.v8/&quot;</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">SetNewOutDir</span>(<span class="st">&quot;../../2.7a.7b.bladder.and.melanoma.2019.03.16/&quot;</span>)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">191906</span>)
 num.syn.tumors &lt;-<span class="st"> </span><span class="dv">500</span>
 
@@ -249,6 +249,26 @@ sp.bladder.skin.syn.exp &lt;-
   WriteCatSNS96)</code></pre></div>
 </div>
 </div>
+<div id="copy-in-the-scripts" class="section level3">
+<h3>Copy in the scripts</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">CopyScripts &lt;-<span class="st"> </span><span class="cf">function</span>() {
+  res &lt;-<span class="st"> </span><span class="kw">file.copy</span>(<span class="dt">from =</span> <span class="st">&quot;1run.signatureanalyzer.on.monster.R&quot;</span>,
+                   <span class="dt">to =</span> <span class="kw">OutDir</span>(<span class="st">&quot;sa.sa.96&quot;</span>))
+  <span class="cf">if</span> (<span class="op">!</span>res) <span class="kw">cat</span>(<span class="st">&quot;Copy failed</span><span class="ch">\n</span><span class="st">&quot;</span>)
+  res &lt;-<span class="st"> </span><span class="kw">file.copy</span>(<span class="dt">from =</span> <span class="st">&quot;2run.signatureanalyzer.on.monster.R&quot;</span>,
+                   <span class="dt">to =</span> <span class="kw">OutDir</span>(<span class="st">&quot;sp.sp/&quot;</span>))
+  <span class="cf">if</span> (<span class="op">!</span>res) <span class="kw">cat</span>(<span class="st">&quot;Copy failed</span><span class="ch">\n</span><span class="st">&quot;</span>)
+  res &lt;-<span class="st"> </span><span class="kw">file.copy</span>(<span class="dt">from =</span> <span class="st">&quot;3run.signatureanalyzer.on.monster.R&quot;</span>,
+                   <span class="dt">to =</span> <span class="kw">OutDir</span>(<span class="st">&quot;sa.sa.COMPOSITE/&quot;</span>))
+  <span class="cf">if</span> (<span class="op">!</span>res) <span class="kw">cat</span>(<span class="st">&quot;Copy failed</span><span class="ch">\n</span><span class="st">&quot;</span>)
+  res &lt;-<span class="st"> </span><span class="kw">file.copy</span>(<span class="dt">from =</span> <span class="st">&quot;4run.signatureanalyzer.on.monster.R&quot;</span>,
+                   <span class="dt">to =</span> <span class="kw">OutDir</span>(<span class="st">&quot;sp.sa.COMPOSITE/&quot;</span>))
+  <span class="cf">if</span> (<span class="op">!</span>res) <span class="kw">cat</span>(<span class="st">&quot;Copy failed</span><span class="ch">\n</span><span class="st">&quot;</span>)
+  
+}
+
+<span class="kw">CopyScripts</span>()</code></pre></div>
+</div>
 </div>
 <div id="version-2-abstract-synthetic-data-set-from-only-sbs2-sbs7a-and-sbs7b" class="section level2">
 <h2>Version 2: “abstract” synthetic data set from only SBS2, SBS7a, and SBS7b</h2>
@@ -368,7 +388,7 @@ knitr<span class="op">::</span><span class="kw">kable</span>(
 </div>
 <div id="generate-synthetic-exposures" class="section level3">
 <h3>Generate synthetic exposures</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">SetNewOutDir</span>(<span class="st">&quot;../../tmp.syn.2.7a.7b.abst.v8/&quot;</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">SetNewOutDir</span>(<span class="st">&quot;../../2.7a.7b.abst.2019.03.16/&quot;</span>)
 <span class="kw">set.seed</span>(<span class="dv">55</span>)
 num.syn.tumors &lt;-<span class="st"> </span><span class="dv">1000</span></code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sp.abst.info &lt;-
