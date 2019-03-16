@@ -240,8 +240,6 @@ SACat96 <- function(cat96) {
 
 #' Plot the SBS96 part of a SignatureAnalyzer COMPOSITE signature or catalog
 #'
-#' TODO(Steve): Deal with Collapse1536to96
-#'
 #' @param catalog Catalog or signature matrix
 #'
 #' @param name Name of file to print to.
@@ -670,8 +668,6 @@ SignatureAnalyzerOneCatalog <-
 #' @importFrom ICAMS WriteCatSNS96 ReadCatSNS96
 #'
 
-# TODO(Steve): Why is there an issue finding catalog.row.order from
-# inside of ReadCatSNS96?
 SignatureAnalyzer4MatchedCatalogs <-
   function(
     num.runs = 20,
