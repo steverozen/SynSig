@@ -1,3 +1,15 @@
+CopyWithChecks <- function(from, to.dir, overwrite = FALSE) {
+  if (!file.exists(from)) {
+    warning("Cannot find", from, "\n\nSkipping\n\n")
+  } else {
+    copy.res <- file.copy(
+      from = from, to = to.dir, overwrite = overwrite)
+    if (!copy.res)
+      cat("Copy from", from, "to directory", to.dir, "failed\n\n")
+  }
+}
+
+
 #' Assess/evaluate results from SigProfiler or SignatureAnalyzer
 #'
 #' @param third.level.dir Lowest level path to results, that is,
@@ -13,8 +25,10 @@
 #' It defaults to be "ground.truth.syn.exposures.csv". This file can be found
 #' in the \code{sub.dir}, i.e. \code{third.level.dir}/../
 #'
-#' @param extracted.sigs.path Full path of extracted sigs file, e.g.
+#' @param extracted.sigs.path Path to extracted sigs file, e.g.
 #' \code{<third.level.dir>/SBS96/Selected_Solution/De_Novo_Solution/signatures.PCAWG.format.csv}.
+#'
+#' @param extracted.exp.path Path to extracted exposures file.
 #'
 #' @param read.extracted.sigs.fn Function to read the extracted sigs file.
 #' e.g. \code{ReadCatSNS96}
@@ -33,15 +47,15 @@
 #' @export
 #'
 #' @importFrom utils capture.output sessionInfo
-#' @importFrom grDevices png dev.off
-#' @importFrom graphics par
-#' @importFrom ICAMS catalog.row.order
-#'
-#'
+
 SummarizeSigOneSubdir <-
   function(third.level.dir,
            ground.truth.exposure.name,
            extracted.sigs.path,
+           extracted.exp.path = NULL,
+           # TODO(Steve): copy this to the summary and do analysis on how much
+           # extracted signature contributs to exposures.
+
            read.extracted.sigs.fn,
            read.ground.truth.sigs.fn,
            write.cat.fn,
@@ -66,17 +80,24 @@ SummarizeSigOneSubdir <-
     }
     suppressWarnings(dir.create(outputPath))
 
-    # Copies ground.truth exposures and from second.level.dir
-    # to third.level.dir/summary
+    # Copies ground.truth exposures from second.level.dir
+    # to third.level.dir/summary.
+    CopyWithChecks(
+      from = paste0(third.level.dir,"/../ground.truth.syn.exposures.csv"),
+      to.dir = paste0(third.level.dir,"/summary/"),
+      overwrite = TRUE)
+
+    if (FALSE) {
     copy.from <- paste0(third.level.dir,"/../ground.truth.syn.exposures.csv")
     if (!file.exists(copy.from)) {
       warning("Cannot find", copy.from, "\n\nSkipping\n\n")
     } else {
-      file.copy(# from = paste0(third.level.dir,"/SBS96/All_Solution_Layer/L1/stability.pdf"),
+      copy.res <- file.copy(
         from = copy.from,
         to = paste0(third.level.dir,"/summary/"),
         overwrite = TRUE)
-    }
+      if (!copy.res) cat("Copy from", copy.from, "to somewhere failed\n\n")
+    }}
 
     # Writes bi-directional matching and cos.sim calculation
     write.csv(sigAnalysis$match1,
@@ -118,13 +139,8 @@ SummarizeSigOneSubdir <-
                   type = "signature")
     }
 
-    ## Logs
-    # Session Info
-    capture.output(sessionInfo(),
-                   file = paste0(outputPath,"/sessionInfo.log"))
-    # Date and time to finish the analysis
-    capture.output(Sys.time(),
-                   file = paste0(outputPath,"/finish.time.log"))
+    capture.output(Sys.time(), sessionInfo(),
+                   file = paste0(outputPath,"/log.txt"))
 
     invisible(sigAnalysis) # So we have something to check in tests
   }
@@ -151,7 +167,7 @@ SummarizeSigOneSubdir <-
 #'
 #' @export
 #'
-#' @importFrom ICAMS WriteCatSNS96 ReadCatSNS96 catalog.row.order
+#' @importFrom ICAMS WriteCatSNS96 ReadCatSNS96
 #' @importFrom utils capture.output sessionInfo
 #' @importFrom grDevices png dev.off
 #' @importFrom graphics par
@@ -207,7 +223,7 @@ SummarizeSigOneSPSubdir <-
     invisible(retval) # So we can test without looking at a file.
 }
 
-#' Summarize SigProfiler results in the sa.sa.96 and/or sp.sp subdirectories
+#' Summarize SigProfiler results in the sa.sa.96 and/or sp.sp subdirectories.
 #'
 #' @param top.dir The top directory of a conventional data structure containing
 #' at least one of the subdirectories: sa.sa.96/sp.results and sp.sp/sp.results;
@@ -221,13 +237,12 @@ SummarizeSigOneSPSubdir <-
 #'
 #' @param write.png If TRUE create png plots of the signatures.
 #'
-#' @importFrom ICAMS catalog.row.order
-#'
 #' @export
 #'
 #' @details Results are put in standardized subdirectories of \code{top.dir}.
 
-SummarizeSigProfiler <- function (top.dir, sub.dir = c("sa.sa.96","sp.sp"), write.png = FALSE) {
+SummarizeSigProfiler <-
+  function(top.dir, sub.dir = c("sa.sa.96","sp.sp"), write.png = FALSE) {
 
   ## If sub.dir are unexpected, throw an error
   expected.sub.dir <- c("sa.sa.96","sp.sp")
@@ -250,7 +265,7 @@ SummarizeSigProfiler <- function (top.dir, sub.dir = c("sa.sa.96","sp.sp"), writ
   }
 }
 
-#' Summarize COMPOSITE results from SignatureAnalyzer
+#' Summarize COMPOSITE results from SignatureAnalyzer.
 #'
 #' @param third.level.dir Lowest level path to results, that is
 #' \code{<top.dir>}\code{/sa.sa.96/sa.results/},
@@ -274,7 +289,7 @@ SummarizeSigProfiler <- function (top.dir, sub.dir = c("sa.sa.96","sp.sp"), writ
 #'
 #' @export
 #'
-#' @importFrom ICAMS WriteCatSNS96 ReadCatSNS96 catalog.row.order
+#' @importFrom ICAMS WriteCatSNS96 ReadCatSNS96
 #' @importFrom utils capture.output sessionInfo
 #' @importFrom grDevices png dev.off
 #' @importFrom graphics par
@@ -330,7 +345,7 @@ SummarizeSigOneSACOMPOSITESubdir <-
 #'
 #' @export
 #'
-#' @importFrom ICAMS WriteCatSNS96 ReadCatSNS96 catalog.row.order
+#' @importFrom ICAMS WriteCatSNS96 ReadCatSNS96
 #' @importFrom utils capture.output sessionInfo
 #' @importFrom grDevices png dev.off
 #' @importFrom graphics par
