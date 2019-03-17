@@ -297,6 +297,9 @@ GenerateSynExposureOneSample <-
 #' @export
 
 CreateSynCatalogs <- function(signatures, exposures, sample.id.suffix = NULL) {
+
+  if (any(colSums(exposures) < 1)) warning("Some exposures < 1")
+
   exposed.sigs <- rownames(exposures)
 
   # It is an error if there are signatures in exposures that are not
@@ -310,8 +313,21 @@ CreateSynCatalogs <- function(signatures, exposures, sample.id.suffix = NULL) {
   # that are present in exposures.
   #
   signatures <- signatures[ , exposed.sigs]
+
+  # TODO(Steve): in a future versions, for each
+  # synthetic tumor, for each signature, accounting
+  # for e mutations in that tumor, sample e mutations
+  # from the signature profile.
   catalog <- signatures %*% exposures
+  stopifnot(!any(colSums(catalog) < 1))
+
   i.cat <- round(catalog, digits = 0)
+
+  # The condition below can occur even if any(colSUms(catalog) < 1) is FALSE,
+  # if before rounding mutiple mutational classes had < 0.5 mutations.
+  if (any(colSums(i.cat) == 0))
+    warning("Some tumors with 0 mutations")
+
   if (!is.null(sample.id.suffix)) {
     newcolnames <-
       gsub(".", paste0("-", sample.id.suffix, "."),
