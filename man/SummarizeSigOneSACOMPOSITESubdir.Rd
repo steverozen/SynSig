@@ -2,7 +2,7 @@
 % Please edit documentation in R/SummarizeResults.R
 \name{SummarizeSigOneSACOMPOSITESubdir}
 \alias{SummarizeSigOneSACOMPOSITESubdir}
-\title{Summarize COMPOSITE results from SignatureAnalyzer}
+\title{Summarize COMPOSITE results from SignatureAnalyzer.}
 \usage{
 SummarizeSigOneSACOMPOSITESubdir(third.level.dir,
   ground.truth.exposure.name = "ground.truth.syn.exposures.csv",
@@ -30,5 +30,5 @@ This file can be found in the \code{sub.dir}, i.e. \code{<third.level.dir>/../}}
 \item{overwrite}{If TRUE overwrite existing directories and files.}
 }
 \description{
-Summarize COMPOSITE results from SignatureAnalyzer
+Summarize COMPOSITE results from SignatureAnalyzer.
 }

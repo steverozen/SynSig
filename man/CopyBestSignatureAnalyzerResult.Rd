@@ -15,7 +15,9 @@ CopyBestSignatureAnalyzerResult(sa.results.dir, verbose = FALSE,
 \item{overwrite}{If TRUE overwrite existing "best.run"}
 }
 \value{
-The path of the best directory that was copied.
+The path of the best directory that was copied as a
+string, with the list directories examined as the attribute
+\code{run.directories}.
 }
 \description{
 Find best result and make a copy of the folder

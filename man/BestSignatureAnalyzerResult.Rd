@@ -38,7 +38,9 @@ Then
 \item{verbose}{If TRUE print informative messages to standard output.}
 }
 \value{
-The path to the directory with the best output.
+The path to the directory with the best output as a
+string, with the list directories examined as the attribute
+\code{run.directories}.
 }
 \description{
 Find the best SignatureAnalyzer result over a set of output directories.
@@ -49,3 +51,4 @@ of signatures across all the runs, and then among those
 runs with that number of signatures, we choose the lowest
 \code{evidence} (which is the negative posterior probability).
 }
+\keyword{internal}

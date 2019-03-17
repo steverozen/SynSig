@@ -2,7 +2,7 @@
 % Please edit documentation in R/SummarizeResults.R
 \name{SummarizeSigProfiler}
 \alias{SummarizeSigProfiler}
-\title{Summarize SigProfiler results in the sa.sa.96 and/or sp.sp subdirectories}
+\title{Summarize SigProfiler results in the sa.sa.96 and/or sp.sp subdirectories.}
 \usage{
 SummarizeSigProfiler(top.dir, sub.dir = c("sa.sa.96", "sp.sp"),
   write.png = FALSE)
@@ -21,7 +21,7 @@ the \code{sp.sp} subdirectory
 \item{write.png}{If TRUE create png plots of the signatures.}
 }
 \description{
-Summarize SigProfiler results in the sa.sa.96 and/or sp.sp subdirectories
+Summarize SigProfiler results in the sa.sa.96 and/or sp.sp subdirectories.
 }
 \details{
 Results are put in standardized subdirectories of \code{top.dir}.

@@ -14,5 +14,5 @@ Plot96PartOfComposite(catalog, name, type = "density")
 \item{type}{See \code{\link[ICAMS]{PlotCatSNS96ToPdf}}.}
 }
 \description{
-TODO(Steve): Deal with Collapse1536to96
+Plot the SBS96 part of a SignatureAnalyzer COMPOSITE signature or catalog
 }

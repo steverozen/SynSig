@@ -5,8 +5,9 @@
 \title{Assess/evaluate results from SigProfiler or SignatureAnalyzer}
 \usage{
 SummarizeSigOneSubdir(third.level.dir, ground.truth.exposure.name,
-  extracted.sigs.path, read.extracted.sigs.fn, read.ground.truth.sigs.fn,
-  write.cat.fn, plot.pdf.fn, overwrite = FALSE)
+  extracted.sigs.path, extracted.exp.path = NULL, read.extracted.sigs.fn,
+  read.ground.truth.sigs.fn, write.cat.fn, plot.pdf.fn,
+  overwrite = FALSE)
 }
 \arguments{
 \item{third.level.dir}{Lowest level path to results, that is,
@@ -22,8 +23,10 @@ which stores the software output.}
 It defaults to be "ground.truth.syn.exposures.csv". This file can be found
 in the \code{sub.dir}, i.e. \code{third.level.dir}/../}
 
-\item{extracted.sigs.path}{Full path of extracted sigs file, e.g.
+\item{extracted.sigs.path}{Path to extracted sigs file, e.g.
 \code{<third.level.dir>/SBS96/Selected_Solution/De_Novo_Solution/signatures.PCAWG.format.csv}.}
+
+\item{extracted.exp.path}{Path to extracted exposures file.}
 
 \item{read.extracted.sigs.fn}{Function to read the extracted sigs file.
 e.g. \code{ReadCatSNS96}}

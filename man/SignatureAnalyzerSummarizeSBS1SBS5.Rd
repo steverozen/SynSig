@@ -12,5 +12,8 @@ SignatureAnalyzerSummarizeSBS1SBS5(top.level.dir, overwrite = FALSE)
 \item{overwrite}{If TRUE overwrite existing directories and files.}
 }
 \description{
-Summarize all subdirectories of the correlated SBS1 / SBS5.
+This is special-purpose function to summarize results
+from one in-silico experiment that examines how well
+signatures can be extracted from synthetic tumors with
+correlated SBS1 and SBS5.
 }
