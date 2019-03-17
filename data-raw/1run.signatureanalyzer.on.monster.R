@@ -1,4 +1,4 @@
-# Put this file in the top level directory and start R from there.
+# Put this file in <top.level.directory>/sa.sa.96 and start R from there.
 
 
 library(SynSig)
