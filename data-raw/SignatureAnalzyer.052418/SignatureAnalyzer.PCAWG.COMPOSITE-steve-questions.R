@@ -24,24 +24,28 @@
 #### THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 #### (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 #### OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-############################################################################################
-############################################################################################
 
-#################################################################################################
+##############################################################################
 ###### COMPOSITE SIGNATURE EXTRACTIO AND ATTRIBUTION
-#################################################################################################
+##############################################################################
 
-#################################################################################################
+##############################################################################
 ###### SIGNATURE EXTRACTION
-#################################################################################################
-###### SignatureAnalyzer applied two-step signature extraction strategy in 2,780 PCAWG samples.
-###### First, the global signature extraction was performed for the low mutation burden samples (n=2624) without putative POLE and MSI samples, skin tumours, and one TMZ sample.
-###### Second, additional signatures unique to hyper-mutated samples were extracted with maintaining all signatures discovered in the low mutation burden-samples
-###### This approach is expected to minimize a "signature bleeding" or biase of hyper- or ultra-mutated samples on the signature extraction process and
-###### also enalbes key information on the signature availability i.e., the signatures found only in hyper-mutated samples are not allowed in low mutation burden-samples,
-###### while all signatures are available in hyper-mutated samples with no constraints.
-#################################################################################################
-
+##############################################################################
+######SignatureAnalyzer applied two-step signature extraction strategy in 2,780
+######PCAWG samples. First, the global signature extraction was performed for
+######the low mutation burden samples (n=2624) without putative POLE and MSI
+######samples, skin tumours, and one TMZ sample. Second, additional signatures
+######unique to hyper-mutated samples were extracted with maintaining all
+######signatures discovered in the low mutation burden-samples This approach is
+######expected to minimize a "signature bleeding" or biase of hyper- or
+######ultra-mutated samples on the signature extraction process and also enalbes
+######key information on the signature availability i.e., the signatures found
+######only in hyper-mutated samples are not allowed in low mutation
+######burden-samples, while all signatures are available in hyper-mutated
+######samples with no constraints.
+################################################################################
+################################################################################
 CURRENT <- paste(getwd(),"/",sep="")
 INPUT <- paste(CURRENT,"INPUT_SignatureAnalyzer/",sep="") ### Directory for INPUT data
 OUTPUT <- paste(CURRENT,"OUTPUT_SignatureAnalyzer/",sep="") #### Directory for OUTPUT data
@@ -51,18 +55,24 @@ system(paste("mkdir",TEMPORARY,sep=" "))
 
 source("SignatureAnalyzer.PCAWG.function.R")
 
-###### loading input mutation counts matrix along 1536 SNV + 78 DNP + 83 INDEL features across 2780 PCAWG samples
-###### SNV features in 1536 contexts were defined as six-letters such as "CTAATT", in which first two letters refers to the reference and altered bases, and
-###### next four letters represent a base at -2, -1, +1, and +2 position at mutated pyrimidines (C or T), e.g, C>T at AACTT penta-nucleotide sequence motif.
-###### SNV features in 96 contexts were defined as four-letters such as "CTAT", in which first two letters refers to the reference and altered bases, and
-###### next two letters represent a base at -1 and +1 position at mutated pyrimidines (C or T), e.g, C>T at ACT tri-nucleotide sequence motif.
+###### loading input mutation counts matrix along 1536 SNV + 78 DNP + 83 INDEL
+###### features across 2780 PCAWG samples SNV features in 1536 contexts were
+###### defined as six-letters such as "CTAATT", in which first two letters
+###### refers to the reference and altered bases, and next four letters
+###### represent a base at -2, -1, +1, and +2 position at mutated pyrimidines (C
+###### or T), e.g, C>T at AACTT penta-nucleotide sequence motif. SNV features in
+###### 96 contexts were defined as four-letters such as "CTAT", in which first
+###### two letters refers to the reference and altered bases, and next two
+###### letters represent a base at -1 and +1 position at mutated pyrimidines (C
+###### or T), e.g, C>T at ACT tri-nucleotide sequence motif.
 
 load(file=paste(INPUT,"lego1536.PAN.SNV.091217.RData",sep="")) ### SNV lego-matrix in 1536 contexts
 load(file=paste(INPUT,"lego96.PAN.SNV.091217.RData",sep="")) ### SNV lego-matrix in 96 contexts
 load(file=paste(INPUT,"lego1536.DNP.091217.RData",sep="")) ### DNP lego-matrix
 load(file=paste(INPUT,"lego1536.INDEL.091217.RData",sep="")) ### INDEL lego-matrix
 
-lego1536.PAN <- rbind(lego1536.SNV,lego1536.DNP,lego1536.INDEL) ### COMPOSITE lego-matrix in 1697 features (1536 SNV + 78 DNP + 83 INDEL)
+lego1536.PAN <- rbind(lego1536.SNV,lego1536.DNP,lego1536.INDEL)
+### COMPOSITE lego-matrix in 1697 features (1536 SNV + 78 DNP + 83 INDEL)
 
 ###### loading information on hyper- or ultra-mutated samples; POLE (n=9), MSI
 ###### (n=39), all SKIN (n=107), and single TMZ (CNS_GBM__SP25494)
@@ -85,63 +95,68 @@ lego.SECONDARY <- lego1536.PAN[,colnames(lego1536.PAN)%in%sample.remove]
 ####### techinique and the final number of signatures is determined by counting
 ####### non-zero columns in W (res[[1]]).
 
-	if (FALSE) {
-		Kcol <- 50
-		method <- "L1W.L2H.LEGO1536.COMPOSITE_FIRST"
-		for (i in 1:10) {
-	        	res <- BayesNMF.L1W.L2H(as.matrix(lego.PRIMARY),200000,10,5,1.e-05,Kcol,Kcol,1)
-		        save(res,file=paste(OUTPUT,paste(method,i,"RData",sep="."),sep=""))
-		}
-	}
+if (FALSE) {
+  Kcol <- 50
+  method <- "L1W.L2H.LEGO1536.COMPOSITE_FIRST"
+  for (i in 1:10) {
+    res <- BayesNMF.L1W.L2H(as.matrix(lego.PRIMARY),200000,10,5,1.e-05,Kcol,Kcol,1)
+    save(res,file=paste(OUTPUT,paste(method,i,"RData",sep="."),sep=""))
+  }
+}
 
 ####### Second step: Signature Extraction for the SECONDARY 156
 ####### sample set Execute several Bayesian NMF runs and select the solution with
 ####### the lowest value of res[[4]] (-log(posterior)) at the lowest number of
 ####### signatures
-	load(file=paste(OUTPUT,"L1W.L2H.LEGO1536.COMPOSITE_FIRST.RData",sep=""))
-	### loading BayesNMF solution for the primary data set (example RData file).
-  # Steve: W contains the signtures extracted from the "primary" data set.
-		W <- res[[1]]
-        H <- res[[2]]
-        index <- colSums(W) > 1 ### sum(index) is the number of signatures in the primary data set
+load(file=paste(OUTPUT,"L1W.L2H.LEGO1536.COMPOSITE_FIRST.RData",sep=""))
+### loading BayesNMF solution for the primary data set (example RData file).
+# Steve: W contains the signtures extracted from the "primary" data set.
+W <- res[[1]]
+H <- res[[2]]
+index <- colSums(W) > 1 ### sum(index) is the number of signatures in the primary data set
 
-	###### All mutation burdens of the primary dataset are now included in the W
-	###### matrix (signature-loading) and the H matrix (activity-loading).
-        W <- W[,index]
-        H <- H[index,]
-	W1536.PRIMARY <- W
-	H1536.PRIMARY <- H
-        for (i in 1:ncol(W)) {
-                H1536.PRIMARY[i,] <- H1536.PRIMARY[i,]*colSums(W)[i]
-                W1536.PRIMARY[,i] <- W1536.PRIMARY[,i]*rowSums(H)[i] # Jaegil, it looks likes this puts the sum of the mutation counts for signature i in the corresponding column of W1536.PRIMARY, correct?
-        }
-	colnames(W1536.PRIMARY) <- paste("Primary.W",seq(1:ncol(W1536.PRIMARY)),sep="")
-	rownames(H1536.PRIMARY) <- colnames(W1536.PRIMARY)
-	W1536.PRIMARY.norm <- apply(W1536.PRIMARY,2,function(x) x/sum(x)) ## Normalized primary signatures
+###### All mutation burdens of the primary dataset are now included in the W
+###### matrix (signature-loading) and the H matrix (activity-loading).
+W <- W[,index]
+H <- H[index,]
+W1536.PRIMARY <- W
+H1536.PRIMARY <- H
+for (i in 1:ncol(W)) {
+  H1536.PRIMARY[i,] <- H1536.PRIMARY[i,]*colSums(W)[i]
+  W1536.PRIMARY[,i] <- W1536.PRIMARY[,i]*rowSums(H)[i]
+  # Jaegil, it looks likes this puts the sum of the mutation
+  # counts for signature i in the corresponding column of
+  # W1536.PRIMARY, correct?
+}
+colnames(W1536.PRIMARY) <- paste("Primary.W",seq(1:ncol(W1536.PRIMARY)),sep="")
+rownames(H1536.PRIMARY) <- colnames(W1536.PRIMARY)
+W1536.PRIMARY.norm <- apply(W1536.PRIMARY,2,function(x) x/sum(x)) ## Normalized primary signatures
 
-	###### PRIMARY signatures (W1536.PRIMARY) with all mutation burdens were added
-	###### to the muation count matrix of the secondary data set. Thus all PRIMARY
-	###### signatures are now treated as extra fake samples with keeping mutation
-	###### burdens in the PRIMARY 2624 samples. This process enforces the primary
-	###### signatures to be reatined in the secondary signature extraction, while
-	###### enablling a discovery of novel signatures unique to the second primary
-	###### data set.
-        lego.PRIMARY.SECONDARY <- cbind(W1536.PRIMARY,lego.SECONDARY)
-        # Jaegil, it looks like the result of the cbind will serve as the V matrix for the secondary extraction, correct?
-        method <- "L1W.L2H.LEGO1536.COMPOSITE_SECOND"
-	if (FALSE) {
-        Kcol <- 96
-        for (i in 1:10) {
-                res <- BayesNMF.L1W.L2H(as.matrix(lego.PRIMARY.SECONDARY),200000,10,5,5.e-06,Kcol,Kcol,1)
-                save(res,file=paste(OUTPUT,paste(method,i,"RData",sep="."),sep=""))
-	}
-	}
+###### PRIMARY signatures (W1536.PRIMARY) with all mutation burdens were added
+###### to the muation count matrix of the secondary data set. Thus all PRIMARY
+###### signatures are now treated as extra fake samples with keeping mutation
+###### burdens in the PRIMARY 2624 samples. This process enforces the primary
+###### signatures to be reatined in the secondary signature extraction, while
+###### enablling a discovery of novel signatures unique to the second primary
+###### data set.
+lego.PRIMARY.SECONDARY <- cbind(W1536.PRIMARY,lego.SECONDARY)
+# Jaegil, it looks like the result of the cbind will
+# serve as the V matrix for the secondary extraction, correct?
+method <- "L1W.L2H.LEGO1536.COMPOSITE_SECOND"
+if (FALSE) {
+  Kcol <- 96
+  for (i in 1:10) {
+    res <- BayesNMF.L1W.L2H(as.matrix(lego.PRIMARY.SECONDARY),200000,10,5,5.e-06,Kcol,Kcol,1)
+    save(res,file=paste(OUTPUT,paste(method,i,"RData",sep="."),sep=""))
+  }
+}
 
 	load(file=paste(OUTPUT,"L1W.L2H.LEGO1536.COMPOSITE_SECOND.RData",sep=""))
 	### loading BayesNMF solution for the primary data set (example RData file)
 	W <- res[[1]]
         H <- res[[2]]
-        index <- colSums(W) > 1 ### sum(index) is the number of extracted signatures in the primary data set
+        index <- colSums(W) > 1
+        ### sum(index) is the number of extracted signatures in the primary data set
         W <- W[,index]
         H <- H[index,]
 	W1536.SECONDARY <- W
@@ -154,24 +169,29 @@ lego.SECONDARY <- lego1536.PAN[,colnames(lego1536.PAN)%in%sample.remove]
 	rownames(H1536.SECONDARY) <- colnames(W1536.SECONDARY)
 	W1536.SECONDARY.norm <- apply(W1536.SECONDARY,2,function(x) x/sum(x))
 
-	###### cosine similairy between W1536.SECONDARY (signatures in the second step)  and W1536.PRIMARY (signatures in the first step)
+	###### cosine similairy between W1536.SECONDARY (signatures in the second step)
+	###### and W1536.PRIMARY (signatures in the first step)
 	corr <- plot.W.correlation(W1536.SECONDARY.norm[1:1536,],W1536.PRIMARY.norm[1:1536,])
 	corr.max <- apply(corr,1,function(x) max(x)) ### maximum cosine similarity of secondary signatures to primary signatures
 	corr.id <- apply(corr,1,function(x) which.max(x))  ### primary signature ID with corr.max
 
-	###### summary data-frame mapping the signatures in the second extration step to the signatures in the frist step
+	###### summary data-frame mapping the signatures in the second extration step
+	###### to the signatures in the frist step
 	df.summary <- data.frame(colnames(W1536.SECONDARY),colnames(W1536.PRIMARY)[corr.id],corr.id,corr.max) ### summary for the comparison of secondary signatures to primary ones
 	colnames(df.summary) <- c("secondary","primary","primary.id","CS.max")
 	df.summary[,"CS_0.99"] <- df.summary$CS.max > 0.99
 
-	###### identify primary signatures retained in the secondary signature extraction (W1536.1) and those attributions in 2624 samples (H1536.1)
+	###### identify primary signatures retained in the secondary signature
+	###### extraction (W1536.1) and those attributions in 2624 samples (H1536.1)
 	W1536.1 <- W1536.PRIMARY[,match(df.summary$primary[df.summary$CS_0.99],colnames(W1536.PRIMARY),nomatch=0)]
 	H1536.1 <- H1536.PRIMARY[match(df.summary$primary[df.summary$CS_0.99],rownames(H1536.PRIMARY),nomatch=0),]
 	colnames(W1536.1) <- df.summary$secondary[df.summary$CS_0.99]
 	rownames(H1536.1) <- colnames(W1536.1)
 
-	###### identify signatures unique to the hyper-mutated samples (W1536.2) in the secondary signature extraction and those attributions in 156 samples (H1536.2.2)
-	###### H1536.2.1 is a signature attribution of the primary signatures in hyper-mutated samples.
+	###### identify signatures unique to the hyper-mutated samples (W1536.2) in the
+	###### secondary signature extraction and those attributions in 156 samples
+	###### (H1536.2.2) H1536.2.1 is a signature attribution of the primary
+	###### signatures in hyper-mutated samples.
 	W1536.2 <- W1536.SECONDARY[,!df.summary$CS_0.99]
 	H1536.2.1 <- H1536.SECONDARY[df.summary$CS_0.99,(ncol(W1536.PRIMARY)+1):ncol(H1536.SECONDARY)]
 	H1536.2.2 <- H1536.SECONDARY[!df.summary$CS_0.99,(ncol(W1536.PRIMARY)+1):ncol(H1536.SECONDARY)]
@@ -181,8 +201,9 @@ lego.SECONDARY <- lego1536.PAN[,colnames(lego1536.PAN)%in%sample.remove]
 	lego.tmp1 <- get.lego96.from.lego1536(W.tmp1[1:1536,]) ### get lego in 96 contexts from 1536 contexts
 	colnames(lego.tmp1) <- gsub("Secondary.","",colnames(lego.tmp1))
 	p1 <- plot.signature.SNV(lego.tmp1,"validation")
-	pdf(file=paste(OUTPUT,paste("signature.SNV.primary.re_ordered.pdf",sep="."),sep=""),width=(12),height=0.75*ncol(lego.tmp1))
-		plot(p1) ### plotting primary signatures
+	pdf(file=paste(OUTPUT,paste("signature.SNV.primary.re_ordered.pdf",sep="."),sep=""),
+	    width=(12),height=0.75*ncol(lego.tmp1))
+	plot(p1) ### plotting primary signatures
 	dev.off()
 
 	W.tmp2 <- cbind(W1536.1,W1536.2)
