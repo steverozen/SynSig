@@ -179,8 +179,9 @@ CopyBestSignatureAnalyzerResult <-
 
     info.file.name <- paste0(target.dir, "/info.txt")
     cat("This is a copy of", best, "\n\n", file = info.file.name)
+    capture.output(Sys.time(), file = info.file.name, append = TRUE)
     run.directories <- attr(best, "run.directories")
-    cat("Based on", length(run.directories), "runs:\n",
+    cat("There were", length(run.directories), "runs:\n",
         file = info.file.name, append = TRUE)
     cat(run.directories, "\n", file = info.file.name, append = TRUE)
 
