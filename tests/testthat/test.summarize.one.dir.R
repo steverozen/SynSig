@@ -1,5 +1,7 @@
 context("Test summarizing extraction results in one directory")
 
+library(ICAMS) # TODO(Steve) remove once we move to new ICAMS
+
 test_that("signature.analyzer.sa.sa.COMPOSITE.out", {
   load("signature.analyzer.sa.sa.COMPOSITE.out")
   expect_equal(
@@ -7,7 +9,7 @@ test_that("signature.analyzer.sa.sa.COMPOSITE.out", {
       third.level.dir = "./test.sa.sa.COMPOSITE/sa.results/",
       ground.truth.exposure.name = "ground.truth.syn.exposures.csv",
       which.run = "1.run.sa.sa.COMPOSITE",
-      overwrite = FALSE),
+      overwrite = TRUE),
     signature.analyzer.sa.sa.COMPOSITE.out)
   if (TRUE) # Set this to FALSE to inspect the file and directory output
   {
