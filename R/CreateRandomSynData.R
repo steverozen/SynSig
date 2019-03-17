@@ -189,16 +189,34 @@ CreateOneSetOfRandomCatalogs <-
     sig.info <- CreateMeanAndStdevForSigs(
       total.num.sigs, mut.mean, mut.sd, colnames(syn.96.sigs))
 
+    buffer <- 100
+
     exp.nums <-
       CreateExposuresNums(
-        num.exposures = num.syn.tumors, mean = num.sigs.mean,
-        sd = num.sigs.sd, total.num.sigs = total.num.sigs)
+        num.exposures = num.syn.tumors + buffer,
+        mean = num.sigs.mean,
+        sd = num.sigs.sd,
+        total.num.sigs = total.num.sigs)
 
     exp <-
       sapply(exp.nums,
              function(x) {
                ExposureNums2Exposures(
                  x, colnames(syn.96.sigs), sig.info$syn.mean, sig.info$syn.sd) })
+
+    test.catalog <- syn.COMPOSITE.sigs %*% exp
+    stopifnot(!any(colSums(test.catalog) < 1))
+    test.catalog <- round(test.catalog, digits = 0)
+    zero.mutations <- colSums(test.catalog) == 0
+    # colSums(test.catalog) == 0 can occur after rounding even if
+    # any(colSUms(test.catalog) < 1) before rounding is FALSE, if
+    # before rounding mutiple mutational classes had < 0.5 mutations.
+
+    exp <- exp[ , !zero.mutations]
+    if (ncol(exp) < num.syn.tumors)
+      stop("Too many tumors with no mutations; check the code, ",
+            "possibly increase the value of variable buffer")
+    exp <- exp[ , 1:num.syn.tumors]
     colnames(exp) <- paste0(sample.name.prefix, 1:num.syn.tumors)
 
     CreateAndWriteCatalog(
@@ -231,7 +249,7 @@ CreateRandomSAAndSPSynCatalogs <-
   function(top.level.dir, num.syn.tumors, overwrite = FALSE) {
   SetNewOutDir(top.level.dir, overwrite)
 
-  COMPOSITE.features <- c(ICAMS::catalog.row.order[["DNS1536"]],
+  COMPOSITE.features <- c(ICAMS::catalog.row.order[["SNS1536"]],
                           ICAMS::catalog.row.order[["DNS78"]],
                           ICAMS::catalog.row.order[["ID"]])
 
@@ -286,6 +304,6 @@ CreateRandomSAAndSPSynCatalogs <-
 
 MakeAllRandom <- function() {
   set.seed(1443196)
-  CreateRandomSAAndSPSynCatalogs("./x30.random.sigs.2019.03.12/",
+  CreateRandomSAAndSPSynCatalogs("../30.random.sigs.2019.03.17/",
                            1000, overwrite = TRUE)
 }
