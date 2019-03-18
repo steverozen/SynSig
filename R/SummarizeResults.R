@@ -207,7 +207,7 @@ SummarizeSigOneSPSubdir <-
     # file.copy will return an "okay" flag, which equals to be TRUE if properly executed.
     # This is annoying, and I'll prevent this flag from printing it out
     copy.from.files <- paste0(third.level.dir,
-                              c("/SBS96/All_Solution_Layer/L1/stability.pdf",
+                              c("/SBS96/All_Solution_Layer/L1/RE_vs_stabiliy_plot.pdf",
                                 "/SBS96/All_Solution_Layer/L1/results_stat.csv"))
     for(copy.from in copy.from.files) {
       if (!file.exists(copy.from)) {
