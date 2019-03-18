@@ -180,7 +180,7 @@ SummarizeSigOneSPSubdir <-
 
     # Location of SigProfiler output, which is our input
     # inputPath may change if sigproextractor updates!
-    inputPath <- paste0(third.level.dir,"/SBS96/Selected_Solution/De_Novo_Solution")
+    inputPath <- paste0(third.level.dir,"/SBS96/Suggested_Solution/De_Novo_Solution")
     stopifnot(dir.exists(inputPath))
 
     # Read in extracted signatures in sigproextractor txt format,
