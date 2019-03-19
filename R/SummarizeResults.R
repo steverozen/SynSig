@@ -161,21 +161,18 @@ SummarizeSigOneSubdir <-
 #' defaults to \code{"ground.truth.syn.exposures.csv"}.
 #' This file can be found in the \code{sub.dir}, i.e. \code{<third.level.dir>/../}
 #'
-#' @param write.png If TRUE create png plots of the signatures.
-#'
 #'@param overwrite If TRUE overwrite existing directories and files.
 #'
 #' @export
 #'
 #' @importFrom ICAMS WriteCatSNS96 ReadCatSNS96
 #' @importFrom utils capture.output sessionInfo
-#' @importFrom grDevices png dev.off
+#' @importFrom grDevices dev.off
 #' @importFrom graphics par
 #'
 SummarizeSigOneSPSubdir <-
   function(third.level.dir,
            ground.truth.exposure.name = "ground.truth.syn.exposures.csv",
-           write.png = FALSE,
            overwrite = FALSE) {
 
     # Location of SigProfiler output, which is our input
@@ -235,14 +232,12 @@ SummarizeSigOneSPSubdir <-
 #' the \code{sp.sp} subdirectory
 #' (as is the case for the correlated SBS1-and-SBS5-containing data sets).
 #'
-#' @param write.png If TRUE create png plots of the signatures.
-#'
 #' @export
 #'
 #' @details Results are put in standardized subdirectories of \code{top.dir}.
 
 SummarizeSigProfiler <-
-  function(top.dir, sub.dir = c("sa.sa.96","sp.sp"), write.png = FALSE) {
+  function(top.dir, sub.dir = c("sa.sa.96","sp.sp")) {
 
   ## If sub.dir are unexpected, throw an error
   expected.sub.dir <- c("sa.sa.96","sp.sp")
@@ -253,15 +248,13 @@ SummarizeSigProfiler <-
   if("sa.sa.96" %in% sub.dir) {
     SummarizeSigOneSPSubdir(
       third.level.dir = paste0(top.dir, "/sa.sa.96/sp.results"),
-      ground.truth.exposure.name = "ground.truth.syn.exposures.csv",
-      write.png = write.png)
+      ground.truth.exposure.name = "ground.truth.syn.exposures.csv")
   }
 
   if("sp.sp" %in% sub.dir) {
     SummarizeSigOneSPSubdir(
       third.level.dir = paste0(top.dir, "/sp.sp/sp.results"),
-      ground.truth.exposure.name = "ground.truth.syn.exposures.csv",
-      write.png = write.png)
+      ground.truth.exposure.name = "ground.truth.syn.exposures.csv")
   }
 }
 
@@ -291,7 +284,7 @@ SummarizeSigProfiler <-
 #'
 #' @importFrom ICAMS WriteCatSNS96 ReadCatSNS96
 #' @importFrom utils capture.output sessionInfo
-#' @importFrom grDevices png dev.off
+#' @importFrom grDevices dev.off
 #' @importFrom graphics par
 #
 SummarizeSigOneSACOMPOSITESubdir <-
@@ -339,22 +332,19 @@ SummarizeSigOneSACOMPOSITESubdir <-
 #'
 #' @param which.run Name of subdirectory containing the run to summarize.
 #'
-#' @param write.png If TRUE create png plots of the signatures.
-#'
 #' @param overwrite If TRUE overwrite existing directories and files.
 #'
 #' @export
 #'
 #' @importFrom ICAMS WriteCatSNS96 ReadCatSNS96
 #' @importFrom utils capture.output sessionInfo
-#' @importFrom grDevices png dev.off
+#' @importFrom grDevices dev.off
 #' @importFrom graphics par
 #
 SummarizeSigOneSA96Subdir <-
   function(third.level.dir,
            ground.truth.exposure.name = "ground.truth.syn.exposures.csv",
            which.run = "/best.run/",
-           write.png = FALSE,
            overwrite = FALSE) {
     # Location of SigProfiler output, which is our input
     # inputPath may change if sigproextractor updates!

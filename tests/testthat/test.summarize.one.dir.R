@@ -27,7 +27,6 @@ test_that("SummarizeSigOneSA96Subdir", {
       third.level.dir = "./test.sa.sa.96/sa.results/",
       ground.truth.exposure.name = "ground.truth.syn.exposures.csv",
       which.run = "1.run.sa.sa.96",
-      write.png = FALSE,  # Set to FALSE for some operating systems
       overwrite = TRUE),
     signature.analyzer.sa.sa.96.out)
   if (TRUE) # Set this to FALSE to inspect the file and directory output
@@ -48,8 +47,7 @@ test_that("SummarizeSigOneSPSubdir", {
     SummarizeSigOneSPSubdir(
       third.level.dir =
         "./sp.sum.test.in/sp.results/", overwrite = T,
-      ground.truth.exposure.name = "ground.truth.syn.exposures.csv",
-      write.png = FALSE), # Set this to FALSE to speed up the test.
+      ground.truth.exposure.name = "ground.truth.syn.exposures.csv"),
     sigprofiler.sp.sp.out)
   if (TRUE) # Set this to FALSE to inspect the file and directory output
   {
