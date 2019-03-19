@@ -56,12 +56,12 @@ test_that("SummarizeSigOneSPSubdir", {
     file1 <- "./sp.sum.test.in/sp.results/summary"
     if (!file.exists(file1)) cat("coding error, wrong file\n")
     res <- unlink(file1, recursive = TRUE, force = TRUE)
-    if (res != 0) cat("Failed to unlink", file1, "\n")
-    res <- unlink(
-      paste0("./sp.sum.test.in/",
-             "sp.results/SBS96/Selected_Solution/",
-             "De_Novo_Solution/signatures.PCAWG.format.csv"))
-    if (res != 0) cat("Failed to unlink several files\n")
+    if (res != 0) cat("Failed to unlink ", file1, "\n")
+    file2 <- paste0("./sp.sum.test.in/",
+                    "sp.results/SBS96/Suggested_Solution/",
+                    "De_Novo_Solution/signatures.PCAWG.format.csv")
+    res <- unlink(file2)
+    if (res != 0) cat("Failed to unlink ", file2, "\n")
   }
 })
 
