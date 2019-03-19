@@ -46,7 +46,8 @@ test_that("SummarizeSigOneSPSubdir", {
   expect_equal(
     SummarizeSigOneSPSubdir(
       third.level.dir =
-        "./sp.sum.test.in/sp.results/", overwrite = T,
+        "./sp.sum.test.in/sp.results/",
+      overwrite = T,
       ground.truth.exposure.name = "ground.truth.syn.exposures.csv"),
     sigprofiler.sp.sp.out)
   if (TRUE) # Set this to FALSE to inspect the file and directory output
