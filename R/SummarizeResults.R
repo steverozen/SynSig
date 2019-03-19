@@ -165,7 +165,11 @@ SummarizeSigOneSubdir <-
 #' defaults to \code{"ground.truth.syn.exposures.csv"}.
 #' This file can be found in the \code{sub.dir}, i.e. \code{<third.level.dir>/../}
 #'
-#'@param overwrite If TRUE overwrite existing directories and files.
+#' @param overwrite If TRUE overwrite existing directories and files.
+#'
+#' @param hierarchy Whether the user have enabled hierarchy = True when running sigproextractor.
+#' specifying True or False into sigproextractor will cause the program
+#' to generate different folder structure. (Default: \code{FALSE})
 #'
 #' @export
 #'
@@ -177,7 +181,8 @@ SummarizeSigOneSubdir <-
 SummarizeSigOneSPSubdir <-
   function(third.level.dir,
            ground.truth.exposure.name = "ground.truth.syn.exposures.csv",
-           overwrite = FALSE) {
+           overwrite = FALSE,
+           hierarchy = FALSE) {
 
     # Location of SigProfiler output, which is our input
     # inputPath may change if sigproextractor updates!
