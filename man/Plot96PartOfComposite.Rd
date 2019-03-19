@@ -11,7 +11,7 @@ Plot96PartOfComposite(catalog, name, type = "density")
 
 \item{name}{Name of file to print to.}
 
-\item{type}{See \code{\link[ICAMS]{PlotCatSNS96ToPdf}}.}
+\item{type}{See \code{\link[ICAMS]{PlotCatalogToPdf}}.}
 }
 \description{
 Plot the SBS96 part of a SignatureAnalyzer COMPOSITE signature or catalog

@@ -4,7 +4,7 @@
 #### date: 2019-Feb-15
 #### Version: 0.1.1
 #### To evaluate / assess how well extracted signatures
-#### reflect the ground-truth signatures that went into the 
+#### reflect the ground-truth signatures that went into the
 #### synthetic data, do the following steps.  We take as the first
 #### example SigProfiler-Python output run on synthetic data based on
 #### SigProfiler 96-channel mutational signature profiles and
@@ -15,7 +15,7 @@
 #### SigProfiler-Python example
 ################################################################################
 #### We start by reading in the ground truth signature profiles,
-#### the ground truth synthetic exposures, and the 
+#### the ground truth synthetic exposures, and the
 #### signature profiles extracted by SigProfiler.
 #### We start with data in files because we assume
 #### that signature extraction software is not integrated into
@@ -39,10 +39,10 @@ datasetMainFolders = c("syn.3.5.40.rcc.and.ovary.v4","syn.3.5.40.abst.v4")
 
 #### Naming the datasets (spectra) for cycling
 datasetNames = c("sa.sa.96","sp.sp")
-                    
+
 #### Naming the seed numbers
 # seedNumbers = c(1, 9902, 10509, 14476, 34637, 35058, 35161, 35754,
-#                36725, 36804, 36931, 38418, 38687, 41020, 41897)  
+#                36725, 36804, 36931, 38418, 38687, 41020, 41897)
 
 # seedNumbers = c(1, 9902, 10509, 14476, 34637, 35058)
 seedNumbers = c(2)
@@ -50,7 +50,7 @@ seedNumbers = c(2)
 
 ################################################################################
 #### Traverse the result folders for SigProextractor extraction:
-#### 1. Convert extracted signatures in SigProfiler-Python format 
+#### 1. Convert extracted signatures in SigProfiler-Python format
 #### into signatures in ICAMS-PCAWG csv format.
 #### 2. Use ReadAndAnalyzeSigs() function to calculate extraction similarity
 #### 3. Output the results of analysis.
@@ -58,22 +58,23 @@ seedNumbers = c(2)
 for(seedNumber in seedNumbers)
   for(datasetMainFolder in datasetMainFolders)
     for(datasetName in datasetNames) {
-      
+
       sessionName <- paste0("seed.",seedNumber)
-      
+
       #### Specify paths
       ## Input path - path where program analysis files are stored
       inputPath <- paste(datasetMainFolder,datasetName,"sigproextractor_results",sessionName,"SBS96/Selected_Solution/De_Novo_Solution",sep = "/")
       ## Output path - path to dump the ReadAndAnalyzeSigs() results
       outputPath <- paste(datasetMainFolder,datasetName,"sigproextractor_results",sessionName,"evaluation",sep = "/")
-      
+
       #### Convert Ludmil's tsv96 format to PCAWG csv96 format
       extractedSigs <- ReadSigProfilerSig96(paste(inputPath,"signatures.txt",sep = "/"))
-      WriteCat96(ct = extractedSigs,paste(inputPath,"signatures.PCAWG.format.csv",sep = "/"))
-      
+      WriteCatSNS96(extractedSigs,
+                 paste(inputPath,"signatures.PCAWG.format.csv",sep = "/"))
+
       #### Use ReadAndAnalyzeSigs() function to calculate extraction similarity
       if(datasetName == "sa.sa.96") {
-        sigAnalysis <- 
+        sigAnalysis <-
           ReadAndAnalyzeSigs(
             extracted.sigs =
               paste(inputPath,"signatures.PCAWG.format.csv",sep = "/"),
@@ -82,7 +83,7 @@ for(seedNumber in seedNumbers)
             read.ground.truth.sigs.fn = tmp.read.96)
       }
       if(datasetName == "sp.sp") {
-        sigAnalysis <- 
+        sigAnalysis <-
           ReadAndAnalyzeSigs(
             extracted.sigs =
               paste(inputPath,"signatures.PCAWG.format.csv",sep = "/"),
@@ -90,7 +91,7 @@ for(seedNumber in seedNumbers)
             ground.truth.exposures = paste(datasetMainFolder,"sp.exposure.csv",sep = "/"),
             read.ground.truth.sigs.fn = tmp.read.96)
       }
-      
+
       #### Use ReadAndAnalyzeSigs() function to calculate extraction similarity
       ## The file sigProfiler_SBS_signatures_2018_03_28.csv was downloaded from Synapse (https://www.synapse.org/#!Synapse:syn11738319).
       ## The file res_sp.sp.syn.2018.12.31.v2_signature_patterns_for_7_sigs.csv was
@@ -101,13 +102,13 @@ for(seedNumber in seedNumbers)
       ## exposures to ensure that only signatures with exposures in the
       ## synthetic data are compared to the extracted signatures.
       dir.create(outputPath)
-      
+
       write.csv(sigAnalysis$match1, file = paste(outputPath,"match1.csv",sep = "/"))
       write.csv(sigAnalysis$match2, file = paste(outputPath,"match2.csv",sep = "/"))
-      
+
       WriteCat96(sigAnalysis$gt.sigs, path = paste(outputPath,"ground.truth.sigs.csv",sep = "/"))
       WriteCat96(sigAnalysis$ex.sigs, path = paste(outputPath,"extracted.sigs.csv",sep = "/"))
-      
+
       capture.output(cat("\nsigAnalysis$avg\n"),
                      sigAnalysis$avg,
                      cat("\nsigAnalysis$extracted.with.no.best.match\n"),
@@ -115,16 +116,16 @@ for(seedNumber in seedNumbers)
                      cat("\nsigAnalysis$ground.truth.with.no.best.match\n"),
                      sigAnalysis$ground.truth.with.no.best.match,
                      file = paste0(outputPath,"other.results.txt"))
-      
+
       ## The average cosine similarity is `r round(sigAnalysis$avg, digits = 3)`.
-      
+
       ### Plot the input signatures
       dir.create(paste0(outputPath,"/ground.truth.sigs/"))
-      
+
       ## Optional: Output ground-truth sigs to PNG files
       if(0) {
         par("mfrow"=c(1,1))
-        tmp <- 
+        tmp <-
           lapply(colnames(sigAnalysis$gt.sigs),
                  function(x) {
                    png(paste0(outputPath,"/ground.truth.sigs/",x,".png"))
@@ -135,11 +136,11 @@ for(seedNumber in seedNumbers)
                    dev.off()
                  })
       }
-      
+
       ## Output ground-truth sigs to a PDF file
       par("mfrow"=c(8,1))
       pdf(paste0(outputPath,"/ground.truth.sigs/ground.truth.sigs.pdf"))
-      tmp <- 
+      tmp <-
         lapply(colnames(sigAnalysis$gt.sigs),
                function(x) {
                  PlotCat96(sigAnalysis$gt.sigs[ ,x, drop = FALSE],
@@ -148,15 +149,15 @@ for(seedNumber in seedNumbers)
                            upper = FALSE)
                })
       dev.off()
-      
-      
+
+
       ### Plot the extracted signatures
       dir.create(paste0(outputPath,"/extracted.sigs/"))
-      
+
       ## Optional: Output extracted sigs to PNG files
       if(0) {
         par("mfrow"=c(1,1))
-        tmp <- 
+        tmp <-
           lapply(colnames(sigAnalysis$ex.sigs),
                  function(x) {
                    png(paste0(outputPath,"/extracted.sigs/",x,".png"))
@@ -167,11 +168,11 @@ for(seedNumber in seedNumbers)
                    dev.off()
                  })
       }
-      
+
       ## Output extracted sigs to a PDF file
       par("mfrow"=c(8,1))
       pdf(paste0(outputPath,"/extracted.sigs/extracted.sigs.pdf"))
-      tmp <- 
+      tmp <-
         lapply(colnames(sigAnalysis$ex.sigs),
                function(x) {
                  PlotCat96(sigAnalysis$ex.sigs[ ,x, drop = FALSE],
@@ -180,7 +181,7 @@ for(seedNumber in seedNumbers)
                            upper = FALSE)
                })
       dev.off()
-      
+
       ### Session Info
       capture.output(sessionInfo(),file = paste0(outputPath,"/sessionInfo.log"))
     }

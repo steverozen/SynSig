@@ -244,7 +244,7 @@ SACat96 <- function(cat96) {
 #'
 #' @param name Name of file to print to.
 #'
-#' @param type See \code{\link[ICAMS]{PlotCatSNS96ToPdf}}.
+#' @param type See \code{\link[ICAMS]{PlotCatalogToPdf}}.
 #'
 #' @importFrom ICAMS PlotCatSNS96ToPdf Collapse1536To96
 #' @export
@@ -259,7 +259,7 @@ Plot96PartOfComposite <- function(catalog, name, type = "density") {
     cn[all.0] <- paste(cn[all.0], "WARNING all 0")
     colnames(cat96) <- cn
   }
-  PlotCatSNS96ToPdf(catalog = cat96/sum(cat96), name = name, type = type)
+  PlotCatSNS96ToPdf(catalog = cat96/sum(cat96), filename = name, type = type)
 }
 
 #' Standardize SignatureAnalyzer signature names

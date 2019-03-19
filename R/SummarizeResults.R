@@ -189,7 +189,7 @@ SummarizeSigOneSPSubdir <-
     # Converted signatures will be included in the /summary folder.
     extractedSigs <- ReadSigProfilerSig96(paste0(inputPath,"/De_Novo_Solution_Signatures.txt"))
     extracted.sigs.path <- paste0(inputPath,"/extracted.signatures.PCAWG.format.csv")
-    ICAMS::WriteCatSNS96(ct = extractedSigs, extracted.sigs.path)
+    ICAMS::WriteCatSNS96(extractedSigs, extracted.sigs.path)
 
     retval <-
       SummarizeSigOneSubdir(
