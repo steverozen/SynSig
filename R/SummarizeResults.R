@@ -11,6 +11,8 @@ CopyWithChecks <- function(from, to.dir, overwrite = FALSE) {
 
 
 #' Assess/evaluate results from SigProfiler or SignatureAnalyzer
+#' Note: Users should use sigproextractor(SigProfiler-Python) v0.0.5.31
+#' and SignatureAnalyzer 2018-Apr-18
 #'
 #' @param third.level.dir Lowest level path to results, that is,
 #' \code{top.dir}/sp.sp/sa.results/. or
@@ -146,6 +148,8 @@ SummarizeSigOneSubdir <-
   }
 
 #' Assess/evaluate results from SigProfiler-python (a.k.a. sigproextractor)
+#' Assessment is restricted to v0.0.5.31,
+#' because different version has different folder structure.
 #'
 #' @param third.level.dir Lowest level path to results, e.g.
 #' \code{<top.dir>}\code{/sa.sa.96/sp.results/} or
@@ -188,6 +192,9 @@ SummarizeSigOneSPSubdir <-
     extracted.sigs.path <- paste0(inputPath,"/extracted.signatures.PCAWG.format.csv")
     ICAMS::WriteCatSNS96(extractedSigs, extracted.sigs.path)
 
+    # SummarizeSigOneSubdir will generate a "/summary" folder
+    # under third.level.dir. Summarized results are dumped into
+    # this folder.
     retval <-
       SummarizeSigOneSubdir(
         third.level.dir = third.level.dir,
@@ -204,8 +211,8 @@ SummarizeSigOneSPSubdir <-
     # file.copy will return an "okay" flag, which equals to be TRUE if properly executed.
     # This is annoying, and I'll prevent this flag from printing it out
     copy.from.files <- paste0(third.level.dir,
-                              c("/SBS96/All_Solution_Layer/L1/RE_vs_stabiliy_plot.pdf",
-                                "/SBS96/All_Solution_Layer/L1/results_stat.csv"))
+                              c("/SBS96/SBS96_selection_plot.pdf",
+                                "/SBS96/All_solution_stat.csv"))
     for(copy.from in copy.from.files) {
       if (!file.exists(copy.from)) {
         warning("Cannot find", copy.from, "\n\nSkipping\n\n")
