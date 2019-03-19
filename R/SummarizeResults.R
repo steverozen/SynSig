@@ -180,7 +180,7 @@ SummarizeSigOneSPSubdir <-
 
     # Location of SigProfiler output, which is our input
     # inputPath may change if sigproextractor updates!
-    inputPath <- paste0(third.level.dir,"/SBS96/Selected_Solution/De_Novo_Solution")
+    inputPath <- paste0(third.level.dir,"/SBS96/Suggested_Solution/De_Novo_Solution")
     stopifnot(dir.exists(inputPath))
 
     # Read in extracted signatures in sigproextractor txt format,
@@ -207,7 +207,7 @@ SummarizeSigOneSPSubdir <-
     # file.copy will return an "okay" flag, which equals to be TRUE if properly executed.
     # This is annoying, and I'll prevent this flag from printing it out
     copy.from.files <- paste0(third.level.dir,
-                              c("/SBS96/All_Solution_Layer/L1/stability.pdf",
+                              c("/SBS96/All_Solution_Layer/L1/RE_vs_stabiliy_plot.pdf",
                                 "/SBS96/All_Solution_Layer/L1/results_stat.csv"))
     for(copy.from in copy.from.files) {
       if (!file.exists(copy.from)) {
