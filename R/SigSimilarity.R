@@ -121,7 +121,7 @@ MatchSigs2Directions <- function(sigs1, sigs2) {
                sim=unlist(match1),
                stringsAsFactors = FALSE)
   rownames(table1) <- table1$from
-  table1 <-table1[ , -1]
+  table1 <-table1[ , -1, drop = FALSE]
 
   table2 <-
     data.frame(from=names(match2),
@@ -129,7 +129,7 @@ MatchSigs2Directions <- function(sigs1, sigs2) {
                sim=unlist(match2),
                stringsAsFactors = FALSE)
   rownames(table2) <- table2$from
-  table2 <-table2[ , -1]
+  table2 <-table2[ , -1, drop = FALSE]
 
   return(list(avg=avg, match1=table1, match2=table2))
 }

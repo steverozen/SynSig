@@ -54,7 +54,7 @@ MatchSigsAndRelabel <-
     names(labels) <- colnames(ex.sigs)
     nums <- NumFromId(sim$match1$to)
     reordered.ex <- colnames(ex.sigs)[order(nums)]
-    ex.sigs.x <- ex.sigs[ , order(nums)]
+    ex.sigs.x <- ex.sigs[ , order(nums),drop = FALSE]
     bestmatch.id <- sim$match1[reordered.ex, "to"]
     bestmatch.sim <- sim$match1[reordered.ex, "sim"]
     bestmatch.sim <- round(bestmatch.sim, digits=4)
