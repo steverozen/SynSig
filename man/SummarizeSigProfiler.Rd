@@ -4,8 +4,7 @@
 \alias{SummarizeSigProfiler}
 \title{Summarize SigProfiler results in the sa.sa.96 and/or sp.sp subdirectories.}
 \usage{
-SummarizeSigProfiler(top.dir, sub.dir = c("sa.sa.96", "sp.sp"),
-  write.png = FALSE)
+SummarizeSigProfiler(top.dir, sub.dir = c("sa.sa.96", "sp.sp"))
 }
 \arguments{
 \item{top.dir}{The top directory of a conventional data structure containing
@@ -17,8 +16,6 @@ named sp.results. By default, it contains both \code{c("sa.sa","sp.sp")}.
 But you should specify \code{sub.dir = "sp.sp"} for \code{top.dir} with only
 the \code{sp.sp} subdirectory
 (as is the case for the correlated SBS1-and-SBS5-containing data sets).}
-
-\item{write.png}{If TRUE create png plots of the signatures.}
 }
 \description{
 Summarize SigProfiler results in the sa.sa.96 and/or sp.sp subdirectories.

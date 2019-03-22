@@ -2,7 +2,9 @@
 % Please edit documentation in R/SummarizeResults.R
 \name{SummarizeSigOneSubdir}
 \alias{SummarizeSigOneSubdir}
-\title{Assess/evaluate results from SigProfiler or SignatureAnalyzer}
+\title{Assess/evaluate results from SigProfiler or SignatureAnalyzer
+Note: Users should use sigproextractor(SigProfiler-Python) v0.0.5.31
+and SignatureAnalyzer 2018-Apr-18}
 \usage{
 SummarizeSigOneSubdir(third.level.dir, ground.truth.exposure.name,
   extracted.sigs.path, extracted.exp.path = NULL, read.extracted.sigs.fn,
@@ -44,4 +46,6 @@ extracted signatures.}
 }
 \description{
 Assess/evaluate results from SigProfiler or SignatureAnalyzer
+Note: Users should use sigproextractor(SigProfiler-Python) v0.0.5.31
+and SignatureAnalyzer 2018-Apr-18
 }
