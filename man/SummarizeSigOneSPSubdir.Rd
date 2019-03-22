@@ -8,7 +8,7 @@ because different version has different folder structure.}
 \usage{
 SummarizeSigOneSPSubdir(third.level.dir,
   ground.truth.exposure.name = "ground.truth.syn.exposures.csv",
-  overwrite = FALSE)
+  overwrite = FALSE, hierarchy = FALSE)
 }
 \arguments{
 \item{third.level.dir}{Lowest level path to results, e.g.
@@ -26,6 +26,10 @@ defaults to \code{"ground.truth.syn.exposures.csv"}.
 This file can be found in the \code{sub.dir}, i.e. \code{<third.level.dir>/../}}
 
 \item{overwrite}{If TRUE overwrite existing directories and files.}
+
+\item{hierarchy}{Whether the user have enabled hierarchy = True when running sigproextractor.
+specifying True or False into sigproextractor will cause the program
+to generate different folder structure. (Default: \code{FALSE})}
 }
 \description{
 Assess/evaluate results from SigProfiler-python (a.k.a. sigproextractor)
