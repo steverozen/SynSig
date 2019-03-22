@@ -14,7 +14,8 @@
 ReadSigProfilerSig96 <- function(file) {
   x <- read.table(file, sep = "\t", as.is = TRUE, header = TRUE)
   n <- x[ ,1]
-  x <- x[ , -1]
+  x <- x[ , -1, drop = FALSE] ## x will still be a data.frame if x has only 2 columns
+                              ## i.e. Only one signature has been extracted
 
   # A[C>T]A --> ACAT
   new.n <-
@@ -22,7 +23,7 @@ ReadSigProfilerSig96 <- function(file) {
 
   rownames(x) <- new.n
 
-  x <- x[ICAMS::catalog.row.order[["SNS96"]], ]
+  x <- x[ICAMS::catalog.row.order[["SNS96"]], ,drop = FALSE]
 
   return(x)
 
