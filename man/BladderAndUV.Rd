@@ -2,10 +2,10 @@
 % Please edit documentation in R/CreateMixtedTumourTypeSyntheticData.R
 \name{BladderAndUV}
 \alias{BladderAndUV}
-\title{A simple test for CreateMixedTumorTypeSyntheticData}
+\title{A simple test for \code{CreateMixedTumorTypeSyntheticData}.}
 \usage{
 BladderAndUV()
 }
 \description{
-A simple test for CreateMixedTumorTypeSyntheticData
+A simple test for \code{CreateMixedTumorTypeSyntheticData}.
 }

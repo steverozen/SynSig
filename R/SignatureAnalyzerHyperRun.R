@@ -1,4 +1,5 @@
-#' Prepare the "hypermuted" segment of a split non-hyper and hyper data set.
+#' Prepare the "hypermutated" segment (a.k.a "Secondary" segment
+#' of a split non-hyper and hyper data set.
 #'
 #' @param parent.dir A directory that must contain subdirectories
 #' \code{syn.SA.hyper.low} and \code{syn.SA.hyper.mixed}.
@@ -10,7 +11,7 @@
 #' the initial SignatureAnalyzer run will be placed here to prepare this directory
 #' for the second SignatureAnalyzer run.
 #'
-#' @param overwrite If \code{TRUE} overwrite existing directories and fies.
+#' @param overwrite If \code{TRUE} overwrite existing directories and files.
 #'
 #' @export
 #'

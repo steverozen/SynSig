@@ -301,30 +301,13 @@ CreateRandomSAAndSPSynCatalogs <-
     x96.dir.name       = "sp.sp",
     COMPOSITE.features = COMPOSITE.features,
     overwrite = overwrite)
+
+  AddAllScripts()
   }
-
-AddScript <- function(maxK, slice, dir.name) {
-  out.script.name <- paste0(slice, ".run.SA.R")
-  lines <- readLines("data-raw/run.SA.on.monster.templeate.R")
-  lines[1] <-
-    paste0("# Put this file in <top.level.dir>/", dir.name,
-           " and run Rscript ", out.script.name)
-  lines[2] <- "maxK.for.SA <- 50"
-  lines[15] <- paste0("  slice = ", slice, ",")
-  out.name <- OutDir(paste0(dir.name, "/", out.script.name))
-  writeLines(lines, con = out.name)
-}
-
-AddAllScripts <- function() {
-  AddScript(50, 1, "sa.sa.96")
-  AddScript(50, 2, "sp.sp")
-  AddScript(50, 3, "sa.sa.COMPOSITE")
-  AddScript(50, 4, "sp.sa.COMPOSITE")
-}
 
 MakeAllRandom <- function() {
   set.seed(1443196)
-  CreateRandomSAAndSPSynCatalogs("../30.random.sigs.2019.03.17/",
+  CreateRandomSAAndSPSynCatalogs("../30.random.sigs.2019.03.22/",
                            1000, overwrite = TRUE)
 
 }

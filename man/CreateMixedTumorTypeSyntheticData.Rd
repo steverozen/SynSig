@@ -3,7 +3,7 @@
 \name{CreateMixedTumorTypeSyntheticData}
 \alias{CreateMixedTumorTypeSyntheticData}
 \title{Create a full SignatureAnalyzer / SigProfiler test data set for a
-set of different tumour type.}
+set of different tumor type.}
 \usage{
 CreateMixedTumorTypeSyntheticData(top.level.dir, cancer.type.strings,
   num.syn.tumors, overwrite = FALSE)
@@ -11,7 +11,7 @@ CreateMixedTumorTypeSyntheticData(top.level.dir, cancer.type.strings,
 \arguments{
 \item{top.level.dir}{Path to top level of directory structure to be created.}
 
-\item{cancer.type.strings}{Search the PCAWG data for tumours matching
+\item{cancer.type.strings}{Search the PCAWG data for tumors matching
 these strings. Each string should identify one tumor type, for
 some definition of tumor type. Probably the tumors in each type
 should be non-overlapping, but the code does not enforce this and
@@ -24,5 +24,5 @@ to create.}
 }
 \description{
 Create a full SignatureAnalyzer / SigProfiler test data set for a
-set of different tumour type.
+set of different tumor type.
 }

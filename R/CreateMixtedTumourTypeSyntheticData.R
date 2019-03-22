@@ -1,9 +1,9 @@
 #' Create a full SignatureAnalyzer / SigProfiler test data set for a
-#' set of different tumour type.
+#' set of different tumor type.
 #'
 #' @param top.level.dir Path to top level of directory structure to be created.
 #'
-#' @param cancer.type.strings Search the PCAWG data for tumours matching
+#' @param cancer.type.strings Search the PCAWG data for tumors matching
 #' these strings. Each string should identify one tumor type, for
 #' some definition of tumor type. Probably the tumors in each type
 #' should be non-overlapping, but the code does not enforce this and
@@ -95,12 +95,14 @@ CreateMixedTumorTypeSyntheticData <-
       WriteCatSNS96,
       overwrite = overwrite)
 
+    AddAllScripts()
+
     invisible(list(info.list = info.list,
                    sp.sa.map.info =  sp.sa.map.info))
 
   }
 
-#' A simple test for CreateMixedTumorTypeSyntheticData
+#' A simple test for \code{CreateMixedTumorTypeSyntheticData}.
 BladderAndUV <- function() {
   set.seed(191906)
   num.syn.tumors <- 500
@@ -112,16 +114,19 @@ BladderAndUV <- function() {
       num.syn.tumors = num.syn.tumors,
       overwrite = TRUE
     )
+
   invisible(retval)
 }
 
 # unique(sub("::.*", "", colnames(sp.all.real.exposures), perl = T))
-# TODO: test  "Prost-AdenoCA",  "Liver-HCC"
+# TODO(Steve): test  "Prost-AdenoCA",  "Liver-HCC"
 
-Mix2 <- function() {
+#' Create a specific synthetic data set of 2,700 tumors
+#' @export
+CreateMix <- function() {
   set.seed(191906)
   num.syn.tumors <- 300
-  top.level.dir <- "../mixed.test"
+  top.level.dir <- "../syn.many.types"
   cancer.types <- c("Bladder-TCC", "Eso-AdenoCA",
                     "Breast-AdenoCA", "Lung-SCC",
                     "Kidney-RCC",   "Ovary-AdenoCA",
@@ -134,20 +139,5 @@ Mix2 <- function() {
       num.syn.tumors = num.syn.tumors,
       overwrite = TRUE
     )
-
-  file.copy(
-    from = "data-raw/1run.signatureanalyzer.on.monster.R",
-    to = paste0(top.level.dir, "/sa.sa.96/"))
-  file.copy(
-    from = "data-raw/2run.signatureanalyzer.on.monster.R",
-    to = paste0(top.level.dir, "/sp.sp/"))
-  file.copy(
-    from = "data-raw/3run.signatureanalyzer.on.monster.R",
-    to = paste0(top.level.dir, "/sa.sa.COMPOSITE/"))
-  file.copy(
-    from = "data-raw/4run.signatureanalyzer.on.monster.R",
-    to = paste0(top.level.dir, "/sp.sa.COMPOSITE/"))
-
-
   invisible(retval)
 }

@@ -2,7 +2,8 @@
 % Please edit documentation in R/SignatureAnalyzerHyperRun.R
 \name{SignatureAnalyzerPrepHyper4}
 \alias{SignatureAnalyzerPrepHyper4}
-\title{Prepare the "hypermuted" segment of a split non-hyper and hyper data set.}
+\title{Prepare the "hypermutated" segment (a.k.a "Secondary" segment
+of a split non-hyper and hyper data set.}
 \usage{
 SignatureAnalyzerPrepHyper4(parent.dir, overwrite = FALSE)
 }
@@ -17,8 +18,9 @@ segment, with subdirectories \code{sa.sa.96}, \code{sa.sa.COMPOSITE},
 the initial SignatureAnalyzer run will be placed here to prepare this directory
 for the second SignatureAnalyzer run.}
 
-\item{overwrite}{If \code{TRUE} overwrite existing directories and fies.}
+\item{overwrite}{If \code{TRUE} overwrite existing directories and files.}
 }
 \description{
-Prepare the "hypermuted" segment of a split non-hyper and hyper data set.
+Prepare the "hypermutated" segment (a.k.a "Secondary" segment
+of a split non-hyper and hyper data set.
 }

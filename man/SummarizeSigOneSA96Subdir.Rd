@@ -6,7 +6,7 @@
 \usage{
 SummarizeSigOneSA96Subdir(third.level.dir,
   ground.truth.exposure.name = "ground.truth.syn.exposures.csv",
-  which.run = "/best.run/", write.png = FALSE, overwrite = FALSE)
+  which.run = "/best.run/", overwrite = FALSE)
 }
 \arguments{
 \item{third.level.dir}{Lowest level path to results, that is
@@ -26,8 +26,6 @@ defaults to \code{"ground.truth.syn.exposures.csv"}.
 This file can be found in the \code{sub.dir}, i.e. \code{<third.level.dir>/../}}
 
 \item{which.run}{Name of subdirectory containing the run to summarize.}
-
-\item{write.png}{If TRUE create png plots of the signatures.}
 
 \item{overwrite}{If TRUE overwrite existing directories and files.}
 }

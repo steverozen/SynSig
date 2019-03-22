@@ -585,3 +585,42 @@ CreateAndWriteCatalog <-
     invisible(info$ground.truth.catalog)
   }
 
+#' Add an R script to a particular subdirectory.
+#'
+#' @param maxK The \code{maxK} argument for SignatureAnalyzers.
+#'
+#' @param slice Which subdirectory to put the script into.
+#'
+#' @param dir.name The name of the subdirectory.
+#'
+#' @keywords internal
+
+AddScript <- function(maxK, slice,
+                      dir.name = c("sa.sa.96",
+                                   "sp.sp",
+                                   "sa.sa.COMPOSITE",
+                                   "sp.sa.COMPOSITE")) {
+  out.script.name <- paste0(slice, ".run.SA.R")
+  lines <- readLines("data-raw/run.SA.on.monster.templeate.R")
+  lines[1] <-
+    paste0("# Put this file in <top.level.dir>/", dir.name,
+           " and run Rscript ", out.script.name)
+  lines[2] <- "maxK.for.SA <- 50"
+  lines[15] <- paste0("  slice = ", slice, ",")
+  out.name <- OutDir(paste0(dir.name, "/", out.script.name))
+  writeLines(lines, con = out.name)
+}
+
+
+#' Use the current value of \code{OutDir()} to copy scripts into all subdirectories
+#'
+#' @keywords internal
+
+AddAllScripts <- function() {
+  AddScript(50, 1, "sa.sa.96")
+  AddScript(50, 2, "sp.sp")
+  AddScript(50, 3, "sa.sa.COMPOSITE")
+  AddScript(50, 4, "sp.sa.COMPOSITE")
+}
+
+
