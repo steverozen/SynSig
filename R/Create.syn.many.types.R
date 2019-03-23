@@ -14,18 +14,21 @@
 #'
 #' @param overwrite If TRUE, overwrite existing directories / files.
 #'
+#' @param verbose If > 0, cat various messages.
+#'
 #' @export
 
 CreateMixedTumorTypeSyntheticData <-
   function(top.level.dir, cancer.type.strings,
-           num.syn.tumors, overwrite = FALSE) {
+           num.syn.tumors, overwrite = FALSE,
+           verbose = 0) {
 
     SetNewOutDir(top.level.dir, overwrite)
 
     info.list <-
       lapply(cancer.type.strings,
              function(ca.type.str) {
-               cat("\n\nProcessing", ca.type.str, "\n\n\n")
+               if (verbose) cat("\n\nProcessing", ca.type.str, "\n\n\n")
                retval <-
                  SAAndSPSynDataOneCAType(
                    sa.all.real.exposures,
@@ -41,11 +44,11 @@ CreateMixedTumorTypeSyntheticData <-
 
     sa.exposures <- lapply(info.list, function(x) x$sa.syn.exp)
     sa.exp <- MergeExposures(sa.exposures)
-    cat("Dimension sa.exp", dim(sa.exp), "\n")
+    if (verbose) cat("Dimension sa.exp", dim(sa.exp), "\n")
 
     sp.exposures <- lapply(info.list, function(x) x$sp.syn.exp)
     sp.exp <- MergeExposures(sp.exposures)
-    cat("Dimension sp.exp", dim(sp.exp), "\n")
+    if (verbose) cat("Dimension sp.exp", dim(sp.exp), "\n")
 
 
     # We will need the exposures later when evaluating the attributed signatures
@@ -86,7 +89,7 @@ CreateMixedTumorTypeSyntheticData <-
       overwrite = overwrite)
 
 
-    print(sp.sa.map.info$sp.to.sa.sig.match)
+    if (verbose) print(sp.sa.map.info$sp.to.sa.sig.match)
 
     CreateAndWriteCatalog(
       sp.sigs,
@@ -102,28 +105,14 @@ CreateMixedTumorTypeSyntheticData <-
 
   }
 
-#' A simple test for \code{CreateMixedTumorTypeSyntheticData}.
-BladderAndUV <- function() {
-  set.seed(191906)
-  num.syn.tumors <- 500
-  cancer.types <- c("Bladder-TCC", "Skin-Melanoma")
-  retval <-
-    CreateMixedTumorTypeSyntheticData(
-      top.level.dir = "../Bladder-Melanoma-test",
-      cancer.type.strings = cancer.types,
-      num.syn.tumors = num.syn.tumors,
-      overwrite = TRUE
-    )
-
-  invisible(retval)
-}
 
 # unique(sub("::.*", "", colnames(sp.all.real.exposures), perl = T))
 # TODO(Steve): test  "Prost-AdenoCA",  "Liver-HCC"
 
 #' Create a specific synthetic data set of 2,700 tumors
 #' @export
-CreateMix <- function() {
+
+Create.syn.many.types <- function() {
   set.seed(191906)
   num.syn.tumors <- 300
   top.level.dir <- "../syn.many.types"

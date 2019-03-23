@@ -1,5 +1,5 @@
-# Create "completely random" artificial signatures
-
+# This file contains functions to create "completely random"
+# artificial signatures
 
 #' Create one "random" artificial signature profile.
 #'
@@ -60,7 +60,10 @@ CreateRandomMutSigProfiles <-
 #'
 #' @param sig.names Names for the output vectors.
 #'
-#' @return A list with the needed synthetic means and standard deviations.
+#' @keywords internal
+#'
+#' @return A list with the needed synthetic means
+#' and standard deviations.
 
 CreateMeanAndStdevForSigs <-
   function(num.sigs, target.mut.mean, target.mut.sd, sig.names) {
@@ -71,11 +74,12 @@ CreateMeanAndStdevForSigs <-
   return(list(syn.mean = syn.mean, syn.sd = syn.sd))
 }
 
-#' Create a \code{num.exposures} random exposures
+#' Create \code{num.exposures} signature counts
 #' from a normal distribution with \code{mean} and
 #' \code{sd}.
 #'
-#' Discard 0 exposures and exposures > than \code{max.exposures}.
+#' Discard tumors with signature count = 0 or
+#' signature count > \code{total.num.sigs}.
 #'
 #' @param num.exposures Number of exposures to create.
 #'
@@ -84,6 +88,12 @@ CreateMeanAndStdevForSigs <-
 #' @param sd Standard deviation of distribution to draw from.
 #'
 #' @param total.num.sigs Number of signatures in the "universe".
+#'
+#' @return A numeric vector, each element of which the number
+#' of signatures in the corresponding tumor (which still remains
+#' to be created.)
+#'
+#' @keywords internal
 
 CreateExposuresNums <- function(num.exposures, mean,
                                 sd, total.num.sigs) {
@@ -111,6 +121,8 @@ CreateExposuresNums <- function(num.exposures, mean,
 #'
 #' @return A subset of \code{sig.names} of size \code{num.exp}.
 #'
+#' @keywords internal
+
 ExposureNums2Exposures <-
   function(target.num.exp, all.sig.names, target.sig.means, target.sig.sds) {
     stopifnot(names(target.sig.means) == names(target.sig.sds))
@@ -126,10 +138,10 @@ ExposureNums2Exposures <-
     return(retval)
   }
 
-#' A pair of "random" synthetic catalogs, one for 96-channel
-#' feature and one for COMPOSITE features, for one set
+#' Create a pair of "random" synthetic catalogs, one for 96-channel
+#' features and one for COMPOSITE features, for one set
 #' of signatures.
-
+#'
 #' @param num.syn.tumors Total number of synthetic tumors to create.
 #'
 #' @param total.num.sigs Total number of signatures in the universe.
@@ -161,8 +173,10 @@ ExposureNums2Exposures <-
 #'
 #' @param COMPOSITE.features Character vector containing
 #' rownames for a COMPOSITE signature or catalog.
-#' @param overwrite = FALSE
-
+#'
+#' @param overwrite If \code{TRUE} overwrite existing directories / files.
+#'
+#' @keywords internal
 
 CreateOneSetOfRandomCatalogs <-
   function(num.syn.tumors,
@@ -305,9 +319,9 @@ CreateRandomSAAndSPSynCatalogs <-
   AddAllScripts(maxK = 50)
   }
 
-MakeAllRandom <- function() {
+Create.syn.30.random <- function() {
   set.seed(1443196)
-  CreateRandomSAAndSPSynCatalogs("../30.random.sigs.2019.03.22/",
+  CreateRandomSAAndSPSynCatalogs("../30.random.sigs.2019.03.23x/",
                            1000, overwrite = TRUE)
 
 }
