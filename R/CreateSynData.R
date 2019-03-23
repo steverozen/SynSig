@@ -478,7 +478,19 @@ GenerateSynAbstract <-
     cat("# Parameters derived from synthetic exposures\n",
         file = parm.file, append = TRUE)
     suppressWarnings(
-    WriteSynSigParams(check.params, parm.file, append = TRUE))
+      WriteSynSigParams(check.params, parm.file, append = TRUE))
+
+    missing.sig.names <- setdiff(colnames(parms), colnames(check.params))
+    if (length(missing.sig.names) > 0) {
+      cat("# Some signatures not represented in the synthetic data:\n",
+          file = parm.file, append =  TRUE)
+      cat("#", missing.sig.names, "\n")
+      check.param2 <- matrix(NA, nrow=dim(parms)[1], ncol = dim(parms)[2])
+      dimnames(check.param2) <- dimnames(parms)
+      check.param2[ , colnames(check.params)] <- check.params
+      check.params <- check.param2
+    }
+
     cat("# Difference between original parameters and parameters",
         "derived from synthetic exposures\n",
         file = parm.file, append = TRUE)
@@ -600,14 +612,35 @@ AddScript <- function(maxK, slice,
                                    "sp.sp",
                                    "sa.sa.COMPOSITE",
                                    "sp.sa.COMPOSITE")) {
+
+  lines <- c(
+    "",
+    "",
+    "",
+    "library(SynSig)",
+    "library(ICAMS)",
+    "cat(\"\n\nRunning, maxK.for.SA is\", maxK.for.SA, \"\n\n\")",
+    "RNGkind(kind = \"L'Ecuyer-CMRG\")",
+    "set.seed(888)",
+    "",
+    "reval <- SignatureAnalyzer4MatchedCatalogs(",
+    "  num.runs = 20,",
+    "  signatureanalyzer.code.dir = \"/home/gmssgr/bin/SignatureAnalzyer.052418/\",",
+    "  dir.root = \"..\",",
+    "",
+    "  overwrite = FALSE,",
+    "  maxK = maxK.for.SA,",
+    "  mc.cores = 20",
+    "  )"
+  )
+
   out.script.name <- paste0(slice, ".run.SA.R")
-  lines <- readLines("data-raw/run.SA.on.monster.templeate.R")
-  lines[1] <-
+  lines[1]  <-
     paste0("# Put this file in <top.level.dir>/", dir.name,
            " and run Rscript ", out.script.name)
-  lines[2] <- paste0("maxK.for.SA <- ", maxK)
-  lines[15] <- paste0("  slice = ", slice, ",")
-  out.name <- OutDir(paste0(dir.name, "/", out.script.name))
+  lines[2]  <- paste0("maxK.for.SA <- ", maxK)
+  lines[14] <- paste0("  slice = ", slice, ",")
+  out.name  <- OutDir(paste0(dir.name, "/", out.script.name))
   writeLines(lines, con = out.name)
 }
 
@@ -619,10 +652,10 @@ AddScript <- function(maxK, slice,
 #' @export
 
 AddAllScripts <- function(maxK = 30) {
-  AddScript(50, 1, "sa.sa.96")
-  AddScript(50, 2, "sp.sp")
-  AddScript(50, 3, "sa.sa.COMPOSITE")
-  AddScript(50, 4, "sp.sa.COMPOSITE")
+  AddScript(maxK = maxK, 1, "sa.sa.96")
+  AddScript(maxK = maxK, 2, "sp.sp")
+  AddScript(maxK = maxK, 3, "sa.sa.COMPOSITE")
+  AddScript(maxK = maxK, 4, "sp.sa.COMPOSITE")
 }
 
 
