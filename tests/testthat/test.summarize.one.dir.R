@@ -1,7 +1,5 @@
 context("Test summarizing extraction results in one directory")
 
-library(ICAMS) # TODO(Steve) remove once we move to new ICAMS
-
 test_that("signature.analyzer.sa.sa.COMPOSITE.out", {
   load("signature.analyzer.sa.sa.COMPOSITE.out")
   expect_equal(
