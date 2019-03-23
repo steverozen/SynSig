@@ -1,5 +1,5 @@
 ---
-title: "Create cross-matched SignatureAnalyzer and SigProfiler synthetic data to explore handling overlapping / interfering signatures"
+title: "Create cross-matched SignatureAnalyzer and SigProfiler synthetic data to explore handling of overlapping / interfering signatures"
 author: "Steve Rozen"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 
 ## Overview and rationale
 
-Checking for interference between C > T mutation in 
+Checking for interference between C > T mutations in 
 APOBEC (SBS2) and UV (SBS7a,b).
 
 ## Required libraries
@@ -52,7 +52,6 @@ bladder.info <-
 ```
 
 ```{r}
-undebug(SAAndSPSynDataOneCAType)
 skin.info <- 
   SAAndSPSynDataOneCAType(
     sa.all.real.exposures,
@@ -101,7 +100,7 @@ CreateAndWriteCatalog(
 #### Create synthetic catalogs based on SigProfiler attributions
 
 Create the catalogs. First we need the matching between SigProfiler
-and SignatureAnalyzers signatures.
+and SignatureAnalyzer signatures.
 
 ```{r}
 sp.sa.map.info <-
@@ -120,17 +119,6 @@ knitr::kable(
   caption = 'Best matches from SP signatures to SA signatures',
   digits = 4)
 ```
-```{r, echo = F}
-if (FALSE) {
-knitr::kable(
-  sp.sa.map.info$sa.to.sp.sig.match, 
-  caption =
-    paste('Best (reverse) matches from SA signatures",
-          "to SP signatures (for sanity checking)'),
-  digits = 4)
-}
-```
-
 
 ```{r}
 CreateAndWriteCatalog(
@@ -144,32 +132,18 @@ CreateAndWriteCatalog(
 ### Copy in the scripts
 
 ```{r}
-CopyScripts <- function() {
-  res <- file.copy(from = "1run.signatureanalyzer.on.monster.R",
-                   to = OutDir("sa.sa.96"))
-  if (!res) cat("Copy failed\n")
-  res <- file.copy(from = "2run.signatureanalyzer.on.monster.R",
-                   to = OutDir("sp.sp/"))
-  if (!res) cat("Copy failed\n")
-  res <- file.copy(from = "3run.signatureanalyzer.on.monster.R",
-                   to = OutDir("sa.sa.COMPOSITE/"))
-  if (!res) cat("Copy failed\n")
-  res <- file.copy(from = "4run.signatureanalyzer.on.monster.R",
-                   to = OutDir("sp.sa.COMPOSITE/"))
-  if (!res) cat("Copy failed\n")
-  
-}
-
-CopyScripts()
-
+AddAllScripts()
 ```
 
 ## Version 2: "abstract" synthetic data set from only SBS2, SBS7a, and SBS7b 
 
-1000 synthetic tumors composed from SBS2 and SBS7a,b  Mutation load distributions 
-drawn from bladder transitional cell carcinoma (SBS2) and from skin melanoma (SBS7a,b).
+1000 synthetic tumors composed from SBS2 and SBS7a,b.
+Mutation load distributions 
+drawn from bladder transitional cell carcinoma (SBS2) and
+from skin melanoma (SBS7a,b).
 Most spectra contain both signatures.
-The potential interference is between SBS2 (mainly C > T) and SBS7a,b (mainly C > T).
+The potential interference is between SBS2 (mainly C > T) 
+and SBS7a,b (mainly C > T).
 
 ### Pull together the parameters
 
@@ -258,7 +232,7 @@ CreateAndWriteCatalog(
 #### Generate and write SigProfiler "abstract" 3, 5, 40 catalogs
 
 We need to adjust the signature names in the exposures
-so they match the signature names in \code{sa.COMPOSITE.sigs}.
+so they match the signature names in `sa.COMPOSITE.sigs`.
 
 ```{r SP-abs-syn-cat-COMP}
 tmp.exp <- sp.abst.info$syn.exp
@@ -281,3 +255,6 @@ CreateAndWriteCatalog(
 
 ```
 
+```{r}
+AddAllScripts()
+```
