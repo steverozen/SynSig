@@ -46,7 +46,7 @@ CopyWithChecks <- function(from, to.dir, overwrite = FALSE) {
 #'
 #' @param overwrite If TRUE overwrite existing directories and files.
 #'
-#' @export
+#' @keywords internal
 #'
 #' @importFrom utils capture.output sessionInfo
 
@@ -292,7 +292,7 @@ SummarizeSigProfiler <-
 #'
 #' @param overwrite If TRUE overwrite existing directories and files.
 #'
-#' @export
+#' @keywords internal
 #'
 #' @importFrom ICAMS WriteCatSNS96 ReadCatSNS96
 #' @importFrom utils capture.output sessionInfo
@@ -346,7 +346,7 @@ SummarizeSigOneSACOMPOSITESubdir <-
 #'
 #' @param overwrite If TRUE overwrite existing directories and files.
 #'
-#' @export
+#' @keywords intenal
 #'
 #' @importFrom ICAMS WriteCatSNS96 ReadCatSNS96
 #' @importFrom utils capture.output sessionInfo
