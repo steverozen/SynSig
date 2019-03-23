@@ -1,4 +1,3 @@
-
 #' @title Extract SynSig parameters for one mutational signature profile
 #'
 #' @param counts     A vector of mutation counts attributed to one signature across
@@ -12,8 +11,8 @@
 #'
 #' @importFrom stats sd
 #'
-#' @export
-#'
+#' @keywords internal
+
 SynSigParamsOneSignature <- function(counts, target.size ) {
 
   prevalence <-  length(counts[counts >= 1 ]) / length(counts)
@@ -91,7 +90,8 @@ GetSynSigParamsFromExposures <- function(exposures, target.size = 1) {
 #'
 #' @importFrom utils write.table
 #'
-#' @export
+#' @keywords internal
+
 WriteSynSigParams <-
   function(params, file, append = FALSE,
            col.names = ifelse(append, FALSE, NA)) {
@@ -605,7 +605,7 @@ AddScript <- function(maxK, slice,
   lines[1] <-
     paste0("# Put this file in <top.level.dir>/", dir.name,
            " and run Rscript ", out.script.name)
-  lines[2] <- "maxK.for.SA <- 50"
+  lines[2] <- paste0("maxK.for.SA <- ", maxK)
   lines[15] <- paste0("  slice = ", slice, ",")
   out.name <- OutDir(paste0(dir.name, "/", out.script.name))
   writeLines(lines, con = out.name)
@@ -614,9 +614,11 @@ AddScript <- function(maxK, slice,
 
 #' Use the current value of \code{OutDir()} to copy scripts into all subdirectories
 #'
-#' @keywords internal
+#' @param maxK The \code{maxK} argument for SignatureAnalyzers.
+#'
+#' @export
 
-AddAllScripts <- function() {
+AddAllScripts <- function(maxK = 30) {
   AddScript(50, 1, "sa.sa.96")
   AddScript(50, 2, "sp.sp")
   AddScript(50, 3, "sa.sa.COMPOSITE")

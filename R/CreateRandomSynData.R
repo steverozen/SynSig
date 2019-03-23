@@ -302,7 +302,7 @@ CreateRandomSAAndSPSynCatalogs <-
     COMPOSITE.features = COMPOSITE.features,
     overwrite = overwrite)
 
-  AddAllScripts()
+  AddAllScripts(maxK = 50)
   }
 
 MakeAllRandom <- function() {

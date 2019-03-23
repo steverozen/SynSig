@@ -4,9 +4,11 @@
 \alias{AddAllScripts}
 \title{Use the current value of \code{OutDir()} to copy scripts into all subdirectories}
 \usage{
-AddAllScripts()
+AddAllScripts(maxK = 30)
+}
+\arguments{
+\item{maxK}{The \code{maxK} argument for SignatureAnalyzers.}
 }
 \description{
 Use the current value of \code{OutDir()} to copy scripts into all subdirectories
 }
-\keyword{internal}

@@ -95,7 +95,7 @@ CreateMixedTumorTypeSyntheticData <-
       WriteCatSNS96,
       overwrite = overwrite)
 
-    AddAllScripts()
+    AddAllScripts(maxK = 50)
 
     invisible(list(info.list = info.list,
                    sp.sa.map.info =  sp.sa.map.info))
