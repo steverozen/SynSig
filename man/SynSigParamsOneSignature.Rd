@@ -19,3 +19,4 @@ A 3-element vector with names "prevalence", "mean", and "stdev"
 \description{
 Extract SynSig parameters for one mutational signature profile
 }
+\keyword{internal}

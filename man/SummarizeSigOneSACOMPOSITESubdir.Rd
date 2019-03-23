@@ -32,3 +32,4 @@ This file can be found in the \code{sub.dir}, i.e. \code{<third.level.dir>/../}}
 \description{
 Summarize COMPOSITE results from SignatureAnalyzer.
 }
+\keyword{internal}
