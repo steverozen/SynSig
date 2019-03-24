@@ -57,7 +57,7 @@ CreateAndWriteCatalog(
   sa.96.sigs,
   panc.info$sa.syn.exp,
   "sa.sa.96",
-  WriteCat96)
+  ICAMS::WriteCatSNS96)
 
 ```
 
@@ -104,7 +104,7 @@ CreateAndWriteCatalog(
   sp.sigs,
   panc.info$sp.syn.exp,
   "sp.sp",
-  WriteCat96)
+  ICAMS::WriteCatSNS96)
 
 ```
 
