@@ -1,0 +1,21 @@
+$ diff -rq data-raw/tmp.syn.hyper.low.sa.secondary/ ../../Dropbox\ \(CCB\)/syn-for-pcawg7/data_folders/syn.hyper.4.folders.step2/syn.SA.hyper.mixed/ | gr
+ep differ
+
+
+# Files data-raw/tmp.syn.hyper.low.sa.secondary/sa.sa.96/ground.truth.syn.catalog.csv and ../../Dropbox (CCB)/syn-for-pcawg7/data_folders/syn.hyper.4.folders.step2/syn.SA.hyper.mixed/sa.sa.96/ground.truth.syn.catalog.csv differ
+
+diff -rq data-raw/tmp.syn.hyper.low.sa.secondary/sa.sa.96/ground.truth.syn.catalog.csv ../../Dropbox\ \(CCB\)/syn-for-pcawg7/data_folders/syn.hyper.4.folders.step2/syn.SA.hyper.mixed/sa.sa.96/prev.ground.truth.syn.catalog.csv
+
+# Files data-raw/tmp.syn.hyper.low.sa.secondary/sa.sa.COMPOSITE/ground.truth.syn.catalog.csv and ../../Dropbox (CCB)/syn-for-pcawg7/data_folders/syn.hyper.4.folders.step2/syn.SA.hyper.mixed/sa.sa.COMPOSITE/ground.truth.syn.catalog.csv differ
+
+diff -rq data-raw/tmp.syn.hyper.low.sa.secondary/sa.sa.COMPOSITE/ground.truth.syn.catalog.csv ../../Dropbox\ \(CCB\)/syn-for-pcawg7/data_folders/syn.hyper.4.folders.step2/syn.SA.hyper.mixed/sa.sa.COMPOSITE/prev.ground.truth.syn.catalog.csv
+
+
+
+# Files data-raw/tmp.syn.hyper.low.sa.secondary/sp.sa.COMPOSITE/ground.truth.syn.catalog.csv and ../../Dropbox (CCB)/syn-for-pcawg7/data_folders/syn.hyper.4.folders.step2/syn.SA.hyper.mixed/sp.sa.COMPOSITE/ground.truth.syn.catalog.csv differ
+
+diff -rq data-raw/tmp.syn.hyper.low.sa.secondary/sp.sa.COMPOSITE/ground.truth.syn.catalog.csv ../../Dropbox\ \(CCB\)/syn-for-pcawg7/data_folders/syn.hyper.4.folders.step2/syn.SA.hyper.mixed/sp.sa.COMPOSITE/prev.ground.truth.syn.catalog.csv
+
+# Files data-raw/tmp.syn.hyper.low.sa.secondary/sp.sp/ground.truth.syn.catalog.csv and ../../Dropbox (CCB)/syn-for-pcawg7/data_folders/syn.hyper.4.folders.step2/syn.SA.hyper.mixed/sp.sp/ground.truth.syn.catalog.csv differ
+
+diff -rq data-raw/tmp.syn.hyper.low.sa.secondary/sp.sp/ground.truth.syn.catalog.csv ../../Dropbox\ \(CCB\)/syn-for-pcawg7/data_folders/syn.hyper.4.folders.step2/syn.SA.hyper.mixed/sp.sp/prev.ground.truth.syn.catalog.csv

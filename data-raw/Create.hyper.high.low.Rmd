@@ -80,7 +80,7 @@ We put do this analysis in \code{../../syn.hyper.START},
 and we will \strong{not} use the information in this directory later.
 
 ```{r GetParamHighBurden}
-SetNewOutDir("../../syn.hyper.START/",
+SetNewOutDir("tmp.syn.hyper.START/",
              overwrite = TRUE # For testing and development
              )
 
@@ -232,7 +232,7 @@ sp.hyper.syn.exp <- sp.hyper.syn.exp[ , sp.to.keep]
 #### Create catalogs based on SignatureAnalyzer attributions
 
 ```{r CreateAndWriteLowBurden}
-SetNewOutDir("../../syn.hyper.low.sa.primary/",
+SetNewOutDir("tmp.syn.hyper.low.sa.primary/",
              overwrite = TRUE # For testing and development
              )
 
@@ -283,7 +283,7 @@ CreateAndWriteCatalog(
 #### Create catalogs based on SignatureAnalyzer attributions
 
 ```{r}
-SetNewOutDir("../../syn.hyper.low.sa.secondary/",
+SetNewOutDir("tmp.syn.hyper.low.sa.secondary/",
              overwrite = TRUE # For testing and development
              )
 
@@ -330,7 +330,7 @@ CreateAndWriteCatalog(
 ### Write the catalogs for SP
 
 ```{r}
-SetNewOutDir("../../syn.hyper.high.low.sp/",
+SetNewOutDir("tmp.syn.hyper.low.sp/",
              overwrite = TRUE # For testing and development
              )
 
