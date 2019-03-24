@@ -49,7 +49,7 @@ library(SynSig)
 It is easier to manage if the output is
 is not in a git-managed directory.
 ```{r}
-SetNewOutDir("../../Xsyn.3.5.40.rcc.and.ovary.v8/")
+SetNewOutDir("../../syn.3.5.40.rcc.and.ovary.v8/")
 ```
 
 ```{r}
@@ -101,13 +101,14 @@ CreateAndWriteCatalog(
   sa.rcc.ova.syn.exp,
   "sa.sa.COMPOSITE",
   WriteCatCOMPOSITE)
+```
 
-
+```{r}
 CreateAndWriteCatalog(
   sa.96.sigs,
   sa.rcc.ova.syn.exp,
   "sa.sa.96",
-  WriteCat96)
+  ICAMS::WriteCatSNS96)
 
 ```
 
@@ -136,25 +137,13 @@ knitr::kable(
   digits = 4
 )
 ```
-```{r echo=FALSE}
-if (FALSE) {
-knitr::kable(
-  sp.sa.map.info$sa.to.sp.sig.match, 
-  caption =
-    paste('Best (reverse) matches from SA signatures",
-          "to SP signatures (for sanity checking)'),
-  digits = 4
-)
-}
-```
-
 
 ```{r}
 CreateAndWriteCatalog(
   sp.sigs,
   sp.rcc.ova.syn.exp,
   "sp.sp",
-  WriteCat96)
+  ICAMS::WriteCatSNS96)
 
 ```
 
@@ -205,7 +194,7 @@ knitr::kable(
 
 As above, we do not put the output in a git-managed directory.
 ```{r}
-SetNewOutDir("../../Xsyn.3.5.40.abst.v8/")
+SetNewOutDir("../../syn.3.5.40.abst.v8/")
 set.seed(44)
 num.syn.tumors <- 1000
 
@@ -233,7 +222,7 @@ CreateAndWriteCatalog(
   sa.96.sigs, 
   sa.abst.info$syn.exp,
   "sa.sa.96",
-  WriteCat96)
+  ICAMS::WriteCatSNS96)
 
 ```
 
@@ -256,7 +245,7 @@ CreateAndWriteCatalog(
   sp.sigs, 
   sp.abst.info$syn.exp,
   "sp.sp",
-  WriteCat96)
+  ICAMS::WriteCatSNS96)
 
 ```
 
