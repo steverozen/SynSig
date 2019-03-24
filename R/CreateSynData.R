@@ -90,7 +90,9 @@ GetSynSigParamsFromExposures <- function(exposures, target.size = 1) {
 #'
 #' @importFrom utils write.table
 #'
-#' @keywords internal
+#' @export
+
+# Needs to be exported for e.g. Create.pancreas.Rmd
 
 WriteSynSigParams <-
   function(params, file, append = FALSE,

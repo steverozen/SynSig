@@ -22,4 +22,3 @@ exists.}
 Write SynSig parameters --prevalence, mean(log(exposure))
  and sd(log(exposure)) to a file.
 }
-\keyword{internal}

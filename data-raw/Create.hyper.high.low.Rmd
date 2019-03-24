@@ -76,6 +76,9 @@ sa.hyper.real.exp <-
 \code{SAAndSPSynDataOneCAType} will always include at least 1 non-zero exposure
 in the the synthetic exposure output.
 
+We put do this analysis in \code{../../syn.hyper.START},
+and we will \strong{not} use the information in this directory later.
+
 ```{r GetParamHighBurden}
 SetNewOutDir("../../syn.hyper.START/",
              overwrite = TRUE # For testing and development
@@ -101,7 +104,6 @@ hyper.info$sa.syn.exp <- hyper.info$sa.syn.exp * 2
 hyper.info$sp.syn.exp <- hyper.info$sp.syn.exp * 2
 
 ```
-
 
 
 ## Get actual exposures for low-mutational burden signatures, SBS1 and SBS2
@@ -230,7 +232,7 @@ sp.hyper.syn.exp <- sp.hyper.syn.exp[ , sp.to.keep]
 #### Create catalogs based on SignatureAnalyzer attributions
 
 ```{r CreateAndWriteLowBurden}
-SetNewOutDir("../../syn.SA.hyper.low/",
+SetNewOutDir("../../syn.hyper.low.sa.primary/",
              overwrite = TRUE # For testing and development
              )
 
@@ -281,7 +283,7 @@ CreateAndWriteCatalog(
 #### Create catalogs based on SignatureAnalyzer attributions
 
 ```{r}
-SetNewOutDir("../../syn.SA.hyper.mixed/",
+SetNewOutDir("../../syn.hyper.low.sa.secondary/",
              overwrite = TRUE # For testing and development
              )
 
@@ -299,7 +301,6 @@ CreateAndWriteCatalog(
   WriteCatSNS96,
   overwrite = overwrite)
 ```
-
 
 #### Create synthetic catalogs based on SigProfiler attributions
 
@@ -329,7 +330,7 @@ CreateAndWriteCatalog(
 ### Write the catalogs for SP
 
 ```{r}
-SetNewOutDir("../../syn.SP.hyper.mixed/",
+SetNewOutDir("../../syn.hyper.high.low.sp/",
              overwrite = TRUE # For testing and development
              )
 

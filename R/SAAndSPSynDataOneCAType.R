@@ -51,7 +51,6 @@
 #'  This function does \strong{not} create the synthetic
 #'  mutational spectra catalogs.
 
-
 SAAndSPSynDataOneCAType <-
   function(sa.real.exp,
            sp.real.exp,

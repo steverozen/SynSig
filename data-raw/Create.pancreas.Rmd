@@ -21,7 +21,7 @@ knitr::opts_chunk$set(
 ```{r librariesEtc}
 library(ICAMS)
 library(SynSig)
-SetNewOutDir("../../Xsyn.pancreas.v8/")
+SetNewOutDir("../../syn.pancreas/")
 ```
 
 ## Generate synthetic exposures
