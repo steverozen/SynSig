@@ -49,7 +49,7 @@ library(SynSig)
 It is easier to manage if the output is
 is not in a git-managed directory.
 ```{r}
-SetNewOutDir("../../syn.3.5.40.rcc.and.ovary.v8/")
+SetNewOutDir("tmp.syn.3.5.40.rcc.and.ovary")
 ```
 
 ```{r}
@@ -194,7 +194,7 @@ knitr::kable(
 
 As above, we do not put the output in a git-managed directory.
 ```{r}
-SetNewOutDir("../../syn.3.5.40.abst.v8/")
+SetNewOutDir("tmp.syn.3.5.40.abst")
 set.seed(44)
 num.syn.tumors <- 1000
 
@@ -249,3 +249,31 @@ CreateAndWriteCatalog(
 
 ```
 
+## Check results
+
+```{r}
+diff1.res <-
+  system(
+    "diff -rq tmp.syn.3.5.40.rcc.and.ovary long.test.regression.data/syn.3.5.40.rcc.and.ovary")
+if (diff1.res == 0) {
+  # No differences
+  unlink.res <- unlink("tmp.syn.3.5.40.rcc.and.ovary", recursive = TRUE, force = TRUE)
+  if (unlink.res != 0) warning("failed to unlink tmp.syn.3.5.40.rcc.and.ovary")
+} 
+```
+
+Return from diff is `r diff1.res`.
+
+```{r}
+diff2.res <- 
+  system(
+    "diff -rq tmp.syn.3.5.40.abst long.test.regression.data/syn.3.5.40.abst")
+if (diff2.res == 0) {
+  # No differences
+  unlink.res <- unlink("tmp.syn.3.5.40.abst", recursive = TRUE, force = TRUE)
+  if (unlink.res != 0) warning("failed to unlink tmp.syn.3.5.40.abst")
+}
+
+```
+
+Return from diff is `r diff2.res`.
