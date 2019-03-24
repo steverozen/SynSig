@@ -26,7 +26,7 @@ NULL
 #' @rdname RealExposures
 "sp.no.hyper.real.exposures"
 
-#' Reference mutational signatures from PCAWG7
+#' Reference mutational signature profiles from PCAWG7.
 #'
 #' @format Numerical matrix with rows indicating mutation
 #' types and columns indicating signatures.
@@ -35,12 +35,18 @@ NULL
 
 NULL
 
+#' SignatureAnalyzer mutational signature profiles collapsed from
+#' COMPOSITE to 96-channel SNS signatures.
 #' @rdname MutationalSignatures
 "sa.96.sigs"
 
+#' COMPOSITE mutational signature profiles extrated by
+#' SignatureAnalyzer.
+#'
 #' @rdname MutationalSignatures
 "sa.COMPOSITE.sigs"
 
+#' Signatures extracted by SigProfiler.
 #' @rdname MutationalSignatures
 "sp.sigs"
 

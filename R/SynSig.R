@@ -1,9 +1,40 @@
-#' SynSig: A package for working with synthetic mutational signatures for
-#' purpose of evaluating software packages for extracting and attributing
-#' mutational signatures.
+#' SynSig: Create catalogs of synthetic mutational spectra and assess the
+#' performance of mutational-signature analysis programs on these.
 #'
-#' The SynSig package provides several categories
-#' of functions for working with mutational signatures.
+#' @section Overview:
+#'
+#' The main focus is generating synthetic catalogs of mutational
+#' spectra (mutations in tumors) based on known mutational signature
+#' profiles and attributions (assigment of exposures to tumors) in
+#' the PCAWG7 data. We call this kind of synthetic
+#' data broadly "reality-based" synthetic
+#' data.  The package also has a set of functions that
+#' generate random mutational signature profiles and then create
+#' synthetic catalogs based on these random signature profiles. We
+#' call this kind of synthetic data "random" synthetic data, while
+#' pointing out that much depends on the distributions from which
+#' the random signature profiles and attributions are generated.
+#'
+#' Aypical workflow for generating catalogs of "reality-based" synthetic
+#' mutational spectra is as follows.
+#'
+#' \preformatted{
+#'
+#' Input (based on SignatureAnalyzer or SigProfiler analysis of PCAWG tumors)
+#'   A, matrix of attributions (signatures x samples)
+#'   S, mutational signature profiles.
+#'
+#' P <- GetSynSigParamsFromExposures(A, ...)
+#'
+#' synthetic.exposures <- GenerateSyntheticExposures(P, ...)
+#'
+#' synthetic.spectra <- CreateAndWRiteCatalog(S, synthetic.exposures, ...)
+#'
+#' T <- Signatures extracted by SignatureAnalzer or SigProfiler on synthetic.spectra
+#'
+#' SummarizeReults(T, S, ...)
+#'
+#' }
 #'
 #' @section Creating Synthetic Mutational Catalogs:
 #'
@@ -11,53 +42,29 @@
 #' on parameters derived from signature profiles
 #' and attributions (exposures).
 #'
+#' @section Summarize reults (of signature extraction):
 #'
-#' @section Signature Matching and Comparison:
+#' Relevant functions are: \enumerate{
+#'
+#' \item \code{\link{SummarizeSigProfiler}}
+#' \item \code{\link{SignatureAnalyzerSummarizeTopLevel}}
+#' \item \code{\link{SignatureAnalyzerSummarizeSBS1SBS5}}
+#'
+#' }
+#'
+#' @section Comparing two sets of mutational signatures:
 #'
 #' Functions for comparing mutational signatures and
-#' sets of mutational signatures:
+#' sets of mutational signatures. Often we will be interested
+#' in comparing signature profiles extracted froms synthetic data to the
+#' ground-truth signature profiles.
+#'
 #' \code{\link{Match1Sig}},
 #' \code{\link{MatchSigs1Direction}},
 #' \code{\link{MatchSigs2Directions}},
 #' \code{\link{MatchSigsAndRelabel}}
 #'
-#' @section Overview:
-#'
-#' Generate synthetic mutational spectra (mutations in tumors) from
-#'\enumerate{
-#' \item A set of mutational signatures
-#'
-#' \item Attribution of mutation counts in each tumor to the responsible mutational
-#' signatures
-#'}
-#'
-#'
-#' Typical workflow
-#'
-#' \preformatted{
-#' A <- Read in matrix of attributions (signatures x samples)
-#' S <- Read the mutational signature profiles.
-#'
-#' P <- synsig.parameters.from.attributions (A, ....)
-#'
-#' No.noise.exposure <- GenerateSyntheticExposures(P....)
-#'
-#' No.noise.specra <- GenSynCatalogs(S, No.noise.exposure)
-#'
-#' # Skip for now
-#' # Noise.spectra <- ... neg binomial resample from No.noise.spectra
-#'
-#' Use functions from ICAMS to save spectra
-#'
-#' T <-  Results of running extraction package on spectra
-#'
-#' MatchSigsThenWriteAndPlot(T, S, ...)
-#'
-#' }
-#'
-#' For more information, refer to
-#'
-#' https://docs.google.com/document/d/183DzzG80BxuAdcnuL1jD1qI_YM-cgtVEdHvkbMLwHGc/edit?usp=sharing
+
 #'
 #' TODO(steve): describe how to evaluate!
 #'
