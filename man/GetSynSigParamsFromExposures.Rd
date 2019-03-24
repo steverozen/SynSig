@@ -2,9 +2,9 @@
 % Please edit documentation in R/CreateSynData.R
 \name{GetSynSigParamsFromExposures}
 \alias{GetSynSigParamsFromExposures}
-\title{Determine 3 parameters for synthetic tumors from an exposure matrix}
+\title{Determine 3 parameters for synthetic tumors from an exposure matrix.}
 \usage{
-GetSynSigParamsFromExposures(exposures, target.size = 1)
+GetSynSigParamsFromExposures(exposures, verbose = 0)
 }
 \arguments{
 \item{exposures}{A matrix in which each column is a sample and each row is a mutation
@@ -12,10 +12,7 @@ signature, with each element being the "exposure",
 i.e. mutation count attributed to a
 (sample, signature) pair.}
 
-\item{target.size}{Deprecated - was the length of sequence
-from which the counts were derived; in the future
-make any adjustments (e.g exome to genome) before
-providing the exposure matrix.}
+\item{verbose}{If > 0 cat various messages.}
 }
 \value{
 A data frame with one row for
@@ -31,5 +28,5 @@ each of a subset of the input signatures
 }
 }
 \description{
-Determine 3 parameters for synthetic tumors from an exposure matrix
+Determine 3 parameters for synthetic tumors from an exposure matrix.
 }

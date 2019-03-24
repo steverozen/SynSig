@@ -16,3 +16,8 @@ Vector of signatures names with "_SNV" removed.
 For example, change \code{BI_COMPOSITE_SNV_SBS83_P}
 to \code{BI_COMPOSITE_SBS83_P}
 }
+\details{
+This is necessary because
+for COMPOSITE signatures we rbind coordinated
+"SNV", "DNP", and "INDEL" signatures.
+}

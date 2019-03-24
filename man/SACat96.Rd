@@ -15,3 +15,4 @@ Catalog in in-memory format expected by SignatureAnalyzer
 \description{
 Prepare input data for SignatureAnalyzer
 }
+\keyword{internal}

@@ -1,7 +1,7 @@
 context("Long test of SignatureAnalyzer4MatchedCatalogs")
 
 test_that("SignatureAnalyzer4MatchedCatalogs", {
-  skip_if_not(exists("run.long.tests") && run.long.tests)
+  skip("This is a long test")
   load("SignatureAnalyzer4MatchedCatalogs.out.Rdata")
   set.seed(888)
   tmp.result <<-

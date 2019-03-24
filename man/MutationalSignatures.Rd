@@ -6,7 +6,7 @@
 \alias{sa.96.sigs}
 \alias{sa.COMPOSITE.sigs}
 \alias{sp.sigs}
-\title{Reference mutational signatures from PCAWG7}
+\title{Reference mutational signature profiles from PCAWG7.}
 \format{Numerical matrix with rows indicating mutation
 types and columns indicating signatures.}
 \usage{
@@ -17,6 +17,14 @@ sa.COMPOSITE.sigs
 sp.sigs
 }
 \description{
-Reference mutational signatures from PCAWG7
+Reference mutational signature profiles from PCAWG7.
+
+SignatureAnalyzer mutational signature profiles collapsed from
+COMPOSITE to 96-channel SNS signatures.
+
+COMPOSITE mutational signature profiles extrated by
+SignatureAnalyzer.
+
+Signatures extracted by SigProfiler.
 }
 \keyword{datasets}

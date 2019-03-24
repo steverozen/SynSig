@@ -4,14 +4,14 @@
 \alias{SynSigParamsOneSignature}
 \title{Extract SynSig parameters for one mutational signature profile}
 \usage{
-SynSigParamsOneSignature(counts, target.size)
+SynSigParamsOneSignature(counts, target.size = 1)
 }
 \arguments{
 \item{counts}{A vector of mutation counts attributed to one signature across
 length(counts) samples. TODO(Steve): rename to exposures}
 
 \item{target.size}{The length of genomic sequence from which the counts
-were derived, in megabases TODO:(Steve) probably do not need this}
+were derived, in megabases. Deprecated, set this to 1.}
 }
 \value{
 A 3-element vector with names "prevalence", "mean", and "stdev"

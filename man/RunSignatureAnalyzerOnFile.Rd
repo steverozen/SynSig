@@ -2,11 +2,7 @@
 % Please edit documentation in R/SignatureAnalyzerInteraction.R
 \name{RunSignatureAnalyzerOnFile}
 \alias{RunSignatureAnalyzerOnFile}
-\title{for COMPOSITE signatures we rbind coordinated
-"SNV", "DNP", and "INDEL" signatures. See
-\code{\link{ReadSASigCOMPOSITE}}.
-Function for running SignatureAnalyzer on a file containing
-a catalog.}
+\title{Run SignatureAnalyzer on a file containing a catalog.}
 \usage{
 RunSignatureAnalyzerOnFile(input.catalog, read.catalog.function, out.dir,
   write.signature.function, input.exposures = NULL, maxK = 30,

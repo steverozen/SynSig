@@ -16,3 +16,4 @@ Plot96PartOfComposite(catalog, name, type = "density")
 \description{
 Plot the SBS96 part of a SignatureAnalyzer COMPOSITE signature or catalog
 }
+\keyword{internal}
