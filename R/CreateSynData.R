@@ -1,10 +1,10 @@
 #' @title Extract SynSig parameters for one mutational signature profile
 #'
-#' @param counts     A vector of mutation counts attributed to one signature across
+#' @param counts  A vector of mutation counts attributed to one signature across
 #'                length(counts) samples. TODO(Steve): rename to exposures
 #'
 #' @param target.size The length of genomic sequence from which the counts
-#'                were derived, in megabases TODO:(Steve) probably do not need this
+#'                were derived, in megabases. Deprecated, set this to 1.
 #'
 #' @return
 #'   A 3-element vector with names "prevalence", "mean", and "stdev"
@@ -13,7 +13,7 @@
 #'
 #' @keywords internal
 
-SynSigParamsOneSignature <- function(counts, target.size ) {
+SynSigParamsOneSignature <- function(counts, target.size = 1 ) {
 
   prevalence <-  length(counts[counts >= 1 ]) / length(counts)
 
@@ -27,17 +27,14 @@ SynSigParamsOneSignature <- function(counts, target.size ) {
 }
 
 
-#' @title Determine 3 parameters for synthetic tumors from an exposure matrix
+#' @title Determine 3 parameters for synthetic tumors from an exposure matrix.
 #'
 #' @param exposures A matrix in which each column is a sample and each row is a mutation
 #'         signature, with each element being the "exposure",
 #'         i.e. mutation count attributed to a
 #'         (sample, signature) pair.
 #'
-#' @param target.size Deprecated - was the length of sequence
-#'         from which the counts were derived; in the future
-#'         make any adjustments (e.g exome to genome) before
-#'         providing the exposure matrix.
+#' @param verbose If > 0 cat various messages.
 #'
 #' @return A data frame with one row for
 #' each of a subset of the input signatures
@@ -53,21 +50,29 @@ SynSigParamsOneSignature <- function(counts, target.size ) {
 #'
 #' @export
 
-GetSynSigParamsFromExposures <- function(exposures, target.size = 1) {
+GetSynSigParamsFromExposures <-
+  function(exposures, # target.size = 1,
+           verbose = 0) {
+    # target.size Deprecated - was the length of sequence
+    # from which the counts were derived; in the future
+    # make any adjustments (e.g exome to genome) before
+    # providing the exposure matrix.
 
   integer.counts <- round(exposures, digits=0)
   integer.counts <- integer.counts[rowSums(integer.counts) >0 , ]
   ret1 <- apply(X=integer.counts,
                 MARGIN=1,
-                FUN=SynSigParamsOneSignature,
-                target.size)
+                FUN=SynSigParamsOneSignature)
+                #, target.size)
 
   # Some standard deviations can be NA (if there is only one tumor
   # with mutations for that signature). We pretend we did not see
   # these signatures. TODO(Steve): impute from similar signatures.
   if(any(is.na(ret1['stdev', ]))) {
-    cat("Warning, some signatures present in only one sample, dropping:\n")
-    cat(colnames(ret1)[is.na(ret1['stdev', ])], "\n")
+    if (verbose > 0) {
+      cat("\nWarning, some signatures present in only one sample, dropping:\n")
+      cat(colnames(ret1)[is.na(ret1['stdev', ])], "\n")
+    }
   }
   retval <- ret1[,!is.na(ret1['stdev',]) , drop = FALSE]
   if (ncol(retval) == 0) {
@@ -486,7 +491,7 @@ GenerateSynAbstract <-
     if (length(missing.sig.names) > 0) {
       cat("# Some signatures not represented in the synthetic data:\n",
           file = parm.file, append =  TRUE)
-      cat("#", missing.sig.names, "\n")
+      cat("#", missing.sig.names, "\n", file = parm.file, append = TRUE)
       check.param2 <- matrix(NA, nrow=dim(parms)[1], ncol = dim(parms)[2])
       dimnames(check.param2) <- dimnames(parms)
       check.param2[ , colnames(check.params)] <- check.params
