@@ -296,9 +296,7 @@ SummarizeSigProfiler <-
 #'
 #' @importFrom ICAMS WriteCatSNS96 ReadCatSNS96
 #' @importFrom utils capture.output sessionInfo
-#' @importFrom grDevices dev.off
-#' @importFrom graphics par
-#
+
 SummarizeSigOneSACOMPOSITESubdir <-
   function(third.level.dir,
            ground.truth.exposure.name = "ground.truth.syn.exposures.csv",
@@ -350,9 +348,7 @@ SummarizeSigOneSACOMPOSITESubdir <-
 #'
 #' @importFrom ICAMS WriteCatSNS96 ReadCatSNS96
 #' @importFrom utils capture.output sessionInfo
-#' @importFrom grDevices dev.off
-#' @importFrom graphics par
-#
+
 SummarizeSigOneSA96Subdir <-
   function(third.level.dir,
            ground.truth.exposure.name = "ground.truth.syn.exposures.csv",
