@@ -21,7 +21,8 @@ knitr::opts_chunk$set(
 ```{r librariesEtc}
 library(ICAMS)
 library(SynSig)
-SetNewOutDir("../../syn.pancreas/")
+SetNewOutDir("tmp.syn.pancreas/")
+getwd()
 ```
 
 ## Generate synthetic exposures
@@ -108,8 +109,12 @@ CreateAndWriteCatalog(
 
 ```
 
-## Session Info
+## Check results
 
 ```{r}
-sessionInfo()
+print(
+  system(
+    "diff -rq tmp.syn.pancreas long.test.regression.data/syn.pancreas"))
+
 ```
+

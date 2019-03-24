@@ -35,7 +35,7 @@ and 500 synthetic skin melanomas (high in SBS7a,b,c,d).  The potential interfere
 SBS2 (mainly C > T) and SBS7a,b (mainly C > T).
 
 ```{r}
-SetNewOutDir("../../2.7a.7b.bladder.and.melanoma.2019.03.16/")
+SetNewOutDir("tmp.syn.2.7a.7b.bladder.and.melanoma")
 ```
 
 ```{r}
@@ -192,7 +192,7 @@ knitr::kable(
 ### Generate synthetic exposures
 
 ```{r}
-SetNewOutDir("../../2.7a.7b.abst.2019.03.16/")
+SetNewOutDir("tmp.syn.2.7a.7b.abst")
 set.seed(55)
 num.syn.tumors <- 1000
 ```
@@ -229,7 +229,7 @@ CreateAndWriteCatalog(
 
 ```
 
-#### Generate and write SigProfiler "abstract" 3, 5, 40 catalogs
+#### Generate and write SigProfiler "abstract" 2, 7a, 7b catalogs
 
 We need to adjust the signature names in the exposures
 so they match the signature names in `sa.COMPOSITE.sigs`.
@@ -258,3 +258,18 @@ CreateAndWriteCatalog(
 ```{r}
 AddAllScripts()
 ```
+
+
+## Check results
+
+```{r}
+print(
+  system(
+    "diff -rq tmp.syn.2.7a.7b.bladder.and.melanoma long.test.regression.data/syn.2.7a.7b.bladder.and.melanoma"))
+
+print(
+  system(
+    "diff -rq tmp.syn.2.7a.7b.abst long.test.regression.data/syn.2.7a.7b.abst"))
+
+```
+
