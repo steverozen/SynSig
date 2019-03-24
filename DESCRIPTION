@@ -1,18 +1,18 @@
 Package: SynSig
 Type: Package
-Title: Dealing with Synthetic Mutational Signatures
+Title: Create Catalogs of Synthetic Mutational Spectra
 Version: 0.2.0.9002
 Author: Steven G. Rozen
 Maintainer: Steven G. Rozen <steverozen@gmail.com>
-Description: A collection of functions for generating synthetic
- mutational catalogs and assessing the performance of
- mutational signature analysis programs on these.
+Description: Create catalogs of synthetic mutational spectra and assess the
+  performance of mutational signature analysis programs on these.
 License: GPL-3
 Language: en-US
 Encoding: UTF-8
 LazyData: true
 Imports: lsa, data.table, ICAMS
 Depends: R (>= 2.10)
+Remotes:  github::steverozen/ICAMS@version_1.0.0
 RoxygenNote: 6.1.1
 Suggests: 
     testthat,
