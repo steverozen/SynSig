@@ -14,13 +14,24 @@ Diff4SynDataSets <- function(dirname, unlink) {
   if (!file.exists(regressdirname)) stop(regressdirname, " does not exist")
   tmpdirname <- paste0("tmp.", dirname)
   if (!file.exists(tmpdirname)) stop(tmpdirname, " does not exist")
-  cmd.result <- system2("diff", c("-rq", tmpdirname, regressdirname))
-  if (cmd.result == 0) {
+  cmd.result <-
+    system2("diff", c("-rq", tmpdirname, regressdirname),
+            stderr = TRUE, stdout = TRUE) # Capture all output
+  if (length(cmd.result) == 0) {
     # No differences
     if (unlink) {
       unlink.res <- unlink(tmpdirname, recursive = TRUE, force = TRUE)
-      if (unlink.res != 0) warning("failed to unlink ", tmpdirname)
+      if (unlink.res != 0) {
+        warning("failed to unlink ", tmpdirname)
+        return("failed to unlink")
+      }
     }
+    return("ok")
   }
-  invisible(cmd.result)
+
+  cmd.result <-
+    c(paste("diff -rq", tmpdirname, regressdirname), cmd.result)
+  # cat(cmd.result, sep = "\n")
+
+  return(cmd.result)
 }

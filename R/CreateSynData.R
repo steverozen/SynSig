@@ -430,7 +430,7 @@ SetNewOutDir <- function(dir, overwrite = FALSE) {
   if (dir.exists(dir)) {
     if (overwrite) {
       warning("\nOverwriting ", dir)
-    } else stop(dir, "already exists")
+    } else stop(dir, " already exists")
   } else {
     dir.create(dir)
   }
