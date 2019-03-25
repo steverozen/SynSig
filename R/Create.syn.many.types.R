@@ -105,20 +105,22 @@ CreateMixedTumorTypeSyntheticData <-
 
   }
 
-
-# unique(sub("::.*", "", colnames(sp.all.real.exposures), perl = T))
-# TODO(Steve): test  "Prost-AdenoCA",  "Liver-HCC"
-
 #' Create a specific synthetic data set of 2,700 tumors
+#'
+#' @param regress If \code{TRUE}, then compare to data in \code{data-raw}
+#' and report any differences; if no differences, unlink the result
+#' directory.
+#'
 #' @export
 
-Create.syn.many.types <- function() {
+Create.syn.many.types <- function(regress = FALSE) {
   set.seed(191906)
-  num.syn.tumors <- 300
-  top.level.dir <- "../syn.many.types"
-  cancer.types <- c("Bladder-TCC", "Eso-AdenoCA",
+  num.syn.tumors <- 300 # number of tumor of each type
+  top.level.dir <- "tmp.syn.many.types"
+
+  cancer.types <- c("Bladder-TCC",    "Eso-AdenoCA",
                     "Breast-AdenoCA", "Lung-SCC",
-                    "Kidney-RCC",   "Ovary-AdenoCA",
+                    "Kidney-RCC",     "Ovary-AdenoCA",
                     "Bone-Osteosarc", "Cervix-AdenoCA",
                     "Stomach-AdenoCA")
   retval <-
@@ -128,5 +130,14 @@ Create.syn.many.types <- function() {
       num.syn.tumors = num.syn.tumors,
       overwrite = TRUE
     )
+
+  if (regress) {
+    if (Diff4SynDataSets("syn.many.types", unlink = TRUE) != 0) {
+      cat("\nThere was a difference, investigate\n")
+    } else {
+      cat("\nok\n")
+    }
+  }
+
   invisible(retval)
 }

@@ -319,9 +319,15 @@ CreateRandomSAAndSPSynCatalogs <-
   AddAllScripts(maxK = 50)
   }
 
-Create.syn.30.random <- function() {
+Create.syn.30.random <- function(regress = FALSE) {
   set.seed(1443196)
-  CreateRandomSAAndSPSynCatalogs("../30.random.sigs.2019.03.23x/",
+  CreateRandomSAAndSPSynCatalogs("tmp.syn.30.random.sigs",
                            1000, overwrite = TRUE)
-
+  if (regress) {
+    if (Diff4SynDataSets("syn.30.random.sigs", unlink = TRUE) != 0) {
+      cat("\nThere was a difference, investigate\n")
+    } else {
+      cat("\nok\n")
+    }
+  }
 }
