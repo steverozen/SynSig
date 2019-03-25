@@ -3,11 +3,7 @@ maxK.for.SA <- 30
 
 library(SynSig)
 library(ICAMS)
-cat("
-
-Running, maxK.for.SA is", maxK.for.SA, "
-
-")
+cat("\n\nRunning, maxK.for.SA is", maxK.for.SA, "\n\n")
 RNGkind(kind = "L'Ecuyer-CMRG")
 set.seed(888)
 
