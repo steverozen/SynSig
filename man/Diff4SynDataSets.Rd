@@ -13,7 +13,7 @@ Diff4SynDataSets(dirname, unlink)
 if there are diffs.}
 }
 \value{
-The return value of diff command.
+The output of the diff command.
 }
 \description{
 diff new directory / files against regression data for testing.

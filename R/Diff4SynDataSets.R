@@ -5,7 +5,7 @@
 #' @param unlink if \code{TRUE} unlink \code{tmpdirname}, but do not unlink
 #' if there are diffs.
 #'
-#' @return Invisibly, the return value of the diff command.
+#' @return The output of the diff command.
 #'
 #' @export
 
