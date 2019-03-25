@@ -80,7 +80,8 @@ We put do this analysis in \code{../../syn.hyper.START},
 and we will \strong{not} use the information in this directory later.
 
 ```{r GetParamHighBurden}
-SetNewOutDir("tmp.syn.hyper.START/",
+START.dir.root <- "syn.hyper.low.START"
+SetNewOutDir(paste0("tmp.", START.dir.root),
              overwrite = TRUE # For testing and development
              )
 
@@ -232,7 +233,8 @@ sp.hyper.syn.exp <- sp.hyper.syn.exp[ , sp.to.keep]
 #### Create catalogs based on SignatureAnalyzer attributions
 
 ```{r CreateAndWriteLowBurden}
-SetNewOutDir("tmp.syn.hyper.low.sa.primary/",
+sa.primary.dir.root <- "syn.hyper.low.sa.primary" 
+SetNewOutDir(paste0("tmp.", sa.primary.dir.root),
              overwrite = TRUE # For testing and development
              )
 
@@ -283,7 +285,8 @@ CreateAndWriteCatalog(
 #### Create catalogs based on SignatureAnalyzer attributions
 
 ```{r}
-SetNewOutDir("tmp.syn.hyper.low.sa.secondary/",
+sa.secondary.dir.root <- "syn.hyper.low.sa.secondary"
+SetNewOutDir(paste0("tmp.", sa.secondary.dir.root),
              overwrite = TRUE # For testing and development
              )
 
@@ -330,14 +333,15 @@ CreateAndWriteCatalog(
 ### Write the catalogs for SP
 
 ```{r}
-SetNewOutDir("tmp.syn.hyper.low.sp/",
+sp.dir.root <- "syn.hyper.low.sp"
+SetNewOutDir(paste0("tmp.", sp.dir.root),
              overwrite = TRUE # For testing and development
              )
-
 
 sa.merge.syn.exp <-
   MergeExposures(
     list(no.hyper.syn.info$sa.syn.exp, sa.hyper.syn.exp))
+
 sa.tmp <-
 CreateAndWriteCatalog(
   sa.96.sigs,
@@ -360,4 +364,24 @@ CreateAndWriteCatalog(
   WriteCatSNS96,
   overwrite = overwrite)
 ```
+
+
+```{r}
+diff.START <- Diff4SynDataSets(START.dir.root)
+
+diff.START
+
+diff.sa.primary <- Diff4SynDataSets(sa.primary.dir.root)
+
+diff.sa.primary
+
+diff.sa.secondary <- Diff4SynDataSets(sa.secondary.dir.root)
+
+diff.sa.secondary
+
+diff.sp <- Diff4SynDataSets(sp.dir.root)
+
+diff.sp
+```
+
 
