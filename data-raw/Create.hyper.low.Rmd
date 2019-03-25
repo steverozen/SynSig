@@ -365,23 +365,14 @@ CreateAndWriteCatalog(
   overwrite = overwrite)
 ```
 
+## Check and unlink the results
+
+Set <tt>unlink = FALSE</tt> if you want to keep the results. Return values
+are 0 on success.
 
 ```{r}
-diff.START <- Diff4SynDataSets(START.dir.root)
-
-diff.START
-
-diff.sa.primary <- Diff4SynDataSets(sa.primary.dir.root)
-
-diff.sa.primary
-
-diff.sa.secondary <- Diff4SynDataSets(sa.secondary.dir.root)
-
-diff.sa.secondary
-
-diff.sp <- Diff4SynDataSets(sp.dir.root)
-
-diff.sp
+Diff4SynDataSets(START.dir.root, unlink = TRUE)
+Diff4SynDataSets(sa.primary.dir.root, unlink = TRUE)
+Diff4SynDataSets(sa.secondary.dir.root, unlink = TRUE)
+Diff4SynDataSets(sp.dir.root, unlink = TRUE)
 ```
-
-

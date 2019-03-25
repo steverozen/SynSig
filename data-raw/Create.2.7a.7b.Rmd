@@ -262,14 +262,11 @@ AddAllScripts()
 
 ## Check results
 
+Set <tt>unlink = FALSE</tt> if you want to keep the results.  Return
+values are 0 on success.
+
 ```{r}
-print(
-  system(
-    "diff -rq tmp.syn.2.7a.7b.bladder.and.melanoma long.test.regression.data/syn.2.7a.7b.bladder.and.melanoma"))
-
-print(
-  system(
-    "diff -rq tmp.syn.2.7a.7b.abst long.test.regression.data/syn.2.7a.7b.abst"))
-
+Diff4SynDataSets("syn.2.7a.7b.bladder.and.melanoma", unlink = TRUE)
+Diff4SynDataSets("syn.2.7a.7b.abst", unlink = TRUE)
 ```
 

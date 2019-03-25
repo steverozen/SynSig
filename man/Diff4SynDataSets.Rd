@@ -4,10 +4,13 @@
 \alias{Diff4SynDataSets}
 \title{diff new directory / files against regression data for testing.}
 \usage{
-Diff4SynDataSets(dirname)
+Diff4SynDataSets(dirname, unlink)
 }
 \arguments{
 \item{dirname}{the root name of the directories to diff.}
+
+\item{unlink}{if \code{TRUE} unlink \code{tmpdirname}, but do not unlink
+if there are diffs.}
 }
 \value{
 The return value of diff command.

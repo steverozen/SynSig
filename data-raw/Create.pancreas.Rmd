@@ -21,7 +21,7 @@ knitr::opts_chunk$set(
 ```{r librariesEtc}
 library(ICAMS)
 library(SynSig)
-SetNewOutDir("tmp.syn.pancreas/")
+SetNewOutDir("tmp.syn.pancreas")
 getwd()
 ```
 
@@ -109,12 +109,11 @@ CreateAndWriteCatalog(
 
 ```
 
-## Check results
+## Check the results
+
+Set <tt>unlink = FALSE</tt> if you want to keep the results. Return
+values are 0 on success.
 
 ```{r}
-print(
-  system(
-    "diff -rq tmp.syn.pancreas long.test.regression.data/syn.pancreas"))
-
+Diff4SynDataSets("syn.pancreas", unlink = TRUE)
 ```
-

@@ -251,29 +251,11 @@ CreateAndWriteCatalog(
 
 ## Check results
 
-```{r}
-diff1.res <-
-  system(
-    "diff -rq tmp.syn.3.5.40.rcc.and.ovary long.test.regression.data/syn.3.5.40.rcc.and.ovary")
-if (diff1.res == 0) {
-  # No differences
-  unlink.res <- unlink("tmp.syn.3.5.40.rcc.and.ovary", recursive = TRUE, force = TRUE)
-  if (unlink.res != 0) warning("failed to unlink tmp.syn.3.5.40.rcc.and.ovary")
-} 
-```
-
-Return from diff is `r diff1.res`.
+Set <tt>unlink = FALSE</tt> if you want to keep the results.  Return
+values are 0 on success.
 
 ```{r}
-diff2.res <- 
-  system(
-    "diff -rq tmp.syn.3.5.40.abst long.test.regression.data/syn.3.5.40.abst")
-if (diff2.res == 0) {
-  # No differences
-  unlink.res <- unlink("tmp.syn.3.5.40.abst", recursive = TRUE, force = TRUE)
-  if (unlink.res != 0) warning("failed to unlink tmp.syn.3.5.40.abst")
-}
+Diff4SynDataSets("syn.3.5.40.rcc.and.ovary", unlink = TRUE)
 
+Diff4SynDataSets("syn.3.5.40.abst", unlink = TRUE)
 ```
-
-Return from diff is `r diff2.res`.
