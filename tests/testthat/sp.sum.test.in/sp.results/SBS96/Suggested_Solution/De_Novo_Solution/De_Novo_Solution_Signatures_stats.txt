@@ -1,3 +1,0 @@
-Samples	Stability	Total Mutations
-Signature A	0.9998749354252767	126637
-Signature B	0.9993666437944522	226687
