@@ -16,6 +16,8 @@
 \url{https://dx.doi.org/10.7303/syn11738669.5}
 
 \url{https://dx.doi.org/10.7303/syn11761198.4}
+
+\url{https://dx.doi.org/10.7303/syn11761237.4}
 }
 \usage{
 sa.all.real.exposures
@@ -32,6 +34,6 @@ Real exposure (signature attributions) from SignatureAnalyzer and SigProfiler
 \note{
 Prefix \code{sa} indicates SignatureAnalyzers, \code{sp} indicates
 SigProfiler; \code{all} indicates all samples, \code{no.hyper} means
-hypermutated tumors as defined for SignatureAnalyzer have been removed.
+that hypermutated tumors as defined for SignatureAnalyzer have been removed.
 }
 \keyword{datasets}

@@ -39,15 +39,12 @@ In the end we take the cross product of the two choices, that is,
 
 ## Required libraries
 
-```{r readSPprofiles}
-library(ICAMS)
+```{r library}
 library(SynSig)
 ```
 
 ## Version 1, Kidney-RCC and ovarian adenocarcinoma to explore SBS3, SBS5, and SBS40
 
-It is easier to manage if the output is
-is not in a git-managed directory.
 ```{r}
 SetNewOutDir("tmp.syn.3.5.40.rcc.and.ovary")
 ```
@@ -78,14 +75,14 @@ ovary.info <-
 Combine the RCC and ovarian adenocarcinoma synthetic exposures.
 
 ```{r} 
-# debug(MergeExposures)
 sa.rcc.ova.syn.exp <-
   MergeExposures(list(rcc.info$sa.syn.exp, ovary.info$sa.syn.exp))
 
 sp.rcc.ova.syn.exp <-
   MergeExposures(list(rcc.info$sp.syn.exp, ovary.info$sp.syn.exp))
 
-# We will need the exposures later when evaluating the attributed signatures
+# We might want the exposures later to understand the 
+# characteristics of the synthetic data.
 WriteExposure(sa.rcc.ova.syn.exp, OutDir("sa.exposure.csv"))
 WriteExposure(sp.rcc.ova.syn.exp, OutDir("sp.exposure.csv"))
 
@@ -192,7 +189,7 @@ knitr::kable(
 )
 ```
 
-As above, we do not put the output in a git-managed directory.
+
 ```{r}
 SetNewOutDir("tmp.syn.3.5.40.abst")
 set.seed(44)
@@ -251,8 +248,8 @@ CreateAndWriteCatalog(
 
 ## Check results
 
-Set <tt>unlink = FALSE</tt> if you want to keep the results.  Return
-values are 0 on success.
+Set <tt>unlink = FALSE</tt> if you want to keep the results.
+Return values are `"ok"` on success.
 
 ```{r}
 Diff4SynDataSets("syn.3.5.40.rcc.and.ovary", unlink = TRUE)

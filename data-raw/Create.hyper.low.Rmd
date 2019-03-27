@@ -367,8 +367,8 @@ CreateAndWriteCatalog(
 
 ## Check and unlink the results
 
-Set <tt>unlink = FALSE</tt> if you want to keep the results. Return values
-are 0 on success.
+Set <tt>unlink = FALSE</tt> if you want to keep the results. 
+Return values are `"ok"` on success.
 
 ```{r}
 Diff4SynDataSets(START.dir.root, unlink = TRUE)

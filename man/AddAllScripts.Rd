@@ -2,13 +2,15 @@
 % Please edit documentation in R/CreateSynData.R
 \name{AddAllScripts}
 \alias{AddAllScripts}
-\title{Use the current value of \code{OutDir()} to copy scripts into all subdirectories}
+\title{Create scripts to run SignatureAnalyzer in all subdirectories
+of \code{OutDir()}.}
 \usage{
 AddAllScripts(maxK = 30)
 }
 \arguments{
-\item{maxK}{The \code{maxK} argument for SignatureAnalyzers.}
+\item{maxK}{The \code{maxK} argument for SignatureAnalyzer.}
 }
 \description{
-Use the current value of \code{OutDir()} to copy scripts into all subdirectories
+Create scripts to run SignatureAnalyzer in all subdirectories
+of \code{OutDir()}.
 }

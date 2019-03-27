@@ -20,7 +20,12 @@ the first "." in the sample id with "-" concatenated
 to sample.id.suffix. TODO(Steve): probably drop this}
 }
 \value{
-A list of three elements TODO(Steve): FINISH Spectra catalog as a numeric matrix.
+A list of three elements that comprise the
+synthetic data: \enumerate{
+ \item \code{ground.truth.catalog}
+ \item \code{ground.truth.signatures}
+ \item \code{ground.truth.exposures}
+}
 }
 \description{
 Generate synthetic spectra catalogs given

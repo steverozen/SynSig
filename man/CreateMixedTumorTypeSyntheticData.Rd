@@ -3,7 +3,7 @@
 \name{CreateMixedTumorTypeSyntheticData}
 \alias{CreateMixedTumorTypeSyntheticData}
 \title{Create a full SignatureAnalyzer / SigProfiler test data set for a
-set of different tumor type.}
+set of various tumor types.}
 \usage{
 CreateMixedTumorTypeSyntheticData(top.level.dir, cancer.type.strings,
   num.syn.tumors, overwrite = FALSE, verbose = 0)
@@ -17,8 +17,8 @@ some definition of tumor type. Probably the tumors in each type
 should be non-overlapping, but the code does not enforce this and
 does not care.}
 
-\item{num.syn.tumors}{Number of synthetic tumors of each cancer type
-to create.}
+\item{num.syn.tumors}{Number of synthetic tumors to create
+for each cancer type.}
 
 \item{overwrite}{If TRUE, overwrite existing directories / files.}
 
@@ -26,5 +26,5 @@ to create.}
 }
 \description{
 Create a full SignatureAnalyzer / SigProfiler test data set for a
-set of different tumor type.
+set of various tumor types.
 }

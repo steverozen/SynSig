@@ -9,6 +9,17 @@
 \title{Reference mutational signature profiles from PCAWG7.}
 \format{Numerical matrix with rows indicating mutation
 types and columns indicating signatures.}
+\source{
+\url{https://www.synapse.org/#!Synapse:syn11738310}
+
+\url{https://www.synapse.org/#!Synapse:syn11738311}
+
+\url{https://www.synapse.org/#!Synapse:syn11738308}
+
+\url{https://www.synapse.org/#!Synapse:syn11738309}
+
+\url{https://www.synapse.org/#!Synapse:syn11738319}
+}
 \usage{
 sa.96.sigs
 
@@ -18,13 +29,20 @@ sp.sigs
 }
 \description{
 Reference mutational signature profiles from PCAWG7.
-
-SignatureAnalyzer mutational signature profiles collapsed from
+}
+\details{
+\code{sa.96.sigs}
+provides SignatureAnalyzer mutational signature profiles collapsed from
 COMPOSITE to 96-channel SNS signatures.
 
-COMPOSITE mutational signature profiles extrated by
-SignatureAnalyzer.
+\code{sa.COMPOSITE.sigs} provides
+COMPOSITE mutational signature profiles extracted by
+SignatureAnalyzer. \code{sa.COMPOSITE.sigs}
+are an \code{rbind} of the contents of
+\url{https://www.synapse.org/#!Synapse:syn11738311} (SBS 1536),
+\url{https://www.synapse.org/#!Synapse:syn11738308} (DBS), and
+\url{https://www.synapse.org/#!Synapse:syn11738309}.
 
-Signatures extracted by SigProfiler.
+\code{sp.sigs} provides signatures extracted by SigProfiler.
 }
 \keyword{datasets}

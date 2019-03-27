@@ -1,5 +1,5 @@
 #' Create a full SignatureAnalyzer / SigProfiler test data set for a
-#' set of different tumor type.
+#' set of various tumor types.
 #'
 #' @param top.level.dir Path to top level of directory structure to be created.
 #'
@@ -9,8 +9,8 @@
 #' should be non-overlapping, but the code does not enforce this and
 #' does not care.
 #'
-#' @param num.syn.tumors Number of synthetic tumors of each cancer type
-#' to create.
+#' @param num.syn.tumors Number of synthetic tumors to create
+#' for each cancer type.
 #'
 #' @param overwrite If TRUE, overwrite existing directories / files.
 #'
@@ -55,8 +55,8 @@ CreateMixedTumorTypeSyntheticData <-
     WriteExposure(sa.exp, OutDir("sa.exposure.csv"))
     WriteExposure(sp.exp, OutDir("sp.exposure.csv"))
 
-    # Create synthetic mutational spectra catalogs based on SignatureAnalyzer
-    # attributions
+    # Create catalogs of synthetic mutational spectra
+    # based on SignatureAnalyzer attributions
 
     CreateAndWriteCatalog(
       sa.COMPOSITE.sigs,
@@ -72,11 +72,11 @@ CreateMixedTumorTypeSyntheticData <-
       WriteCatSNS96,
       overwrite = overwrite)
 
-    # Create synthetic mutational spectra catalogs based on SigProfiler
-    # attributions
+    # Create catalogs of synthetic mutational spectra
+    # based on SigProfiler attributions
 
-    # First we need the matching between SigProfiler and SignatureAnalyzers
-    # signatures.
+    # First we need the matching between SigProfiler and
+    # SignatureAnalyzers signatures.
 
     sp.sa.map.info <-
       MapSPToSASignatureNamesInExposure(sp.exp)
@@ -105,7 +105,7 @@ CreateMixedTumorTypeSyntheticData <-
 
   }
 
-#' Create a specific synthetic data set of 2,700 tumors
+#' Create a specific synthetic data set of 2,700 tumors.
 #'
 #' @param regress If \code{TRUE}, then compare to data in \code{data-raw}
 #' and report any differences; if no differences, unlink the result

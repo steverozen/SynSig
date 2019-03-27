@@ -5,7 +5,7 @@
 #'
 #' The main focus is generating synthetic catalogs of mutational
 #' spectra (mutations in tumors) based on known mutational signature
-#' profiles and attributions (assigment of exposures to tumors) in
+#' profiles and attributions (assignment of exposures to tumors) in
 #' the PCAWG7 data. We call this kind of synthetic
 #' data broadly "reality-based" synthetic
 #' data.  The package also has a set of functions that
@@ -15,7 +15,7 @@
 #' pointing out that much depends on the distributions from which
 #' the random signature profiles and attributions are generated.
 #'
-#' Aypical workflow for generating catalogs of "reality-based" synthetic
+#' Typical workflow for generating catalogs of "reality-based" synthetic
 #' mutational spectra is as follows.
 #'
 #' \preformatted{
@@ -32,7 +32,7 @@
 #'
 #' T <- Signatures extracted by SignatureAnalzer or SigProfiler on synthetic.spectra
 #'
-#' SummarizeReults(T, S, ...)
+#' SummarizeResults(T, S, ...)
 #'
 #' }
 #'
@@ -42,7 +42,7 @@
 #' on parameters derived from signature profiles
 #' and attributions (exposures).
 #'
-#' @section Summarize reults (of signature extraction):
+#' @section Summarize results (of signature extraction):
 #'
 #' Relevant functions are: \enumerate{
 #'
@@ -56,7 +56,7 @@
 #'
 #' Functions for comparing mutational signatures and
 #' sets of mutational signatures. Often we will be interested
-#' in comparing signature profiles extracted froms synthetic data to the
+#' in comparing signature profiles extracted from synthetic data to the
 #' ground-truth signature profiles.
 #'
 #' \code{\link{Match1Sig}},

@@ -19,10 +19,8 @@ knitr::opts_chunk$set(
 ## Required libraries and set output path
 
 ```{r librariesEtc}
-library(ICAMS)
 library(SynSig)
 SetNewOutDir("tmp.syn.pancreas")
-getwd()
 ```
 
 ## Generate synthetic exposures
@@ -111,8 +109,8 @@ CreateAndWriteCatalog(
 
 ## Check the results
 
-Set <tt>unlink = FALSE</tt> if you want to keep the results. Return
-values are 0 on success.
+Set <tt>unlink = FALSE</tt> if you want to keep the results.
+Return values are `"ok"` on success.
 
 ```{r}
 Diff4SynDataSets("syn.pancreas", unlink = TRUE)

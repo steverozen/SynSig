@@ -344,7 +344,7 @@ SummarizeSigOneSACOMPOSITESubdir <-
 #'
 #' @param overwrite If TRUE overwrite existing directories and files.
 #'
-#' @keywords intenal
+#' @keywords internal
 #'
 #' @importFrom ICAMS WriteCatSNS96 ReadCatSNS96
 #' @importFrom utils capture.output sessionInfo

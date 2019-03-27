@@ -138,7 +138,9 @@ BestSignatureAnalyzerResult <- function(sa.results.dir,
 
 }
 
-#' Find best result and make a copy of the folder
+#' Find the SignatureAnalyzer results
+#' directory with the best results and make a copy
+#' of it as \code{sa.results.dir/best.run/}
 #'
 #' @param sa.results.dir See \code{\link{BestSignatureAnalyzerResult}}
 #'
@@ -151,7 +153,6 @@ BestSignatureAnalyzerResult <- function(sa.results.dir,
 #' \code{run.directories}.
 #'
 #' @export
-#'
 
 CopyBestSignatureAnalyzerResult <-
   function(sa.results.dir,

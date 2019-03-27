@@ -2,7 +2,9 @@
 % Please edit documentation in R/BestSignatureAnalyzerResult.R
 \name{CopyBestSignatureAnalyzerResult}
 \alias{CopyBestSignatureAnalyzerResult}
-\title{Find best result and make a copy of the folder}
+\title{Find the SignatureAnalyzer results
+directory with the best results and make a copy
+of it as \code{sa.results.dir/best.run/}}
 \usage{
 CopyBestSignatureAnalyzerResult(sa.results.dir, verbose = FALSE,
   overwrite = FALSE)
@@ -20,5 +22,7 @@ string, with the list directories examined as the attribute
 \code{run.directories}.
 }
 \description{
-Find best result and make a copy of the folder
+Find the SignatureAnalyzer results
+directory with the best results and make a copy
+of it as \code{sa.results.dir/best.run/}
 }

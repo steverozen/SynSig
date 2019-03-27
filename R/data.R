@@ -5,7 +5,7 @@
 #'
 #' @note Prefix \code{sa} indicates SignatureAnalyzers, \code{sp} indicates
 #' SigProfiler; \code{all} indicates all samples, \code{no.hyper} means
-#' hypermutated tumors as defined for SignatureAnalyzer have been removed.
+#' that hypermutated tumors as defined for SignatureAnalyzer have been removed.
 #'
 #' @name RealExposures
 NULL
@@ -24,9 +24,24 @@ NULL
 "sa.no.hyper.real.exposures"
 
 #' @rdname RealExposures
+#' @source \url{https://dx.doi.org/10.7303/syn11761237.4}
 "sp.no.hyper.real.exposures"
 
 #' Reference mutational signature profiles from PCAWG7.
+#'
+#' @details \code{sa.96.sigs}
+#' provides SignatureAnalyzer mutational signature profiles collapsed from
+#' COMPOSITE to 96-channel SNS signatures.
+#'
+#' @details \code{sa.COMPOSITE.sigs} provides
+#' COMPOSITE mutational signature profiles extracted by
+#' SignatureAnalyzer. \code{sa.COMPOSITE.sigs}
+#' are an \code{rbind} of the contents of
+#' \url{https://www.synapse.org/#!Synapse:syn11738311} (SBS 1536),
+#' \url{https://www.synapse.org/#!Synapse:syn11738308} (DBS), and
+#' \url{https://www.synapse.org/#!Synapse:syn11738309}.
+#'
+#' @details \code{sp.sigs} provides signatures extracted by SigProfiler.
 #'
 #' @format Numerical matrix with rows indicating mutation
 #' types and columns indicating signatures.
@@ -35,18 +50,16 @@ NULL
 
 NULL
 
-#' SignatureAnalyzer mutational signature profiles collapsed from
-#' COMPOSITE to 96-channel SNS signatures.
 #' @rdname MutationalSignatures
+#' @source \url{https://www.synapse.org/#!Synapse:syn11738310}
 "sa.96.sigs"
 
-#' COMPOSITE mutational signature profiles extrated by
-#' SignatureAnalyzer.
-#'
 #' @rdname MutationalSignatures
+#' @source \url{https://www.synapse.org/#!Synapse:syn11738311}
+#' @source \url{https://www.synapse.org/#!Synapse:syn11738308}
+#' @source \url{https://www.synapse.org/#!Synapse:syn11738309}
 "sa.COMPOSITE.sigs"
 
-#' Signatures extracted by SigProfiler.
 #' @rdname MutationalSignatures
+#' @source \url{https://www.synapse.org/#!Synapse:syn11738319}
 "sp.sigs"
-

@@ -143,11 +143,15 @@ ReadSASigID <- function(path) {
 #'
 #' @export
 ReadSASigCOMPOSITE <- function() {
-
+  # source: https://www.synapse.org/#!Synapse:syn11738311
   sa1536.file <-
     "SignatureAnalyzer_COMPOSITE_SBS_W1536.signature.031918.txt"
+
+  # source: https://www.synapse.org/#!Synapse:syn11738308
   saDBS.file  <-
     "SignatureAnalyzer_COMPOSITE_DBS.signature.042018.txt"
+
+  # source: https://www.synapse.org/#!Synapse:syn11738309
   saID.file   <-
     "SignatureAnalyzer_COMPOSITE_ID.signature.031918.txt"
 
@@ -172,6 +176,7 @@ sa.COMPOSITE.sigs <- ReadSASigCOMPOSITE()
 
 
 # 96-channel signature profiles
+# Source: https://www.synapse.org/#!Synapse:syn11738310
 sa.96.sigs <-
   ReadSASig96("SignatureAnalyzer_COMPOSITE_SBS_W96.signature.031918.txt")
 colnames(sa.96.sigs) <- FixSASigNames(colnames(sa.96.sigs))

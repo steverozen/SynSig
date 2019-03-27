@@ -23,8 +23,7 @@ APOBEC (SBS2) and UV (SBS7a,b).
 
 ## Required libraries
 
-```{r readSPprofiles}
-library(ICAMS)
+```{r library}
 library(SynSig)
 ```
 
@@ -262,8 +261,8 @@ AddAllScripts()
 
 ## Check results
 
-Set <tt>unlink = FALSE</tt> if you want to keep the results.  Return
-values are 0 on success.
+Set <tt>unlink = FALSE</tt> if you want to keep the results.
+Return values are `"ok"` on success.
 
 ```{r}
 Diff4SynDataSets("syn.2.7a.7b.bladder.and.melanoma", unlink = TRUE)

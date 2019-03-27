@@ -31,3 +31,4 @@ exposures to files. It also checks that the parameters
 inferred from the synthetic data approximate those
 inferred from \code{real.exp}.
 }
+\keyword{internal}

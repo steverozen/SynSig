@@ -2,7 +2,7 @@
 % Please edit documentation in R/Create.syn.many.types.R
 \name{Create.syn.many.types}
 \alias{Create.syn.many.types}
-\title{Create a specific synthetic data set of 2,700 tumors}
+\title{Create a specific synthetic data set of 2,700 tumors.}
 \usage{
 Create.syn.many.types(regress = FALSE)
 }
@@ -12,5 +12,5 @@ and report any differences; if no differences, unlink the result
 directory.}
 }
 \description{
-Create a specific synthetic data set of 2,700 tumors
+Create a specific synthetic data set of 2,700 tumors.
 }

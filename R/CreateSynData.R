@@ -299,11 +299,17 @@ GenerateSynExposureOneSample <-
 #'  the first "." in the sample id with "-" concatenated
 #'  to sample.id.suffix. TODO(Steve): probably drop this
 #'
-#' @return A list of three elements TODO(Steve): FINISH Spectra catalog as a numeric matrix.
+#' @return A list of three elements that comprise the
+#' synthetic data: \enumerate{
+#'  \item \code{ground.truth.catalog}
+#'  \item \code{ground.truth.signatures}
+#'  \item \code{ground.truth.exposures}
+#' }
 #'
 #' @export
 
-CreateSynCatalogs <- function(signatures, exposures, sample.id.suffix = NULL) {
+CreateSynCatalogs <-
+  function(signatures, exposures, sample.id.suffix = NULL) {
 
   if (any(colSums(exposures) < 1)) warning("Some exposures < 1")
 
@@ -461,7 +467,8 @@ SetNewOutDir <- function(dir, overwrite = FALSE) {
 #'  \item \code{syn.exp} The synthetic exposures generated from \code{parms}.
 #' }
 #'
-#' @export
+#' @keywords internal
+
 GenerateSynAbstract <-
   function(parms, num.syn.tumors, file.prefix, sample.id.prefix) {
     stopifnot(!is.null(parms))
@@ -588,8 +595,7 @@ CreateAndWriteCatalog <-
     }
     write.cat.fn(info$ground.truth.signatures,
                   OutDir(paste0(dir, "/ground.truth.syn.sigs", suffix)))
-    # write.cat.fn(info$ground.truth.catalog,
-    #             OutDir(paste0(dir, "/syn.data", suffix)))
+
     zero.mutation <- which(colSums(info$ground.truth.catalog) == 0)
 
     if (length(zero.mutation) > 0) {
@@ -652,9 +658,10 @@ AddScript <- function(maxK, slice,
 }
 
 
-#' Use the current value of \code{OutDir()} to copy scripts into all subdirectories
+#' Create scripts to run SignatureAnalyzer in all subdirectories
+#' of \code{OutDir()}.
 #'
-#' @param maxK The \code{maxK} argument for SignatureAnalyzers.
+#' @param maxK The \code{maxK} argument for SignatureAnalyzer.
 #'
 #' @export
 
