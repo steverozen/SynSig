@@ -212,6 +212,13 @@ CreateOneSetOfRandomCatalogs <-
         sd = num.sigs.sd,
         total.num.sigs = total.num.sigs)
 
+    if (TRUE) {
+      cat("\nCreateOneSetOfRandomCatalogs\n",
+          "number of exposures per tumor statisitcs:\n")
+      print(summary(exp.nums))
+      cat("sd", sd(exp.nums), "\n")
+    }
+
     exp <-
       sapply(exp.nums,
              function(x) {
