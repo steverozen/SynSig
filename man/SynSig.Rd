@@ -32,7 +32,7 @@ mutational spectra is as follows.
 
 Input (based on SignatureAnalyzer or SigProfiler analysis of PCAWG tumors)
   A, matrix of attributions (signatures x samples)
-  S, mutational signature profiles.
+  S, mutational signature profiles (mutation type x signature)
 
 P <- GetSynSigParamsFromExposures(A, ...)
 
@@ -42,7 +42,7 @@ synthetic.spectra <- CreateAndWRiteCatalog(S, synthetic.exposures, ...)
 
 T <- Signatures extracted by SignatureAnalzer or SigProfiler on synthetic.spectra
 
-SummarizeResults(T, S, ...)
+SummarizeResults(T, S, synthetic.exposures, ...)
 
 }
 }
@@ -79,9 +79,5 @@ ground-truth signature profiles.
 \code{\link{MatchSigs1Direction}},
 \code{\link{MatchSigs2Directions}},
 \code{\link{MatchSigsAndRelabel}}
-
-
-TODO(steve): describe how to evaluate!
 }
 
-\keyword{internal}

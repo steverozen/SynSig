@@ -22,7 +22,7 @@
 #'
 #' Input (based on SignatureAnalyzer or SigProfiler analysis of PCAWG tumors)
 #'   A, matrix of attributions (signatures x samples)
-#'   S, mutational signature profiles.
+#'   S, mutational signature profiles (mutation type x signature)
 #'
 #' P <- GetSynSigParamsFromExposures(A, ...)
 #'
@@ -32,7 +32,7 @@
 #'
 #' T <- Signatures extracted by SignatureAnalzer or SigProfiler on synthetic.spectra
 #'
-#' SummarizeResults(T, S, ...)
+#' SummarizeResults(T, S, synthetic.exposures, ...)
 #'
 #' }
 #'
@@ -64,11 +64,7 @@
 #' \code{\link{MatchSigs2Directions}},
 #' \code{\link{MatchSigsAndRelabel}}
 #'
-
-#'
-#' TODO(steve): describe how to evaluate!
-#'
 #' @docType package
 #' @name SynSig
-#' @keywords internal
+
 NULL
