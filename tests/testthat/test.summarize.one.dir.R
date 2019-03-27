@@ -41,26 +41,27 @@ test_that("SummarizeSigOneSA96Subdir", {
 
 test_that("SummarizeSigOneSPSubdir", {
   load("./test.sigprofiler.sp.sp.out.Rdata")
+
+  # Warning, do not change t1 to a longer name,
+  # or file2 below will be too long for portable zip'ing.
+  tdir.res <- "./t1/r/"
   expect_equal(
     SummarizeSigOneSPSubdir(
-      third.level.dir =
-        "./sp.sum.test.in/sp.results/",
+      third.level.dir = tdir.res,
       overwrite = T,
       ground.truth.exposure.name = "ground.truth.syn.exposures.csv"),
     sigprofiler.sp.sp.out)
   if (TRUE) # Set this to FALSE to inspect the file and directory output
   {
     # Clean up
-    file1 <- "./sp.sum.test.in/sp.results/summary"
+    file1 <- paste0(tdir.res, "summary")
     if (!file.exists(file1)) cat("coding error, wrong file\n")
     res <- unlink(file1, recursive = TRUE, force = TRUE)
     if (res != 0) cat("Failed to unlink ", file1, "\n")
-    file2 <- paste0("./sp.sum.test.in/",
-                    "sp.results/SBS96/Suggested_Solution/",
+    file2 <- paste0(tdir.res,
+                    "SBS96/Suggested_Solution/",
                     "De_Novo_Solution/signatures.PCAWG.format.csv")
     res <- unlink(file2)
     if (res != 0) cat("Failed to unlink ", file2, "\n")
   }
 })
-
-
