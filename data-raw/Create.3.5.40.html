@@ -12,7 +12,7 @@
 
 <meta name="author" content="Steve Rozen" />
 
-<meta name="date" content="2019-03-25" />
+<meta name="date" content="2019-03-27" />
 
 <title>Create cross-matched SignatureAnalyzer and SigProfiler synthetic data to explore handling of flat signatures</title>
 
@@ -92,7 +92,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">Create cross-matched SignatureAnalyzer and SigProfiler synthetic data to explore handling of flat signatures</h1>
 <h4 class="author"><em>Steve Rozen</em></h4>
-<h4 class="date"><em>2019-03-25</em></h4>
+<h4 class="date"><em>2019-03-27</em></h4>
 
 
 
@@ -103,12 +103,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <pre><code> {96-channel, COMPOSITE} X {SignatureAnalyzer-attributions, SigProfiler-attributions}</code></pre>
 <div id="required-libraries" class="section level2">
 <h2>Required libraries</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ICAMS)
-<span class="kw">library</span>(SynSig)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(SynSig)</code></pre></div>
 </div>
 <div id="version-1-kidney-rcc-and-ovarian-adenocarcinoma-to-explore-sbs3-sbs5-and-sbs40" class="section level2">
 <h2>Version 1, Kidney-RCC and ovarian adenocarcinoma to explore SBS3, SBS5, and SBS40</h2>
-<p>It is easier to manage if the output is is not in a git-managed directory.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">SetNewOutDir</span>(<span class="st">&quot;tmp.syn.3.5.40.rcc.and.ovary&quot;</span>)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">191905</span>)
 num.syn.tumors &lt;-<span class="st"> </span><span class="dv">500</span>
@@ -128,14 +126,14 @@ rcc.info &lt;-<span class="st"> </span>
     num.syn.tumors,
     <span class="dt">file.prefix =</span> <span class="st">&quot;OVA&quot;</span>)</code></pre></div>
 <p>Combine the RCC and ovarian adenocarcinoma synthetic exposures.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># debug(MergeExposures)</span>
-sa.rcc.ova.syn.exp &lt;-
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sa.rcc.ova.syn.exp &lt;-
 <span class="st">  </span><span class="kw">MergeExposures</span>(<span class="kw">list</span>(rcc.info<span class="op">$</span>sa.syn.exp, ovary.info<span class="op">$</span>sa.syn.exp))
 
 sp.rcc.ova.syn.exp &lt;-
 <span class="st">  </span><span class="kw">MergeExposures</span>(<span class="kw">list</span>(rcc.info<span class="op">$</span>sp.syn.exp, ovary.info<span class="op">$</span>sp.syn.exp))
 
-<span class="co"># We will need the exposures later when evaluating the attributed signatures</span>
+<span class="co"># We might want the exposures later to understand the </span>
+<span class="co"># characteristics of the synthetic data.</span>
 <span class="kw">WriteExposure</span>(sa.rcc.ova.syn.exp, <span class="kw">OutDir</span>(<span class="st">&quot;sa.exposure.csv&quot;</span>))
 <span class="kw">WriteExposure</span>(sp.rcc.ova.syn.exp, <span class="kw">OutDir</span>(<span class="st">&quot;sp.exposure.csv&quot;</span>))</code></pre></div>
 <div id="generate-synthetic-catalogs-for-rcc-combined-with-ovary-adenocarcinoma" class="section level3">
@@ -360,7 +358,6 @@ knitr<span class="op">::</span><span class="kw">kable</span>(
 </tr>
 </tbody>
 </table>
-<p>As above, we do not put the output in a git-managed directory.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">SetNewOutDir</span>(<span class="st">&quot;tmp.syn.3.5.40.abst&quot;</span>)
 <span class="kw">set.seed</span>(<span class="dv">44</span>)
 num.syn.tumors &lt;-<span class="st"> </span><span class="dv">1000</span>
@@ -409,7 +406,7 @@ sa.abst.info &lt;-
 </div>
 <div id="check-results" class="section level2">
 <h2>Check results</h2>
-<p>Set <tt>unlink = FALSE</tt> if you want to keep the results. Return values are 0 on success.</p>
+<p>Set <tt>unlink = FALSE</tt> if you want to keep the results. Return values are <code>&quot;ok&quot;</code> on success.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">Diff4SynDataSets</span>(<span class="st">&quot;syn.3.5.40.rcc.and.ovary&quot;</span>, <span class="dt">unlink =</span> <span class="ot">TRUE</span>)
 <span class="co">#&gt; [1] &quot;ok&quot;</span>
 
