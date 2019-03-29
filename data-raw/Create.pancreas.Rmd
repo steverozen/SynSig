@@ -105,6 +105,8 @@ CreateAndWriteCatalog(
   "sp.sp",
   ICAMS::WriteCatSNS96)
 
+AddAllScripts(maxK = 30)
+
 ```
 
 ## Check the results
@@ -113,5 +115,5 @@ Set <tt>unlink = FALSE</tt> if you want to keep the results.
 Return values are `"ok"` on success.
 
 ```{r}
-Diff4SynDataSets("syn.pancreas", unlink = TRUE)
+Diff4SynDataSets("syn.pancreas", unlink = FALSE)
 ```
