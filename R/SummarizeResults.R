@@ -217,7 +217,7 @@ SummarizeSigOneSPSubdir <-
     # This is annoying, and I'll prevent this flag from printing it out
     copy.from.files <- paste0(third.level.dir,
                               c("/SBS96/SBS96_selection_plot.pdf",
-                                "/SBS96/All_solution_stat.csv"))
+                                "/SBS96/All_solutions_stat.csv"))
     for(copy.from in copy.from.files) {
       if (!file.exists(copy.from)) {
         warning("Cannot find", copy.from, "\n\nSkipping\n\n")
