@@ -127,6 +127,55 @@ Plot96PartOfComposite <- function(catalog, name, type = "density") {
   PlotCatSNS96ToPdf(catalog = cat96/sum(cat96), filename = name, type = type)
 }
 
+#' Plot the a SignatureAnalyzer COMPOSITE signature or catalog into separate pdfs
+#'
+#' @param catalog Catalog or signature matrix
+#'
+#' @param filename.header Contain path and the beginning part of the file name.
+#' The name of the pdf files will be:
+#' \code{filename.header}.SNS.96.pdf
+#' \code{filename.header}.SNS.1536.pdf
+#' \code{filename.header}.DNS.78.pdf
+#' \code{filename.header}.ID.83.pdf
+#'
+#' @param type See \code{\link[ICAMS]{PlotCatalogToPdf}}.
+#'
+#' @importFrom ICAMS PlotCatSNS96ToPdf Collapse1536To96
+#' PlotCatSNS1536ToPdf PlotCatDNS78ToPdf PlotCatIDToPdf
+#'
+#' @export
+PlotCatCOMPOSITE <- function(catalog, filename.header, type, id = colnames(catalog)) {
+
+  ## Read in COMPOSITE catalogue
+  test.COMPOSITE.sigs <-
+    SynSig:::ReadCatCOMPOSITE(catalog)
+
+  ## Check
+  stopifnot(nrow(test.COMPOSITE.sigs) == 1697)
+  # TODO WUYang: check whether the base context is in correct order
+
+  ## Subsetting COMPOSITE catalogue
+  test.SNS1536.sigs <- test.COMPOSITE.sigs[1:1536,]
+  test.DNS78.sigs <- test.COMPOSITE.sigs[1537:1614,]
+  test.ID83.sigs <- test.COMPOSITE.sigs[1615:1697,]
+
+  ## Plot using ICAMS embedded plotting function
+
+
+  ICAMS::PlotCatSNS1536ToPdf(test.SNS1536.sigs,
+                             filename = paste0(filename.header,".SNS.1536.pdf"),
+                             type = type,
+                             id = id)
+  ICAMS::PlotCatDNS78ToPdf(test.DNS78.sigs,
+                           filename = paste0(filename.header,".DNS.78.pdf"),
+                           type = type,
+                           id = id)
+  ICAMS::PlotCatIDToPdf(test.ID83.sigs,
+                        filename = paste0(filename.header,".ID.83.pdf"),
+                        type = type,
+                        id = id)
+}
+
 
 #' Run SignatureAnalyzer on a file containing a catalog.
 #'
