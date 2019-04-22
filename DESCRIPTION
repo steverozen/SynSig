@@ -1,8 +1,8 @@
 Package: SynSig
 Type: Package
 Title: Create Catalogs of Synthetic Mutational Spectra
-Version: 0.2.0.9009
-Author: Steven G. Rozen
+Version: 0.2.1.9001
+Author: Steven G. Rozen, Yang Wu
 Maintainer: Steven G. Rozen <steverozen@gmail.com>
 Description: Create catalogs of synthetic mutational spectra and assess the
   performance of mutational signature analysis programs on these.
