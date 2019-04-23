@@ -11,7 +11,7 @@ CopyWithChecks <- function(from, to.dir, overwrite = FALSE) {
 
 
 #' Assess/evaluate results from SigProfiler or SignatureAnalyzer
-#' Note: Users should use sigproextractor(SigProfiler-Python) v0.0.5.31
+#' Note: Users should use sigproextractor(SigProfiler-Python) v0.0.5.43
 #' and SignatureAnalyzer 2018-Apr-18
 #'
 #' @param third.level.dir Lowest level path to results, that is,
