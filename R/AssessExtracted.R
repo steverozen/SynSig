@@ -123,3 +123,76 @@ ReadAndAnalyzeSigs <-
   return(
     MatchSigsAndRelabel(ex.sigs, gt.sigs, exposure))
 }
+
+
+#' @title Assess how well attributed exposures match input exposures
+#'
+#' We assume that in many cases attribution programs will be run
+#' outside of R on file inputs and will generate fill outputs.
+#'
+#' @param extracted.sigs Path to file containing the extracted signature profiles.
+#'
+#' @param ground.truth.sigs File containing signature profiles from which the
+#'  synthetic data were generated.
+#'
+#' @param attributed.exposures File containing mutation counts (exposures) 
+#' of synthetic tumors which are attributed to extracted or input signatures.
+#'
+#' @param ground.truth.exposures File containing accurate values of 
+#' mutation counts (exposures) of synthetic tumors 
+#'
+#' @param read.extracted.sigs.fn Function to read the extracted signatures
+#' into the appropriate standard internal representation. If NULL then
+#' \code{read.ground.truth.sigs.fn} is used.
+#'
+#' @param read.ground.truth.sigs.fn Function to read the ground truth
+#' signatures into the appropriate standard internal representation.
+#'
+#' @param ground.truth.exposures File containing the exposures from which
+#'  the synthetic catalogs were generated.  This file is used to restrict
+#'  assessment to only those signatures in \code{ground.truth.sigs}
+#'  that were actually represented in the exposures.
+#'
+#' @return See \code{\link{MatchSigsAndRelabel}}
+#'
+#' @details Generates output files by calling
+#' \code{\link{MatchSigsAndRelabel}}
+#'
+#' @export
+
+ReadAndAnalyzeExposures <-
+  function(extracted.sigs,
+           ground.truth.sigs,
+           attributed.exposures,
+           ground.truth.exposures,
+           read.extracted.sigs.fn = NULL,
+           read.ground.truth.sigs.fn) {
+
+  ## Bilaterally matching between ground-truth and extracted signatures
+  sigMatch <- ReadAndAnalyzeSigs(extracted.sigs,
+              ground.truth.sigs,
+              ground.truth.exposures,
+              read.extracted.sigs.fn = NULL,
+              read.ground.truth.sigs.fn)
+
+  
+  ## Read in ground-truth and attributed exposures in ICAMS format
+  gtExposures <- ReadExposure(ground.truth.exposures)
+  attrExposures <- ReadExposure(attributed.exposures)
+
+  ## Names of ground-truth signatures
+  gtSigsNames <- colnames(sigMatch$gt.sigs)
+  
+  ## Initialize an empty data.frame for exposure difference 
+  exposureSim <- data.frame() 
+  ## For each of the ground-truth signature, calculate the absolute difference
+  ## between its input (ground-truth) exposure and its attributed exposure.
+  ## Attributed exposure of a input signature equals to the sum of 
+  ## exposures of all extracted signatures which matches to 
+  ## this input signature.
+  for(gtSigsName in gtSigsNames){
+    invisible(NULL) ## Do it later
+  }
+  
+}
+
