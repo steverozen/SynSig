@@ -2,8 +2,8 @@
 % Please edit documentation in R/SummarizeResults.R
 \name{SummarizeSigOneSubdir}
 \alias{SummarizeSigOneSubdir}
-\title{Assess/evaluate results from SigProfiler or SignatureAnalyzer
-Note: Users should use sigproextractor(SigProfiler-Python) v0.0.5.31
+\title{Assess/evaluate results from Multiple software packages
+Note: Users should use sigproextractor(SigProfiler-Python) v0.0.5.43
 and SignatureAnalyzer 2018-Apr-18}
 \usage{
 SummarizeSigOneSubdir(third.level.dir, ground.truth.exposure.name,
@@ -45,8 +45,8 @@ extracted signatures.}
 \item{overwrite}{If TRUE overwrite existing directories and files.}
 }
 \description{
-Assess/evaluate results from SigProfiler or SignatureAnalyzer
-Note: Users should use sigproextractor(SigProfiler-Python) v0.0.5.31
+Assess/evaluate results from Multiple software packages
+Note: Users should use sigproextractor(SigProfiler-Python) v0.0.5.43
 and SignatureAnalyzer 2018-Apr-18
 }
 \keyword{internal}

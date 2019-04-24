@@ -3,7 +3,7 @@
 \name{SummarizeSigOneSPSubdir}
 \alias{SummarizeSigOneSPSubdir}
 \title{Assess/evaluate results from SigProfiler-python (a.k.a. sigproextractor)
-Assessment is restricted to v0.0.5.31,
+Assessment is restricted to v0.0.5.43,
 because different version has different folder structure.}
 \usage{
 SummarizeSigOneSPSubdir(third.level.dir,
@@ -33,6 +33,6 @@ to generate different folder structure. (Default: \code{FALSE})}
 }
 \description{
 Assess/evaluate results from SigProfiler-python (a.k.a. sigproextractor)
-Assessment is restricted to v0.0.5.31,
+Assessment is restricted to v0.0.5.43,
 because different version has different folder structure.
 }
