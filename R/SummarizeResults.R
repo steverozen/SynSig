@@ -10,7 +10,7 @@ CopyWithChecks <- function(from, to.dir, overwrite = FALSE) {
 }
 
 
-#' Assess/evaluate results from SigProfiler or SignatureAnalyzer
+#' Assess/evaluate results from Multiple software packages
 #' Note: Users should use sigproextractor(SigProfiler-Python) v0.0.5.43
 #' and SignatureAnalyzer 2018-Apr-18
 #'
@@ -148,7 +148,7 @@ SummarizeSigOneSubdir <-
   }
 
 #' Assess/evaluate results from SigProfiler-python (a.k.a. sigproextractor)
-#' Assessment is restricted to v0.0.5.31,
+#' Assessment is restricted to v0.0.5.43,
 #' because different version has different folder structure.
 #'
 #' @param third.level.dir Lowest level path to results, e.g.
@@ -374,7 +374,8 @@ SummarizeSigOneSA96Subdir <-
     invisible(retval)
   }
 
-#' Summarize all subdirectories of a major dataset.
+#' Summarize all subdirectories of SignatureAnalyzer results
+#' on a major dataset.
 #'
 #' @param top.level.dir Path to top level directory.
 #'
@@ -424,7 +425,8 @@ SignatureAnalyzerSummarizeTopLevel <-
     invisible(retval)
   }
 
-#' Summarize all subdirectories of the correlated SBS1 / SBS5.
+#' Summarize all subdirectories of Signatureanalyzer results
+#' on the correlated SBS1 / SBS5.
 #'
 #' This is special-purpose function to summarize results
 #' from one in-silico experiment that examines how well
