@@ -31,7 +31,7 @@ CopyWithChecks <- function(from, to.dir, overwrite = FALSE) {
 #' @param extracted.sigs.path Path to extracted sigs file, e.g.
 #' \code{<third.level.dir>/SBS96/Selected_Solution/De_Novo_Solution/signatures.PCAWG.format.csv}.
 #'
-#' @param extracted.exp.path Path to extracted exposures file.
+#' @param attributed.exp.path Path to attributed exposures file.
 #'
 #' @param read.extracted.sigs.fn Function to read the extracted sigs file.
 #' e.g. \code{ReadCatSNS96}
@@ -55,7 +55,7 @@ SummarizeSigOneSubdir <-
   function(third.level.dir,
            ground.truth.exposure.name,
            extracted.sigs.path,
-           extracted.exp.path = NULL,
+           attributed.exp.path = NULL,
            # TODO(Steve): copy this to the summary and do analysis on how much
            # extracted signature contributs to exposures.
 
@@ -68,6 +68,7 @@ SummarizeSigOneSubdir <-
     ## Output path - path to dump the ReadAndAnalyzeSigs() results
     outputPath <- paste0(third.level.dir, "/summary")
 
+    ## Analyze signature extraction similarity
     sigAnalysis <-
       ReadAndAnalyzeSigs(
         extracted.sigs = extracted.sigs.path,
@@ -129,7 +130,34 @@ SummarizeSigOneSubdir <-
                   paste0(outputPath,"/extracted.sigs.pdf"),
                   type = "signature")
     }
-
+    
+    ## Analyze exposure attribution
+    # To be compatible with PCAWG project which only studies 
+    # signature extraction not exposure attribution, 
+    # errors will not be thrown if attributed.exposures = NULL.
+    if(!is.null(attributed.exposures)) {
+    
+      if(file.exists(attributed.exposures)) {
+        expDifference <- ReadAndAnalyzeExposures(
+          extracted.sigs = extracted.sigs.path,
+          ground.truth.sigs =
+            paste0(third.level.dir,"/../ground.truth.syn.sigs.csv"),
+          attributed.exposures = attributed.exp.path,
+          ground.truth.exposures =
+            paste0(third.level.dir,"/../", ground.truth.exposure.name),
+          read.extracted.sigs.fn = read.ground.truth.sigs.fn,
+          read.ground.truth.sigs.fn = read.ground.truth.sigs.fn)
+        
+        write.csv(expDifference, 
+                  file = paste0(outputPath,"/exposureDifference.csv"),
+                  quote = T)
+      }
+      else {
+        warning("Cannot find", attributed.exposures, "\n\nSkipping\n\n")
+      }
+    }
+    
+    ## Log of system time and session info
     capture.output(Sys.time(), sessionInfo(),
                    file = paste0(outputPath,"/log.txt"))
 
