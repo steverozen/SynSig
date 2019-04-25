@@ -135,11 +135,11 @@ ReadAndAnalyzeSigs <-
 #' @param ground.truth.sigs File containing signature profiles from which the
 #'  synthetic data were generated.
 #'
-#' @param attributed.exposures File containing mutation counts (exposures) 
+#' @param attributed.exposures File containing mutation counts (exposures)
 #' of synthetic tumors which are attributed to extracted or input signatures.
 #'
-#' @param ground.truth.exposures File containing accurate values of 
-#' mutation counts (exposures) of synthetic tumors 
+#' @param ground.truth.exposures File containing accurate values of
+#' mutation counts (exposures) of synthetic tumors
 #'
 #' @param read.extracted.sigs.fn Function to read the extracted signatures
 #' into the appropriate standard internal representation. If NULL then
@@ -153,7 +153,25 @@ ReadAndAnalyzeSigs <-
 #'  assessment to only those signatures in \code{ground.truth.sigs}
 #'  that were actually represented in the exposures.
 #'
-#' @return See \code{\link{MatchSigsAndRelabel}}
+#' @return See \code{\link{data.frame}} recording:
+#'
+#' \code{Ground.truth.exposure}: sum of ground truth exposures of
+#' all tumors to all ground-truth signatures.
+#'
+#' \code{Attributed.exposure}: sum of attributed exposures of
+#' all tumors to all ground-truth signatures.
+#' Here, attributed exposure of a tumor to a ground-truth
+#' signature equals to the sum of the exposures of this tumor
+#' to all extracted signatures which are most similar to
+#' a ground-truth signature.
+#' If there is no extracted signature resembling an ground-truth
+#' signature, the attributed exposure of this ground-truth
+#' signature will be \code{0}.
+#'
+#' \code{Absolute.difference}: sum of absolute difference between
+#' ground-truth exposure and attributed exposure of all tumors
+#' to all ground-truth signatures.
+#'
 #'
 #' @details Generates output files by calling
 #' \code{\link{MatchSigsAndRelabel}}
@@ -184,11 +202,12 @@ ReadAndAnalyzeExposures <-
   gtSigsNames <- colnames(sigMatch$gt.sigs)
 
   ## Initialize an empty data.frame for exposure difference
-  exposureSim <- data.frame()
+  exposureSim <- data.frame(matrix(0,nrow = length(gtSigsNames),ncol = 3))
+  rownames(exposureSim) <- gtSigsNames
+  colnames(exposureSim) <- c("Ground.truth.exposure", ## Sum of all tumor's ground-truth exposure to gtSigsName
+                             "Attributed.exposure", ## Sum of all tumor's attributed exposure to gtSigsName
+                             "Absolute.difference") ## Sum of absolute difference of two exposure values for each tumor
 
-  ## Calculate vector for absolute difference
-  absDiff <- rep(0,length(gtSigsNames))
-  names(absDiff) <- gtSigsNames
 
   ## For each of the ground-truth signature, calculate the absolute difference
   ## between its input (ground-truth) exposure and its attributed exposure.
@@ -198,16 +217,27 @@ ReadAndAnalyzeExposures <-
   for(gtSigName in gtSigsNames){
 
     matchedExtrSigIndex <- which(sigMatch$match1[,1] == gtSigName)
-    matchedExtrSigName <- rownames(sigMatch$match1)[matchedExtrSigIndex]
+
+    if(length(matchedExtrSigIndex) > 0) ## 1 or more extracted signatures match to gtSigName in match1
+      matchedExtrSigName <- rownames(sigMatch$match1)[matchedExtrSigIndex]
+    else ## No extracted signatures match to gtSigName
+      matchedExtrSigName <- NULL
 
     for(index in 1:ncol(attrExposures)) { ## index refers to which tumor we are scrutinizing
       ## Each cycle traverses one tumor, and calculate the absolute difference
       ## between its attributed exposures and ground-truth exposures.
-       absDiff[gtSigName] <- absDiff[gtSigName] +
-         abs(sum(attrExposures[matchedExtrSigName,index])-gtExposures[gtSigName,index])
+      gtExposureOneTumor <- gtExposures[gtSigName,index]
+      attrExposureOneTumor <- ifelse(length(matchedExtrSigIndex) > 0,
+                                     yes = sum(attrExposures[matchedExtrSigName,index]),
+                                     no = 0)
+      exposureSim[gtSigName,1] <- exposureSim[gtSigName,1] + gtExposureOneTumor
+      exposureSim[gtSigName,2] <- exposureSim[gtSigName,2] + attrExposureOneTumor
+      exposureSim[gtSigName,3] <- exposureSim[gtSigName,3] +
+        abs(gtExposureOneTumor - attrExposureOneTumor)
     }
+
   }
 
-  return(absDiff)
+  return(exposureSim)
 }
 
