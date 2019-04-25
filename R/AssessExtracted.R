@@ -138,8 +138,10 @@ ReadAndAnalyzeSigs <-
 #' @param attributed.exposures File containing mutation counts (exposures)
 #' of synthetic tumors which are attributed to extracted or input signatures.
 #'
-#' @param ground.truth.exposures File containing accurate values of
-#' mutation counts (exposures) of synthetic tumors
+#' @param ground.truth.exposures File containing the exposures from which
+#'  the synthetic catalogs were generated.  This file is used to restrict
+#'  assessment of signature exposures to only those signatures in
+#'  \code{ground.truth.sigs} that were actually represented in the exposures.
 #'
 #' @param read.extracted.sigs.fn Function to read the extracted signatures
 #' into the appropriate standard internal representation. If NULL then
@@ -148,12 +150,7 @@ ReadAndAnalyzeSigs <-
 #' @param read.ground.truth.sigs.fn Function to read the ground truth
 #' signatures into the appropriate standard internal representation.
 #'
-#' @param ground.truth.exposures File containing the exposures from which
-#'  the synthetic catalogs were generated.  This file is used to restrict
-#'  assessment to only those signatures in \code{ground.truth.sigs}
-#'  that were actually represented in the exposures.
-#'
-#' @return See \code{\link{data.frame}} recording:
+#' @return A \code{\link{data.frame}} recording:
 #'
 #' \code{Ground.truth.exposure}: sum of ground truth exposures of
 #' all tumors to all ground-truth signatures.

@@ -17,6 +17,9 @@ The name of the pdf files will be:
 \code{filename.header}.ID.83.pdf}
 
 \item{type}{See \code{\link[ICAMS]{PlotCatalogToPdf}}.}
+
+\item{id}{A vector containing the identifiers of the samples
+or signatures in \code{catalog}.}
 }
 \description{
 Plot the a SignatureAnalyzer COMPOSITE signature or catalog into separate pdfs
