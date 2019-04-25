@@ -130,13 +130,13 @@ SummarizeSigOneSubdir <-
                   paste0(outputPath,"/extracted.sigs.pdf"),
                   type = "signature")
     }
-    
+
     ## Analyze exposure attribution
-    # To be compatible with PCAWG project which only studies 
-    # signature extraction not exposure attribution, 
+    # To be compatible with PCAWG project which only studies
+    # signature extraction not exposure attribution,
     # errors will not be thrown if attributed.exposures = NULL.
     if(!is.null(attributed.exposures)) {
-    
+
       if(file.exists(attributed.exposures)) {
         expDifference <- ReadAndAnalyzeExposures(
           extracted.sigs = extracted.sigs.path,
@@ -147,8 +147,8 @@ SummarizeSigOneSubdir <-
             paste0(third.level.dir,"/../", ground.truth.exposure.name),
           read.extracted.sigs.fn = read.ground.truth.sigs.fn,
           read.ground.truth.sigs.fn = read.ground.truth.sigs.fn)
-        
-        write.csv(expDifference, 
+
+        write.csv(expDifference,
                   file = paste0(outputPath,"/exposureDifference.csv"),
                   quote = T)
       }
@@ -156,7 +156,7 @@ SummarizeSigOneSubdir <-
         warning("Cannot find", attributed.exposures, "\n\nSkipping\n\n")
       }
     }
-    
+
     ## Log of system time and session info
     capture.output(Sys.time(), sessionInfo(),
                    file = paste0(outputPath,"/log.txt"))
@@ -244,6 +244,13 @@ SummarizeSigOneSPSubdir <-
           to = paste0(third.level.dir,"/summary/"),
           overwrite = TRUE)
       }
+    }
+
+    # TODO(Wuyang): Read in and Analyze attributed exposures,
+    # if available.
+    if(0){
+      invisible(NULL)
+      # attributed.exp.path
     }
 
     invisible(retval) # So we can test without looking at a file.
@@ -335,6 +342,13 @@ SummarizeSigOneSACOMPOSITESubdir <-
         plot.pdf.fn =  Plot96PartOfComposite, # NA, # Does not exist for COMPOSITE # maybe Plot96PartOfComposite
         overwrite = overwrite)
 
+    # TODO(Wuyang): Read in and Analyze attributed exposures,
+    # if available.
+    if(0){
+      invisible(NULL)
+      # attributed.exp.path
+    }
+
     invisible(retval)
   }
 
@@ -387,6 +401,13 @@ SummarizeSigOneSA96Subdir <-
         write.cat.fn = WriteCatSNS96,
         plot.pdf.fn = PlotCatSNS96ToPdf,
         overwrite = overwrite)
+
+    # TODO(Wuyang): Read in and Analyze attributed exposures,
+    # if available.
+    if(0){
+      invisible(NULL)
+      # attributed.exp.path
+    }
 
     invisible(retval)
   }
@@ -546,6 +567,13 @@ SummarizeSigOneExtrAttr96Subdir <-
         write.cat.fn = WriteCatSNS96,
         plot.pdf.fn = PlotCatSNS96ToPdf,
         overwrite = overwrite)
+
+    # TODO(Wuyang): Read in and Analyze attributed exposures,
+    # if available.
+    if(0){
+      invisible(NULL)
+      # attributed.exp.path
+    }
 
     invisible(retval) # So we can test without looking at a file.
   }
