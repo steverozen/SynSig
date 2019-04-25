@@ -175,24 +175,39 @@ ReadAndAnalyzeExposures <-
               read.extracted.sigs.fn = NULL,
               read.ground.truth.sigs.fn)
 
-  
+
   ## Read in ground-truth and attributed exposures in ICAMS format
   gtExposures <- ReadExposure(ground.truth.exposures)
   attrExposures <- ReadExposure(attributed.exposures)
 
   ## Names of ground-truth signatures
   gtSigsNames <- colnames(sigMatch$gt.sigs)
-  
-  ## Initialize an empty data.frame for exposure difference 
-  exposureSim <- data.frame() 
+
+  ## Initialize an empty data.frame for exposure difference
+  exposureSim <- data.frame()
+
+  ## Calculate vector for absolute difference
+  absDiff <- rep(0,length(gtSigsNames))
+  names(absDiff) <- gtSigsNames
+
   ## For each of the ground-truth signature, calculate the absolute difference
   ## between its input (ground-truth) exposure and its attributed exposure.
-  ## Attributed exposure of a input signature equals to the sum of 
-  ## exposures of all extracted signatures which matches to 
+  ## Attributed exposure of a input signature equals to the sum of
+  ## exposures of all extracted signatures which matches to
   ## this input signature.
-  for(gtSigsName in gtSigsNames){
-    invisible(NULL) ## Do it later
+  for(gtSigName in gtSigsNames){
+
+    matchedExtrSigIndex <- which(sigMatch$match1[,1] == gtSigName)
+    matchedExtrSigName <- rownames(sigMatch$match1)[matchedExtrSigIndex]
+
+    for(index in 1:ncol(attrExposures)) { ## index refers to which tumor we are scrutinizing
+      ## Each cycle traverses one tumor, and calculate the absolute difference
+      ## between its attributed exposures and ground-truth exposures.
+       absDiff[gtSigName] <- absDiff[gtSigName] +
+         abs(sum(attrExposures[matchedExtrSigName,index])-gtExposures[gtSigName,index])
+    }
   }
-  
+
+  return(absDiff)
 }
 
