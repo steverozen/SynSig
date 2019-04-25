@@ -11,6 +11,7 @@ CopyWithChecks <- function(from, to.dir, overwrite = FALSE) {
 
 
 #' Assess/evaluate results from Multiple software packages
+#'
 #' Note: Users should use sigproextractor(SigProfiler-Python) v0.0.5.43
 #' and SignatureAnalyzer 2018-Apr-18
 #'
@@ -88,18 +89,6 @@ SummarizeSigOneSubdir <-
       from = paste0(third.level.dir,"/../ground.truth.syn.exposures.csv"),
       to.dir = paste0(third.level.dir,"/summary/"),
       overwrite = TRUE)
-
-    if (FALSE) {
-    copy.from <- paste0(third.level.dir,"/../ground.truth.syn.exposures.csv")
-    if (!file.exists(copy.from)) {
-      warning("Cannot find", copy.from, "\n\nSkipping\n\n")
-    } else {
-      copy.res <- file.copy(
-        from = copy.from,
-        to = paste0(third.level.dir,"/summary/"),
-        overwrite = TRUE)
-      if (!copy.res) cat("Copy from", copy.from, "to somewhere failed\n\n")
-    }}
 
     # Writes bi-directional matching and cos.sim calculation
     write.csv(sigAnalysis$match1,
