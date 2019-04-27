@@ -286,7 +286,9 @@ SummarizeSigOneSPSubdir <-
 #' @details Results are put in standardized subdirectories of \code{top.dir}.
 
 SummarizeSigProfiler <-
-  function(top.dir, sub.dir = c("sa.sa.96","sp.sp")) {
+  function(top.dir, 
+           sub.dir = c("sa.sa.96","sp.sp"),
+		   overwrite = FALSE) {
 
   ## If sub.dir are unexpected, throw an error
   expected.sub.dir <- c("sa.sa.96","sp.sp")
@@ -297,13 +299,15 @@ SummarizeSigProfiler <-
   if("sa.sa.96" %in% sub.dir) {
     SummarizeSigOneSPSubdir(
       third.level.dir = paste0(top.dir, "/sa.sa.96/sp.results"),
-      ground.truth.exposure.name = "ground.truth.syn.exposures.csv")
+      ground.truth.exposure.name = "ground.truth.syn.exposures.csv",
+	  overwrite = overwrite)
   }
 
   if("sp.sp" %in% sub.dir) {
     SummarizeSigOneSPSubdir(
       third.level.dir = paste0(top.dir, "/sp.sp/sp.results"),
-      ground.truth.exposure.name = "ground.truth.syn.exposures.csv")
+      ground.truth.exposure.name = "ground.truth.syn.exposures.csv",
+	  overwrite = overwrite)
   }
 }
 
