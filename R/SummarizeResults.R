@@ -133,8 +133,8 @@ SummarizeSigOneSubdir <-
     ## Analyze exposure attribution
     # To be compatible with PCAWG project which only studies
     # signature extraction not exposure attribution,
-    # errors will not be thrown if exists(attributed.exp.path) == F.
-    if(exists(attributed.exp.path)) {
+    # errors will not be thrown if exists("attributed.exp.path") == F.
+    if(exists("attributed.exp.path")) {
 
       if(file.exists(attributed.exp.path)) {
         expDifference <- ReadAndAnalyzeExposures(
