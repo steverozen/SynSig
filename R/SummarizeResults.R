@@ -286,7 +286,7 @@ SummarizeSigOneSPSubdir <-
 #' @details Results are put in standardized subdirectories of \code{top.dir}.
 
 SummarizeSigProfiler <-
-  function(top.dir, 
+  function(top.dir,
            sub.dir = c("sa.sa.96","sp.sp"),
 		   overwrite = FALSE) {
 
@@ -640,7 +640,7 @@ SummarizeSigOneAttr96Subdir <-
     stopifnot(dir.exists(inputPath))
 
     # Specify the path of extracted signatures in ICAMS csv format.
-    ground.truth.sigs.path <- paste0(inputPath,"/ground.truth.signatures.csv")
+    ground.truth.sigs.path <- paste0(inputPath,"/../ground.truth.syn.sigs.csv")
 
     # SummarizeSigOneSubdir will generate a "/summary" folder
     # under third.level.dir. Summarized results are dumped into
