@@ -57,8 +57,7 @@ SummarizeSigOneSubdir <-
            extracted.sigs.path,
            attributed.exp.path = NULL,
            # TODO(Steve): copy this to the summary and do analysis on how much
-           # extracted signature contributs to exposures.
-
+           # extracted signature contributes to exposures.
            read.extracted.sigs.fn,
            read.ground.truth.sigs.fn,
            write.cat.fn,
@@ -148,9 +147,15 @@ SummarizeSigOneSubdir <-
           read.extracted.sigs.fn = read.ground.truth.sigs.fn,
           read.ground.truth.sigs.fn = read.ground.truth.sigs.fn)
 
+        # Write results of exposure attribution analysis
         write.csv(expDifference,
                   file = paste0(outputPath,"/exposureDifference.csv"),
                   quote = T)
+                
+        # Copy attributed exposures to summary folder.
+        CopyWithChecks(attributed.exp.path, 
+                       paste0(outputPath,"/attributed.exposures.csv"),
+                       overwrite = overwrite)
       }
       else {
         warning("Cannot find", attributed.exposures, "\n\nSkipping\n\n")
@@ -213,6 +218,16 @@ SummarizeSigOneSPSubdir <-
     extractedSigs <- ReadSigProfilerSig96(paste0(inputPath,"/De_Novo_Solution_Signatures.txt"))
     extracted.sigs.path <- paste0(inputPath,"/extracted.signatures.PCAWG.format.csv")
     ICAMS::WriteCatSNS96(extractedSigs, extracted.sigs.path)
+        
+    # Read in attributed exposures in SP format,
+    # and convert it into our internal format
+    attributed.exp.path.SP.format <-
+      paste0(inputPath,"SBS96/Suggested_Solution/De_Novo_Solution/De_Novo_Solution_Activities.txt")
+      
+    attributedExposues <- ReadSigProfilerExposure(attributed.exp.path.SP.format)
+    attributed.exp.path <- paste0(inputPath,"SBS96/Suggested_Solution/De_Novo_Solution/attributed.exposures.csv")
+    WriteExposure(exposure.matrix = attributedExposues, file = attributed.exp.path)
+        
 
     # SummarizeSigOneSubdir will generate a "/summary" folder
     # under third.level.dir. Summarized results are dumped into
@@ -222,6 +237,7 @@ SummarizeSigOneSPSubdir <-
         third.level.dir = third.level.dir,
         ground.truth.exposure.name = ground.truth.exposure.name,
         extracted.sigs.path = extracted.sigs.path,
+        attributed.exp.path = attributed.exp.path,
         read.extracted.sigs.fn = ReadCatSNS96,
         read.ground.truth.sigs.fn = ReadCatSNS96,
         write.cat.fn = WriteCatSNS96,
@@ -244,13 +260,6 @@ SummarizeSigOneSPSubdir <-
           to = paste0(third.level.dir,"/summary/"),
           overwrite = TRUE)
       }
-    }
-
-    # TODO(Wuyang): Read in and Analyze attributed exposures,
-    # if available.
-    if(0){
-      invisible(NULL)
-      # attributed.exp.path
     }
 
     invisible(retval) # So we can test without looking at a file.
@@ -553,7 +562,10 @@ SummarizeSigOneExtrAttr96Subdir <-
 
     # Specify the path of extracted signatures in ICAMS csv format.
     extracted.sigs.path <- paste0(inputPath,"/extracted.signatures.csv")
-
+        
+    # Specify the path of attributed exposures in SynSig csv format.
+    attributed.exp.path <- paste0(inputPath,"/attributed.exposures.csv")
+    
     # SummarizeSigOneSubdir will generate a "/summary" folder
     # under third.level.dir. Summarized results are dumped into
     # this folder.
@@ -562,18 +574,12 @@ SummarizeSigOneExtrAttr96Subdir <-
         third.level.dir = third.level.dir,
         ground.truth.exposure.name = ground.truth.exposure.name,
         extracted.sigs.path = extracted.sigs.path,
-        read.extracted.sigs.fn = ReadCatSNS96,
-        read.ground.truth.sigs.fn = ReadCatSNS96,
-        write.cat.fn = WriteCatSNS96,
-        plot.pdf.fn = PlotCatSNS96ToPdf,
+        attributed.exp.path = attributed.exp.path,
+        read.extracted.sigs.fn = ICAMS::ReadCatSNS96,
+        read.ground.truth.sigs.fn = ICAMS::ReadCatSNS96,
+        write.cat.fn = ICAMS::WriteCatSNS96,
+        plot.pdf.fn = ICAMS::PlotCatSNS96ToPdf,
         overwrite = overwrite)
-
-    # TODO(Wuyang): Read in and Analyze attributed exposures,
-    # if available.
-    if(0){
-      invisible(NULL)
-      # attributed.exp.path
-    }
 
     invisible(retval) # So we can test without looking at a file.
   }
@@ -636,6 +642,7 @@ SummarizeSigOneAttr96Subdir <-
         third.level.dir = third.level.dir,
         ground.truth.exposure.name = ground.truth.exposure.name,
         extracted.sigs.path = ground.truth.sigs.path,
+        attributed.exp.path = paste0(inputPath,"/attributed.exposures.csv"),
         read.extracted.sigs.fn = ReadCatSNS96,
         read.ground.truth.sigs.fn = ReadCatSNS96,
         write.cat.fn = WriteCatSNS96,
