@@ -2,14 +2,12 @@
 % Please edit documentation in R/SummarizeResults.R
 \name{SummarizeSigOneSubdir}
 \alias{SummarizeSigOneSubdir}
-\title{Assess/evaluate results from Multiple software packages
-Note: Users should use sigproextractor(SigProfiler-Python) v0.0.5.43
-and SignatureAnalyzer 2018-Apr-18}
+\title{Assess/evaluate results from Multiple software packages}
 \usage{
 SummarizeSigOneSubdir(third.level.dir, ground.truth.exposure.name,
-  extracted.sigs.path, extracted.exp.path = NULL, read.extracted.sigs.fn,
-  read.ground.truth.sigs.fn, write.cat.fn, plot.pdf.fn,
-  overwrite = FALSE)
+  extracted.sigs.path, attributed.exp.path = NULL,
+  read.extracted.sigs.fn, read.ground.truth.sigs.fn, write.cat.fn,
+  plot.pdf.fn, overwrite = FALSE)
 }
 \arguments{
 \item{third.level.dir}{Lowest level path to results, that is,
@@ -28,7 +26,7 @@ in the \code{sub.dir}, i.e. \code{third.level.dir}/../}
 \item{extracted.sigs.path}{Path to extracted sigs file, e.g.
 \code{<third.level.dir>/SBS96/Selected_Solution/De_Novo_Solution/signatures.PCAWG.format.csv}.}
 
-\item{extracted.exp.path}{Path to extracted exposures file.}
+\item{attributed.exp.path}{Path to attributed exposures file.}
 
 \item{read.extracted.sigs.fn}{Function to read the extracted sigs file.
 e.g. \code{ReadCatSNS96}}
@@ -45,7 +43,6 @@ extracted signatures.}
 \item{overwrite}{If TRUE overwrite existing directories and files.}
 }
 \description{
-Assess/evaluate results from Multiple software packages
 Note: Users should use sigproextractor(SigProfiler-Python) v0.0.5.43
 and SignatureAnalyzer 2018-Apr-18
 }
