@@ -141,7 +141,7 @@ SummarizeSigOneSubdir <-
           extracted.sigs = extracted.sigs.path,
           ground.truth.sigs =
             paste0(third.level.dir,"/../ground.truth.syn.sigs.csv"),
-          attributed.exposures = attributed.exp.path,
+          attributed.exp.path = attributed.exp.path,
           ground.truth.exposures =
             paste0(third.level.dir,"/../", ground.truth.exposure.name),
           read.extracted.sigs.fn = read.ground.truth.sigs.fn,
