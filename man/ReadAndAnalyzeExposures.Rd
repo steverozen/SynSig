@@ -8,7 +8,7 @@ We assume that in many cases attribution programs will be run
 outside of R on file inputs and will generate fill outputs.}
 \usage{
 ReadAndAnalyzeExposures(extracted.sigs, ground.truth.sigs,
-  attributed.exposures, ground.truth.exposures,
+  attributed.exp.path, ground.truth.exposures,
   read.extracted.sigs.fn = NULL, read.ground.truth.sigs.fn)
 }
 \arguments{
@@ -17,7 +17,7 @@ ReadAndAnalyzeExposures(extracted.sigs, ground.truth.sigs,
 \item{ground.truth.sigs}{File containing signature profiles from which the
 synthetic data were generated.}
 
-\item{attributed.exposures}{File containing mutation counts (exposures)
+\item{attributed.exp.path}{File containing mutation counts (exposures)
 of synthetic tumors which are attributed to extracted or input signatures.}
 
 \item{ground.truth.exposures}{File containing the exposures from which
