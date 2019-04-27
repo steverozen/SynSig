@@ -277,7 +277,7 @@ SummarizeSigOneSPSubdir <-
 #' the \code{sp.sp} subdirectory
 #' (as is the case for the correlated SBS1-and-SBS5-containing data sets).
 #'
-#' @parm overwrite whether to overwrite the existing \code{third.level.dir/summary}
+#' @param overwrite whether to overwrite the existing \code{third.level.dir/summary}
 #' folder? If chosen to be FALSE and there is an existing summary folder, an error
 #' will be raised.
 #'
@@ -300,7 +300,7 @@ SummarizeSigProfiler <-
     SummarizeSigOneSPSubdir(
       third.level.dir = paste0(top.dir, "/sa.sa.96/sp.results"),
       ground.truth.exposure.name = "ground.truth.syn.exposures.csv",
-	  overwrite = overwrite)
+	    overwrite = overwrite)
   }
 
   if("sp.sp" %in% sub.dir) {

@@ -17,6 +17,10 @@ named sp.results. By default, it contains both \code{c("sa.sa","sp.sp")}.
 But you should specify \code{sub.dir = "sp.sp"} for \code{top.dir} with only
 the \code{sp.sp} subdirectory
 (as is the case for the correlated SBS1-and-SBS5-containing data sets).}
+
+\item{overwrite}{whether to overwrite the existing \code{third.level.dir/summary}
+folder? If chosen to be FALSE and there is an existing summary folder, an error
+will be raised.}
 }
 \description{
 Summarize SigProfiler results in the sa.sa.96 and/or sp.sp subdirectories.
