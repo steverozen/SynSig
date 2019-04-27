@@ -133,10 +133,10 @@ SummarizeSigOneSubdir <-
     ## Analyze exposure attribution
     # To be compatible with PCAWG project which only studies
     # signature extraction not exposure attribution,
-    # errors will not be thrown if attributed.exposures = NULL.
-    if(!is.null(attributed.exposures)) {
+    # errors will not be thrown if exists(attributed.exp.path) == F.
+    if(!exists(attributed.exp.path)) {
 
-      if(file.exists(attributed.exposures)) {
+      if(file.exists(attributed.exp.path)) {
         expDifference <- ReadAndAnalyzeExposures(
           extracted.sigs = extracted.sigs.path,
           ground.truth.sigs =
@@ -151,14 +151,14 @@ SummarizeSigOneSubdir <-
         write.csv(expDifference,
                   file = paste0(outputPath,"/exposureDifference.csv"),
                   quote = T)
-                
+
         # Copy attributed exposures to summary folder.
-        CopyWithChecks(attributed.exp.path, 
+        CopyWithChecks(attributed.exp.path,
                        paste0(outputPath,"/attributed.exposures.csv"),
                        overwrite = overwrite)
       }
       else {
-        warning("Cannot find", attributed.exposures, "\n\nSkipping\n\n")
+        warning("Cannot find", attributed.exp.path, "\n\nSkipping\n\n")
       }
     }
 
@@ -218,16 +218,16 @@ SummarizeSigOneSPSubdir <-
     extractedSigs <- ReadSigProfilerSig96(paste0(inputPath,"/De_Novo_Solution_Signatures.txt"))
     extracted.sigs.path <- paste0(inputPath,"/extracted.signatures.PCAWG.format.csv")
     ICAMS::WriteCatSNS96(extractedSigs, extracted.sigs.path)
-        
+
     # Read in attributed exposures in SP format,
     # and convert it into our internal format
     attributed.exp.path.SP.format <-
-      paste0(inputPath,"SBS96/Suggested_Solution/De_Novo_Solution/De_Novo_Solution_Activities.txt")
-      
+      paste0(inputPath,"/De_Novo_Solution_Activities.txt")
+
     attributedExposues <- ReadSigProfilerExposure(attributed.exp.path.SP.format)
-    attributed.exp.path <- paste0(inputPath,"SBS96/Suggested_Solution/De_Novo_Solution/attributed.exposures.csv")
+    attributed.exp.path <- paste0(inputPath,"/attributed.exposures.csv")
     WriteExposure(exposure.matrix = attributedExposues, file = attributed.exp.path)
-        
+
 
     # SummarizeSigOneSubdir will generate a "/summary" folder
     # under third.level.dir. Summarized results are dumped into
@@ -276,6 +276,10 @@ SummarizeSigOneSPSubdir <-
 #' But you should specify \code{sub.dir = "sp.sp"} for \code{top.dir} with only
 #' the \code{sp.sp} subdirectory
 #' (as is the case for the correlated SBS1-and-SBS5-containing data sets).
+#'
+#' @parm overwrite whether to overwrite the existing \code{third.level.dir/summary}
+#' folder? If chosen to be FALSE and there is an existing summary folder, an error
+#' will be raised.
 #'
 #' @export
 #'
@@ -562,10 +566,10 @@ SummarizeSigOneExtrAttr96Subdir <-
 
     # Specify the path of extracted signatures in ICAMS csv format.
     extracted.sigs.path <- paste0(inputPath,"/extracted.signatures.csv")
-        
+
     # Specify the path of attributed exposures in SynSig csv format.
     attributed.exp.path <- paste0(inputPath,"/attributed.exposures.csv")
-    
+
     # SummarizeSigOneSubdir will generate a "/summary" folder
     # under third.level.dir. Summarized results are dumped into
     # this folder.

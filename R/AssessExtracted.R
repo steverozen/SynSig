@@ -135,7 +135,7 @@ ReadAndAnalyzeSigs <-
 #' @param ground.truth.sigs File containing signature profiles from which the
 #'  synthetic data were generated.
 #'
-#' @param attributed.exposures File containing mutation counts (exposures)
+#' @param attributed.exp.path File containing mutation counts (exposures)
 #' of synthetic tumors which are attributed to extracted or input signatures.
 #'
 #' @param ground.truth.exposures File containing the exposures from which
@@ -178,7 +178,7 @@ ReadAndAnalyzeSigs <-
 ReadAndAnalyzeExposures <-
   function(extracted.sigs,
            ground.truth.sigs,
-           attributed.exposures,
+           attributed.exp.path,
            ground.truth.exposures,
            read.extracted.sigs.fn = NULL,
            read.ground.truth.sigs.fn) {
@@ -193,7 +193,7 @@ ReadAndAnalyzeExposures <-
 
   ## Read in ground-truth and attributed exposures in ICAMS format
   gtExposures <- ReadExposure(ground.truth.exposures)
-  attrExposures <- ReadExposure(attributed.exposures)
+  attrExposures <- ReadExposure(attributed.exp.path)
 
   ## Names of ground-truth signatures
   gtSigsNames <- colnames(sigMatch$gt.sigs)
