@@ -4,7 +4,8 @@
 \alias{SummarizeSigProfiler}
 \title{Summarize SigProfiler results in the sa.sa.96 and/or sp.sp subdirectories.}
 \usage{
-SummarizeSigProfiler(top.dir, sub.dir = c("sa.sa.96", "sp.sp"))
+SummarizeSigProfiler(top.dir, sub.dir = c("sa.sa.96", "sp.sp"),
+  overwrite = FALSE)
 }
 \arguments{
 \item{top.dir}{The top directory of a conventional data structure containing
