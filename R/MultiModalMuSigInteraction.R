@@ -96,8 +96,9 @@ MMCatalog2ICAMS <- function(cat) {
 #' its only argument and returning a catalog as a numeric matrix.
 #'
 #' @param out.dir Directory that will be created for the output;
-#' abort if it already exits.  Log files will be in
-#' \code{paste0(out.dir, "/tmp")}.
+#' abort if it already exists. Usually, the \code{out.dir} will
+#' be a \code{MultiModalMuSig.results} folder directly under the
+#' folder storing \code{catalog}.
 #'
 #' @param overwrite If TRUE, overwrite existing output
 #'
@@ -116,9 +117,9 @@ MMCatalog2ICAMS <- function(cat) {
 #' @importFrom utils capture.output
 
 CreateMultiModalMuSigOutput <-
-  function(catalog = "ground.truth.syn.catalog.csv",
+  function(catalog,
            read.catalog.function = NULL,
-           out.dir = "MultiModalMuSig.results",
+           out.dir = paste0(dirname(catalog),"/MultiModalMuSig.results"),
            overwrite = FALSE) {
 
   ## If catalog is a string of file path
@@ -126,19 +127,18 @@ CreateMultiModalMuSigOutput <-
     ## Read in catalog matrix using read.catalog.function.
     catMatrix <- read.catalog.function(catalog, strict = FALSE)
     ## Convert catalog to MM format
-    catMatrix <- ICAMSCatalog2MM(catalog)
+    catMatrix <- ICAMSCatalog2MM(catMatrix)
     ## Fetch the name of catalog file without extension
     oldFileName <- tools::file_path_sans_ext(basename(catalog))
-  }
-  if(is.data.frame(catalog) | is.matrix(catalog)){
+  } else if(is.data.frame(catalog) | is.matrix(catalog)){
     ## Convert catalog to MM format
     catMatrix <- ICAMSCatalog2MM(catalog)
     ## Fetch the name of catalog file
-    oldFileName <- "catalog"
+    oldFileName <- "ground.truth.syn.catalog"
   }
 
   ## Create out.dir
-  dir.create(out.dir)
+  dir.create(out.dir,recursive = T)
 
 	## Dump catMatrix into out.dir
 	newFileName <- paste0(out.dir,"/",oldFileName,".tsv")

@@ -5,8 +5,8 @@
 \title{Prepare input file for MultiModalMuSig from a
 MultiModalMuSig formatted catalog file.}
 \usage{
-CreateMultiModalMuSigOutput(catalog = "ground.truth.syn.catalog.csv",
-  read.catalog.function = NULL, out.dir = "MultiModalMuSig.results",
+CreateMultiModalMuSigOutput(catalog, read.catalog.function = NULL,
+  out.dir = paste0(dirname(catalog), "/MultiModalMuSig.results"),
   overwrite = FALSE)
 }
 \arguments{
@@ -18,8 +18,9 @@ Usually, it refers to \code{"ground.truth.syn.catalog.csv"}.}
 its only argument and returning a catalog as a numeric matrix.}
 
 \item{out.dir}{Directory that will be created for the output;
-abort if it already exits.  Log files will be in
-\code{paste0(out.dir, "/tmp")}.}
+abort if it already exists. Usually, the \code{out.dir} will
+be a \code{MultiModalMuSig.results} folder directly under the
+folder storing \code{catalog}.}
 
 \item{overwrite}{If TRUE, overwrite existing output}
 }
