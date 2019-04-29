@@ -48,9 +48,9 @@ CopyWithChecks <- function(from, to.dir, overwrite = FALSE) {
 #' @param overwrite If TRUE overwrite existing directories and files.
 #'
 #' @param summary.folder.name The name of the folder containing summary results.
-#' Usually, it equals to "summary", but it shall be changed in case a software 
+#' Usually, it equals to "summary", but it shall be changed in case a software
 #' (e.g. SignatureEstimation) has results from 2 or more different methods
-#' (e.g. QP - Quadratic Programming; SA - Simulated Annealing). In this case, 
+#' (e.g. QP - Quadratic Programming; SA - Simulated Annealing). In this case,
 #' the summary folder name shall be different (e.g. "summary.QP" and "summary.SA").
 #' summary folder will be created under the \code{third.level.dir}.
 #'
@@ -70,7 +70,7 @@ SummarizeSigOneSubdir <-
            write.cat.fn,
            plot.pdf.fn,
            overwrite = FALSE,
-		   summary.folder.name = "summary") {
+           summary.folder.name = "summary") {
 
     ## Output path - path to dump the ReadAndAnalyzeSigs() results
     outputPath <- paste0(third.level.dir, "/", summary.folder.name)
@@ -92,10 +92,10 @@ SummarizeSigOneSubdir <-
     suppressWarnings(dir.create(outputPath))
 
     # Copies ground.truth exposures from second.level.dir
-    # to third.level.dir/summary.
+    # to outputPath == third.level.dir/<summary.folder.name>.
     CopyWithChecks(
       from = paste0(third.level.dir,"/../ground.truth.syn.exposures.csv"),
-      to.dir = paste0(third.level.dir,"/summary/"),
+      to.dir = outputPath,
       overwrite = TRUE)
 
     # Writes bi-directional matching and cos.sim calculation

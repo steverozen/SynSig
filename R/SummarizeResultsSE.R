@@ -7,7 +7,7 @@
 #' Here, \code{<top.dir>} refers to a top-level directory which contains the
 #' full information of a synthetic dataset. (e.g. \code{syn.2.7a.7b.abst.v8})
 #' This code depends on a conventional directory structure documented
-#' elsewhere. However in \code{<third.level.dir>} there should be files 
+#' elsewhere. However in \code{<third.level.dir>} there should be files
 #' \code{attributed.exposures.QP.csv} and \code{attributed.exposures.SA.csv}
 #' which store SignatureEstimation results.
 #'
@@ -48,10 +48,10 @@ SummarizeSigOneSE96Subdir <-
 	attributed.exp.path <- list()
     attributed.exp.path[["QP"]] <- paste0(inputPath,"/attributed.exposures.QP.csv")
     attributed.exp.path[["SA"]] <- paste0(inputPath,"/attributed.exposures.SA.csv")
-	
+
     # Return value of this function is an embedded list.
 	retval <- list()
-	
+
     # For attributed exposures using Quadratic Programming,
 	# SummarizeSigOneSubdir will generate a "/summary.QP" folder
     # under third.level.dir. Summarized results are dumped into
@@ -67,8 +67,8 @@ SummarizeSigOneSE96Subdir <-
         write.cat.fn = WriteCatSNS96,
         plot.pdf.fn = PlotCatSNS96ToPdf,
         overwrite = overwrite,
-		summary.folder.name = "summary.QP")
-	
+        summary.folder.name = "summary.QP")
+
     # For attributed exposures using Simulated Annealing,
 	# SummarizeSigOneSubdir will generate a "/summary.QP" folder
     # under third.level.dir. Summarized results are dumped into
@@ -84,7 +84,7 @@ SummarizeSigOneSE96Subdir <-
         write.cat.fn = WriteCatSNS96,
         plot.pdf.fn = PlotCatSNS96ToPdf,
         overwrite = overwrite,
-		summary.folder.name = "summary.SA")		
+        summary.folder.name = "summary.SA")
 
     invisible(retval) # So we can test without looking at a file.
 }

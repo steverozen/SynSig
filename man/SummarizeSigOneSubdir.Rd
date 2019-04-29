@@ -43,9 +43,9 @@ extracted signatures.}
 \item{overwrite}{If TRUE overwrite existing directories and files.}
 
 \item{summary.folder.name}{The name of the folder containing summary results.
-Usually, it equals to "summary", but it shall be changed in case a software 
+Usually, it equals to "summary", but it shall be changed in case a software
 (e.g. SignatureEstimation) has results from 2 or more different methods
-(e.g. QP - Quadratic Programming; SA - Simulated Annealing). In this case, 
+(e.g. QP - Quadratic Programming; SA - Simulated Annealing). In this case,
 the summary folder name shall be different (e.g. "summary.QP" and "summary.SA").
 summary folder will be created under the \code{third.level.dir}.}
 }
