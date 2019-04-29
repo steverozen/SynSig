@@ -47,6 +47,13 @@ CopyWithChecks <- function(from, to.dir, overwrite = FALSE) {
 #'
 #' @param overwrite If TRUE overwrite existing directories and files.
 #'
+#' @param summary.folder.name The name of the folder containing summary results.
+#' Usually, it equals to "summary", but it shall be changed in case a software 
+#' (e.g. SignatureEstimation) has results from 2 or more different methods
+#' (e.g. QP - Quadratic Programming; SA - Simulated Annealing). In this case, 
+#' the summary folder name shall be different (e.g. "summary.QP" and "summary.SA").
+#' summary folder will be created under the \code{third.level.dir}.
+#'
 #' @keywords internal
 #'
 #' @importFrom utils capture.output sessionInfo
@@ -62,10 +69,11 @@ SummarizeSigOneSubdir <-
            read.ground.truth.sigs.fn,
            write.cat.fn,
            plot.pdf.fn,
-           overwrite = FALSE) {
+           overwrite = FALSE,
+		   summary.folder.name = "summary") {
 
     ## Output path - path to dump the ReadAndAnalyzeSigs() results
-    outputPath <- paste0(third.level.dir, "/summary")
+    outputPath <- paste0(third.level.dir, "/", summary.folder.name)
 
     ## Analyze signature extraction similarity
     sigAnalysis <-
