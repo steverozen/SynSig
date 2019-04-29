@@ -7,7 +7,7 @@
 SummarizeSigOneSubdir(third.level.dir, ground.truth.exposure.name,
   extracted.sigs.path, attributed.exp.path = NULL,
   read.extracted.sigs.fn, read.ground.truth.sigs.fn, write.cat.fn,
-  plot.pdf.fn, overwrite = FALSE)
+  plot.pdf.fn, overwrite = FALSE, summary.folder.name = "summary")
 }
 \arguments{
 \item{third.level.dir}{Lowest level path to results, that is,
@@ -41,6 +41,13 @@ e.g. \code{ReadCatSNS96}}
 extracted signatures.}
 
 \item{overwrite}{If TRUE overwrite existing directories and files.}
+
+\item{summary.folder.name}{The name of the folder containing summary results.
+Usually, it equals to "summary", but it shall be changed in case a software 
+(e.g. SignatureEstimation) has results from 2 or more different methods
+(e.g. QP - Quadratic Programming; SA - Simulated Annealing). In this case, 
+the summary folder name shall be different (e.g. "summary.QP" and "summary.SA").
+summary folder will be created under the \code{third.level.dir}.}
 }
 \description{
 Note: Users should use sigproextractor(SigProfiler-Python) v0.0.5.43
