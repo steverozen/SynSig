@@ -154,25 +154,114 @@ RunSignatureAnalyzerOnFile <-
           BayesNMF.L1W.L2H(syn.data, 200000, 10, 5, tol, maxK, maxK, 1),
         file = paste0(TEMPORARY, "captured.output.txt")))
 
+    ## Output raw-extracted signatures. (Sum of each signature != 1)
     sigs <- out.data[[1]]
     sigs.to.use <- which(colSums(sigs) > 1 )
     sigs <- sigs[   , sigs.to.use]
-
+    ## Normalize the mutational signatures so that the sum of all channels equal to 1.
+    sigs <- apply(sigs,2,function(x) x/sum(x))
+    ## Change the names of extracted signatures to W1,W2,...
     new.names <- paste0("W.", 1:ncol(sigs))
     colnames(sigs) <- new.names
 
-    exp <- out.data[[2]]
-    exp <- exp[sigs.to.use, ]
-    rownames(exp) <- new.names
+    ## Output RAW-attributed exposures.
+    ## NOTE: This is not the exposure SignatureAnalyzer suppose to output.
+    ## After two more steps, fine-tuned attributed exposures will be provided.
+    exp.raw <- out.data[[2]]
+    exp.raw <- exp1[sigs.to.use, ]
+    rownames(exp1) <- new.names
 
-    names(out.data) <- c("signatures.W", "exposures.H",
+    ## 2 more steps Fine-tuned attribution.
+    ## INPUT: extracted signatures (sigs)
+    ## and RAW-attributed exposures (exp1)
+    W0 <- sigs ## Extracted signatures
+    H0 <- exp1 ## initially attributed exposures
+
+    V0 <- syn.data     ## Catalog matrix for all tumors
+    K0 <- ncol(W0)     ## # of signatures
+
+    ## Z0 is a signature allowance matrix for the whole dataset.
+    ## rows refer to signatures, columns refer to tumor samples.
+    ## If you specify an entry as 0,
+    ## then you prohibit a signature to be active in this tumor sample.
+    ## Here, we simply select Z0 as unit matrix (all-1 matrix)
+    ## and therefore any signature is allowed to be present in any tumor.
+    Z0 <- array(1,dim=c(K0,ncol(V0))) ## signature indicator matrix Z (0 = not allowed, 1 = allowed); all elements initialized by one.
+    colnames(Z0) <- colnames(H0)
+    rownames(Z0) <- rownames(H0)
+
+    ## The original SignatureAnalyzer code attributes tumors of different tumor types separately
+    ## TODO(Wuyang): Add separation of tumor types later.
+    ttype <- rep("SBS1.SBS5.correlated",ncol(V0))
+    ttype.unique <- unique(ttype)
+    n.ttype.unique <- length(ttype.unique)
+
+
+    a0 <- 10 ### default parameter
+    phi <- 1.5 ### default parameter
+    for (i in 1:n.ttype.unique) {
+      #### First step: determine a set of optimal signatures best explaining the observed mutations in each tumor type ("cohort").
+      #### The automatic relevance determination technique was applied to the H matrix only, while keeping signatures (W0) frozen.
+      cohort <- ttype.unique[i] ## each cohort is composed of tumor catalogs with the SAME tumor type.
+      W1 <- W0
+      V1 <- as.matrix(V0[,ttype==cohort])
+      Z1 <- Z0[,match(colnames(V1),colnames(Z0),nomatch=0)] ## If a signature is not active in a tumor type in initial attribution,
+                                                            ## it is no more allowed in the fine-tuned attribution step.
+      H1 <- Z1*H0[,match(colnames(V1),colnames(Z0),nomatch=0)]
+      lambda <- rep(1+(sqrt((a0-1)*(a0-2)*mean(V1,na.rm=T)/K0))/(nrow(V1) + ncol(V1) + a0 + 1)*2,K0)
+      res0 <- BayesNMF.L1.KL.fixed_W.Z(as.matrix(V1),as.matrix(W1),as.matrix(H1),as.matrix(Z1),lambda,2000000,a0,1.e-07,1/phi)
+      H2 <- res0[[2]]  ## Attribution from second step
+      colnames(H2) <- colnames(V1) ## The colnames of H2 (exposure attribution matrix) are the names of tumor samples,
+                                   ## it should be the same as the colnames of V1 (catalog matrix for tumors whose tumor type is cohort=ttype.unique[i])
+      rownames(H2) <- colnames(W0) ## The rownames of H2 (exposure attribution matrix) are the names of signatures,
+                                   ## it should be the same as the colnames of W0 (signature matrix extracted in the previous section)
+
+      #### Second step: determine a sample-level exposure attribution using selected sigantures in the first step.
+      index.H2 <- rowSums(H2)>1 ### identify only active signatures in the cohort
+      Z2 <- Z1
+      Z2[!index.H2,] <- 0 ### only selected signatures in the first step are allowed + the original contraints on the signature availability from Z1.
+      for (j in 1:ncol(H2)) {
+        tmpH <- rep(0,ncol(W0))
+        if (sum(V1[,j])>=5) {
+          lambda <- 1+(sqrt((a0-1)*(a0-2)*mean(V1,na.rm=T)/K0))/(nrow(V1) + ncol(V1) + a0 + 1)*2
+          res <- BayesNMF.L1.KL.fixed_W.Z.sample(as.matrix(V1[,j]),W0,as.matrix(H2[,j]),as.matrix(Z2[,j]),lambda,1000000,a0,1.e-07,1) ## Precise attribution
+          tmpH <- res[[2]]
+        }
+        if (j==1) {
+          H3 <- tmpH
+        } else {
+          H3 <- cbind(H3,tmpH)
+          cat(j,'\n')
+        }
+      }
+      colnames(H3) <- colnames(V1)
+      rownames(H3) <- colnames(W0)
+      if (i==1) {
+        H2.all <- H2
+        H3.all <- H3
+      } else {
+        H2.all <- cbind(H2.all,H2)  ## Attribution result from step 2
+        H3.all <- cbind(H3.all,H3)  ## Attribution result from step 3
+      }
+    }
+    exp.fine.tuned <- H3.all ### fine-tuned attributions of signature exposures
+
+
+
+
+    ## List of output exposures.
+    names(out.data) <- c("signatures.W", "exposures.raw",
                          "likelihood", "evidence",
                          "relevance", "error")
+    ## Replace raw sigs with normalized sigs (colSums == 1)
+    out.data[[1]] <- sigs
+    ## Replace raw exposures with exp.fine.tuned
+    out.data[[2]] <- exp.fine.tuned
 
     write.signature.function(sigs,
                              paste0(out.dir, "/sa.output.sigs.csv"))
 
-    WriteExposure(exp, file = paste0(out.dir, "/sa.output.exp.csv"))
+    WriteExposure(exp.fine.tuned, file = paste0(out.dir, "/sa.output.exp.csv"))
 
     if (!is.null(input.exposures)) {
       WriteExposure(ReadExposure(input.exposures),
