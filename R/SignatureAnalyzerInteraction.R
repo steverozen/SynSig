@@ -281,7 +281,7 @@ RunSignatureAnalyzerAttributeOnly <-
     names(out.data) <- c("signatures.W", "exposures.H",
                          "likelihood", "evidence",
                          "relevance", "error",
-                         "nomralized.sigs","exposures.fine.tuned")
+                         "normalized.sigs","exposures.fine.tuned")
 
     ## Output normalized signatures
     write.signature.function(sigs,
@@ -521,7 +521,7 @@ RunSignatureAnalyzerOnFile <-
     names(out.data) <- c("signatures.W", "exposures.H",
                          "likelihood", "evidence",
                          "relevance", "error",
-                         "nomralized.sigs","exposures.fine.tuned")
+                         "normalized.sigs","exposures.fine.tuned")
 
     ## Output normalized signatures
     write.signature.function(sigs,
