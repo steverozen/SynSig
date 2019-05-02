@@ -49,7 +49,7 @@ The output of SignatureAnalyzer, invisibly. This is a list
 with five elements (named in this code, not by SignatureAnalyzer):
 \enumerate{
  \item \code{signatures.W} The signature matrix
- \item \code{exposures.H} The corresponding exposures
+ \item \code{exposures.fine.tuned} The corresponding exposures
  \item \code{likelihood} The likelihood
  \item \code{evidence} -1 * the posterior probability
  \item \code{relevance} One for each column of the \code{signatures.W}

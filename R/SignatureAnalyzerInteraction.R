@@ -55,6 +55,27 @@ SACat96 <- function(cat96) {
   return(cat96)
 }
 
+#' Source SignatureAnalyzer Codes.
+#'
+#' @param signatureanalzer.code.dir The directory which stores
+#' SignatureAnalyzer program files. It must include a folder
+#' named \code{INPUT_SignatureAnalyzer} and a R script named
+#' \code{SignatureAnalyer.PCAWG.function.R}
+
+SourceSignatureAnlyzerCode <-
+  function(signatureanalyzer.code.dir){
+    here <- getwd()
+    setwd(signatureanalyzer.code.dir)
+    INPUT <<- "INPUT_SignatureAnalyzer/"
+    suppressPackageStartupMessages(
+      source("SignatureAnalyzer.PCAWG.function.R")
+    )
+    setwd(here) # This is necessary because the caller
+    # as specified input and output locations
+    # realtive to here.
+  }
+
+
 
 #' Run SignatureAnalyzer on a file containing a catalog.
 #'
@@ -99,7 +120,7 @@ SACat96 <- function(cat96) {
 #' with five elements (named in this code, not by SignatureAnalyzer):
 #' \enumerate{
 #'  \item \code{signatures.W} The signature matrix
-#'  \item \code{exposures.H} The corresponding exposures
+#'  \item \code{exposures.fine.tuned} The corresponding exposures
 #'  \item \code{likelihood} The likelihood
 #'  \item \code{evidence} -1 * the posterior probability
 #'  \item \code{relevance} One for each column of the \code{signatures.W}
@@ -150,6 +171,13 @@ RunSignatureAnalyzerOnFile <-
       capture.output(
         # BayesNMF.L1W.L2H is defined by the statement
         # source("SignatureAnalyzer.PCAWG.function.R") above.
+        # BayesNMF.L1W.L2H will output:
+        # [[1]]: extracted signatures
+        # [[2]]: RAW-attributed exposures (not finalized)
+        # [[3]]: likelihood -
+        # [[4]]: evidence -
+        # [[5]]: relevance -
+        # [[6]]: error -
         out.data <-
           BayesNMF.L1W.L2H(syn.data, 200000, 10, 5, tol, maxK, maxK, 1),
         file = paste0(TEMPORARY, "captured.output.txt")))
@@ -168,14 +196,14 @@ RunSignatureAnalyzerOnFile <-
     ## NOTE: This is not the exposure SignatureAnalyzer suppose to output.
     ## After two more steps, fine-tuned attributed exposures will be provided.
     exp.raw <- out.data[[2]]
-    exp.raw <- exp1[sigs.to.use, ]
-    rownames(exp1) <- new.names
+    exp.raw <- exp.raw[sigs.to.use, ]
+    rownames(exp.raw) <- new.names
 
     ## 2 more steps Fine-tuned attribution.
     ## INPUT: extracted signatures (sigs)
-    ## and RAW-attributed exposures (exp1)
+    ## and RAW-attributed exposures (exp.raw)
     W0 <- sigs ## Extracted signatures
-    H0 <- exp1 ## initially attributed exposures
+    H0 <- exp.raw ## initially attributed exposures
 
     V0 <- syn.data     ## Catalog matrix for all tumors
     K0 <- ncol(W0)     ## # of signatures
@@ -250,7 +278,7 @@ RunSignatureAnalyzerOnFile <-
 
 
     ## List of output exposures.
-    names(out.data) <- c("signatures.W", "exposures.raw",
+    names(out.data) <- c("signatures.W", "exposures.fine.tuned",
                          "likelihood", "evidence",
                          "relevance", "error")
     ## Replace raw sigs with normalized sigs (colSums == 1)
@@ -348,15 +376,7 @@ SignatureAnalyzerOneRun <-
            overwrite = FALSE)
 {
   options( warn = 0 )
-  here <- getwd()
-  setwd(signatureanalyzer.code.dir)
-  INPUT <<- "INPUT_SignatureAnalyzer/"
-  suppressPackageStartupMessages(
-    source("SignatureAnalyzer.PCAWG.function.R")
-  )
-  setwd(here) # This is necessary because the caller
-  # as specified input and output locations
-  # realtive to here.
+  SourceSignatureAnlyzerCode(signatureanalyzer.code.dir)
 
   if (verbose)
     cat("Running SignatureAnalyzerOneRun in", here, out.dir, "\n")
