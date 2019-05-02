@@ -275,17 +275,18 @@ RunSignatureAnalyzerAttributeOnly <-
 
 
     ## List of output exposures.
-    names(out.data) <- c("signatures.W", "exposures.fine.tuned",
-                         "likelihood", "evidence",
-                         "relevance", "error")
-    ## Replace raw sigs with normalized sigs (colSums == 1)
-    out.data[[1]] <- sigs
-    ## Replace raw exposures with exp.fine.tuned
-    out.data[[2]] <- exp.fine.tuned
+    out.data[[7]] <- sigs ## Normalized sigs
+    out.data[[8]] <- exp.fine.tuned ## Well-attributed exposures
 
+    names(out.data) <- c("signatures.W", "exposures.H",
+                         "likelihood", "evidence",
+                         "relevance", "error",
+                         "nomralized.sigs","exposures.fine.tuned")
+
+    ## Output normalized signatures
     write.signature.function(sigs,
                              paste0(out.dir, "/sa.output.sigs.csv"))
-
+    ## Output fine-tuned attributions
     WriteExposure(exp.fine.tuned, file = paste0(out.dir, "/sa.output.exp.csv"))
 
     if (!is.null(input.exposures)) {
@@ -514,17 +515,18 @@ RunSignatureAnalyzerOnFile <-
 
 
     ## List of output exposures.
-    names(out.data) <- c("signatures.W", "exposures.fine.tuned",
-                         "likelihood", "evidence",
-                         "relevance", "error")
-    ## Replace raw sigs with normalized sigs (colSums == 1)
-    out.data[[1]] <- sigs
-    ## Replace raw exposures with exp.fine.tuned
-    out.data[[2]] <- exp.fine.tuned
+    out.data[[7]] <- sigs ## Normalized sigs
+    out.data[[8]] <- exp.fine.tuned ## Well-attributed exposures
 
+    names(out.data) <- c("signatures.W", "exposures.H",
+                         "likelihood", "evidence",
+                         "relevance", "error",
+                         "nomralized.sigs","exposures.fine.tuned")
+
+    ## Output normalized signatures
     write.signature.function(sigs,
                              paste0(out.dir, "/sa.output.sigs.csv"))
-
+    ## Output fine-tuned attributions
     WriteExposure(exp.fine.tuned, file = paste0(out.dir, "/sa.output.exp.csv"))
 
     if (!is.null(input.exposures)) {
