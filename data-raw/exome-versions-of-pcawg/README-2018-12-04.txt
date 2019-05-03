@@ -1,0 +1,34 @@
+This folder contains mutational spectra catalogs for PCAWG7 
+genomes "projected" to Agilent Sureselect V7 exome-capture target
+regions -- ie only variants in the exome capture regions are
+represented.
+
+All samples present in the whole-genome spectra catalogs are 
+represented (2780 tumours). Therefore some have 0 mutations in
+every category.
+
+The conventions for all files except pcawg-as-exome-COMPOSITE.csv
+are the same as for the whole-genome catalog spectra on Synapse. 
+
+For the COMPOSITE file, the first column contains the following:
+
+The first 1536 rows after the header contain six characters in
+{A, C, G, T}. The first 5 characters are the reference sequence, 
+with the mutated base at the center, and the 6th character
+indicating the variant base. For example, AGCTAT represents a 
+mutation from AGCTA > AGTTA.
+
+The next 78 rows are for DBS (doublet base substitutions, aka 
+dinucleotide substitutions), with the two reference variants 
+followed by the two mutated bases. For example, AACG represents a
+mutation from AA > CG.
+
+The remaining rows are indels, following the classification and 
+conventions in pcawg-as-exome-ID.csv, except that the contents of
+the first four columns of pcawg-as-exome-ID.csv are encoded in a
+single, :-separated string in column 1 in 
+pcawg-as-exome-COMPOSITE.
+
+Steve Rozen
+steverozen@gmail.com
+2018 12 04
