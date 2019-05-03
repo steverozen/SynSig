@@ -3,7 +3,7 @@
 \name{SignatureAnalyzerPrepHyper4}
 \alias{SignatureAnalyzerPrepHyper4}
 \title{Prepare the "hypermutated" segment (a.k.a "Secondary" segment
-of a split non-hyper and hyper data set.}
+of a split non-hyper and hyper data set.)}
 \usage{
 SignatureAnalyzerPrepHyper4(parent.dir, overwrite = FALSE)
 }
@@ -22,5 +22,5 @@ for the second SignatureAnalyzer run.}
 }
 \description{
 Prepare the "hypermutated" segment (a.k.a "Secondary" segment
-of a split non-hyper and hyper data set.
+of a split non-hyper and hyper data set.)
 }

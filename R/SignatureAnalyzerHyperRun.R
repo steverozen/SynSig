@@ -1,5 +1,5 @@
 #' Prepare the "hypermutated" segment (a.k.a "Secondary" segment
-#' of a split non-hyper and hyper data set.
+#' of a split non-hyper and hyper data set.)
 #'
 #' @param parent.dir A directory that must contain subdirectories
 #' \code{syn.SA.hyper.low} and \code{syn.SA.hyper.mixed}.
