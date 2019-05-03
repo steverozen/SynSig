@@ -5,6 +5,8 @@
 \alias{MutationalSignatures}
 \alias{sa.96.sigs}
 \alias{sa.COMPOSITE.sigs}
+\alias{sa.DBS.sigs}
+\alias{sa.ID.sigs}
 \alias{sp.sigs}
 \title{Reference mutational signature profiles from PCAWG7.}
 \format{Numerical matrix with rows indicating mutation
@@ -18,12 +20,20 @@ types and columns indicating signatures.}
 
 \url{https://www.synapse.org/#!Synapse:syn11738309}
 
+\url{https://www.synapse.org/#!Synapse:syn11738312}
+
+\url{https://www.synapse.org/#!Synapse:syn11738313}
+
 \url{https://www.synapse.org/#!Synapse:syn11738319}
 }
 \usage{
 sa.96.sigs
 
 sa.COMPOSITE.sigs
+
+sa.DBS.sigs
+
+sa.ID.sigs
 
 sp.sigs
 }
@@ -41,7 +51,19 @@ SignatureAnalyzer. \code{sa.COMPOSITE.sigs}
 are an \code{rbind} of the contents of
 \url{https://www.synapse.org/#!Synapse:syn11738311} (SBS 1536),
 \url{https://www.synapse.org/#!Synapse:syn11738308} (DBS), and
-\url{https://www.synapse.org/#!Synapse:syn11738309}.
+\url{https://www.synapse.org/#!Synapse:syn11738309} (ID).
+
+\code{sa.DBS.sigs} provides the DBS signatures extracted by
+SignatureAnalyzer, from
+\url{https://www.synapse.org/#!Synapse:syn11738312}. These are not the
+DBS signatures that are part of \code{sa.COMPOSITE.sigs};
+these were extracted from the ID catalogs alone.
+
+\code{sa.ID.sigs} provides the ID signatures extracted by
+SignatureAnalyzer, from
+\url{https://www.synapse.org/#!Synapse:syn11738313}.These are not the
+ID signatures that are part of \code{sa.COMPOSITE.sigs};
+these were extracted from the ID catalogs alone.
 
 \code{sp.sigs} provides signatures extracted by SigProfiler.
 }

@@ -39,7 +39,19 @@ NULL
 #' are an \code{rbind} of the contents of
 #' \url{https://www.synapse.org/#!Synapse:syn11738311} (SBS 1536),
 #' \url{https://www.synapse.org/#!Synapse:syn11738308} (DBS), and
-#' \url{https://www.synapse.org/#!Synapse:syn11738309}.
+#' \url{https://www.synapse.org/#!Synapse:syn11738309} (ID).
+#'
+#' @details \code{sa.DBS.sigs} provides the DBS signatures extracted by
+#' SignatureAnalyzer, from
+#' \url{https://www.synapse.org/#!Synapse:syn11738312}. These are not the
+#' DBS signatures that are part of \code{sa.COMPOSITE.sigs};
+#' these were extracted from the ID catalogs alone.
+#'
+#' @details \code{sa.ID.sigs} provides the ID signatures extracted by
+#' SignatureAnalyzer, from
+#' \url{https://www.synapse.org/#!Synapse:syn11738313}.These are not the
+#' ID signatures that are part of \code{sa.COMPOSITE.sigs};
+#' these were extracted from the ID catalogs alone.
 #'
 #' @details \code{sp.sigs} provides signatures extracted by SigProfiler.
 #'
@@ -59,6 +71,14 @@ NULL
 #' @source \url{https://www.synapse.org/#!Synapse:syn11738308}
 #' @source \url{https://www.synapse.org/#!Synapse:syn11738309}
 "sa.COMPOSITE.sigs"
+
+#' @rdname MutationalSignatures
+#' @source \url{https://www.synapse.org/#!Synapse:syn11738312}
+"sa.DBS.sigs"
+
+#' @rdname MutationalSignatures
+#' @source \url{https://www.synapse.org/#!Synapse:syn11738313}
+"sa.ID.sigs"
 
 #' @rdname MutationalSignatures
 #' @source \url{https://www.synapse.org/#!Synapse:syn11738319}

@@ -182,3 +182,15 @@ sa.96.sigs <-
 colnames(sa.96.sigs) <- FixSASigNames(colnames(sa.96.sigs))
 
 usethis::use_data(sa.COMPOSITE.sigs, sa.96.sigs)
+
+# New section, 2019 05 04
+
+# Source: https://www.synapse.org/#!Synapse:syn11738312
+sa.DBS.sigs <- ReadSASigDBS("SignatureAnalyzer_DBS.signature.20180420.txt")
+
+# Source: https://www.synapse.org/#!Synapse:syn11738313
+sa.ID.sigs  <- ReadSASigID("SignatureAnalyzer_ID.signature.012718.txt")
+
+usethis::use_data(sa.DBS.sigs, sa.ID.sigs)
+
+
