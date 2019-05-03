@@ -1,7 +1,7 @@
-context("Long test of SignatureAnalyzer4MatchedCatalogs")
+context("Long test of SignatureAnalyzer4MatchedCatalogs, ~60 seconds on laptop")
 
 test_that("SignatureAnalyzer4MatchedCatalogs", {
-  skip("This is a long test")
+  # skip("This is a long test")
   load("SignatureAnalyzer4MatchedCatalogs.out.Rdata")
   set.seed(888)
   tmp.result <<-
