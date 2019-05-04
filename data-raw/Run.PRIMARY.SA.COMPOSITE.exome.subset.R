@@ -5,7 +5,7 @@
 library(ICAMS)
 library(SynSig)
 
-laptop.test <- TRUE
+laptop.test <- FALSE
 
 if (laptop.test) {
   test.only                  <- TRUE
