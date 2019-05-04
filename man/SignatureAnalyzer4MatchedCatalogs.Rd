@@ -37,7 +37,7 @@ corresponding data set (see Details).}
 \item{overwrite}{if TRUE overwrite preexisting results.}
 
 \item{mc.cores}{The number of cores to use with \code{mclapply};
-ignored on Windows.}
+automatically overridden to 1 on Windows.}
 }
 \description{
 Run SignatureAnalyzer on 4 coordinated data sets and put results
