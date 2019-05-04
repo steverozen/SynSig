@@ -2,7 +2,7 @@
 % Please edit documentation in R/SummarizeResultsSA.R
 \name{SummarizeSigOneSA96Subdir}
 \alias{SummarizeSigOneSA96Subdir}
-\title{Summarize 96-channel results from SignatureAnalyzer}
+\title{Summarize SNS 96-channel results from SignatureAnalyzer}
 \usage{
 SummarizeSigOneSA96Subdir(third.level.dir,
   ground.truth.exposure.name = "ground.truth.syn.exposures.csv",
@@ -17,9 +17,7 @@ SummarizeSigOneSA96Subdir(third.level.dir,
 Here, \code{<top.dir>} refers to a top-level directory which contains the
 full information of a synthetic dataset. (e.g. \code{syn.2.7a.7b.abst.v8})
 This code depends on a conventional directory structure documented
-elsewhere. However there should be a directory
-\code{<third.level.dir>}\code{/SBS96} which
-stores SigProfiler results.}
+elsewhere.}
 
 \item{ground.truth.exposure.name}{File name which stores ground-truth exposures;
 defaults to \code{"ground.truth.syn.exposures.csv"}.
@@ -30,6 +28,6 @@ This file can be found in the \code{sub.dir}, i.e. \code{<third.level.dir>/../}}
 \item{overwrite}{If TRUE overwrite existing directories and files.}
 }
 \description{
-Summarize 96-channel results from SignatureAnalyzer
+Summarize SNS 96-channel results from SignatureAnalyzer
 }
 \keyword{internal}

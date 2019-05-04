@@ -21,7 +21,7 @@
 #'
 #' @importFrom utils read.csv
 #'
-#' @keywords internal
+#' @export
 
 ReadCatCOMPOSITE <- function(path, strict = FALSE) {
   retval <- read.csv(path, header = T, row.names = 1)

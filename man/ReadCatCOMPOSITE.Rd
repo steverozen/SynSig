@@ -27,4 +27,3 @@ SignatureAnalyzer.
 \seealso{
 \code{\link{WriteCatCOMPOSITE}}
 }
-\keyword{internal}
