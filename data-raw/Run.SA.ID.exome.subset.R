@@ -3,14 +3,15 @@
 library(ICAMS)
 library(SynSig)
 
-num.runs                   <- 2 # 2 for debugging
-signatureanalyzer.code.dir <- "SignatureAnalzyer.052418"
+num.runs                   <- 20 # 2 for debugging
+# signatureanalyzer.code.dir <- "SignatureAnalzyer.052418" # for debugging on Laptop
+signatureanalyzer.code.dir <- "/home/gmssgr/bin/SignatureAnalzyer.052418/"
 input.catalog              <- "sa.ID.exome.subset/pcawg-as-exome-ID.csv"
 read.catalog.function      <- ReadCatID
 out.dir                    <- "sa.ID.exome.subset/"
 write.signature.function   <- WriteCatID
 maxK                       <- 30
-test.only                  <- TRUE
+test.only                  <- FALSE
 delete.tmp.files           <- TRUE
 overwrite                  <- TRUE
 mc.cores                   <- 20 # Will be overidden and set to 1 on Windows
