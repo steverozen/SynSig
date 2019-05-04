@@ -1,4 +1,5 @@
-# This script runs against an implicit argument
+# Script to run SignatureAnalyzer on the exome-subset of PCAWG
+# ID mutational spectra
 
 library(ICAMS)
 library(SynSig)
@@ -30,7 +31,7 @@ sa.SA.ID.exome.subset.res <-
     read.catalog.function      = read.catalog.function,
     out.dir                    = out.dir,
     write.signature.function   = write.signature.function,
-    maxK                       = 30,
+    maxK                       = maxK,
     tol                        = 1e-7,
     test.only                  = test.only,
     delete.tmp.files           = delete.tmp.files,
