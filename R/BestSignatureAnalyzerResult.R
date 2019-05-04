@@ -43,7 +43,7 @@
 BestSignatureAnalyzerResult <- function(sa.results.dir,
                                         verbose = FALSE) {
   me <- match.call()[[1]]
-
+  stopifnot(dir.exists(sa.results.dir))
   run.directories <-
     list.files(path = sa.results.dir,
                pattern = "run",
@@ -158,6 +158,7 @@ CopyBestSignatureAnalyzerResult <-
   function(sa.results.dir,
            verbose = FALSE,
            overwrite = FALSE) {
+    stopifnot(dir.exists(sa.results.dir))
     best <- BestSignatureAnalyzerResult(sa.results.dir, verbose)
     target.dir <- paste0(sa.results.dir, "/best.run")
      # file.copy.ret <- file.copy(
@@ -170,7 +171,7 @@ CopyBestSignatureAnalyzerResult <-
       create.result <- dir.create(target.dir)
       if (!create.result) warning("problem creating", target.dir)
     }
-    best.exp <- paste0(best, "sa.output.exp.csv")
+    best.exp <- paste0(best, "sa.output.raw.exp.csv")
     if (!file.exists(best.exp)) stop(best.exp, " does not exist")
     file.copy(from = best.exp, to = target.dir, overwrite = overwrite)
     file.copy(from = paste0(best, "sa.output.sigs.csv"),
