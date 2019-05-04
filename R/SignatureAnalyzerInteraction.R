@@ -259,7 +259,7 @@ RunSignatureAnalyzerAttributeOnly <-
           H3 <- tmpH
         } else {
           H3 <- cbind(H3,tmpH)
-          cat(j,'\n')
+          if (verbose) cat(j,'\n')
         }
       }
       colnames(H3) <- colnames(V1)
@@ -505,7 +505,7 @@ RunSignatureAnalyzerOnFile <-
           H3 <- tmpH
         } else {
           H3 <- cbind(H3,tmpH)
-          cat(j,'\n')
+          if (verbose) cat(j,'\n')
         }
       }
       colnames(H3) <- colnames(V1)
@@ -787,7 +787,7 @@ SAMultiRunOneCatalog <-
 #' @param overwrite if TRUE overwrite preexisting results.
 #'
 #' @param mc.cores The number of cores to use with \code{mclapply};
-#' ignored on Windows.
+#' automatically overridden to 1 on Windows.
 #'
 #' @export
 #'
