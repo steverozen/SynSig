@@ -5,7 +5,7 @@ library(SynSig)
 
 num.runs                   <- 20 # 2 for debugging
 # signatureanalyzer.code.dir <- "SignatureAnalzyer.052418" # for debugging on Laptop
-signatureanalyzer.code.dir <- "/home/gmssgr/bin/SignatureAnalzyer.052418/"
+signatureanalyzer.code.dir <- "/home/gmssgr/bin/SignatureAnalzyer.052418/" # for monster
 input.catalog              <- "sa.ID.exome.subset/pcawg-as-exome-ID.csv"
 read.catalog.function      <- ReadCatID
 out.dir                    <- "sa.ID.exome.subset/"
