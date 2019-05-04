@@ -67,12 +67,14 @@ SourceSignatureAnlyzerCode <-
     here <- getwd()
     setwd(signatureanalyzer.code.dir)
     INPUT <<- "INPUT_SignatureAnalyzer/"
-    suppressPackageStartupMessages(
-      source("SignatureAnalyzer.PCAWG.function.R")
+    suppressWarnings(
+      suppressPackageStartupMessages(
+        source("SignatureAnalyzer.PCAWG.function.R")
+      )
     )
     setwd(here) # This is necessary because the caller
     # as specified input and output locations
-    # realtive to here.
+    # relative to here.
   }
 
 #' Run SignatureAnalyzer attribution on a sa.output.rdata and its corresponding catalog file.
@@ -182,7 +184,8 @@ RunSignatureAnalyzerAttributeOnly <-
     ## Output raw-extracted signatures. (Sum of each signature != 1)
     sigs <- out.data[[1]]
     sigs.to.use <- which(colSums(sigs) > 1 )
-    sigs <- sigs[   , sigs.to.use]
+    stopifnot(length(sigs.to.use) > 0)
+    sigs <- sigs[   , sigs.to.use, drop = FALSE]
     ## Normalize the mutational signatures so that the sum of all channels equal to 1.
     sigs <- apply(sigs,2,function(x) x/sum(x))
     ## Change the names of extracted signatures to W1,W2,...
@@ -193,7 +196,7 @@ RunSignatureAnalyzerAttributeOnly <-
     ## NOTE: This is not the exposure SignatureAnalyzer suppose to output.
     ## After two more steps, fine-tuned attributed exposures will be provided.
     exp.raw <- out.data[[2]]
-    exp.raw <- exp.raw[sigs.to.use, ]
+    exp.raw <- exp.raw[sigs.to.use, , drop = FALSE]
     rownames(exp.raw) <- new.names
 
     ## 2 more steps Fine-tuned attribution.
@@ -422,7 +425,8 @@ RunSignatureAnalyzerOnFile <-
     ## Output raw-extracted signatures. (Sum of each signature != 1)
     sigs <- out.data[[1]]
     sigs.to.use <- which(colSums(sigs) > 1 )
-    sigs <- sigs[   , sigs.to.use]
+    stopifnot(length(sigs.to.use) > 0)
+    sigs <- sigs[   , sigs.to.use, drop = FALSE]
     ## Normalize the mutational signatures so that the sum of all channels equal to 1.
     sigs <- apply(sigs,2,function(x) x/sum(x))
     ## Change the names of extracted signatures to W1,W2,...
@@ -433,8 +437,13 @@ RunSignatureAnalyzerOnFile <-
     ## NOTE: This is not the exposure SignatureAnalyzer suppose to output.
     ## After two more steps, fine-tuned attributed exposures will be provided.
     exp.raw <- out.data[[2]]
-    exp.raw <- exp.raw[sigs.to.use, ]
+    exp.raw <- exp.raw[sigs.to.use, , drop = FALSE]
     rownames(exp.raw) <- new.names
+
+    # We need new code to handle the case in which there is only one signature
+    if (ncol(sigs) == 1) {
+       stop("The attribution code below cannot handle the case where there is only one signature")
+    }
 
     ## 2 more steps Fine-tuned attribution.
     ## INPUT: extracted signatures (sigs)
@@ -696,7 +705,7 @@ SAMultiRunOneCatalog <-
     else warning(out.dir, "exists, overwriting")
 
     RunOneIndex <- function(i) {
-      out.dir2 <- paste0(out.dir, "sa.run.", i)
+      out.dir2 <- paste0(out.dir, "/sa.run.", i)
       signature.analyzer.output <-
         SignatureAnalyzerOneRun(
           signatureanalyzer.code.dir = signatureanalyzer.code.dir,
