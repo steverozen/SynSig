@@ -24,7 +24,7 @@ cat("\nRunning, maxK is ", maxK, "\n\n", sep = "")
 RNGkind(kind = "L'Ecuyer-CMRG")
 set.seed(897)
 
-sa.SA.DBS.exome.subset.res <-
+sa.DBS.exome.subset.res <-
   SAMultiRunOneCatalog(
     num.runs                   = num.runs,
     signatureanalyzer.code.dir = signatureanalyzer.code.dir,
