@@ -8,9 +8,7 @@
 #' Here, \code{<top.dir>} refers to a top-level directory which contains the
 #' full information of a synthetic dataset. (e.g. \code{syn.2.7a.7b.abst.v8})
 #' This code depends on a conventional directory structure documented
-#' elsewhere. However there should be a directory
-#' \code{<third.level.dir>}\code{/SBS96} which
-#' stores SigProfiler results.
+#' elsewhere.
 #'
 #' @param ground.truth.exposure.name File name which stores ground-truth exposures;
 #' defaults to \code{"ground.truth.syn.exposures.csv"}.
@@ -47,18 +45,11 @@ SummarizeSigOneSACOMPOSITESubdir <-
         plot.pdf.fn =  Plot96PartOfComposite, # NA, # Does not exist for COMPOSITE # maybe Plot96PartOfComposite
         overwrite = overwrite)
 
-    # TODO(Wuyang): Read in and Analyze attributed exposures,
-    # if available.
-    if(0){
-      invisible(NULL)
-      # attributed.exp.path
-    }
-
     invisible(retval)
   }
 
 
-#' Summarize 96-channel results from SignatureAnalyzer
+#' Summarize SNS 96-channel results from SignatureAnalyzer
 #'
 #' @param third.level.dir Lowest level path to results, that is
 #' \code{<top.dir>}\code{/sa.sa.96/sa.results/},
@@ -68,9 +59,7 @@ SummarizeSigOneSACOMPOSITESubdir <-
 #' Here, \code{<top.dir>} refers to a top-level directory which contains the
 #' full information of a synthetic dataset. (e.g. \code{syn.2.7a.7b.abst.v8})
 #' This code depends on a conventional directory structure documented
-#' elsewhere. However there should be a directory
-#' \code{<third.level.dir>}\code{/SBS96} which
-#' stores SigProfiler results.
+#' elsewhere.
 #'
 #' @param ground.truth.exposure.name File name which stores ground-truth exposures;
 #' defaults to \code{"ground.truth.syn.exposures.csv"}.
@@ -82,7 +71,7 @@ SummarizeSigOneSACOMPOSITESubdir <-
 #'
 #' @keywords internal
 #'
-#' @importFrom ICAMS WriteCatSNS96 ReadCatSNS96
+#' @importFrom ICAMS WriteCatSNS96 ReadCatSNS96 PlotCatSNS96ToPdf
 #' @importFrom utils capture.output sessionInfo
 
 SummarizeSigOneSA96Subdir <-
@@ -108,12 +97,107 @@ SummarizeSigOneSA96Subdir <-
         plot.pdf.fn = PlotCatSNS96ToPdf,
         overwrite = overwrite)
 
-    # TODO(Wuyang): Read in and Analyze attributed exposures,
-    # if available.
-    if(0){
-      invisible(NULL)
-      # attributed.exp.path
-    }
+    invisible(retval)
+  }
+
+#' Summarize DNS (Double Nucleotide Substitution) 78-channel results from SignatureAnalyzer
+#'
+#' @param third.level.dir Lowest level path to results, that is
+#' \code{<top.dir>}\code{/sa.sa.96/sa.results/},
+#' \code{<top.dir>}\code{/sp.sp/sa.results/},
+#'\code{<top.dir>}\code{/sa.sa.COMPOSITE/sa.results/}, or
+#' \code{<top.dir>}\code{/sp.sa.COMPOSITE/sa.results/}.
+#' Here, \code{<top.dir>} refers to a top-level directory which contains the
+#' full information of a synthetic dataset. (e.g. \code{syn.2.7a.7b.abst.v8})
+#' This code depends on a conventional directory structure documented
+#' elsewhere.
+#'
+#' @param ground.truth.exposure.name File name which stores ground-truth exposures;
+#' defaults to \code{"ground.truth.syn.exposures.csv"}.
+#' This file can be found in the \code{sub.dir}, i.e. \code{<third.level.dir>/../}
+#'
+#' @param which.run Name of subdirectory containing the run to summarize.
+#'
+#' @param overwrite If TRUE overwrite existing directories and files.
+#'
+#' @keywords internal
+#'
+#' @importFrom ICAMS WriteCatDNS78 ReadCatDNS78 PlotCatDNS78ToPdf
+#' @importFrom utils capture.output sessionInfo
+
+SummarizeSigOneSADNSSubdir <-
+  function(third.level.dir,
+           ground.truth.exposure.name = "ground.truth.syn.exposures.csv",
+           which.run = "/best.run/",
+           overwrite = FALSE) {
+    # Location of SigProfiler output, which is our input
+    # inputPath may change if sigproextractor updates!
+    inputPath <- paste0(third.level.dir, which.run)
+
+    if (!dir.exists(inputPath)) stop(inputPath, "does not exist")
+
+    retval <-
+      SummarizeSigOneSubdir(
+        third.level.dir = third.level.dir,
+        ground.truth.exposure.name = ground.truth.exposure.name,
+        extracted.sigs.path = paste0(inputPath,"/sa.output.sigs.csv"),
+        attributed.exp.path = paste0(inputPath,"/sa.output.exp.csv"),
+        read.extracted.sigs.fn = ReadCatDNS78,
+        read.ground.truth.sigs.fn = ReadCatDNS78,
+        write.cat.fn = WriteCatDNS78,
+        plot.pdf.fn = PlotCatDNS78ToPdf,
+        overwrite = overwrite)
+
+    invisible(retval)
+  }
+
+#' Summarize ID (Indel) results from SignatureAnalyzer
+#'
+#' @param third.level.dir Lowest level path to results, that is
+#' \code{<top.dir>}\code{/sa.sa.96/sa.results/},
+#' \code{<top.dir>}\code{/sp.sp/sa.results/},
+#'\code{<top.dir>}\code{/sa.sa.COMPOSITE/sa.results/}, or
+#' \code{<top.dir>}\code{/sp.sa.COMPOSITE/sa.results/}.
+#' Here, \code{<top.dir>} refers to a top-level directory which contains the
+#' full information of a synthetic dataset. (e.g. \code{syn.2.7a.7b.abst.v8})
+#' This code depends on a conventional directory structure documented
+#' elsewhere.
+#'
+#' @param ground.truth.exposure.name File name which stores ground-truth exposures;
+#' defaults to \code{"ground.truth.syn.exposures.csv"}.
+#' This file can be found in the \code{sub.dir}, i.e. \code{<third.level.dir>/../}
+#'
+#' @param which.run Name of subdirectory containing the run to summarize.
+#'
+#' @param overwrite If TRUE overwrite existing directories and files.
+#'
+#' @keywords internal
+#'
+#' @importFrom ICAMS WriteCatID ReadCatID PlotCatIDToPdf
+#' @importFrom utils capture.output sessionInfo
+
+SummarizeSigOneSAIDSubdir <-
+  function(third.level.dir,
+           ground.truth.exposure.name = "ground.truth.syn.exposures.csv",
+           which.run = "/best.run/",
+           overwrite = FALSE) {
+    # Location of SigProfiler output, which is our input
+    # inputPath may change if sigproextractor updates!
+    inputPath <- paste0(third.level.dir, which.run)
+
+    if (!dir.exists(inputPath)) stop(inputPath, "does not exist")
+
+    retval <-
+      SummarizeSigOneSubdir(
+        third.level.dir = third.level.dir,
+        ground.truth.exposure.name = ground.truth.exposure.name,
+        extracted.sigs.path = paste0(inputPath,"/sa.output.sigs.csv"),
+        attributed.exp.path = paste0(inputPath,"/sa.output.exp.csv"),
+        read.extracted.sigs.fn = ReadCatID,
+        read.ground.truth.sigs.fn = ReadCatID,
+        write.cat.fn = WriteCatID,
+        plot.pdf.fn = PlotCatIDToPdf,
+        overwrite = overwrite)
 
     invisible(retval)
   }
