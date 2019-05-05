@@ -14,6 +14,7 @@ if (laptop.test) {
   num.runs                   <- 2
   maxK                       <- 10
   signatureanalyzer.code.dir <- "C:/Users/steve/Documents/SynSig/data-raw/SignatureAnalzyer.052418/"
+  stopifnot(getwd() == "C:/Users/steve/Documents/SynSig/data-raw")
 } else {
   input.catalog              <- "sa.COMPOSITE.exome.subset/non-hyper-pcawg-as-exome-COMPOSITE.csv"
   out.dir                    <- "sa.COMPOSITE.exome.subset/PRIMARY/"
