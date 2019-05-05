@@ -21,6 +21,9 @@
 #'
 #' @param write.fn Function to use for writing signatures.
 #'
+#' @param overwrite If \code{TRUE} overwrite possible previously
+#' computed files and/or directories.
+#'
 #' @export
 
 SignatureAnalyzerPrepHyper1Secondary <-
@@ -29,7 +32,8 @@ SignatureAnalyzerPrepHyper1Secondary <-
            hyper.catalog,
            secondary.catalog,
            read.fn,
-           write.fn) {
+           write.fn,
+           overwrite = TRUE) {
   if (!dir.exists(non.hyper.results)) {
     stop(non.hyper.results, "does not exist")
   }
@@ -80,7 +84,7 @@ SignatureAnalyzerPrepHyper1Secondary <-
   hyper.catalog <- read.fn(hyper.catalog)
   hyper.catalog.plus <- cbind(hyper.catalog, pseudo.catalog)
 
-  cat("dim of hyper.catalog.plus is", dim(hyper.catalog.plus))
+  cat("dim of hyper.catalog.plus is", dim(hyper.catalog.plus), "\n")
   write.fn(hyper.catalog.plus, secondary.catalog)
 
   # We don't deal with the exposures, because we will remove the
