@@ -1,0 +1,2270 @@
+[[1]]
+[[1]]$signatures.W
+                  [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8]       [,9] [,10]
+AACAAA               0    0    0    0    0    0    0    0 0.05380192     0
+AACACA               0    0    0    0    0    0    0    0 0.00000000     0
+AACAGA               0    0    0    0    0    0    0    0 0.01793397     0
+AACATA               0    0    0    0    0    0    0    0 0.01793397     0
+AACCAA               0    0    0    0    0    0    0    0 0.00000000     0
+AACCCA               0    0    0    0    0    0    0    0 0.01793397     0
+AACCGA               0    0    0    0    0    0    0    0 0.00000000     0
+AACCTA               0    0    0    0    0    0    0    0 0.00000000     0
+AACGAA               0    0    0    0    0    0    0    0 0.00000000     0
+AACGCA               0    0    0    0    0    0    0    0 0.00000000     0
+AACGGA               0    0    0    0    0    0    0    0 0.00000000     0
+AACGTA               0    0    0    0    0    0    0    0 0.00000000     0
+AACTAA               0    0    0    0    0    0    0    0 0.00000000     0
+AACTCA               0    0    0    0    0    0    0    0 0.00000000     0
+AACTGA               0    0    0    0    0    0    0    0 0.00000000     0
+AACTTA               0    0    0    0    0    0    0    0 0.00000000     0
+ACCAAA               0    0    0    0    0    0    0    0 0.03586794     0
+ACCACA               0    0    0    0    0    0    0    0 0.00000000     0
+ACCAGA               0    0    0    0    0    0    0    0 0.00000000     0
+ACCATA               0    0    0    0    0    0    0    0 0.00000000     0
+ACCCAA               0    0    0    0    0    0    0    0 0.01793397     0
+ACCCCA               0    0    0    0    0    0    0    0 0.01793397     0
+ACCCGA               0    0    0    0    0    0    0    0 0.00000000     0
+ACCCTA               0    0    0    0    0    0    0    0 0.00000000     0
+ACCGAA               0    0    0    0    0    0    0    0 0.00000000     0
+ACCGCA               0    0    0    0    0    0    0    0 0.00000000     0
+ACCGGA               0    0    0    0    0    0    0    0 0.00000000     0
+ACCGTA               0    0    0    0    0    0    0    0 0.00000000     0
+ACCTAA               0    0    0    0    0    0    0    0 0.01793397     0
+ACCTCA               0    0    0    0    0    0    0    0 0.00000000     0
+ACCTGA               0    0    0    0    0    0    0    0 0.01793397     0
+ACCTTA               0    0    0    0    0    0    0    0 0.03586794     0
+AGCAAA               0    0    0    0    0    0    0    0 0.00000000     0
+AGCACA               0    0    0    0    0    0    0    0 0.00000000     0
+AGCAGA               0    0    0    0    0    0    0    0 0.01793397     0
+AGCATA               0    0    0    0    0    0    0    0 0.00000000     0
+AGCCAA               0    0    0    0    0    0    0    0 0.00000000     0
+AGCCCA               0    0    0    0    0    0    0    0 0.01793397     0
+AGCCGA               0    0    0    0    0    0    0    0 0.00000000     0
+AGCCTA               0    0    0    0    0    0    0    0 0.03586794     0
+AGCGAA               0    0    0    0    0    0    0    0 0.00000000     0
+AGCGCA               0    0    0    0    0    0    0    0 0.01793397     0
+AGCGGA               0    0    0    0    0    0    0    0 0.00000000     0
+AGCGTA               0    0    0    0    0    0    0    0 0.01793397     0
+AGCTAA               0    0    0    0    0    0    0    0 0.00000000     0
+AGCTCA               0    0    0    0    0    0    0    0 0.03586794     0
+AGCTGA               0    0    0    0    0    0    0    0 0.03586794     0
+AGCTTA               0    0    0    0    0    0    0    0 0.01793397     0
+ATCAAA               0    0    0    0    0    0    0    0 0.01793397     0
+ATCACA               0    0    0    0    0    0    0    0 0.00000000     0
+ATCAGA               0    0    0    0    0    0    0    0 0.00000000     0
+ATCATA               0    0    0    0    0    0    0    0 0.01793397     0
+ATCCAA               0    0    0    0    0    0    0    0 0.03586794     0
+ATCCCA               0    0    0    0    0    0    0    0 0.00000000     0
+ATCCGA               0    0    0    0    0    0    0    0 0.00000000     0
+ATCCTA               0    0    0    0    0    0    0    0 0.03586794     0
+ATCGAA               0    0    0    0    0    0    0    0 0.00000000     0
+ATCGCA               0    0    0    0    0    0    0    0 0.00000000     0
+ATCGGA               0    0    0    0    0    0    0    0 0.00000000     0
+ATCGTA               0    0    0    0    0    0    0    0 0.00000000     0
+ATCTAA               0    0    0    0    0    0    0    0 0.01793397     0
+ATCTCA               0    0    0    0    0    0    0    0 0.03586794     0
+ATCTGA               0    0    0    0    0    0    0    0 0.03586794     0
+ATCTTA               0    0    0    0    0    0    0    0 0.05380192     0
+CACAAA               0    0    0    0    0    0    0    0 0.01793397     0
+CACACA               0    0    0    0    0    0    0    0 0.00000000     0
+CACAGA               0    0    0    0    0    0    0    0 0.05380192     0
+CACATA               0    0    0    0    0    0    0    0 0.00000000     0
+CACCAA               0    0    0    0    0    0    0    0 0.03586794     0
+CACCCA               0    0    0    0    0    0    0    0 0.01793397     0
+CACCGA               0    0    0    0    0    0    0    0 0.01793397     0
+CACCTA               0    0    0    0    0    0    0    0 0.05380192     0
+CACGAA               0    0    0    0    0    0    0    0 0.00000000     0
+CACGCA               0    0    0    0    0    0    0    0 0.00000000     0
+CACGGA               0    0    0    0    0    0    0    0 0.00000000     0
+CACGTA               0    0    0    0    0    0    0    0 0.00000000     0
+CACTAA               0    0    0    0    0    0    0    0 0.00000000     0
+CACTCA               0    0    0    0    0    0    0    0 0.00000000     0
+CACTGA               0    0    0    0    0    0    0    0 0.00000000     0
+CACTTA               0    0    0    0    0    0    0    0 0.00000000     0
+CCCAAA               0    0    0    0    0    0    0    0 0.00000000     0
+CCCACA               0    0    0    0    0    0    0    0 0.00000000     0
+CCCAGA               0    0    0    0    0    0    0    0 0.00000000     0
+CCCATA               0    0    0    0    0    0    0    0 0.03586794     0
+CCCCAA               0    0    0    0    0    0    0    0 0.00000000     0
+CCCCCA               0    0    0    0    0    0    0    0 0.01793397     0
+CCCCGA               0    0    0    0    0    0    0    0 0.03586794     0
+CCCCTA               0    0    0    0    0    0    0    0 0.00000000     0
+CCCGAA               0    0    0    0    0    0    0    0 0.00000000     0
+CCCGCA               0    0    0    0    0    0    0    0 0.00000000     0
+CCCGGA               0    0    0    0    0    0    0    0 0.05380192     0
+CCCGTA               0    0    0    0    0    0    0    0 0.03586794     0
+CCCTAA               0    0    0    0    0    0    0    0 0.00000000     0
+CCCTCA               0    0    0    0    0    0    0    0 0.00000000     0
+CCCTGA               0    0    0    0    0    0    0    0 0.00000000     0
+CCCTTA               0    0    0    0    0    0    0    0 0.01793397     0
+CGCAAA               0    0    0    0    0    0    0    0 0.00000000     0
+CGCACA               0    0    0    0    0    0    0    0 0.00000000     0
+CGCAGA               0    0    0    0    0    0    0    0 0.00000000     0
+CGCATA               0    0    0    0    0    0    0    0 0.00000000     0
+ [ reached getOption("max.print") -- omitted 1597 rows ]
+
+[[1]]$exposures.H
+    Biliary.AdenoCA..SP117655 Biliary.AdenoCA..SP117556 Biliary.AdenoCA..SP117627
+W.1                  1.881762                  1.061779                  1.191115
+    Biliary.AdenoCA..SP117775 Biliary.AdenoCA..SP117332 Biliary.AdenoCA..SP117712
+W.1                  1.881762                 0.8353834                  1.753772
+    Biliary.AdenoCA..SP117017 Biliary.AdenoCA..SP117031 Biliary.AdenoCA..SP117759
+W.1                  1.347919                  1.610855                  1.859053
+    Biliary.AdenoCA..SP117621
+W.1                   1.89864
+
+[[1]]$likelihood
+[1] 2690.082
+
+[[1]]$evidence
+[1] -76389.48
+
+[[1]]$relevance
+ [1] 0.002922268 0.002922268 0.002922268 0.002922268 0.002922268 0.002922268 0.002922268 0.002922268
+ [9] 0.024729181 0.002922268
+
+[[1]]$error
+[1] 1713.34
+
+[[1]]$normalized.sigs
+                           W.1
+AACAAA            0.0021629416
+AACACA            0.0000000000
+AACAGA            0.0007209805
+AACATA            0.0007209805
+AACCAA            0.0000000000
+AACCCA            0.0007209805
+AACCGA            0.0000000000
+AACCTA            0.0000000000
+AACGAA            0.0000000000
+AACGCA            0.0000000000
+AACGGA            0.0000000000
+AACGTA            0.0000000000
+AACTAA            0.0000000000
+AACTCA            0.0000000000
+AACTGA            0.0000000000
+AACTTA            0.0000000000
+ACCAAA            0.0014419611
+ACCACA            0.0000000000
+ACCAGA            0.0000000000
+ACCATA            0.0000000000
+ACCCAA            0.0007209805
+ACCCCA            0.0007209805
+ACCCGA            0.0000000000
+ACCCTA            0.0000000000
+ACCGAA            0.0000000000
+ACCGCA            0.0000000000
+ACCGGA            0.0000000000
+ACCGTA            0.0000000000
+ACCTAA            0.0007209805
+ACCTCA            0.0000000000
+ACCTGA            0.0007209805
+ACCTTA            0.0014419611
+AGCAAA            0.0000000000
+AGCACA            0.0000000000
+AGCAGA            0.0007209805
+AGCATA            0.0000000000
+AGCCAA            0.0000000000
+AGCCCA            0.0007209805
+AGCCGA            0.0000000000
+AGCCTA            0.0014419611
+AGCGAA            0.0000000000
+AGCGCA            0.0007209805
+AGCGGA            0.0000000000
+AGCGTA            0.0007209805
+AGCTAA            0.0000000000
+AGCTCA            0.0014419611
+AGCTGA            0.0014419611
+AGCTTA            0.0007209805
+ATCAAA            0.0007209805
+ATCACA            0.0000000000
+ATCAGA            0.0000000000
+ATCATA            0.0007209805
+ATCCAA            0.0014419611
+ATCCCA            0.0000000000
+ATCCGA            0.0000000000
+ATCCTA            0.0014419611
+ATCGAA            0.0000000000
+ATCGCA            0.0000000000
+ATCGGA            0.0000000000
+ATCGTA            0.0000000000
+ATCTAA            0.0007209805
+ATCTCA            0.0014419611
+ATCTGA            0.0014419611
+ATCTTA            0.0021629416
+CACAAA            0.0007209805
+CACACA            0.0000000000
+CACAGA            0.0021629416
+CACATA            0.0000000000
+CACCAA            0.0014419611
+CACCCA            0.0007209805
+CACCGA            0.0007209805
+CACCTA            0.0021629416
+CACGAA            0.0000000000
+CACGCA            0.0000000000
+CACGGA            0.0000000000
+CACGTA            0.0000000000
+CACTAA            0.0000000000
+CACTCA            0.0000000000
+CACTGA            0.0000000000
+CACTTA            0.0000000000
+CCCAAA            0.0000000000
+CCCACA            0.0000000000
+CCCAGA            0.0000000000
+CCCATA            0.0014419611
+CCCCAA            0.0000000000
+CCCCCA            0.0007209805
+CCCCGA            0.0014419611
+CCCCTA            0.0000000000
+CCCGAA            0.0000000000
+CCCGCA            0.0000000000
+CCCGGA            0.0021629416
+CCCGTA            0.0014419611
+CCCTAA            0.0000000000
+CCCTCA            0.0000000000
+CCCTGA            0.0000000000
+CCCTTA            0.0007209805
+CGCAAA            0.0000000000
+CGCACA            0.0000000000
+CGCAGA            0.0000000000
+CGCATA            0.0000000000
+CGCCAA            0.0000000000
+CGCCCA            0.0000000000
+CGCCGA            0.0000000000
+CGCCTA            0.0000000000
+CGCGAA            0.0000000000
+CGCGCA            0.0014419611
+CGCGGA            0.0000000000
+CGCGTA            0.0000000000
+CGCTAA            0.0000000000
+CGCTCA            0.0014419611
+CGCTGA            0.0000000000
+CGCTTA            0.0000000000
+CTCAAA            0.0007209805
+CTCACA            0.0014419611
+CTCAGA            0.0014419611
+CTCATA            0.0000000000
+CTCCAA            0.0000000000
+CTCCCA            0.0007209805
+CTCCGA            0.0000000000
+CTCCTA            0.0014419611
+CTCGAA            0.0000000000
+CTCGCA            0.0000000000
+CTCGGA            0.0000000000
+CTCGTA            0.0000000000
+CTCTAA            0.0000000000
+CTCTCA            0.0000000000
+CTCTGA            0.0007209805
+CTCTTA            0.0007209805
+GACAAA            0.0007209805
+GACACA            0.0007209805
+GACAGA            0.0007209805
+GACATA            0.0000000000
+GACCAA            0.0000000000
+GACCCA            0.0007209805
+GACCGA            0.0000000000
+GACCTA            0.0000000000
+GACGAA            0.0000000000
+GACGCA            0.0000000000
+GACGGA            0.0000000000
+GACGTA            0.0007209805
+GACTAA            0.0000000000
+GACTCA            0.0014419611
+GACTGA            0.0007209805
+GACTTA            0.0000000000
+GCCAAA            0.0000000000
+GCCACA            0.0014419611
+GCCAGA            0.0000000000
+GCCATA            0.0007209805
+GCCCAA            0.0000000000
+GCCCCA            0.0000000000
+GCCCGA            0.0007209805
+GCCCTA            0.0000000000
+GCCGAA            0.0007209805
+GCCGCA            0.0000000000
+GCCGGA            0.0000000000
+GCCGTA            0.0000000000
+GCCTAA            0.0000000000
+GCCTCA            0.0014419611
+GCCTGA            0.0000000000
+GCCTTA            0.0007209805
+GGCAAA            0.0000000000
+GGCACA            0.0007209805
+GGCAGA            0.0014419611
+GGCATA            0.0000000000
+GGCCAA            0.0007209805
+GGCCCA            0.0021629416
+GGCCGA            0.0021629416
+GGCCTA            0.0014419611
+GGCGAA            0.0000000000
+GGCGCA            0.0000000000
+GGCGGA            0.0007209805
+GGCGTA            0.0007209805
+GGCTAA            0.0000000000
+GGCTCA            0.0007209805
+GGCTGA            0.0000000000
+GGCTTA            0.0014419611
+GTCAAA            0.0007209805
+GTCACA            0.0000000000
+GTCAGA            0.0007209805
+GTCATA            0.0000000000
+GTCCAA            0.0000000000
+GTCCCA            0.0014419611
+GTCCGA            0.0007209805
+GTCCTA            0.0007209805
+GTCGAA            0.0000000000
+GTCGCA            0.0000000000
+GTCGGA            0.0000000000
+GTCGTA            0.0000000000
+GTCTAA            0.0007209805
+GTCTCA            0.0000000000
+GTCTGA            0.0007209805
+GTCTTA            0.0000000000
+TACAAA            0.0000000000
+TACACA            0.0000000000
+TACAGA            0.0007209805
+TACATA            0.0000000000
+TACCAA            0.0000000000
+TACCCA            0.0000000000
+TACCGA            0.0000000000
+TACCTA            0.0014419611
+TACGAA            0.0000000000
+TACGCA            0.0000000000
+TACGGA            0.0000000000
+TACGTA            0.0000000000
+TACTAA            0.0000000000
+TACTCA            0.0000000000
+TACTGA            0.0007209805
+TACTTA            0.0007209805
+TCCAAA            0.0000000000
+TCCACA            0.0000000000
+TCCAGA            0.0000000000
+TCCATA            0.0000000000
+TCCCAA            0.0000000000
+TCCCCA            0.0000000000
+TCCCGA            0.0000000000
+TCCCTA            0.0000000000
+TCCGAA            0.0007209805
+TCCGCA            0.0000000000
+TCCGGA            0.0007209805
+TCCGTA            0.0007209805
+TCCTAA            0.0000000000
+TCCTCA            0.0007209805
+TCCTGA            0.0000000000
+TCCTTA            0.0014419611
+TGCAAA            0.0000000000
+TGCACA            0.0007209805
+TGCAGA            0.0007209805
+TGCATA            0.0000000000
+TGCCAA            0.0021629416
+TGCCCA            0.0014419611
+TGCCGA            0.0000000000
+TGCCTA            0.0007209805
+TGCGAA            0.0000000000
+TGCGCA            0.0007209805
+TGCGGA            0.0021629416
+TGCGTA            0.0007209805
+TGCTAA            0.0007209805
+TGCTCA            0.0007209805
+TGCTGA            0.0000000000
+TGCTTA            0.0007209805
+TTCAAA            0.0007209805
+TTCACA            0.0000000000
+TTCAGA            0.0014419611
+TTCATA            0.0014419611
+TTCCAA            0.0014419611
+TTCCCA            0.0000000000
+TTCCGA            0.0007209805
+TTCCTA            0.0000000000
+TTCGAA            0.0007209805
+TTCGCA            0.0000000000
+TTCGGA            0.0000000000
+TTCGTA            0.0000000000
+TTCTAA            0.0000000000
+TTCTCA            0.0014419611
+TTCTGA            0.0000000000
+TTCTTA            0.0014419611
+AACAAG            0.0000000000
+AACACG            0.0000000000
+AACAGG            0.0000000000
+AACATG            0.0000000000
+AACCAG            0.0000000000
+AACCCG            0.0000000000
+AACCGG            0.0000000000
+AACCTG            0.0000000000
+AACGAG            0.0000000000
+AACGCG            0.0000000000
+AACGGG            0.0000000000
+AACGTG            0.0000000000
+AACTAG            0.0007209805
+AACTCG            0.0007209805
+AACTGG            0.0000000000
+AACTTG            0.0000000000
+ACCAAG            0.0007209805
+ACCACG            0.0000000000
+ACCAGG            0.0000000000
+ACCATG            0.0007209805
+ACCCAG            0.0000000000
+ACCCCG            0.0000000000
+ACCCGG            0.0000000000
+ACCCTG            0.0000000000
+ACCGAG            0.0000000000
+ACCGCG            0.0007209805
+ACCGGG            0.0000000000
+ACCGTG            0.0000000000
+ACCTAG            0.0007209805
+ACCTCG            0.0007209805
+ACCTGG            0.0007209805
+ACCTTG            0.0000000000
+AGCAAG            0.0000000000
+AGCACG            0.0000000000
+AGCAGG            0.0000000000
+AGCATG            0.0000000000
+AGCCAG            0.0000000000
+AGCCCG            0.0000000000
+AGCCGG            0.0000000000
+AGCCTG            0.0000000000
+AGCGAG            0.0000000000
+AGCGCG            0.0014419611
+AGCGGG            0.0000000000
+AGCGTG            0.0000000000
+AGCTAG            0.0007209805
+AGCTCG            0.0000000000
+AGCTGG            0.0000000000
+AGCTTG            0.0000000000
+ATCAAG            0.0028839221
+ATCACG            0.0007209805
+ATCAGG            0.0007209805
+ATCATG            0.0000000000
+ATCCAG            0.0007209805
+ATCCCG            0.0000000000
+ATCCGG            0.0000000000
+ATCCTG            0.0014419611
+ATCGAG            0.0000000000
+ATCGCG            0.0000000000
+ATCGGG            0.0000000000
+ATCGTG            0.0000000000
+ATCTAG            0.0000000000
+ATCTCG            0.0007209805
+ATCTGG            0.0007209805
+ATCTTG            0.0021629416
+CACAAG            0.0007209805
+CACACG            0.0000000000
+CACAGG            0.0007209805
+CACATG            0.0000000000
+CACCAG            0.0014419611
+CACCCG            0.0014419611
+CACCGG            0.0000000000
+CACCTG            0.0000000000
+CACGAG            0.0007209805
+CACGCG            0.0000000000
+CACGGG            0.0000000000
+CACGTG            0.0000000000
+CACTAG            0.0007209805
+CACTCG            0.0000000000
+CACTGG            0.0000000000
+CACTTG            0.0007209805
+CCCAAG            0.0000000000
+CCCACG            0.0007209805
+CCCAGG            0.0000000000
+CCCATG            0.0007209805
+CCCCAG            0.0000000000
+CCCCCG            0.0007209805
+CCCCGG            0.0000000000
+CCCCTG            0.0007209805
+CCCGAG            0.0007209805
+CCCGCG            0.0007209805
+CCCGGG            0.0000000000
+CCCGTG            0.0007209805
+CCCTAG            0.0000000000
+CCCTCG            0.0014419611
+CCCTGG            0.0000000000
+CCCTTG            0.0014419611
+CGCAAG            0.0000000000
+CGCACG            0.0000000000
+CGCAGG            0.0000000000
+CGCATG            0.0000000000
+CGCCAG            0.0000000000
+CGCCCG            0.0000000000
+CGCCGG            0.0000000000
+CGCCTG            0.0000000000
+CGCGAG            0.0000000000
+CGCGCG            0.0000000000
+CGCGGG            0.0000000000
+CGCGTG            0.0007209805
+CGCTAG            0.0000000000
+CGCTCG            0.0007209805
+CGCTGG            0.0000000000
+CGCTTG            0.0000000000
+CTCAAG            0.0007209805
+CTCACG            0.0021629416
+CTCAGG            0.0036049027
+CTCATG            0.0000000000
+CTCCAG            0.0000000000
+CTCCCG            0.0014419611
+CTCCGG            0.0007209805
+CTCCTG            0.0000000000
+CTCGAG            0.0007209805
+CTCGCG            0.0000000000
+CTCGGG            0.0000000000
+CTCGTG            0.0007209805
+CTCTAG            0.0000000000
+CTCTCG            0.0021629416
+CTCTGG            0.0036049027
+CTCTTG            0.0043258832
+GACAAG            0.0000000000
+GACACG            0.0000000000
+GACAGG            0.0007209805
+GACATG            0.0007209805
+GACCAG            0.0000000000
+GACCCG            0.0014419611
+GACCGG            0.0000000000
+GACCTG            0.0000000000
+GACGAG            0.0007209805
+GACGCG            0.0007209805
+GACGGG            0.0000000000
+GACGTG            0.0000000000
+GACTAG            0.0000000000
+GACTCG            0.0000000000
+GACTGG            0.0000000000
+GACTTG            0.0000000000
+GCCAAG            0.0007209805
+GCCACG            0.0000000000
+GCCAGG            0.0007209805
+GCCATG            0.0000000000
+GCCCAG            0.0007209805
+GCCCCG            0.0000000000
+GCCCGG            0.0000000000
+GCCCTG            0.0000000000
+GCCGAG            0.0000000000
+GCCGCG            0.0000000000
+GCCGGG            0.0000000000
+GCCGTG            0.0000000000
+GCCTAG            0.0000000000
+GCCTCG            0.0007209805
+GCCTGG            0.0000000000
+GCCTTG            0.0000000000
+GGCAAG            0.0000000000
+GGCACG            0.0000000000
+GGCAGG            0.0000000000
+GGCATG            0.0007209805
+GGCCAG            0.0000000000
+GGCCCG            0.0000000000
+GGCCGG            0.0000000000
+GGCCTG            0.0000000000
+GGCGAG            0.0007209805
+GGCGCG            0.0000000000
+GGCGGG            0.0000000000
+GGCGTG            0.0007209805
+GGCTAG            0.0007209805
+GGCTCG            0.0000000000
+GGCTGG            0.0000000000
+GGCTTG            0.0000000000
+GTCAAG            0.0036049027
+GTCACG            0.0000000000
+GTCAGG            0.0000000000
+GTCATG            0.0007209805
+GTCCAG            0.0000000000
+GTCCCG            0.0000000000
+GTCCGG            0.0000000000
+GTCCTG            0.0007209805
+GTCGAG            0.0007209805
+GTCGCG            0.0000000000
+GTCGGG            0.0000000000
+GTCGTG            0.0000000000
+GTCTAG            0.0007209805
+GTCTCG            0.0000000000
+GTCTGG            0.0014419611
+GTCTTG            0.0014419611
+TACAAG            0.0007209805
+TACACG            0.0000000000
+TACAGG            0.0000000000
+TACATG            0.0000000000
+TACCAG            0.0007209805
+TACCCG            0.0000000000
+TACCGG            0.0000000000
+TACCTG            0.0000000000
+TACGAG            0.0007209805
+TACGCG            0.0000000000
+TACGGG            0.0000000000
+TACGTG            0.0000000000
+TACTAG            0.0000000000
+TACTCG            0.0000000000
+TACTGG            0.0000000000
+TACTTG            0.0000000000
+TCCAAG            0.0000000000
+TCCACG            0.0000000000
+TCCAGG            0.0000000000
+TCCATG            0.0000000000
+TCCCAG            0.0000000000
+TCCCCG            0.0000000000
+TCCCGG            0.0007209805
+TCCCTG            0.0000000000
+TCCGAG            0.0000000000
+TCCGCG            0.0000000000
+TCCGGG            0.0000000000
+TCCGTG            0.0000000000
+TCCTAG            0.0000000000
+TCCTCG            0.0000000000
+TCCTGG            0.0000000000
+TCCTTG            0.0000000000
+TGCAAG            0.0007209805
+TGCACG            0.0000000000
+TGCAGG            0.0000000000
+TGCATG            0.0000000000
+TGCCAG            0.0007209805
+TGCCCG            0.0000000000
+TGCCGG            0.0000000000
+TGCCTG            0.0000000000
+TGCGAG            0.0000000000
+TGCGCG            0.0000000000
+TGCGGG            0.0000000000
+TGCGTG            0.0000000000
+TGCTAG            0.0000000000
+TGCTCG            0.0000000000
+TGCTGG            0.0007209805
+TGCTTG            0.0000000000
+TTCAAG            0.0021629416
+TTCACG            0.0007209805
+TTCAGG            0.0000000000
+TTCATG            0.0000000000
+TTCCAG            0.0007209805
+TTCCCG            0.0000000000
+TTCCGG            0.0007209805
+TTCCTG            0.0014419611
+TTCGAG            0.0000000000
+TTCGCG            0.0000000000
+TTCGGG            0.0000000000
+TTCGTG            0.0000000000
+TTCTAG            0.0021629416
+TTCTCG            0.0021629416
+TTCTGG            0.0007209805
+TTCTTG            0.0036049027
+AACAAT            0.0000000000
+AACACT            0.0007209805
+AACAGT            0.0021629416
+AACATT            0.0000000000
+AACCAT            0.0000000000
+AACCCT            0.0000000000
+AACCGT            0.0000000000
+AACCTT            0.0000000000
+AACGAT            0.0036049027
+AACGCT            0.0043258832
+AACGGT            0.0043258832
+AACGTT            0.0028839221
+AACTAT            0.0000000000
+AACTCT            0.0000000000
+AACTGT            0.0007209805
+AACTTT            0.0007209805
+ACCAAT            0.0000000000
+ACCACT            0.0000000000
+ACCAGT            0.0007209805
+ACCATT            0.0000000000
+ACCCAT            0.0014419611
+ACCCCT            0.0007209805
+ACCCGT            0.0000000000
+ACCCTT            0.0007209805
+ACCGAT            0.0014419611
+ACCGCT            0.0057678443
+ACCGGT            0.0028839221
+ACCGTT            0.0028839221
+ACCTAT            0.0000000000
+ACCTCT            0.0014419611
+ACCTGT            0.0021629416
+ACCTTT            0.0021629416
+AGCAAT            0.0021629416
+AGCACT            0.0000000000
+AGCAGT            0.0028839221
+AGCATT            0.0021629416
+AGCCAT            0.0007209805
+AGCCCT            0.0014419611
+AGCCGT            0.0000000000
+AGCCTT            0.0007209805
+AGCGAT            0.0021629416
+AGCGCT            0.0079307859
+AGCGGT            0.0093727469
+AGCGTT            0.0043258832
+AGCTAT            0.0007209805
+AGCTCT            0.0007209805
+AGCTGT            0.0028839221
+AGCTTT            0.0014419611
+ATCAAT            0.0028839221
+ATCACT            0.0057678443
+ATCAGT            0.0021629416
+ATCATT            0.0036049027
+ATCCAT            0.0007209805
+ATCCCT            0.0021629416
+ATCCGT            0.0000000000
+ATCCTT            0.0007209805
+ATCGAT            0.0021629416
+ATCGCT            0.0007209805
+ATCGGT            0.0043258832
+ATCGTT            0.0014419611
+ATCTAT            0.0021629416
+ATCTCT            0.0021629416
+ATCTGT            0.0021629416
+ATCTTT            0.0014419611
+CACAAT            0.0000000000
+CACACT            0.0000000000
+CACAGT            0.0021629416
+CACATT            0.0021629416
+CACCAT            0.0028839221
+CACCCT            0.0000000000
+CACCGT            0.0007209805
+CACCTT            0.0007209805
+CACGAT            0.0057678443
+CACGCT            0.0144196107
+CACGGT            0.0072098053
+CACGTT            0.0050468637
+CACTAT            0.0007209805
+CACTCT            0.0007209805
+CACTGT            0.0014419611
+CACTTT            0.0000000000
+CCCAAT            0.0007209805
+CCCACT            0.0007209805
+CCCAGT            0.0021629416
+CCCATT            0.0000000000
+CCCCAT            0.0014419611
+CCCCCT            0.0007209805
+CCCCGT            0.0014419611
+CCCCTT            0.0036049027
+CCCGAT            0.0036049027
+CCCGCT            0.0057678443
+CCCGGT            0.0072098053
+CCCGTT            0.0021629416
+CCCTAT            0.0007209805
+CCCTCT            0.0036049027
+CCCTGT            0.0014419611
+CCCTTT            0.0021629416
+CGCAAT            0.0000000000
+CGCACT            0.0000000000
+CGCAGT            0.0014419611
+CGCATT            0.0007209805
+CGCCAT            0.0014419611
+CGCCCT            0.0007209805
+CGCCGT            0.0028839221
+CGCCTT            0.0007209805
+CGCGAT            0.0014419611
+CGCGCT            0.0057678443
+CGCGGT            0.0036049027
+CGCGTT            0.0021629416
+CGCTAT            0.0000000000
+CGCTCT            0.0000000000
+CGCTGT            0.0000000000
+CGCTTT            0.0007209805
+CTCAAT            0.0014419611
+CTCACT            0.0021629416
+CTCAGT            0.0014419611
+CTCATT            0.0028839221
+CTCCAT            0.0028839221
+CTCCCT            0.0028839221
+CTCCGT            0.0021629416
+CTCCTT            0.0036049027
+CTCGAT            0.0028839221
+CTCGCT            0.0057678443
+CTCGGT            0.0043258832
+CTCGTT            0.0021629416
+CTCTAT            0.0007209805
+CTCTCT            0.0021629416
+CTCTGT            0.0021629416
+CTCTTT            0.0036049027
+GACAAT            0.0000000000
+GACACT            0.0007209805
+GACAGT            0.0000000000
+GACATT            0.0007209805
+GACCAT            0.0007209805
+GACCCT            0.0028839221
+GACCGT            0.0000000000
+GACCTT            0.0000000000
+GACGAT            0.0036049027
+GACGCT            0.0100937275
+GACGGT            0.0108147080
+GACGTT            0.0028839221
+GACTAT            0.0000000000
+GACTCT            0.0000000000
+GACTGT            0.0000000000
+GACTTT            0.0021629416
+GCCAAT            0.0007209805
+GCCACT            0.0014419611
+GCCAGT            0.0007209805
+GCCATT            0.0014419611
+GCCCAT            0.0014419611
+GCCCCT            0.0014419611
+GCCCGT            0.0000000000
+GCCCTT            0.0007209805
+GCCGAT            0.0043258832
+GCCGCT            0.0129776496
+GCCGGT            0.0072098053
+GCCGTT            0.0064888248
+GCCTAT            0.0000000000
+GCCTCT            0.0000000000
+GCCTGT            0.0021629416
+GCCTTT            0.0000000000
+GGCAAT            0.0007209805
+GGCACT            0.0007209805
+GGCAGT            0.0007209805
+GGCATT            0.0007209805
+GGCCAT            0.0021629416
+GGCCCT            0.0014419611
+GGCCGT            0.0014419611
+GGCCTT            0.0007209805
+GGCGAT            0.0057678443
+GGCGCT            0.0122566691
+GGCGGT            0.0136986301
+GGCGTT            0.0028839221
+GGCTAT            0.0000000000
+GGCTCT            0.0000000000
+GGCTGT            0.0000000000
+GGCTTT            0.0000000000
+GTCAAT            0.0014419611
+GTCACT            0.0000000000
+GTCAGT            0.0007209805
+GTCATT            0.0000000000
+GTCCAT            0.0036049027
+GTCCCT            0.0028839221
+GTCCGT            0.0000000000
+GTCCTT            0.0007209805
+GTCGAT            0.0007209805
+GTCGCT            0.0050468637
+GTCGGT            0.0036049027
+GTCGTT            0.0036049027
+GTCTAT            0.0007209805
+GTCTCT            0.0007209805
+GTCTGT            0.0036049027
+GTCTTT            0.0000000000
+TACAAT            0.0000000000
+TACACT            0.0007209805
+TACAGT            0.0014419611
+TACATT            0.0000000000
+TACCAT            0.0000000000
+TACCCT            0.0007209805
+TACCGT            0.0000000000
+TACCTT            0.0021629416
+TACGAT            0.0014419611
+TACGCT            0.0021629416
+TACGGT            0.0043258832
+TACGTT            0.0021629416
+TACTAT            0.0007209805
+TACTCT            0.0000000000
+TACTGT            0.0007209805
+TACTTT            0.0021629416
+TCCAAT            0.0007209805
+TCCACT            0.0021629416
+TCCAGT            0.0028839221
+TCCATT            0.0007209805
+TCCCAT            0.0014419611
+TCCCCT            0.0021629416
+TCCCGT            0.0007209805
+TCCCTT            0.0021629416
+TCCGAT            0.0050468637
+TCCGCT            0.0057678443
+TCCGGT            0.0079307859
+TCCGTT            0.0036049027
+TCCTAT            0.0014419611
+TCCTCT            0.0007209805
+TCCTGT            0.0000000000
+TCCTTT            0.0007209805
+TGCAAT            0.0014419611
+TGCACT            0.0000000000
+TGCAGT            0.0014419611
+TGCATT            0.0007209805
+TGCCAT            0.0014419611
+TGCCCT            0.0014419611
+TGCCGT            0.0014419611
+TGCCTT            0.0050468637
+TGCGAT            0.0028839221
+TGCGCT            0.0057678443
+TGCGGT            0.0079307859
+TGCGTT            0.0057678443
+TGCTAT            0.0007209805
+TGCTCT            0.0000000000
+TGCTGT            0.0014419611
+TGCTTT            0.0014419611
+TTCAAT            0.0021629416
+TTCACT            0.0036049027
+TTCAGT            0.0021629416
+TTCATT            0.0036049027
+TTCCAT            0.0007209805
+TTCCCT            0.0014419611
+TTCCGT            0.0021629416
+TTCCTT            0.0036049027
+TTCGAT            0.0014419611
+TTCGCT            0.0028839221
+TTCGGT            0.0050468637
+TTCGTT            0.0014419611
+TTCTAT            0.0007209805
+TTCTCT            0.0043258832
+TTCTGT            0.0036049027
+TTCTTT            0.0057678443
+AATAAA            0.0000000000
+AATACA            0.0000000000
+AATAGA            0.0000000000
+AATATA            0.0000000000
+AATCAA            0.0007209805
+AATCCA            0.0007209805
+AATCGA            0.0000000000
+AATCTA            0.0000000000
+AATGAA            0.0000000000
+AATGCA            0.0000000000
+AATGGA            0.0000000000
+AATGTA            0.0000000000
+AATTAA            0.0007209805
+AATTCA            0.0007209805
+AATTGA            0.0000000000
+AATTTA            0.0028839221
+ACTAAA            0.0000000000
+ACTACA            0.0000000000
+ACTAGA            0.0000000000
+ACTATA            0.0000000000
+ACTCAA            0.0000000000
+ACTCCA            0.0000000000
+ACTCGA            0.0000000000
+ACTCTA            0.0000000000
+ACTGAA            0.0000000000
+ACTGCA            0.0000000000
+ACTGGA            0.0000000000
+ACTGTA            0.0014419611
+ACTTAA            0.0000000000
+ACTTCA            0.0007209805
+ACTTGA            0.0000000000
+ACTTTA            0.0007209805
+AGTAAA            0.0000000000
+AGTACA            0.0000000000
+AGTAGA            0.0000000000
+AGTATA            0.0000000000
+AGTCAA            0.0000000000
+AGTCCA            0.0000000000
+AGTCGA            0.0000000000
+AGTCTA            0.0000000000
+AGTGAA            0.0000000000
+AGTGCA            0.0000000000
+AGTGGA            0.0000000000
+AGTGTA            0.0000000000
+AGTTAA            0.0007209805
+AGTTCA            0.0000000000
+AGTTGA            0.0000000000
+AGTTTA            0.0000000000
+ATTAAA            0.0000000000
+ATTACA            0.0000000000
+ATTAGA            0.0000000000
+ATTATA            0.0000000000
+ATTCAA            0.0000000000
+ATTCCA            0.0000000000
+ATTCGA            0.0000000000
+ATTCTA            0.0000000000
+ATTGAA            0.0000000000
+ATTGCA            0.0000000000
+ATTGGA            0.0000000000
+ATTGTA            0.0000000000
+ATTTAA            0.0007209805
+ATTTCA            0.0000000000
+ATTTGA            0.0000000000
+ATTTTA            0.0000000000
+CATAAA            0.0000000000
+CATACA            0.0000000000
+CATAGA            0.0007209805
+CATATA            0.0007209805
+CATCAA            0.0000000000
+CATCCA            0.0014419611
+CATCGA            0.0000000000
+CATCTA            0.0014419611
+CATGAA            0.0000000000
+CATGCA            0.0007209805
+CATGGA            0.0000000000
+CATGTA            0.0000000000
+CATTAA            0.0000000000
+CATTCA            0.0000000000
+CATTGA            0.0014419611
+CATTTA            0.0000000000
+CCTAAA            0.0000000000
+CCTACA            0.0000000000
+CCTAGA            0.0000000000
+CCTATA            0.0000000000
+CCTCAA            0.0007209805
+CCTCCA            0.0007209805
+CCTCGA            0.0007209805
+CCTCTA            0.0000000000
+CCTGAA            0.0000000000
+CCTGCA            0.0000000000
+CCTGGA            0.0000000000
+CCTGTA            0.0000000000
+CCTTAA            0.0007209805
+CCTTCA            0.0007209805
+CCTTGA            0.0007209805
+CCTTTA            0.0000000000
+CGTAAA            0.0000000000
+CGTACA            0.0000000000
+CGTAGA            0.0000000000
+CGTATA            0.0000000000
+CGTCAA            0.0000000000
+CGTCCA            0.0000000000
+CGTCGA            0.0007209805
+CGTCTA            0.0000000000
+CGTGAA            0.0000000000
+CGTGCA            0.0007209805
+CGTGGA            0.0000000000
+CGTGTA            0.0000000000
+CGTTAA            0.0007209805
+CGTTCA            0.0000000000
+CGTTGA            0.0007209805
+CGTTTA            0.0000000000
+CTTAAA            0.0007209805
+CTTACA            0.0000000000
+CTTAGA            0.0000000000
+CTTATA            0.0000000000
+CTTCAA            0.0000000000
+CTTCCA            0.0000000000
+CTTCGA            0.0000000000
+CTTCTA            0.0007209805
+CTTGAA            0.0000000000
+CTTGCA            0.0000000000
+CTTGGA            0.0000000000
+CTTGTA            0.0000000000
+CTTTAA            0.0000000000
+CTTTCA            0.0000000000
+CTTTGA            0.0007209805
+CTTTTA            0.0000000000
+GATAAA            0.0007209805
+GATACA            0.0000000000
+GATAGA            0.0000000000
+GATATA            0.0000000000
+GATCAA            0.0014419611
+GATCCA            0.0000000000
+GATCGA            0.0000000000
+GATCTA            0.0007209805
+GATGAA            0.0007209805
+GATGCA            0.0000000000
+GATGGA            0.0014419611
+GATGTA            0.0007209805
+GATTAA            0.0000000000
+GATTCA            0.0000000000
+GATTGA            0.0000000000
+GATTTA            0.0007209805
+GCTAAA            0.0000000000
+GCTACA            0.0000000000
+GCTAGA            0.0000000000
+GCTATA            0.0000000000
+GCTCAA            0.0000000000
+GCTCCA            0.0007209805
+GCTCGA            0.0000000000
+GCTCTA            0.0000000000
+GCTGAA            0.0000000000
+GCTGCA            0.0007209805
+GCTGGA            0.0000000000
+GCTGTA            0.0007209805
+GCTTAA            0.0000000000
+GCTTCA            0.0000000000
+GCTTGA            0.0007209805
+GCTTTA            0.0007209805
+GGTAAA            0.0000000000
+GGTACA            0.0000000000
+GGTAGA            0.0000000000
+GGTATA            0.0007209805
+GGTCAA            0.0000000000
+GGTCCA            0.0000000000
+GGTCGA            0.0000000000
+GGTCTA            0.0000000000
+GGTGAA            0.0007209805
+GGTGCA            0.0000000000
+GGTGGA            0.0000000000
+GGTGTA            0.0000000000
+GGTTAA            0.0000000000
+GGTTCA            0.0000000000
+GGTTGA            0.0000000000
+GGTTTA            0.0000000000
+GTTAAA            0.0000000000
+GTTACA            0.0000000000
+GTTAGA            0.0000000000
+GTTATA            0.0000000000
+GTTCAA            0.0000000000
+GTTCCA            0.0000000000
+GTTCGA            0.0000000000
+GTTCTA            0.0000000000
+GTTGAA            0.0007209805
+GTTGCA            0.0000000000
+GTTGGA            0.0000000000
+GTTGTA            0.0000000000
+GTTTAA            0.0000000000
+GTTTCA            0.0000000000
+GTTTGA            0.0000000000
+GTTTTA            0.0000000000
+TATAAA            0.0007209805
+TATACA            0.0000000000
+TATAGA            0.0000000000
+TATATA            0.0000000000
+TATCAA            0.0014419611
+TATCCA            0.0000000000
+TATCGA            0.0000000000
+TATCTA            0.0007209805
+TATGAA            0.0000000000
+TATGCA            0.0000000000
+TATGGA            0.0000000000
+TATGTA            0.0000000000
+TATTAA            0.0000000000
+TATTCA            0.0000000000
+TATTGA            0.0000000000
+TATTTA            0.0007209805
+TCTAAA            0.0007209805
+TCTACA            0.0000000000
+TCTAGA            0.0000000000
+TCTATA            0.0000000000
+TCTCAA            0.0000000000
+TCTCCA            0.0007209805
+TCTCGA            0.0007209805
+TCTCTA            0.0007209805
+TCTGAA            0.0000000000
+TCTGCA            0.0000000000
+TCTGGA            0.0000000000
+TCTGTA            0.0000000000
+TCTTAA            0.0000000000
+TCTTCA            0.0007209805
+TCTTGA            0.0000000000
+TCTTTA            0.0000000000
+TGTAAA            0.0000000000
+TGTACA            0.0007209805
+TGTAGA            0.0000000000
+TGTATA            0.0000000000
+TGTCAA            0.0007209805
+TGTCCA            0.0000000000
+TGTCGA            0.0000000000
+TGTCTA            0.0000000000
+ [ reached getOption("max.print") -- omitted 697 rows ]
+
+attr(,"message")
+[1] "Success for sa.COMPOSITE.exome.subset/PRIMARY//sa.run.1"
+
+[[2]]
+[[2]]$signatures.W
+                  [,1]       [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]
+AACAAA               0 0.05380192    0    0    0    0    0    0    0     0
+AACACA               0 0.00000000    0    0    0    0    0    0    0     0
+AACAGA               0 0.01793397    0    0    0    0    0    0    0     0
+AACATA               0 0.01793397    0    0    0    0    0    0    0     0
+AACCAA               0 0.00000000    0    0    0    0    0    0    0     0
+AACCCA               0 0.01793397    0    0    0    0    0    0    0     0
+AACCGA               0 0.00000000    0    0    0    0    0    0    0     0
+AACCTA               0 0.00000000    0    0    0    0    0    0    0     0
+AACGAA               0 0.00000000    0    0    0    0    0    0    0     0
+AACGCA               0 0.00000000    0    0    0    0    0    0    0     0
+AACGGA               0 0.00000000    0    0    0    0    0    0    0     0
+AACGTA               0 0.00000000    0    0    0    0    0    0    0     0
+AACTAA               0 0.00000000    0    0    0    0    0    0    0     0
+AACTCA               0 0.00000000    0    0    0    0    0    0    0     0
+AACTGA               0 0.00000000    0    0    0    0    0    0    0     0
+AACTTA               0 0.00000000    0    0    0    0    0    0    0     0
+ACCAAA               0 0.03586794    0    0    0    0    0    0    0     0
+ACCACA               0 0.00000000    0    0    0    0    0    0    0     0
+ACCAGA               0 0.00000000    0    0    0    0    0    0    0     0
+ACCATA               0 0.00000000    0    0    0    0    0    0    0     0
+ACCCAA               0 0.01793397    0    0    0    0    0    0    0     0
+ACCCCA               0 0.01793397    0    0    0    0    0    0    0     0
+ACCCGA               0 0.00000000    0    0    0    0    0    0    0     0
+ACCCTA               0 0.00000000    0    0    0    0    0    0    0     0
+ACCGAA               0 0.00000000    0    0    0    0    0    0    0     0
+ACCGCA               0 0.00000000    0    0    0    0    0    0    0     0
+ACCGGA               0 0.00000000    0    0    0    0    0    0    0     0
+ACCGTA               0 0.00000000    0    0    0    0    0    0    0     0
+ACCTAA               0 0.01793397    0    0    0    0    0    0    0     0
+ACCTCA               0 0.00000000    0    0    0    0    0    0    0     0
+ACCTGA               0 0.01793397    0    0    0    0    0    0    0     0
+ACCTTA               0 0.03586794    0    0    0    0    0    0    0     0
+AGCAAA               0 0.00000000    0    0    0    0    0    0    0     0
+AGCACA               0 0.00000000    0    0    0    0    0    0    0     0
+AGCAGA               0 0.01793397    0    0    0    0    0    0    0     0
+AGCATA               0 0.00000000    0    0    0    0    0    0    0     0
+AGCCAA               0 0.00000000    0    0    0    0    0    0    0     0
+AGCCCA               0 0.01793397    0    0    0    0    0    0    0     0
+AGCCGA               0 0.00000000    0    0    0    0    0    0    0     0
+AGCCTA               0 0.03586794    0    0    0    0    0    0    0     0
+AGCGAA               0 0.00000000    0    0    0    0    0    0    0     0
+AGCGCA               0 0.01793397    0    0    0    0    0    0    0     0
+AGCGGA               0 0.00000000    0    0    0    0    0    0    0     0
+AGCGTA               0 0.01793397    0    0    0    0    0    0    0     0
+AGCTAA               0 0.00000000    0    0    0    0    0    0    0     0
+AGCTCA               0 0.03586794    0    0    0    0    0    0    0     0
+AGCTGA               0 0.03586794    0    0    0    0    0    0    0     0
+AGCTTA               0 0.01793397    0    0    0    0    0    0    0     0
+ATCAAA               0 0.01793397    0    0    0    0    0    0    0     0
+ATCACA               0 0.00000000    0    0    0    0    0    0    0     0
+ATCAGA               0 0.00000000    0    0    0    0    0    0    0     0
+ATCATA               0 0.01793397    0    0    0    0    0    0    0     0
+ATCCAA               0 0.03586794    0    0    0    0    0    0    0     0
+ATCCCA               0 0.00000000    0    0    0    0    0    0    0     0
+ATCCGA               0 0.00000000    0    0    0    0    0    0    0     0
+ATCCTA               0 0.03586794    0    0    0    0    0    0    0     0
+ATCGAA               0 0.00000000    0    0    0    0    0    0    0     0
+ATCGCA               0 0.00000000    0    0    0    0    0    0    0     0
+ATCGGA               0 0.00000000    0    0    0    0    0    0    0     0
+ATCGTA               0 0.00000000    0    0    0    0    0    0    0     0
+ATCTAA               0 0.01793397    0    0    0    0    0    0    0     0
+ATCTCA               0 0.03586794    0    0    0    0    0    0    0     0
+ATCTGA               0 0.03586794    0    0    0    0    0    0    0     0
+ATCTTA               0 0.05380192    0    0    0    0    0    0    0     0
+CACAAA               0 0.01793397    0    0    0    0    0    0    0     0
+CACACA               0 0.00000000    0    0    0    0    0    0    0     0
+CACAGA               0 0.05380192    0    0    0    0    0    0    0     0
+CACATA               0 0.00000000    0    0    0    0    0    0    0     0
+CACCAA               0 0.03586794    0    0    0    0    0    0    0     0
+CACCCA               0 0.01793397    0    0    0    0    0    0    0     0
+CACCGA               0 0.01793397    0    0    0    0    0    0    0     0
+CACCTA               0 0.05380192    0    0    0    0    0    0    0     0
+CACGAA               0 0.00000000    0    0    0    0    0    0    0     0
+CACGCA               0 0.00000000    0    0    0    0    0    0    0     0
+CACGGA               0 0.00000000    0    0    0    0    0    0    0     0
+CACGTA               0 0.00000000    0    0    0    0    0    0    0     0
+CACTAA               0 0.00000000    0    0    0    0    0    0    0     0
+CACTCA               0 0.00000000    0    0    0    0    0    0    0     0
+CACTGA               0 0.00000000    0    0    0    0    0    0    0     0
+CACTTA               0 0.00000000    0    0    0    0    0    0    0     0
+CCCAAA               0 0.00000000    0    0    0    0    0    0    0     0
+CCCACA               0 0.00000000    0    0    0    0    0    0    0     0
+CCCAGA               0 0.00000000    0    0    0    0    0    0    0     0
+CCCATA               0 0.03586794    0    0    0    0    0    0    0     0
+CCCCAA               0 0.00000000    0    0    0    0    0    0    0     0
+CCCCCA               0 0.01793397    0    0    0    0    0    0    0     0
+CCCCGA               0 0.03586794    0    0    0    0    0    0    0     0
+CCCCTA               0 0.00000000    0    0    0    0    0    0    0     0
+CCCGAA               0 0.00000000    0    0    0    0    0    0    0     0
+CCCGCA               0 0.00000000    0    0    0    0    0    0    0     0
+CCCGGA               0 0.05380192    0    0    0    0    0    0    0     0
+CCCGTA               0 0.03586794    0    0    0    0    0    0    0     0
+CCCTAA               0 0.00000000    0    0    0    0    0    0    0     0
+CCCTCA               0 0.00000000    0    0    0    0    0    0    0     0
+CCCTGA               0 0.00000000    0    0    0    0    0    0    0     0
+CCCTTA               0 0.01793397    0    0    0    0    0    0    0     0
+CGCAAA               0 0.00000000    0    0    0    0    0    0    0     0
+CGCACA               0 0.00000000    0    0    0    0    0    0    0     0
+CGCAGA               0 0.00000000    0    0    0    0    0    0    0     0
+CGCATA               0 0.00000000    0    0    0    0    0    0    0     0
+ [ reached getOption("max.print") -- omitted 1597 rows ]
+
+[[2]]$exposures.H
+    Biliary.AdenoCA..SP117655 Biliary.AdenoCA..SP117556 Biliary.AdenoCA..SP117627
+W.1                  1.881762                  1.061779                  1.191115
+    Biliary.AdenoCA..SP117775 Biliary.AdenoCA..SP117332 Biliary.AdenoCA..SP117712
+W.1                  1.881762                 0.8353834                  1.753772
+    Biliary.AdenoCA..SP117017 Biliary.AdenoCA..SP117031 Biliary.AdenoCA..SP117759
+W.1                  1.347919                  1.610855                  1.859053
+    Biliary.AdenoCA..SP117621
+W.1                   1.89864
+
+[[2]]$likelihood
+[1] 2690.082
+
+[[2]]$evidence
+[1] -76389.48
+
+[[2]]$relevance
+ [1] 0.002922268 0.024729181 0.002922268 0.002922268 0.002922268 0.002922268 0.002922268 0.002922268
+ [9] 0.002922268 0.002922268
+
+[[2]]$error
+[1] 1713.34
+
+[[2]]$normalized.sigs
+                           W.1
+AACAAA            0.0021629416
+AACACA            0.0000000000
+AACAGA            0.0007209805
+AACATA            0.0007209805
+AACCAA            0.0000000000
+AACCCA            0.0007209805
+AACCGA            0.0000000000
+AACCTA            0.0000000000
+AACGAA            0.0000000000
+AACGCA            0.0000000000
+AACGGA            0.0000000000
+AACGTA            0.0000000000
+AACTAA            0.0000000000
+AACTCA            0.0000000000
+AACTGA            0.0000000000
+AACTTA            0.0000000000
+ACCAAA            0.0014419611
+ACCACA            0.0000000000
+ACCAGA            0.0000000000
+ACCATA            0.0000000000
+ACCCAA            0.0007209805
+ACCCCA            0.0007209805
+ACCCGA            0.0000000000
+ACCCTA            0.0000000000
+ACCGAA            0.0000000000
+ACCGCA            0.0000000000
+ACCGGA            0.0000000000
+ACCGTA            0.0000000000
+ACCTAA            0.0007209805
+ACCTCA            0.0000000000
+ACCTGA            0.0007209805
+ACCTTA            0.0014419611
+AGCAAA            0.0000000000
+AGCACA            0.0000000000
+AGCAGA            0.0007209805
+AGCATA            0.0000000000
+AGCCAA            0.0000000000
+AGCCCA            0.0007209805
+AGCCGA            0.0000000000
+AGCCTA            0.0014419611
+AGCGAA            0.0000000000
+AGCGCA            0.0007209805
+AGCGGA            0.0000000000
+AGCGTA            0.0007209805
+AGCTAA            0.0000000000
+AGCTCA            0.0014419611
+AGCTGA            0.0014419611
+AGCTTA            0.0007209805
+ATCAAA            0.0007209805
+ATCACA            0.0000000000
+ATCAGA            0.0000000000
+ATCATA            0.0007209805
+ATCCAA            0.0014419611
+ATCCCA            0.0000000000
+ATCCGA            0.0000000000
+ATCCTA            0.0014419611
+ATCGAA            0.0000000000
+ATCGCA            0.0000000000
+ATCGGA            0.0000000000
+ATCGTA            0.0000000000
+ATCTAA            0.0007209805
+ATCTCA            0.0014419611
+ATCTGA            0.0014419611
+ATCTTA            0.0021629416
+CACAAA            0.0007209805
+CACACA            0.0000000000
+CACAGA            0.0021629416
+CACATA            0.0000000000
+CACCAA            0.0014419611
+CACCCA            0.0007209805
+CACCGA            0.0007209805
+CACCTA            0.0021629416
+CACGAA            0.0000000000
+CACGCA            0.0000000000
+CACGGA            0.0000000000
+CACGTA            0.0000000000
+CACTAA            0.0000000000
+CACTCA            0.0000000000
+CACTGA            0.0000000000
+CACTTA            0.0000000000
+CCCAAA            0.0000000000
+CCCACA            0.0000000000
+CCCAGA            0.0000000000
+CCCATA            0.0014419611
+CCCCAA            0.0000000000
+CCCCCA            0.0007209805
+CCCCGA            0.0014419611
+CCCCTA            0.0000000000
+CCCGAA            0.0000000000
+CCCGCA            0.0000000000
+CCCGGA            0.0021629416
+CCCGTA            0.0014419611
+CCCTAA            0.0000000000
+CCCTCA            0.0000000000
+CCCTGA            0.0000000000
+CCCTTA            0.0007209805
+CGCAAA            0.0000000000
+CGCACA            0.0000000000
+CGCAGA            0.0000000000
+CGCATA            0.0000000000
+CGCCAA            0.0000000000
+CGCCCA            0.0000000000
+CGCCGA            0.0000000000
+CGCCTA            0.0000000000
+CGCGAA            0.0000000000
+CGCGCA            0.0014419611
+CGCGGA            0.0000000000
+CGCGTA            0.0000000000
+CGCTAA            0.0000000000
+CGCTCA            0.0014419611
+CGCTGA            0.0000000000
+CGCTTA            0.0000000000
+CTCAAA            0.0007209805
+CTCACA            0.0014419611
+CTCAGA            0.0014419611
+CTCATA            0.0000000000
+CTCCAA            0.0000000000
+CTCCCA            0.0007209805
+CTCCGA            0.0000000000
+CTCCTA            0.0014419611
+CTCGAA            0.0000000000
+CTCGCA            0.0000000000
+CTCGGA            0.0000000000
+CTCGTA            0.0000000000
+CTCTAA            0.0000000000
+CTCTCA            0.0000000000
+CTCTGA            0.0007209805
+CTCTTA            0.0007209805
+GACAAA            0.0007209805
+GACACA            0.0007209805
+GACAGA            0.0007209805
+GACATA            0.0000000000
+GACCAA            0.0000000000
+GACCCA            0.0007209805
+GACCGA            0.0000000000
+GACCTA            0.0000000000
+GACGAA            0.0000000000
+GACGCA            0.0000000000
+GACGGA            0.0000000000
+GACGTA            0.0007209805
+GACTAA            0.0000000000
+GACTCA            0.0014419611
+GACTGA            0.0007209805
+GACTTA            0.0000000000
+GCCAAA            0.0000000000
+GCCACA            0.0014419611
+GCCAGA            0.0000000000
+GCCATA            0.0007209805
+GCCCAA            0.0000000000
+GCCCCA            0.0000000000
+GCCCGA            0.0007209805
+GCCCTA            0.0000000000
+GCCGAA            0.0007209805
+GCCGCA            0.0000000000
+GCCGGA            0.0000000000
+GCCGTA            0.0000000000
+GCCTAA            0.0000000000
+GCCTCA            0.0014419611
+GCCTGA            0.0000000000
+GCCTTA            0.0007209805
+GGCAAA            0.0000000000
+GGCACA            0.0007209805
+GGCAGA            0.0014419611
+GGCATA            0.0000000000
+GGCCAA            0.0007209805
+GGCCCA            0.0021629416
+GGCCGA            0.0021629416
+GGCCTA            0.0014419611
+GGCGAA            0.0000000000
+GGCGCA            0.0000000000
+GGCGGA            0.0007209805
+GGCGTA            0.0007209805
+GGCTAA            0.0000000000
+GGCTCA            0.0007209805
+GGCTGA            0.0000000000
+GGCTTA            0.0014419611
+GTCAAA            0.0007209805
+GTCACA            0.0000000000
+GTCAGA            0.0007209805
+GTCATA            0.0000000000
+GTCCAA            0.0000000000
+GTCCCA            0.0014419611
+GTCCGA            0.0007209805
+GTCCTA            0.0007209805
+GTCGAA            0.0000000000
+GTCGCA            0.0000000000
+GTCGGA            0.0000000000
+GTCGTA            0.0000000000
+GTCTAA            0.0007209805
+GTCTCA            0.0000000000
+GTCTGA            0.0007209805
+GTCTTA            0.0000000000
+TACAAA            0.0000000000
+TACACA            0.0000000000
+TACAGA            0.0007209805
+TACATA            0.0000000000
+TACCAA            0.0000000000
+TACCCA            0.0000000000
+TACCGA            0.0000000000
+TACCTA            0.0014419611
+TACGAA            0.0000000000
+TACGCA            0.0000000000
+TACGGA            0.0000000000
+TACGTA            0.0000000000
+TACTAA            0.0000000000
+TACTCA            0.0000000000
+TACTGA            0.0007209805
+TACTTA            0.0007209805
+TCCAAA            0.0000000000
+TCCACA            0.0000000000
+TCCAGA            0.0000000000
+TCCATA            0.0000000000
+TCCCAA            0.0000000000
+TCCCCA            0.0000000000
+TCCCGA            0.0000000000
+TCCCTA            0.0000000000
+TCCGAA            0.0007209805
+TCCGCA            0.0000000000
+TCCGGA            0.0007209805
+TCCGTA            0.0007209805
+TCCTAA            0.0000000000
+TCCTCA            0.0007209805
+TCCTGA            0.0000000000
+TCCTTA            0.0014419611
+TGCAAA            0.0000000000
+TGCACA            0.0007209805
+TGCAGA            0.0007209805
+TGCATA            0.0000000000
+TGCCAA            0.0021629416
+TGCCCA            0.0014419611
+TGCCGA            0.0000000000
+TGCCTA            0.0007209805
+TGCGAA            0.0000000000
+TGCGCA            0.0007209805
+TGCGGA            0.0021629416
+TGCGTA            0.0007209805
+TGCTAA            0.0007209805
+TGCTCA            0.0007209805
+TGCTGA            0.0000000000
+TGCTTA            0.0007209805
+TTCAAA            0.0007209805
+TTCACA            0.0000000000
+TTCAGA            0.0014419611
+TTCATA            0.0014419611
+TTCCAA            0.0014419611
+TTCCCA            0.0000000000
+TTCCGA            0.0007209805
+TTCCTA            0.0000000000
+TTCGAA            0.0007209805
+TTCGCA            0.0000000000
+TTCGGA            0.0000000000
+TTCGTA            0.0000000000
+TTCTAA            0.0000000000
+TTCTCA            0.0014419611
+TTCTGA            0.0000000000
+TTCTTA            0.0014419611
+AACAAG            0.0000000000
+AACACG            0.0000000000
+AACAGG            0.0000000000
+AACATG            0.0000000000
+AACCAG            0.0000000000
+AACCCG            0.0000000000
+AACCGG            0.0000000000
+AACCTG            0.0000000000
+AACGAG            0.0000000000
+AACGCG            0.0000000000
+AACGGG            0.0000000000
+AACGTG            0.0000000000
+AACTAG            0.0007209805
+AACTCG            0.0007209805
+AACTGG            0.0000000000
+AACTTG            0.0000000000
+ACCAAG            0.0007209805
+ACCACG            0.0000000000
+ACCAGG            0.0000000000
+ACCATG            0.0007209805
+ACCCAG            0.0000000000
+ACCCCG            0.0000000000
+ACCCGG            0.0000000000
+ACCCTG            0.0000000000
+ACCGAG            0.0000000000
+ACCGCG            0.0007209805
+ACCGGG            0.0000000000
+ACCGTG            0.0000000000
+ACCTAG            0.0007209805
+ACCTCG            0.0007209805
+ACCTGG            0.0007209805
+ACCTTG            0.0000000000
+AGCAAG            0.0000000000
+AGCACG            0.0000000000
+AGCAGG            0.0000000000
+AGCATG            0.0000000000
+AGCCAG            0.0000000000
+AGCCCG            0.0000000000
+AGCCGG            0.0000000000
+AGCCTG            0.0000000000
+AGCGAG            0.0000000000
+AGCGCG            0.0014419611
+AGCGGG            0.0000000000
+AGCGTG            0.0000000000
+AGCTAG            0.0007209805
+AGCTCG            0.0000000000
+AGCTGG            0.0000000000
+AGCTTG            0.0000000000
+ATCAAG            0.0028839221
+ATCACG            0.0007209805
+ATCAGG            0.0007209805
+ATCATG            0.0000000000
+ATCCAG            0.0007209805
+ATCCCG            0.0000000000
+ATCCGG            0.0000000000
+ATCCTG            0.0014419611
+ATCGAG            0.0000000000
+ATCGCG            0.0000000000
+ATCGGG            0.0000000000
+ATCGTG            0.0000000000
+ATCTAG            0.0000000000
+ATCTCG            0.0007209805
+ATCTGG            0.0007209805
+ATCTTG            0.0021629416
+CACAAG            0.0007209805
+CACACG            0.0000000000
+CACAGG            0.0007209805
+CACATG            0.0000000000
+CACCAG            0.0014419611
+CACCCG            0.0014419611
+CACCGG            0.0000000000
+CACCTG            0.0000000000
+CACGAG            0.0007209805
+CACGCG            0.0000000000
+CACGGG            0.0000000000
+CACGTG            0.0000000000
+CACTAG            0.0007209805
+CACTCG            0.0000000000
+CACTGG            0.0000000000
+CACTTG            0.0007209805
+CCCAAG            0.0000000000
+CCCACG            0.0007209805
+CCCAGG            0.0000000000
+CCCATG            0.0007209805
+CCCCAG            0.0000000000
+CCCCCG            0.0007209805
+CCCCGG            0.0000000000
+CCCCTG            0.0007209805
+CCCGAG            0.0007209805
+CCCGCG            0.0007209805
+CCCGGG            0.0000000000
+CCCGTG            0.0007209805
+CCCTAG            0.0000000000
+CCCTCG            0.0014419611
+CCCTGG            0.0000000000
+CCCTTG            0.0014419611
+CGCAAG            0.0000000000
+CGCACG            0.0000000000
+CGCAGG            0.0000000000
+CGCATG            0.0000000000
+CGCCAG            0.0000000000
+CGCCCG            0.0000000000
+CGCCGG            0.0000000000
+CGCCTG            0.0000000000
+CGCGAG            0.0000000000
+CGCGCG            0.0000000000
+CGCGGG            0.0000000000
+CGCGTG            0.0007209805
+CGCTAG            0.0000000000
+CGCTCG            0.0007209805
+CGCTGG            0.0000000000
+CGCTTG            0.0000000000
+CTCAAG            0.0007209805
+CTCACG            0.0021629416
+CTCAGG            0.0036049027
+CTCATG            0.0000000000
+CTCCAG            0.0000000000
+CTCCCG            0.0014419611
+CTCCGG            0.0007209805
+CTCCTG            0.0000000000
+CTCGAG            0.0007209805
+CTCGCG            0.0000000000
+CTCGGG            0.0000000000
+CTCGTG            0.0007209805
+CTCTAG            0.0000000000
+CTCTCG            0.0021629416
+CTCTGG            0.0036049027
+CTCTTG            0.0043258832
+GACAAG            0.0000000000
+GACACG            0.0000000000
+GACAGG            0.0007209805
+GACATG            0.0007209805
+GACCAG            0.0000000000
+GACCCG            0.0014419611
+GACCGG            0.0000000000
+GACCTG            0.0000000000
+GACGAG            0.0007209805
+GACGCG            0.0007209805
+GACGGG            0.0000000000
+GACGTG            0.0000000000
+GACTAG            0.0000000000
+GACTCG            0.0000000000
+GACTGG            0.0000000000
+GACTTG            0.0000000000
+GCCAAG            0.0007209805
+GCCACG            0.0000000000
+GCCAGG            0.0007209805
+GCCATG            0.0000000000
+GCCCAG            0.0007209805
+GCCCCG            0.0000000000
+GCCCGG            0.0000000000
+GCCCTG            0.0000000000
+GCCGAG            0.0000000000
+GCCGCG            0.0000000000
+GCCGGG            0.0000000000
+GCCGTG            0.0000000000
+GCCTAG            0.0000000000
+GCCTCG            0.0007209805
+GCCTGG            0.0000000000
+GCCTTG            0.0000000000
+GGCAAG            0.0000000000
+GGCACG            0.0000000000
+GGCAGG            0.0000000000
+GGCATG            0.0007209805
+GGCCAG            0.0000000000
+GGCCCG            0.0000000000
+GGCCGG            0.0000000000
+GGCCTG            0.0000000000
+GGCGAG            0.0007209805
+GGCGCG            0.0000000000
+GGCGGG            0.0000000000
+GGCGTG            0.0007209805
+GGCTAG            0.0007209805
+GGCTCG            0.0000000000
+GGCTGG            0.0000000000
+GGCTTG            0.0000000000
+GTCAAG            0.0036049027
+GTCACG            0.0000000000
+GTCAGG            0.0000000000
+GTCATG            0.0007209805
+GTCCAG            0.0000000000
+GTCCCG            0.0000000000
+GTCCGG            0.0000000000
+GTCCTG            0.0007209805
+GTCGAG            0.0007209805
+GTCGCG            0.0000000000
+GTCGGG            0.0000000000
+GTCGTG            0.0000000000
+GTCTAG            0.0007209805
+GTCTCG            0.0000000000
+GTCTGG            0.0014419611
+GTCTTG            0.0014419611
+TACAAG            0.0007209805
+TACACG            0.0000000000
+TACAGG            0.0000000000
+TACATG            0.0000000000
+TACCAG            0.0007209805
+TACCCG            0.0000000000
+TACCGG            0.0000000000
+TACCTG            0.0000000000
+TACGAG            0.0007209805
+TACGCG            0.0000000000
+TACGGG            0.0000000000
+TACGTG            0.0000000000
+TACTAG            0.0000000000
+TACTCG            0.0000000000
+TACTGG            0.0000000000
+TACTTG            0.0000000000
+TCCAAG            0.0000000000
+TCCACG            0.0000000000
+TCCAGG            0.0000000000
+TCCATG            0.0000000000
+TCCCAG            0.0000000000
+TCCCCG            0.0000000000
+TCCCGG            0.0007209805
+TCCCTG            0.0000000000
+TCCGAG            0.0000000000
+TCCGCG            0.0000000000
+TCCGGG            0.0000000000
+TCCGTG            0.0000000000
+TCCTAG            0.0000000000
+TCCTCG            0.0000000000
+TCCTGG            0.0000000000
+TCCTTG            0.0000000000
+TGCAAG            0.0007209805
+TGCACG            0.0000000000
+TGCAGG            0.0000000000
+TGCATG            0.0000000000
+TGCCAG            0.0007209805
+TGCCCG            0.0000000000
+TGCCGG            0.0000000000
+TGCCTG            0.0000000000
+TGCGAG            0.0000000000
+TGCGCG            0.0000000000
+TGCGGG            0.0000000000
+TGCGTG            0.0000000000
+TGCTAG            0.0000000000
+TGCTCG            0.0000000000
+TGCTGG            0.0007209805
+TGCTTG            0.0000000000
+TTCAAG            0.0021629416
+TTCACG            0.0007209805
+TTCAGG            0.0000000000
+TTCATG            0.0000000000
+TTCCAG            0.0007209805
+TTCCCG            0.0000000000
+TTCCGG            0.0007209805
+TTCCTG            0.0014419611
+TTCGAG            0.0000000000
+TTCGCG            0.0000000000
+TTCGGG            0.0000000000
+TTCGTG            0.0000000000
+TTCTAG            0.0021629416
+TTCTCG            0.0021629416
+TTCTGG            0.0007209805
+TTCTTG            0.0036049027
+AACAAT            0.0000000000
+AACACT            0.0007209805
+AACAGT            0.0021629416
+AACATT            0.0000000000
+AACCAT            0.0000000000
+AACCCT            0.0000000000
+AACCGT            0.0000000000
+AACCTT            0.0000000000
+AACGAT            0.0036049027
+AACGCT            0.0043258832
+AACGGT            0.0043258832
+AACGTT            0.0028839221
+AACTAT            0.0000000000
+AACTCT            0.0000000000
+AACTGT            0.0007209805
+AACTTT            0.0007209805
+ACCAAT            0.0000000000
+ACCACT            0.0000000000
+ACCAGT            0.0007209805
+ACCATT            0.0000000000
+ACCCAT            0.0014419611
+ACCCCT            0.0007209805
+ACCCGT            0.0000000000
+ACCCTT            0.0007209805
+ACCGAT            0.0014419611
+ACCGCT            0.0057678443
+ACCGGT            0.0028839221
+ACCGTT            0.0028839221
+ACCTAT            0.0000000000
+ACCTCT            0.0014419611
+ACCTGT            0.0021629416
+ACCTTT            0.0021629416
+AGCAAT            0.0021629416
+AGCACT            0.0000000000
+AGCAGT            0.0028839221
+AGCATT            0.0021629416
+AGCCAT            0.0007209805
+AGCCCT            0.0014419611
+AGCCGT            0.0000000000
+AGCCTT            0.0007209805
+AGCGAT            0.0021629416
+AGCGCT            0.0079307859
+AGCGGT            0.0093727469
+AGCGTT            0.0043258832
+AGCTAT            0.0007209805
+AGCTCT            0.0007209805
+AGCTGT            0.0028839221
+AGCTTT            0.0014419611
+ATCAAT            0.0028839221
+ATCACT            0.0057678443
+ATCAGT            0.0021629416
+ATCATT            0.0036049027
+ATCCAT            0.0007209805
+ATCCCT            0.0021629416
+ATCCGT            0.0000000000
+ATCCTT            0.0007209805
+ATCGAT            0.0021629416
+ATCGCT            0.0007209805
+ATCGGT            0.0043258832
+ATCGTT            0.0014419611
+ATCTAT            0.0021629416
+ATCTCT            0.0021629416
+ATCTGT            0.0021629416
+ATCTTT            0.0014419611
+CACAAT            0.0000000000
+CACACT            0.0000000000
+CACAGT            0.0021629416
+CACATT            0.0021629416
+CACCAT            0.0028839221
+CACCCT            0.0000000000
+CACCGT            0.0007209805
+CACCTT            0.0007209805
+CACGAT            0.0057678443
+CACGCT            0.0144196107
+CACGGT            0.0072098053
+CACGTT            0.0050468637
+CACTAT            0.0007209805
+CACTCT            0.0007209805
+CACTGT            0.0014419611
+CACTTT            0.0000000000
+CCCAAT            0.0007209805
+CCCACT            0.0007209805
+CCCAGT            0.0021629416
+CCCATT            0.0000000000
+CCCCAT            0.0014419611
+CCCCCT            0.0007209805
+CCCCGT            0.0014419611
+CCCCTT            0.0036049027
+CCCGAT            0.0036049027
+CCCGCT            0.0057678443
+CCCGGT            0.0072098053
+CCCGTT            0.0021629416
+CCCTAT            0.0007209805
+CCCTCT            0.0036049027
+CCCTGT            0.0014419611
+CCCTTT            0.0021629416
+CGCAAT            0.0000000000
+CGCACT            0.0000000000
+CGCAGT            0.0014419611
+CGCATT            0.0007209805
+CGCCAT            0.0014419611
+CGCCCT            0.0007209805
+CGCCGT            0.0028839221
+CGCCTT            0.0007209805
+CGCGAT            0.0014419611
+CGCGCT            0.0057678443
+CGCGGT            0.0036049027
+CGCGTT            0.0021629416
+CGCTAT            0.0000000000
+CGCTCT            0.0000000000
+CGCTGT            0.0000000000
+CGCTTT            0.0007209805
+CTCAAT            0.0014419611
+CTCACT            0.0021629416
+CTCAGT            0.0014419611
+CTCATT            0.0028839221
+CTCCAT            0.0028839221
+CTCCCT            0.0028839221
+CTCCGT            0.0021629416
+CTCCTT            0.0036049027
+CTCGAT            0.0028839221
+CTCGCT            0.0057678443
+CTCGGT            0.0043258832
+CTCGTT            0.0021629416
+CTCTAT            0.0007209805
+CTCTCT            0.0021629416
+CTCTGT            0.0021629416
+CTCTTT            0.0036049027
+GACAAT            0.0000000000
+GACACT            0.0007209805
+GACAGT            0.0000000000
+GACATT            0.0007209805
+GACCAT            0.0007209805
+GACCCT            0.0028839221
+GACCGT            0.0000000000
+GACCTT            0.0000000000
+GACGAT            0.0036049027
+GACGCT            0.0100937275
+GACGGT            0.0108147080
+GACGTT            0.0028839221
+GACTAT            0.0000000000
+GACTCT            0.0000000000
+GACTGT            0.0000000000
+GACTTT            0.0021629416
+GCCAAT            0.0007209805
+GCCACT            0.0014419611
+GCCAGT            0.0007209805
+GCCATT            0.0014419611
+GCCCAT            0.0014419611
+GCCCCT            0.0014419611
+GCCCGT            0.0000000000
+GCCCTT            0.0007209805
+GCCGAT            0.0043258832
+GCCGCT            0.0129776496
+GCCGGT            0.0072098053
+GCCGTT            0.0064888248
+GCCTAT            0.0000000000
+GCCTCT            0.0000000000
+GCCTGT            0.0021629416
+GCCTTT            0.0000000000
+GGCAAT            0.0007209805
+GGCACT            0.0007209805
+GGCAGT            0.0007209805
+GGCATT            0.0007209805
+GGCCAT            0.0021629416
+GGCCCT            0.0014419611
+GGCCGT            0.0014419611
+GGCCTT            0.0007209805
+GGCGAT            0.0057678443
+GGCGCT            0.0122566691
+GGCGGT            0.0136986301
+GGCGTT            0.0028839221
+GGCTAT            0.0000000000
+GGCTCT            0.0000000000
+GGCTGT            0.0000000000
+GGCTTT            0.0000000000
+GTCAAT            0.0014419611
+GTCACT            0.0000000000
+GTCAGT            0.0007209805
+GTCATT            0.0000000000
+GTCCAT            0.0036049027
+GTCCCT            0.0028839221
+GTCCGT            0.0000000000
+GTCCTT            0.0007209805
+GTCGAT            0.0007209805
+GTCGCT            0.0050468637
+GTCGGT            0.0036049027
+GTCGTT            0.0036049027
+GTCTAT            0.0007209805
+GTCTCT            0.0007209805
+GTCTGT            0.0036049027
+GTCTTT            0.0000000000
+TACAAT            0.0000000000
+TACACT            0.0007209805
+TACAGT            0.0014419611
+TACATT            0.0000000000
+TACCAT            0.0000000000
+TACCCT            0.0007209805
+TACCGT            0.0000000000
+TACCTT            0.0021629416
+TACGAT            0.0014419611
+TACGCT            0.0021629416
+TACGGT            0.0043258832
+TACGTT            0.0021629416
+TACTAT            0.0007209805
+TACTCT            0.0000000000
+TACTGT            0.0007209805
+TACTTT            0.0021629416
+TCCAAT            0.0007209805
+TCCACT            0.0021629416
+TCCAGT            0.0028839221
+TCCATT            0.0007209805
+TCCCAT            0.0014419611
+TCCCCT            0.0021629416
+TCCCGT            0.0007209805
+TCCCTT            0.0021629416
+TCCGAT            0.0050468637
+TCCGCT            0.0057678443
+TCCGGT            0.0079307859
+TCCGTT            0.0036049027
+TCCTAT            0.0014419611
+TCCTCT            0.0007209805
+TCCTGT            0.0000000000
+TCCTTT            0.0007209805
+TGCAAT            0.0014419611
+TGCACT            0.0000000000
+TGCAGT            0.0014419611
+TGCATT            0.0007209805
+TGCCAT            0.0014419611
+TGCCCT            0.0014419611
+TGCCGT            0.0014419611
+TGCCTT            0.0050468637
+TGCGAT            0.0028839221
+TGCGCT            0.0057678443
+TGCGGT            0.0079307859
+TGCGTT            0.0057678443
+TGCTAT            0.0007209805
+TGCTCT            0.0000000000
+TGCTGT            0.0014419611
+TGCTTT            0.0014419611
+TTCAAT            0.0021629416
+TTCACT            0.0036049027
+TTCAGT            0.0021629416
+TTCATT            0.0036049027
+TTCCAT            0.0007209805
+TTCCCT            0.0014419611
+TTCCGT            0.0021629416
+TTCCTT            0.0036049027
+TTCGAT            0.0014419611
+TTCGCT            0.0028839221
+TTCGGT            0.0050468637
+TTCGTT            0.0014419611
+TTCTAT            0.0007209805
+TTCTCT            0.0043258832
+TTCTGT            0.0036049027
+TTCTTT            0.0057678443
+AATAAA            0.0000000000
+AATACA            0.0000000000
+AATAGA            0.0000000000
+AATATA            0.0000000000
+AATCAA            0.0007209805
+AATCCA            0.0007209805
+AATCGA            0.0000000000
+AATCTA            0.0000000000
+AATGAA            0.0000000000
+AATGCA            0.0000000000
+AATGGA            0.0000000000
+AATGTA            0.0000000000
+AATTAA            0.0007209805
+AATTCA            0.0007209805
+AATTGA            0.0000000000
+AATTTA            0.0028839221
+ACTAAA            0.0000000000
+ACTACA            0.0000000000
+ACTAGA            0.0000000000
+ACTATA            0.0000000000
+ACTCAA            0.0000000000
+ACTCCA            0.0000000000
+ACTCGA            0.0000000000
+ACTCTA            0.0000000000
+ACTGAA            0.0000000000
+ACTGCA            0.0000000000
+ACTGGA            0.0000000000
+ACTGTA            0.0014419611
+ACTTAA            0.0000000000
+ACTTCA            0.0007209805
+ACTTGA            0.0000000000
+ACTTTA            0.0007209805
+AGTAAA            0.0000000000
+AGTACA            0.0000000000
+AGTAGA            0.0000000000
+AGTATA            0.0000000000
+AGTCAA            0.0000000000
+AGTCCA            0.0000000000
+AGTCGA            0.0000000000
+AGTCTA            0.0000000000
+AGTGAA            0.0000000000
+AGTGCA            0.0000000000
+AGTGGA            0.0000000000
+AGTGTA            0.0000000000
+AGTTAA            0.0007209805
+AGTTCA            0.0000000000
+AGTTGA            0.0000000000
+AGTTTA            0.0000000000
+ATTAAA            0.0000000000
+ATTACA            0.0000000000
+ATTAGA            0.0000000000
+ATTATA            0.0000000000
+ATTCAA            0.0000000000
+ATTCCA            0.0000000000
+ATTCGA            0.0000000000
+ATTCTA            0.0000000000
+ATTGAA            0.0000000000
+ATTGCA            0.0000000000
+ATTGGA            0.0000000000
+ATTGTA            0.0000000000
+ATTTAA            0.0007209805
+ATTTCA            0.0000000000
+ATTTGA            0.0000000000
+ATTTTA            0.0000000000
+CATAAA            0.0000000000
+CATACA            0.0000000000
+CATAGA            0.0007209805
+CATATA            0.0007209805
+CATCAA            0.0000000000
+CATCCA            0.0014419611
+CATCGA            0.0000000000
+CATCTA            0.0014419611
+CATGAA            0.0000000000
+CATGCA            0.0007209805
+CATGGA            0.0000000000
+CATGTA            0.0000000000
+CATTAA            0.0000000000
+CATTCA            0.0000000000
+CATTGA            0.0014419611
+CATTTA            0.0000000000
+CCTAAA            0.0000000000
+CCTACA            0.0000000000
+CCTAGA            0.0000000000
+CCTATA            0.0000000000
+CCTCAA            0.0007209805
+CCTCCA            0.0007209805
+CCTCGA            0.0007209805
+CCTCTA            0.0000000000
+CCTGAA            0.0000000000
+CCTGCA            0.0000000000
+CCTGGA            0.0000000000
+CCTGTA            0.0000000000
+CCTTAA            0.0007209805
+CCTTCA            0.0007209805
+CCTTGA            0.0007209805
+CCTTTA            0.0000000000
+CGTAAA            0.0000000000
+CGTACA            0.0000000000
+CGTAGA            0.0000000000
+CGTATA            0.0000000000
+CGTCAA            0.0000000000
+CGTCCA            0.0000000000
+CGTCGA            0.0007209805
+CGTCTA            0.0000000000
+CGTGAA            0.0000000000
+CGTGCA            0.0007209805
+CGTGGA            0.0000000000
+CGTGTA            0.0000000000
+CGTTAA            0.0007209805
+CGTTCA            0.0000000000
+CGTTGA            0.0007209805
+CGTTTA            0.0000000000
+CTTAAA            0.0007209805
+CTTACA            0.0000000000
+CTTAGA            0.0000000000
+CTTATA            0.0000000000
+CTTCAA            0.0000000000
+CTTCCA            0.0000000000
+CTTCGA            0.0000000000
+CTTCTA            0.0007209805
+CTTGAA            0.0000000000
+CTTGCA            0.0000000000
+CTTGGA            0.0000000000
+CTTGTA            0.0000000000
+CTTTAA            0.0000000000
+CTTTCA            0.0000000000
+CTTTGA            0.0007209805
+CTTTTA            0.0000000000
+GATAAA            0.0007209805
+GATACA            0.0000000000
+GATAGA            0.0000000000
+GATATA            0.0000000000
+GATCAA            0.0014419611
+GATCCA            0.0000000000
+GATCGA            0.0000000000
+GATCTA            0.0007209805
+GATGAA            0.0007209805
+GATGCA            0.0000000000
+GATGGA            0.0014419611
+GATGTA            0.0007209805
+GATTAA            0.0000000000
+GATTCA            0.0000000000
+GATTGA            0.0000000000
+GATTTA            0.0007209805
+GCTAAA            0.0000000000
+GCTACA            0.0000000000
+GCTAGA            0.0000000000
+GCTATA            0.0000000000
+GCTCAA            0.0000000000
+GCTCCA            0.0007209805
+GCTCGA            0.0000000000
+GCTCTA            0.0000000000
+GCTGAA            0.0000000000
+GCTGCA            0.0007209805
+GCTGGA            0.0000000000
+GCTGTA            0.0007209805
+GCTTAA            0.0000000000
+GCTTCA            0.0000000000
+GCTTGA            0.0007209805
+GCTTTA            0.0007209805
+GGTAAA            0.0000000000
+GGTACA            0.0000000000
+GGTAGA            0.0000000000
+GGTATA            0.0007209805
+GGTCAA            0.0000000000
+GGTCCA            0.0000000000
+GGTCGA            0.0000000000
+GGTCTA            0.0000000000
+GGTGAA            0.0007209805
+GGTGCA            0.0000000000
+GGTGGA            0.0000000000
+GGTGTA            0.0000000000
+GGTTAA            0.0000000000
+GGTTCA            0.0000000000
+GGTTGA            0.0000000000
+GGTTTA            0.0000000000
+GTTAAA            0.0000000000
+GTTACA            0.0000000000
+GTTAGA            0.0000000000
+GTTATA            0.0000000000
+GTTCAA            0.0000000000
+GTTCCA            0.0000000000
+GTTCGA            0.0000000000
+GTTCTA            0.0000000000
+GTTGAA            0.0007209805
+GTTGCA            0.0000000000
+GTTGGA            0.0000000000
+GTTGTA            0.0000000000
+GTTTAA            0.0000000000
+GTTTCA            0.0000000000
+GTTTGA            0.0000000000
+GTTTTA            0.0000000000
+TATAAA            0.0007209805
+TATACA            0.0000000000
+TATAGA            0.0000000000
+TATATA            0.0000000000
+TATCAA            0.0014419611
+TATCCA            0.0000000000
+TATCGA            0.0000000000
+TATCTA            0.0007209805
+TATGAA            0.0000000000
+TATGCA            0.0000000000
+TATGGA            0.0000000000
+TATGTA            0.0000000000
+TATTAA            0.0000000000
+TATTCA            0.0000000000
+TATTGA            0.0000000000
+TATTTA            0.0007209805
+TCTAAA            0.0007209805
+TCTACA            0.0000000000
+TCTAGA            0.0000000000
+TCTATA            0.0000000000
+TCTCAA            0.0000000000
+TCTCCA            0.0007209805
+TCTCGA            0.0007209805
+TCTCTA            0.0007209805
+TCTGAA            0.0000000000
+TCTGCA            0.0000000000
+TCTGGA            0.0000000000
+TCTGTA            0.0000000000
+TCTTAA            0.0000000000
+TCTTCA            0.0007209805
+TCTTGA            0.0000000000
+TCTTTA            0.0000000000
+TGTAAA            0.0000000000
+TGTACA            0.0007209805
+TGTAGA            0.0000000000
+TGTATA            0.0000000000
+TGTCAA            0.0007209805
+TGTCCA            0.0000000000
+TGTCGA            0.0000000000
+TGTCTA            0.0000000000
+ [ reached getOption("max.print") -- omitted 697 rows ]
+
+attr(,"message")
+[1] "Success for sa.COMPOSITE.exome.subset/PRIMARY//sa.run.2"
+
