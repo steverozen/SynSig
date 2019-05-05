@@ -1,5 +1,5 @@
-This is a copy of PRIMARY//sa.run.1/ 
+This is a copy of PRIMARY/sa.run.1/ 
 
-[1] "2019-05-04 17:29:59 EDT"
+[1] "2019-05-04 22:29:51 EDT"
 There were 3 runs:
 PRIMARY/best.run PRIMARY/sa.run.1 PRIMARY/sa.run.2 
