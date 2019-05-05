@@ -877,6 +877,9 @@ SignatureAnalyzerOneRun <-
 #'
 #' @param verbose If TRUE cat a message regarding progress.
 #'
+#' @param seed If not \code{NULL} call
+#' \code{RNGkind(kind = "L'Ecuyer-CMRG"); set.seed(seed)}.
+#'
 #' @importFrom parallel mclapply
 #'
 #' @export
@@ -893,7 +896,8 @@ SAMultiRunOneCatalog <-
            delete.tmp.files = TRUE,
            overwrite = FALSE,
            mc.cores = 1,
-           verbose = FALSE) {
+           verbose = FALSE,
+           seed = NULL) {
 
     if (!dir.exists(out.dir)) {
      if (!dir.create(out.dir)) {
@@ -902,6 +906,16 @@ SAMultiRunOneCatalog <-
      }
     }
     else warning(out.dir, "exists, overwriting")
+
+    if (!file.exists(input.catalog)) {
+      stop("Input catalog ", input.catalog,
+           " does not exist when getwd() = ", getwd())
+    }
+
+    if (!is.null(seed)) {
+      RNGkind(kind = "L'Ecuyer-CMRG")
+      set.seed(seed)
+    }
 
     RunOneIndex <- function(i) {
       out.dir2 <- paste0(out.dir, "/sa.run.", i)
