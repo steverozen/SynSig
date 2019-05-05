@@ -16,7 +16,7 @@ if (laptop.test) {
   signatureanalyzer.code.dir <- "C:/Users/steve/Documents/SynSig/data-raw/SignatureAnalzyer.052418/"
   stopifnot(getwd() == "C:/Users/steve/Documents/SynSig/data-raw")
 } else {
-  input.catalog              <- "sa.COMPOSITE.exome.subset/SECONDARYcatalog.csv"
+  input.catalog              <- "sa.COMPOSITE.exome.subset/SECONDARY.catalog.csv"
   out.dir                    <- "sa.COMPOSITE.exome.subset/SECONDARY/"
   test.only                  <- FALSE
   num.runs                   <- 20
