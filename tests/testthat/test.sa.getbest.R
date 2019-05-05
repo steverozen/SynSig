@@ -8,7 +8,7 @@ test_that(
 )
 
 test_that(
-  "Test 1 for CopyBestSignatureAnalyzerResult",
+  "Test 2 for CopyBestSignatureAnalyzerResult",
   {
     expect_equivalent(
       CopyBestSignatureAnalyzerResult("test.sa.results1/"),
@@ -19,9 +19,8 @@ test_that(
   }
 )
 
-
 test_that(
-  "Test 2 for BestSignatureAnalyzerResult",
+  "Test 3 for BestSignatureAnalyzerResult",
   expect_equivalent(
     BestSignatureAnalyzerResult("test.sa.results2/"),
     "test.sa.results2//sa.run.12/"
@@ -29,7 +28,7 @@ test_that(
 )
 
 test_that(
-  "Test 3 for BestSignatureAnalyzerResult",
+  "Test 4 for BestSignatureAnalyzerResult",
   expect_equivalent(
     BestSignatureAnalyzerResult("test.sa.results3/"),
     "test.sa.results3//sa.run.3/"
@@ -37,7 +36,7 @@ test_that(
 )
 
 test_that(
-  "Test 4 for BestSignatureAnalyzerResult",
+  "Test 5 for BestSignatureAnalyzerResult",
   expect_equivalent(
     BestSignatureAnalyzerResult("test.sa.results4/"),
     "test.sa.results4//sa.run.1/"
