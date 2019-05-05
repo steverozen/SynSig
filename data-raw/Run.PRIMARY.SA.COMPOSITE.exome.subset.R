@@ -8,21 +8,22 @@ library(SynSig)
 laptop.test <- FALSE
 
 if (laptop.test) {
+  input.catalog              <- "Laptop.sa.COMPOSITE.exome.subset/non-hyper-pcawg-as-exome-COMPOSITE.csv"
+  out.dir                    <- "Laptop.sa.COMPOSITE.exome.subset/PRIMARY/"
   test.only                  <- TRUE
   num.runs                   <- 2
   maxK                       <- 10
   signatureanalyzer.code.dir <- "C:/Users/steve/Documents/SynSig/data-raw/SignatureAnalzyer.052418/"
 } else {
+  input.catalog              <- "sa.COMPOSITE.exome.subset/non-hyper-pcawg-as-exome-COMPOSITE.csv"
+  out.dir                    <- "sa.COMPOSITE.exome.subset/PRIMARY/"
   test.only                  <- FALSE
   num.runs                   <- 20
   maxK                       <- 80
   signatureanalyzer.code.dir <- "/home/gmssgr/bin/SignatureAnalzyer.052418/"
 }
 
-
-input.catalog              <- "sa.COMPOSITE.exome.subset/non-hyper-pcawg-as-exome-COMPOSITE.csv"
 read.catalog.function      <- SynSig:::ReadCatCOMPOSITE
-out.dir                    <- "sa.COMPOSITE.exome.subset/PRIMARY/"
 write.signature.function   <- WriteCatCOMPOSITE
 delete.tmp.files           <- TRUE
 overwrite                  <- TRUE
