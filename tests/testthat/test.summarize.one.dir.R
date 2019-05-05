@@ -63,5 +63,10 @@ test_that("SummarizeSigOneSPSubdir", {
                     "De_Novo_Solution/signatures.PCAWG.format.csv")
     res <- unlink(file2)
     if (res != 0) cat("Failed to unlink ", file2, "\n")
+    file3 <- paste0(tdir.res,
+                    "SBS96/Suggested_Solution/",
+                    "De_Novo_Solution/attributed.exposures.csv")
+    res <- unlink(file3)
+    if (res != 0) cat("Failed to unlink ", file3, "\n")
   }
 })
