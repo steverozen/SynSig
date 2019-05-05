@@ -21,7 +21,7 @@ test_that("SignatureAnalyzerOneRun", {
   expect_true(dir.exists("test.random.sigs/sp.sp/sa.results/"))
   expect_true(file.exists("test.random.sigs/sp.sp/sa.results/input.syn.exp.csv"))
   expect_true(file.exists("test.random.sigs/sp.sp/sa.results/sa.output.other.data.csv"))
-  expect_true(file.exists("test.random.sigs/sp.sp/sa.results/sa.output.raw.exp.csv"))
+  expect_true(file.exists("test.random.sigs/sp.sp/sa.results/sa.output.exp.csv"))
   expect_true(file.exists("test.random.sigs/sp.sp/sa.results/sa.output.sigs.csv"))
   # Clean up
   dir.to.unlink <- "test.random.sigs/sp.sp/sa.results"
