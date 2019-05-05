@@ -63,7 +63,11 @@ SACat96 <- function(cat96) {
 #' \code{SignatureAnalyer.PCAWG.function.R}
 
 SourceSignatureAnlyzerCode <-
-  function(signatureanalyzer.code.dir){
+  function(signatureanalyzer.code.dir) {
+    if (!dir.exists(signatureanalyzer.code.dir)) {
+      stop("SignatureAnalyzer code directory, ",
+           signatureanalyzer.code.dir, " does not exist")
+    }
     here <- getwd()
     setwd(signatureanalyzer.code.dir)
     INPUT <<- "INPUT_SignatureAnalyzer/"
@@ -891,7 +895,12 @@ SAMultiRunOneCatalog <-
            mc.cores = 1,
            verbose = FALSE) {
 
-    if (!dir.exists(out.dir)) dir.create(out.dir)
+    if (!dir.exists(out.dir)) {
+     if (!dir.create(out.dir)) {
+       stop("Failed to create ", out.dir,
+            "when getwd() == ", getwd())
+     }
+    }
     else warning(out.dir, "exists, overwriting")
 
     RunOneIndex <- function(i) {
