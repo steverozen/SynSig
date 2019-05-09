@@ -15,7 +15,8 @@ WriteExposure <- function(exposure.matrix, file) {
   options(digits = old.digits)
 }
 
-#' @title Read an exposure matrix to a file
+
+#' @title Read an exposure matrix from a file
 #'
 #' @param file CSV file containing an exposure matrix
 #'
@@ -28,3 +29,17 @@ ReadExposure <- function(file) {
   return(read.csv(file, row.names = 1))
 }
 
+
+#' @title Read an exposure matrix from a Synapse file
+#'
+#' @param file CSV file containing an exposure matrix
+#'
+#' @return Matrix of exposures
+#'
+#' @export
+#'
+#' @importFrom utils read.csv
+ReadSynapseExposure <- function(file) {
+  return(read.table(file, header = T, sep = "\t",
+                    as.is = T, row.names =  1))
+}
