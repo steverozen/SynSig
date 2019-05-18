@@ -53,9 +53,9 @@ SummarizeSigOneSPSubdir <-
     attributed.exp.path.SP.format <-
       paste0(inputPath,"/De_Novo_Solution_Activities.txt")
 
-    attributedExposues <- ReadSigProfilerExposure(attributed.exp.path.SP.format)
+    attributedExposures <- ReadSigProfilerExposure(attributed.exp.path.SP.format)
     attributed.exp.path <- paste0(inputPath,"/attributed.exposures.csv")
-    WriteExposure(exposure.matrix = attributedExposues, file = attributed.exp.path)
+    WriteExposure(exposure.matrix = attributedExposures, file = attributed.exp.path)
 
 
     # SummarizeSigOneSubdir will generate a "/summary" folder

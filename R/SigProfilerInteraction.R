@@ -49,8 +49,8 @@ ReadSigProfilerExposure <- function(file) {
   x <- read.table(file = file, sep = "\t", as.is = TRUE, header = TRUE)
 
   y <- t(x)
-  colnames(y) <- y[1,]
-  y <- y[-1,]
+  colnames(y) <- y[1,,drop = F]
+  y <- y[-1,,drop = F]
 
   return(y)
 }
