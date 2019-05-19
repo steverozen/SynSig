@@ -57,7 +57,7 @@ SACat96 <- function(cat96) {
 
 #' Source SignatureAnalyzer Codes.
 #'
-#' @param signatureanalzer.code.dir The directory which stores
+#' @param signatureanalyzer.code.dir The directory which stores
 #' SignatureAnalyzer program files. It must include a folder
 #' named \code{INPUT_SignatureAnalyzer} and a R script named
 #' \code{SignatureAnalyer.PCAWG.function.R}
@@ -66,7 +66,8 @@ SourceSignatureAnlyzerCode <-
   function(signatureanalyzer.code.dir) {
     if (!dir.exists(signatureanalyzer.code.dir)) {
       stop("SignatureAnalyzer code directory, ",
-           signatureanalyzer.code.dir, " does not exist")
+           signatureanalyzer.code.dir,
+           " does not exist; getwd() == ", getwd())
     }
     here <- getwd()
     setwd(signatureanalyzer.code.dir)
@@ -764,6 +765,8 @@ TEMPRunSignatureAnalyzerOnFile <-
 #'
 #' @param signatureanalyzer.code.dir The directory holding the
 #' SignatureAnalyzer code.
+#'
+#' @param verbose If \code{TRUE}, then print various messages.
 #'
 #' @inheritParams RunSignatureAnalyzerOnFile
 #'

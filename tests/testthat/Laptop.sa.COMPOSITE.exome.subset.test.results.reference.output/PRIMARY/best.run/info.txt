@@ -1,5 +1,0 @@
-This is a copy of PRIMARY/sa.run.1/ 
-
-[1] "2019-05-05 14:00:55 EDT"
-There were 2 runs:
-PRIMARY/sa.run.1 PRIMARY/sa.run.2 
