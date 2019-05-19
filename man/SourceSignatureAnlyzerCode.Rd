@@ -7,7 +7,7 @@
 SourceSignatureAnlyzerCode(signatureanalyzer.code.dir)
 }
 \arguments{
-\item{signatureanalzer.code.dir}{The directory which stores
+\item{signatureanalyzer.code.dir}{The directory which stores
 SignatureAnalyzer program files. It must include a folder
 named \code{INPUT_SignatureAnalyzer} and a R script named
 \code{SignatureAnalyer.PCAWG.function.R}}
