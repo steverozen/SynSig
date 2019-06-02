@@ -11,3 +11,5 @@ sa.sp.match.gt.to.extracted.csv
 extracted.sigs.pdf
 match.extracted.to.gt.csv
 match.gt.to.extracted.csv
+packrat/lib*/
+packrat
