@@ -1,7 +1,7 @@
 Package: SynSig
 Type: Package
 Title: Create Catalogs of Synthetic Mutational Spectra
-Version: 0.2.2.9006
+Version: 0.2.2.9007
 Author: Steven G. Rozen, Yang Wu
 Maintainer: Steven G. Rozen <steverozen@gmail.com>
 Description: Create catalogs of synthetic mutational spectra and assess the
@@ -10,7 +10,7 @@ License: GPL-3
 Language: en-US
 Encoding: UTF-8
 LazyData: true
-Imports: lsa, data.table, ICAMS
+Imports: lsa, data.table
 Depends: R (>= 2.10)
 Remotes:  github::steverozen/ICAMS@version_1.0.0
 RoxygenNote: 6.1.1

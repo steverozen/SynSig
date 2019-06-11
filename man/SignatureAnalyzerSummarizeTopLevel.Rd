@@ -8,11 +8,24 @@ on a major dataset.}
 SignatureAnalyzerSummarizeTopLevel(top.level.dir, overwrite = FALSE)
 }
 \arguments{
-\item{top.level.dir}{Path to top level directory.}
+\item{top.level.dir}{Path to top level directory, which
+must contain the following subdirectories:
+\itemize{
+\item \code{sa.sa.96/sa.results/}
+\item \code{sp.sp/sa.results/}
+\item \code{sa.sa.COMPOSITE/sa.results/}
+\item \code{sp.sa.COMPOSITE/sa.results/}
+}
+Each of the directories must contain
+additonal subdirectories, one for each SignatureAnalyzer
+run, names \code{sa.run.<n>}, where <n> is an integer
+(string of digits).}
 
 \item{overwrite}{If TRUE overwrite existing summary files.}
 }
 \description{
-Summarize all subdirectories of SignatureAnalyzer results
-on a major dataset.
+This function depends on a particular directory structure: see
+argument \code{top.level.dir}. This function finds the
+best of multiple SignatureAnalyzer extraction runs and summarizes
+the comparision of the best run with the ground truth.
 }
