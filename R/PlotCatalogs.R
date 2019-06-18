@@ -49,7 +49,7 @@ PlotCatCOMPOSITE <- function(catalog, filename.header, type, id = colnames(catal
 
   ## Read in COMPOSITE catalogue
   test.COMPOSITE.sigs <-
-    SynSig:::ReadCatCOMPOSITE(catalog)
+    ReadCatCOMPOSITE(catalog)
 
   ## Check
   stopifnot(nrow(test.COMPOSITE.sigs) == 1697)

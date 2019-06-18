@@ -10,9 +10,8 @@ License: GPL-3
 Language: en-US
 Encoding: UTF-8
 LazyData: true
-Imports: lsa, data.table
+Imports: lsa, data.table, ICAMS
 Depends: R (>= 2.10)
-Remotes:  github::steverozen/ICAMS@version_1.0.0
 RoxygenNote: 6.1.1
 Suggests: 
     testthat,

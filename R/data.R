@@ -83,3 +83,19 @@ NULL
 #' @rdname MutationalSignatures
 #' @source \url{https://www.synapse.org/#!Synapse:syn11738319}
 "sp.sigs"
+
+
+# Quiets concerns of R CMD check about no visible binding for global variable
+if(getRversion() >= "2.15.1") {
+  utils::globalVariables(
+    c("sa.all.real.exposures",
+      "sp.all.real.exposures",
+      "sa.COMPOSITE.sigs",
+      "sa.96.sigs",
+      "sp.sigs",
+      "TEMPORARY",
+      "BayesNMF.L1.KL.fixed_W.Z",
+      "BayesNMF.L1.KL.fixed_W.Z.sample",
+      "OutDir.dir"
+      ))
+}

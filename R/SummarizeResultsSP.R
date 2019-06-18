@@ -24,7 +24,7 @@
 #'
 #' @export
 #'
-#' @importFrom ICAMS WriteCatSNS96 ReadCatSNS96
+# TESTING @importFrom ICAMS WriteCatSNS96 ReadCatSNS96
 #' @importFrom utils capture.output sessionInfo
 #' @importFrom grDevices dev.off
 #' @importFrom graphics par
