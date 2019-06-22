@@ -12,3 +12,7 @@ extracted.sigs.pdf
 match.extracted.to.gt.csv
 match.gt.to.extracted.csv
 SynSig-0.2.0.Rproj
+packrat/lib*/
+SynSig.Rproj
+packrat
+.Rprofile
