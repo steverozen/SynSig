@@ -3,9 +3,6 @@
 # Functions to find best matches (by cosine similarity) between two
 # sets of mutational signatures.
 #
-# Main functions of interest to users are WriteAndPlotSimilarSigs,
-# which calls SigSetSimilarity.
-#
 # Will require functions from ICAMS to be passed in as arguments.
 
 #' Find the signature in other.sigs that is nearest (by cosine similarity)
