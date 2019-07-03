@@ -248,7 +248,7 @@ present.sigs <-
 #'
 #' @keywords internal
 GenerateSynExposureOneSample <-
-  function(tumor,          ## matrix with present.signatures output
+  function(tumor,          ## matrix with present.sigs() output
            sig.interest,   ## signatures of interest
            burden.per.sig, ## mutation burden in log10(muts/mb)
            sd.per.sig      ## standard deviation of mutation burden
