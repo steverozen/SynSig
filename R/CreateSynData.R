@@ -230,15 +230,23 @@ present.sigs <-
   }
 
 
-#' @title TODO(steve) trace this to be sure we understand what it does.
+#' @title Using parameters given to generate exposures for synthetic tumors
 #'
-#' @param tumor TODO
+#' @param tumor Signature presence matrix or exposure matrix for a tumor.
+#' It has only one row, and K (# of signatures) columns.
+#' Value in each column is the presence flag for a mutational signature:
+#' the value can be non-zero(signature is present) or 0(absent).
+#' The name of each column should be the name of a signature.
 #'
-#' @param sig.interest TODO
+#' @param sig.interest Names of mutational signatures you want to use to
+#' generate exposures. It can be all, or part of signatures in colnames(tumor).
 #'
-#' @param burden.per.sig TODO
+#' @param burden.per.sig Mean mutation burden in log10(muts/mb).
+#' (counts of mutations per megabase of a tumor sequence)
+#' It has one row, and K columns. Each column name refers to a mutational signature.
 #'
-#' @param sd.per.sig TODO
+#' @param sd.per.sig standard deviation of mutation burden.
+#' It has one row, and K columns. Each column name refers to a mutational signature.
 #'
 #' @details ??Determine the intensity of each
 #' mutational signature in a tumor, returning mutations per mb
@@ -248,17 +256,17 @@ present.sigs <-
 #'
 #' @keywords internal
 GenerateSynExposureOneSample <-
-  function(tumor,          ## matrix with present.sigs() output
-           sig.interest,   ## signatures of interest
-           burden.per.sig, ## mutation burden in log10(muts/mb)
-           sd.per.sig      ## standard deviation of mutation burden
+  function(tumor,
+           sig.interest,
+           burden.per.sig,
+           sd.per.sig
   ) {
 
-    ## starts with individual tumors,
+    ## starts with individual tumors, only generate exposures for signatures
+    ## with a flag does not equal to 0.
     active.sigs <- which(tumor != 0)
 
     for (sigs in active.sigs) {
-      ## drop = F added for compatibility of Create.syn.SBS1.5.correlated.R
       stdev <- sd.per.sig[,sigs]
       burden <- burden.per.sig[,sigs]
 
