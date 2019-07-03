@@ -258,8 +258,9 @@ GenerateSynExposureOneSample <-
     active.sigs <- which(tumor != 0)
 
     for (sigs in active.sigs) {
-      stdev <- sd.per.sig[,sigs]
-      burden <- burden.per.sig[,sigs]
+      ## drop = F added for compatibility of Create.syn.SBS1.5.correlated.R
+      stdev <- sd.per.sig[,sigs,drop = F]
+      burden <- burden.per.sig[,sigs,drop = F]
 
       ## if std dev is too big, >= 3, max = 3
       ### consider handling this different. the worry is that the variation
