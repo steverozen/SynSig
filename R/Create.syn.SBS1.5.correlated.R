@@ -76,7 +76,7 @@
 #'
 #' @keywords internal
 #'
-generate.exposure.one.tumor <- function(tumor.name = "TwoCorreSigsGen::1",
+GenSBS1SBS5ExposureOneTumor <- function(tumor.name = "TwoCorreSigsGen::1",
                                         main.signature = "SBS5",
                                         correlated.signature = "SBS1",
                                         main.mean.log = 2.5,
@@ -191,7 +191,7 @@ generate.exposure.one.tumor <- function(tumor.name = "TwoCorreSigsGen::1",
 
 #' Generate correlated exposures for multiple tumors
 #'
-#' Wrapper function around generate.exposure.one.tumor():
+#' Wrapper function around GenSBS1SBS5ExposureOneTumor():
 #' A function to generate exposure of two correlated signatures
 #' (Example: SBS1 and SBS5) for \code{sample.number} (e.g. 500) synthetic tumors.
 #'
@@ -250,9 +250,9 @@ generate.exposure.one.tumor <- function(tumor.name = "TwoCorreSigsGen::1",
 #'
 #' @export
 #'
-generate.exposure <- function(main.signature,
-                              correlated.signature,
-                              sample.number,
+GenSBS1SBS5Exposure <- function(main.signature = "SBS5",
+                              correlated.signature = "SBS1",
+                              sample.number = 500,
                               name.prefix = "TwoCorreSigsGen",
                               main.mean.log = 2.5,
                               main.stdev.log = 0.25,
@@ -284,7 +284,7 @@ generate.exposure <- function(main.signature,
     #### if the count(main.signature) < main.signature.lower.thres
     for( ii in 1:sample.number ){ ## Generate a single tumor at a time in order to let the discarding process faster
       temp.exposure.counts <-
-        generate.exposure.one.tumor(tumor.name = paste(name.prefix,"::",ii),
+        GenSBS1SBS5ExposureOneTumor(tumor.name = paste0(name.prefix,"::",ii),
                                     main.signature = main.signature,
                                     correlated.signature = correlated.signature,
                                     main.mean.log = main.mean.log,
@@ -311,6 +311,12 @@ generate.exposure <- function(main.signature,
 ##############################################################
 ###### Function to plot the scatterplot between exposures of two signatures
 ##############################################################
+
+#'
+#'
+#'
+#'
+#'
 plot.correlation.scatterplot <-
   function (x,y,
             xlab = NULL,
@@ -345,18 +351,23 @@ plot.correlation.scatterplot <-
         cex = 0.8) ## By default, the mtext() function adds text at the top margin
 }
 
+
+#' Plot scatter plot for correlation between exposures of two signatures
+#'
+#' A wrapper around \code{plot.correlation.scatterplot}.
+#'
+#'
+#'
 plot.correlation.scatterplot.from.objects <-
   function(pdf.filename,
-           parameter.obj,
+           main.signature,
+           correlated.signature,
+           slope.linear,
            exposure.counts,
            xlim=c(0,4),
            ylim=c(0,4),
            ...)
 {
-
-  main.signature <- parameter.obj$main.signature
-  correlated.signature <- parameter.obj$correlated.signature
-  slope.linear <- parameter.obj$slope.linear
 
   pdf(pdf.filename)
 
@@ -383,42 +394,93 @@ plot.correlation.scatterplot.from.objects <-
 ######## i.e., main.stdev.log and correlated.stdev.log.
 ##########################################################################################
 
-#' Example function for generating SBS1-SBS5-correlated
-#' Synthetic data.
+#' Wrapper function for generating SBS1-SBS5-correlated Synthetic data
+#'
+#' This function will use SigProfiler-SBS96 mutational signatures
+#' to generate imaginary tumor spectra with mutation burdens only
+#' from SBS1 and SBS5, and mutation burdens of both signatures
+#' are highly correlated.
+#'
+#' @param dataset.name The dataset.name encodes the parameters for
+#' the synthetic data, but this is just a convention
+#' (Default: S.0.5.Rsq.0.3)
+#'
+#' @param main.signature The name of the main signature whose exposure
+#' can vary freely. (Default: SBS5)
+#'
+#' @param correlated.signature The name of the correlated signature
+#' whose exposure is influenced by and co-varies with the exposure
+#' of main.signature. In this study, it defaults as "SBS1".
+#'
+#' @param sample.number The number of synthetic tumors you want to generate.
+#' Default: 500
+#'
+#' @param main.mean.log  The mean of log(count(SBS5),base = 10)
+#' Default: 2.5
+#'
+#' @param main.stdev.log The standard deviation of log(count(SBS5),base = 10)
+#' Default: 0.3
+#'
+#' @param correlated.stdev.log The ADDED standard deviation of log(count(SBS1),base = 10).
+#' This parameter is ADDED stdev because based on the mechanism to generate the count,
+#' log10(count(SBS1)) inherently has a stdev = slope * main.stdev.log
+#' Default: 0.4
+#'
+#' @param slope.linear The ratio for: (Correlated exposure) / (Main exposure) IN LINEAR SPACE!
+#' Default: 0.5
+#'
+#' @param main.signature.lower.thres This program will force the exposure count of
+#' main.signature to be greater than this threhold.
+#' Default: 100
+#'
+#' @param correlated.signature.lower.thres This program will force the exposure count of
+#' correlated.signature to be greater than this threhold.
+#' Default: 1
+#'
+#' @param pearson.r.2.lower.thres Lower boundary of Pearson's R^2
+#' (Default: 0.29)
+#'
+#' @param pearson.r.2.higher.thres Upper boundary of Pearson's R^2
+#' (Default: 0.31)
+#'
+#' @param min.main.to.correlated.ratio.linear The lower ratio for count(SBS5) / count(SBS1)
+#' in LINEAR SPACE! (Default: 1/3)
+#'
+#' @param max.main.to.correlated.ratio.linear (Default: Inf)
+#'
+#'
+#' @details This function will generate files listed below:
+#' ground.truth.syn.catalog.csv: Generated tumor spectra in
+#' ICAMS SBS96 CSV format.
+#' ground.truth.syn.exposures.csv: Mutation burdens of SBS1 and
+#' SBS5 in generated tumor spectra in ICAMS CSV format.
+#' ground.truth.syn.sigs.csv: Ground-truth SBS1 and SBS5
+#' signatures in ICAMS SBS96 CSV format.
+#'
+#'
+#' @export
+#'
 CreateSBS1SBS5CorrelatedSyntheticData <-
-  function(){
+  function(dataset.name,
+           main.signature = "SBS5",
+           correlated.signature = "SBS1",
+           sample.number = 500,
+           main.mean.log = 2.5,
+           main.stdev.log = 0.3,
+           correlated.stdev.log = 0.4,
+           slope.linear = 0.5,
+           main.signature.lower.thres = 100,
+           correlated.signature.lower.thres = 1,
+           pearson.r.2.lower.thres = 0.29,
+           pearson.r.2.higher.thres = 0.31,
+           min.main.to.correlated.ratio.linear = 1/3,
+           max.main.to.correlated.ratio.linear = Inf)
+    {
 
     #### Load SigProfiler signature profiles
+    data(sp.sigs,package = "SynSig")
+
     {
-      sp.omics.sigs <- list()   ## A list storing SigProfiler genome/exome/flat signatures
-      sp.signature.types <- c("SBS.96","SBS.1536","DBS.78","ID.83")
-
-
-      sp.omics.sigs[["SBS.96"]] <-  get.signatures(signature.file = './SP.signatures.attributions/sigProfiler_SBS_signatures.csv', ## This is a human genome SBS signature
-                                                   exome.op = .h19.96.sureselect.v6.op)  ## This is an opportunity stored in mSigTools, for exome (Because the sum of total occurence is 57Mb)
-      ## exome.op is required by get.signatures, but we do not use the exome signature -- only the genome signature.
-
-    }
-
-    #### Load SignatureAnalyzer signatures; not used at present
-    if (FALSE) {
-      sa.omics.sigs <- list()
-      sa.signature.types <- c("COMPOSITE.SBS.96","COMPOSITE.SBS.1536","DBS.78","ID.83")
-
-      sa.omics.sigs[["COMPOSITE.SBS.96"]] <-  get.signatures(signature.file = './SA.signatures.attributions/SignatureAnalyzer_COMPOSITE_SBS_W96.signature.031918.txt', ## This is a human genome SBS signature
-                                                             exome.op = .h19.96.sureselect.v6.op)
-    }
-
-
-
-
-    #### To Run the code, edit parameters from here down and then source this file
-    {
-
-      dataset.name <- "S.0.5.Rsq.0.3" ## The dataset.name encodes the parameters for the synthetic data, but this is just a convention
-      ## S.0.5 refers to slope.linear = 0.5
-      ## Rsq.0.3 refers to control the Pearson's R^2 from 0.29 to 0.31
-      ## i.e., pearson.r.2.lower.thres = 0.29 and pearson.r.2.higher.thres = 0.31
       cat(paste("Specifying dataset.name as: ",dataset.name,"...\n",sep = ""))
       ## make a directory to store the dataset.
       dir.name <- paste("./Synthetic_datasets/", dataset.name,sep = "")
@@ -440,55 +502,60 @@ CreateSBS1SBS5CorrelatedSyntheticData <-
       ## If you intend to lower the Pearson's R^2, do remember to increase the main.stdev.log and correlated.stdev.log.
       ## Otherwise, the exposure generation will keep generating and discarding datasets!
       dataset$parameter <-
-        list(main.signature = "SBS5",           ## The name of the main signature whose exposure can vary freely.
-             correlated.signature = "SBS1",     ## The name of the correlated signature whose exposure is influenced by and co-varies with the exposure of main.signature.
+        list(main.signature,           ## The name of the main signature whose exposure can vary freely.
+             correlated.signature,     ## The name of the correlated signature whose exposure is influenced by and co-varies with the exposure of main.signature.
              ## In this study, it defaults as "SBS1"
-             sample.number = 500,       ## The number of synthetic tumors you want to generate
-             main.mean.log = 2.5,       ## The mean of log(count(SBS5),base = 10)
-             main.stdev.log = 0.3,      ## The standard deviation of log(count(SBS5),base = 10)
-             correlated.stdev.log = 0.4,    ## The ADDED standard deviation of log(count(SBS1),base = 10).
+             sample.number,       ## The number of synthetic tumors you want to generate
+             main.mean.log,       ## The mean of log(count(SBS5),base = 10)
+             main.stdev.log,      ## The standard deviation of log(count(SBS5),base = 10)
+             correlated.stdev.log,    ## The ADDED standard deviation of log(count(SBS1),base = 10).
              ## This parameter is ADDED stdev because
              ## based on the mechanism to generate the count, log10(count(SBS1)) inherently has a stdev = slope * main.stdev.log
-             slope.linear = 0.5,    ## The ratio for: (Correlated exposure) / (Main exposure) IN LINEAR SPACE!
-             main.signature.lower.thres = 100,      ## This program will force the exposure count of
+             slope.linear,    ## The ratio for: (Correlated exposure) / (Main exposure) IN LINEAR SPACE!
+             main.signature.lower.thres,      ## This program will force the exposure count of
              ## main.signature to be greater than this threhold.
-             correlated.signature.lower.thres = 1,      ## This program will force the exposure count of
+             correlated.signature.lower.thres,      ## This program will force the exposure count of
              ## correlated.signature to be greater than this threhold.
-             pearson.r.2.lower.thres = 0.29,      ## Lower boundary of Pearson's R^2
-             pearson.r.2.higher.thres = 0.31,     ## Upper boundary of Pearson's R^2
-             min.main.to.correlated.ratio.linear = 1/3, ## The lower ratio for count(SBS5) / count(SBS1) in LINEAR SPACE!
-             max.main.to.correlated.ratio.linear = Inf) ## The higher ratio for count(SBS5) / count(SBS1) in LINEAR SPACE!)
+             pearson.r.2.lower.thres,      ## Lower boundary of Pearson's R^2
+             pearson.r.2.higher.thres,     ## Upper boundary of Pearson's R^2
+             min.main.to.correlated.ratio.linear, ## The lower ratio for count(SBS5) / count(SBS1) in LINEAR SPACE!
+             max.main.to.correlated.ratio.linear) ## The higher ratio for count(SBS5) / count(SBS1) in LINEAR SPACE!)
 
       #### Generate exposure matrices for main.signature
       cat("Generating ground-truth exposures according to parameters specified...\n")
-      dataset$exposure <- generate.exposure.from.parameter.obj(dataset$parameter)
+      dataset$exposure <- GenSBS1SBS5Exposure(dataset$parameter)
 
       #### Plot out the scatter plot for the two correlated exposures
       cat("Plotting correlation scatterplot for exposures of two signatures...\n")
       plot.correlation.scatterplot.from.objects(pdf.filename = paste(dir.name,"/Scatterplot.",dataset.name,".pdf",sep = ""),
                                                 parameter.obj = dataset$parameter,
-                                                exposure.obj = dataset$exposure,
+                                                exposure.counts = dataset$exposure,
                                                 xlim = c(0,4),
                                                 ylim = c(0,4))
 
 
-      #### Using the exposure count generate and plot synthetic catalog with or without noise.
-      dataset$spectra <- generate.spectra(exposure.object = dataset$exposure,
-                                          signature.matrix = sp.omics.sigs[["SBS.96"]][["exome"]][,c(dataset$parameter$main.signature,dataset$parameter$correlated.signature)])
+      #### Using the exposure count generate synthetic spectra catalog.
+      dataset$spectra <-
+        CreateSynCatalogs(sp.sigs[,c(main.signature,correlated.signature)],
+                          dataset$exposure)
 
-      plot.spectra(spectra.object = dataset$spectra,
-                   filename = paste(dir.name,"/Spectra.plot.",dataset.name,".pdf",sep = ""))
       cat("Spectra generated.")
 
-      #### Output Duke-NUS formatted exposure catalogs and exposure.counts
+      #### Output Duke-NUS formatted mutational spectra and exposure.counts
 
-      spectra.to.txt(spectra.object = dataset$spectra,filename = paste(dir.name,"/",dataset.name,sep = ""))
-      exposure.to.txt(exposure.object = dataset$exposure,filename = paste(dir.name,"/",dataset.name,sep = ""))
-      spectra.to.csv(spectra.object = dataset$spectra,filename = paste(dir.name,"/",dataset.name,sep = ""))
-      exposure.to.csv(exposure.object = dataset$exposure,filename = paste(dir.name,"/",dataset.name,sep = ""))
+      spectra.to.txt(spectra.object = dataset$spectra,
+                     filename = paste(dir.name,"/",dataset.name,sep = ""))
+      exposure.to.txt(exposure.object = dataset$exposure,
+                      filename = paste(dir.name,"/",dataset.name,sep = ""))
+      spectra.to.csv(spectra.object = dataset$spectra,
+                     filename = paste(dir.name,"/",dataset.name,sep = ""))
+      exposure.to.csv(exposure.object = dataset$exposure,
+                      filename = paste(dir.name,"/",dataset.name,sep = ""))
 
       #### Output parameters used for better reproducibility
-      write.table(t(data.frame(dataset$parameter)),paste(dir.name,"/",dataset.name,".parameters.txt",sep = ""),col.names = F,quote = F,sep = ":\t")
+      write.table(t(data.frame(dataset$parameter)),
+                  paste(dir.name,"/",dataset.name,".parameters.txt",sep = ""),
+                  col.names = F,quote = F,sep = ":\t")
 
       #### Save the session image
       save.image(paste(dir.name,"/",dataset.name,".RData",sep = ""))
