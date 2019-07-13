@@ -1,4 +1,4 @@
-#' Run deconstructSigs attribution on a sa.output.rdata and its corresponding catalog file.
+#' Run deconstructSigs attribution on a spectra catalog file.
 #'
 #' @param input.catalog File containing input spectra catalog. Columns are
 #' samples (tumors), rows are mutation types.
