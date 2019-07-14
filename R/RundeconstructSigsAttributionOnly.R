@@ -13,10 +13,10 @@
 #' abort if it already exits.  Log files will be in
 #' \code{paste0(out.dir, "/tmp")}.
 #'
-#' @param input.exposures A file with the synthetic exposures used to generate
-#' \code{input.catalog}; if provided here,
-#' this is copied over to the output directory
-#' for downstream analysis.
+#' @param seed Specify the pseudo-random seed number
+#' used to run deconstructSigs. Setting seed can make the
+#' attribution of deconstructSigs repeatable.
+#' Default: 1.
 #'
 #' @param maxK The maximum number of signatures to consider
 #' exist in tumor spectra. Default is \code{NA}.
@@ -30,6 +30,11 @@
 #'
 #' @param test.only If TRUE, only analyze the first 10 columns
 #' read in from \code{input.catalog}.
+#'
+#' @param input.exposures A file with the synthetic exposures
+#' used to generate \code{input.catalog}; if provided here,
+#' this is copied over to the output directory
+#' for downstream analysis.
 #'
 #' @param overwrite If TRUE, overwrite existing output
 #'
@@ -49,12 +54,24 @@ RundeconstructSigsAttributeOnly <-
            gt.sigs.file,
            read.catalog.function,
            out.dir,
+           seed = 1,
            maxK = NA,
            signature.cutoff = 0.06,
            test.only = FALSE,
            input.exposures = NULL,
            delete.tmp.files = TRUE,
            overwrite = FALSE) {
+
+    ## Install deconstructSigs, if not found in library.
+    if("deconstructSigs" %in% rownames(installed.packages()) == FALSE){
+      message("Installing deconstructSigs from CRAN...\n")
+
+      install.packages("deconstructSigs")
+    }
+
+    ## Set seed
+    set.seed(seed)
+    seedInUse <- .Random.seed ## Save the seed used so that we can restore the pseudorandom series
 
     ## Read in spectra data from input.catalog file
     ## spectra: spectra data.frame in ICAMS format
@@ -106,13 +123,22 @@ RundeconstructSigsAttributeOnly <-
       exposures <- rbind(exposures,exposures.one.tumor)
     }
 
+    ## Copy ground.truth.sigs to out.dir
+    file.copy(from = gt.sigs.file,
+              to = paste0(out.dir,"/ground.truth.signatures.csv"),
+              overwrite = overwrite)
+
     ## Convert exposures to SynSig format, and output exposures.
     exposures <- t(exposures)
     write.csv(exposures,
               file = paste0(out.dir,"/attributed.exposures.csv"))
 
-    ## Copy the ground-truth exposures, if available.
+    ## Save workspace, seeds and session information
+    ## for better reproducibility
+    save.image(paste0(out.dir,"/.RData"))  ## Save workspace image to an .RData file
+    capture.output(sessionInfo(), file = paste0(out.dir,"/sessionInfo.txt")) ## Save session info
+    write(x = seedInUse, file = paste0(out.dir,"/seedInUse.txt")) ## Save seed in use to a text file
 
-
+    ## Return the exposures attributed, invisibly
     invisible(exposures)
   }
