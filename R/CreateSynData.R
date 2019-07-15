@@ -445,7 +445,7 @@ OutDir <- function(file.name) {
 #' @export
 SetNewOutDir <- function(dir,
                          overwrite = FALSE,
-                         recursive = overwrite) {
+                         recursive = TRUE) {
   if (dir.exists(dir)) {
     if (overwrite) {
       warning("\nOverwriting ", dir)
