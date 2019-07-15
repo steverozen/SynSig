@@ -295,7 +295,7 @@ GenSBS1SBS5Exposure <- function(main.signature = "SBS5",
 #' Plot scatter plot for correlation between exposures of two signatures,
 #' SBS1 and SBS5 in this study.
 #'
-#' \code{plot.correlation.scatterplot.for.exposures} is a
+#' \code{PlotCorrelationScatterplotForExposures} is a
 #' function to plot the correlation between two vectors,
 #' \code{x} and \code{y}. These vectors are expected to be
 #' exposures of two signatures.
@@ -303,8 +303,8 @@ GenSBS1SBS5Exposure <- function(main.signature = "SBS5",
 #' onto the plot, including correlation between \code{x} and \code{y},
 #' mean and stdev of \code{x} and \code{y}, etc.
 #'
-#' \code{plot.correlation.scatterplot.for.exposures}
-#' is a wrapper around \code{plot.correlation.scatterplot}.
+#' \code{PlotCorrelationScatterplotForExposures}
+#' is a wrapper around \code{PlotCorrelationScatterplot}.
 #' It lets \code{exposure.counts <-} the exposure matrix,
 #' and will draw a scatterplot for exposures of two signatures.
 #'
@@ -348,7 +348,7 @@ GenSBS1SBS5Exposure <- function(main.signature = "SBS5",
 #' @export
 #'
 
-plot.correlation.scatterplot <-
+PlotCorrelationScatterplot <-
   function (x,y,
             xlab = NULL,
             ylab = NULL,
@@ -382,7 +382,7 @@ plot.correlation.scatterplot <-
           cex = 0.8) ## By default, the mtext() function adds text at the top margin
   }
 
-plot.correlation.scatterplot.for.exposures <-
+PlotCorrelationScatterplotForExposures <-
   function(pdf.filename,
            main.signature = "SBS5",
            correlated.signature = "SBS1",
@@ -395,7 +395,7 @@ plot.correlation.scatterplot.for.exposures <-
 
     pdf(pdf.filename)
 
-    plot.correlation.scatterplot(x = log(exposure.counts[main.signature,], base = 10),
+    PlotCorrelationScatterplot(x = log(exposure.counts[main.signature,], base = 10),
                                  y = log(exposure.counts[correlated.signature,], base = 10),
                                  xlab = paste("log10( ",main.signature," )",sep = ""),
                                  ylab = paste("log10( ",correlated.signature," )",sep = ""),
@@ -587,7 +587,7 @@ CreateSBS1SBS5CorrelatedSyntheticData <-
 
     #### Plot out the scatter plot for the two correlated exposures
     cat("Plotting correlation scatterplot for exposures of two signatures...\n")
-    plot.correlation.scatterplot.for.exposures(pdf.filename = paste(dir.name,"/scatterplot.pdf",sep = ""),
+    PlotCorrelationScatterplotForExposures(pdf.filename = paste(dir.name,"/scatterplot.pdf",sep = ""),
                                                main.signature = "SBS5",
                                                correlated.signature = "SBS1",
                                                slope.linear,
