@@ -133,11 +133,11 @@ RundeconstructSigsAttributeOnly <-
     write.csv(exposures,
               file = paste0(out.dir,"/attributed.exposures.csv"))
 
-    ## Save workspace, seeds and session information
+    ## Save seeds and session information
     ## for better reproducibility
-    save.image(paste0(out.dir,"/.RData"))  ## Save workspace image to an .RData file
-    capture.output(sessionInfo(), file = paste0(out.dir,"/sessionInfo.txt")) ## Save session info
-    write(x = seedInUse, file = paste0(out.dir,"/seedInUse.txt")) ## Save seed in use to a text file
+    capture.output(sessionInfo(), file = paste0(dir.name,"/sessionInfo.txt")) ## Save session info
+    write(x = seedInUse, file = paste0(dir.name,"/seedInUse.txt")) ## Save seed in use to a text file
+    write(x = RNGInUse, file = paste0(dir.name,"/RNGInUse.txt")) ## Save seed in use to a text file
 
     ## Return the exposures attributed, invisibly
     invisible(exposures)
