@@ -438,16 +438,20 @@ OutDir <- function(file.name) {
 #'
 #' @param dir The location of the top level directory
 #'
-#' @param overwrite If TRUE allow overwriting of existing directory
+#' @param overwrite If TRUE allow overwriting of existing directory.
+#'
+#' @param recursive Allow creating directories recursively.
 #'
 #' @export
-SetNewOutDir <- function(dir, overwrite = FALSE) {
+SetNewOutDir <- function(dir,
+                         overwrite = FALSE,
+                         recursive = overwrite) {
   if (dir.exists(dir)) {
     if (overwrite) {
       warning("\nOverwriting ", dir)
     } else stop(dir, " already exists")
   } else {
-    dir.create(dir)
+    dir.create(dir, recursive = recursive)
   }
   OutDir.dir <<- dir
 }
