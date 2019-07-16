@@ -2,7 +2,8 @@
 % Please edit documentation in R/RunYAPSAAttributionOnly.R
 \name{RunYAPSAAttributeOnly}
 \alias{RunYAPSAAttributeOnly}
-\title{Run YAPSA attribution on a spectra catalog file.}
+\title{Run YAPSA attribution on a spectra catalog file
+and known signatures.}
 \usage{
 RunYAPSAAttributeOnly(input.catalog, gt.sigs.file, read.catalog.function,
   out.dir, seed = 1, signature.cutoff = NULL, test.only = FALSE,
@@ -15,7 +16,8 @@ Columns are samples (tumors), rows are mutation types.}
 \item{gt.sigs.file}{File containing input mutational signatures.
 Columns are signatures, rows are mutation types.}
 
-\item{read.catalog.function}{Function taking a file path as
+\item{read.catalog.function}{Function to read a catalog
+(can be spectra or signature catalog): it takes a file path as
 its only argument and returning a catalog as a numeric matrix.}
 
 \item{out.dir}{Directory that will be created for the output;
@@ -46,10 +48,11 @@ for downstream analysis.}
 Default: FALSE}
 }
 \value{
-The attributed exposure of \code{deconstructSigs}, invisibly.
+The attributed exposure of \code{YAPSA}, invisibly.
 }
 \description{
-Run YAPSA attribution on a spectra catalog file.
+Run YAPSA attribution on a spectra catalog file
+and known signatures.
 }
 \details{
 Creates several

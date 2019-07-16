@@ -2,7 +2,8 @@
 % Please edit documentation in R/RundeconstructSigsAttributionOnly.R
 \name{RundeconstructSigsAttributeOnly}
 \alias{RundeconstructSigsAttributeOnly}
-\title{Run deconstructSigs attribution on a spectra catalog file.}
+\title{Run deconstructSigs attribution on a spectra catalog file
+and known signatures.}
 \usage{
 RundeconstructSigsAttributeOnly(input.catalog, gt.sigs.file,
   read.catalog.function, out.dir, seed = 1, maxK = NA,
@@ -16,7 +17,8 @@ samples (tumors), rows are mutation types.}
 \item{gt.sigs.file}{File containing input mutational signatures. Columns are
 signatures, rows are mutation types.}
 
-\item{read.catalog.function}{Function taking a file path as
+\item{read.catalog.function}{Function to read a catalog
+(can be spectra or signature catalog): it takes a file path as
 its only argument and returning a catalog as a numeric matrix.}
 
 \item{out.dir}{Directory that will be created for the output;
@@ -52,7 +54,8 @@ for downstream analysis.}
 The attributed exposure of \code{deconstructSigs}, invisibly.
 }
 \description{
-Run deconstructSigs attribution on a spectra catalog file.
+Run deconstructSigs attribution on a spectra catalog file
+and known signatures.
 }
 \details{
 Creates several

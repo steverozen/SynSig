@@ -7,7 +7,7 @@
 Plot scatter plot for correlation between exposures of two signatures,
 SBS1 and SBS5 in this study.
 
-\code{plot.correlation.scatterplot.from.objects} is a
+\code{plot.correlation.scatterplot.for.exposures} is a
 function to plot the correlation between two vectors,
 \code{x} and \code{y}. These vectors are expected to be
 exposures of two signatures.
@@ -15,7 +15,7 @@ It will draw a scatterplot, and it will also print information
 onto the plot, including correlation between \code{x} and \code{y},
 mean and stdev of \code{x} and \code{y}, etc.
 
-\code{plot.correlation.scatterplot.from.objects}
+\code{plot.correlation.scatterplot.for.exposures}
 is a wrapper around \code{plot.correlation.scatterplot}.
 It lets \code{exposure.counts <-} the exposure matrix,
 and will draw a scatterplot for exposures of two signatures.}
@@ -65,7 +65,7 @@ Plot scatter plot for correlation between exposures of two signatures
 Plot scatter plot for correlation between exposures of two signatures,
 SBS1 and SBS5 in this study.
 
-\code{plot.correlation.scatterplot.from.objects} is a
+\code{plot.correlation.scatterplot.for.exposures} is a
 function to plot the correlation between two vectors,
 \code{x} and \code{y}. These vectors are expected to be
 exposures of two signatures.
@@ -73,7 +73,7 @@ It will draw a scatterplot, and it will also print information
 onto the plot, including correlation between \code{x} and \code{y},
 mean and stdev of \code{x} and \code{y}, etc.
 
-\code{plot.correlation.scatterplot.from.objects}
+\code{plot.correlation.scatterplot.for.exposures}
 is a wrapper around \code{plot.correlation.scatterplot}.
 It lets \code{exposure.counts <-} the exposure matrix,
 and will draw a scatterplot for exposures of two signatures.

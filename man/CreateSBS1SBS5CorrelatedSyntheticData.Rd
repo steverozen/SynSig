@@ -5,9 +5,10 @@
 \title{Wrapper function for generating SBS1-SBS5-correlated Synthetic data}
 \usage{
 CreateSBS1SBS5CorrelatedSyntheticData(dir.name = "./S.0.5.Rsq.0.3",
-  dataset.name = NULL, overwrite = FALSE, main.signature = "SBS5",
-  correlated.signature = "SBS1", name.prefix = "TwoCorreSigsGen",
-  sample.number = 500, main.mean.log = 2.5, main.stdev.log = 0.3,
+  dataset.name = NULL, overwrite = FALSE, seed = 1,
+  main.signature = "SBS5", correlated.signature = "SBS1",
+  name.prefix = "TwoCorreSigsGen", sample.number = 500,
+  main.mean.log = 2.5, main.stdev.log = 0.3,
   correlated.stdev.log = 0.4, slope.linear = 0.5,
   main.signature.lower.thres = 100,
   correlated.signature.lower.thres = 1, pearson.r.2.lower.thres = 0.29,
@@ -25,7 +26,12 @@ the synthetic data, but this is just a convention.
 If NULL, it will be changed to the last part of the \code{dir.name}
 (Default: NULL)}
 
-\item{overwrite}{Whether to overwrite}
+\item{overwrite}{Whether to overwrite
+(Default: FALSE)}
+
+\item{seed}{The seed number used to initizalize pesudo-random number
+generator (RNG). This makes the generation of the correlated
+datasets repeatable. (Default: 1)}
 
 \item{main.signature}{The name of the main signature whose exposure
 can vary freely. (Default: SBS5)}
@@ -79,11 +85,30 @@ from SBS1 and SBS5, and mutation burdens of both signatures
 are highly correlated.
 }
 \details{
+If you want to customize the dataset's Pearson R^2,
+you need to change the standard deviations of two signatures.
+i.e., main.stdev.log and correlated.stdev.log.
+
 This function will generate files listed below:
+
 ground.truth.syn.catalog.csv: Generated tumor spectra in
 ICAMS SBS96 CSV format.
+
 ground.truth.syn.exposures.csv: Mutation burdens of SBS1 and
 SBS5 in generated tumor spectra in ICAMS CSV format.
+
 ground.truth.syn.sigs.csv: Ground-truth SBS1 and SBS5
 signatures in ICAMS SBS96 CSV format.
+
+parameters.txt: Parameters used to generate the exposures
+and tumor spectra.
+
+scatterplot.pdf: scatterplot illustrating correlation of
+exposures of two signatures in generated spectra
+
+seedInUse.txt, RNGInUse.txt: seed and Random Number Generator
+used in generation. (For better reproducibility)
+
+sessionInfo.txt: information related to R versions, platforms,
+loaded or imported packages, etc. (For better reproducibility)
 }
