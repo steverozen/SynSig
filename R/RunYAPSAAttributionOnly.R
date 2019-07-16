@@ -1,4 +1,17 @@
-#' Run YAPSA attribution on a spectra catalog file.
+#' Install YAPSA package from Bioconductor.
+#'
+#' @keywords internal
+InstallYAPSA <- function(){
+  message("Installing YAPSA from Bioconductor...\n")
+
+  if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+  BiocManager::install("YAPSA")
+}
+
+
+#' Run YAPSA attribution on a spectra catalog file
+#' and known signatures.
 #'
 #' @param input.catalog File containing input spectra catalog.
 #' Columns are samples (tumors), rows are mutation types.
@@ -6,7 +19,8 @@
 #' @param gt.sigs.file File containing input mutational signatures.
 #' Columns are signatures, rows are mutation types.
 #'
-#' @param read.catalog.function Function taking a file path as
+#' @param read.catalog.function Function to read a catalog
+#' (can be spectra or signature catalog): it takes a file path as
 #' its only argument and returning a catalog as a numeric matrix.
 #'
 #' @param out.dir Directory that will be created for the output;
@@ -36,7 +50,7 @@
 #' @param overwrite If TRUE, overwrite existing output.
 #' Default: FALSE
 #'
-#' @return The attributed exposure of \code{deconstructSigs}, invisibly.
+#' @return The attributed exposure of \code{YAPSA}, invisibly.
 #'
 #' @details Creates several
 #'  files in \code{paste0(out.dir, "/sa.output.rdata")}. These are
@@ -59,17 +73,13 @@ RunYAPSAAttributeOnly <-
            overwrite = FALSE) {
 
     ## Install YAPSA from Bioconductor, if not found in library.
-    if("YAPSA" %in% rownames(installed.packages()) == FALSE){
-      message("Installing YAPSA from Bioconductor...\n")
-
-      if (!requireNamespace("BiocManager", quietly = TRUE))
-        install.packages("BiocManager")
-      BiocManager::install("YAPSA")
-    }
+    if("YAPSA" %in% rownames(installed.packages()) == FALSE)
+      InstallYAPSA()
 
     ## Set seed
     set.seed(seed)
     seedInUse <- .Random.seed ## Save the seed used so that we can restore the pseudorandom series
+    RNGInUse <- RNGkind() ## Save the random number generator (RNG) used
 
     ## Read in spectra data from input.catalog file
     ## spectra: spectra data.frame in ICAMS format
@@ -179,9 +189,9 @@ RunYAPSAAttributeOnly <-
 
     ## Save seeds and session information
     ## for better reproducibility
-    capture.output(sessionInfo(), file = paste0(dir.name,"/sessionInfo.txt")) ## Save session info
-    write(x = seedInUse, file = paste0(dir.name,"/seedInUse.txt")) ## Save seed in use to a text file
-    write(x = RNGInUse, file = paste0(dir.name,"/RNGInUse.txt")) ## Save seed in use to a text file
+    capture.output(sessionInfo(), file = paste0(out.dir,"/sessionInfo.txt")) ## Save session info
+    write(x = seedInUse, file = paste0(out.dir,"/seedInUse.txt")) ## Save seed in use to a text file
+    write(x = RNGInUse, file = paste0(out.dir,"/RNGInUse.txt")) ## Save seed in use to a text file
 
     ## Return the exposures attributed, invisibly
     invisible(LCD_exposure_counts)

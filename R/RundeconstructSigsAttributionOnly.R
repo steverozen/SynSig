@@ -1,4 +1,11 @@
-#' Run deconstructSigs attribution on a spectra catalog file.
+#' Install deconstructSigs from CRAN
+InstalldeconstructSigs <- function(){
+  message("Installing deconstructSigs from CRAN...\n")
+  install.packages("deconstructSigs")
+}
+
+#' Run deconstructSigs attribution on a spectra catalog file
+#' and known signatures.
 #'
 #' @param input.catalog File containing input spectra catalog. Columns are
 #' samples (tumors), rows are mutation types.
@@ -6,7 +13,8 @@
 #' @param gt.sigs.file File containing input mutational signatures. Columns are
 #' signatures, rows are mutation types.
 #'
-#' @param read.catalog.function Function taking a file path as
+#' @param read.catalog.function Function to read a catalog
+#' (can be spectra or signature catalog): it takes a file path as
 #' its only argument and returning a catalog as a numeric matrix.
 #'
 #' @param out.dir Directory that will be created for the output;
@@ -63,20 +71,18 @@ RundeconstructSigsAttributeOnly <-
            overwrite = FALSE) {
 
     ## Install deconstructSigs, if not found in library.
-    if("deconstructSigs" %in% rownames(installed.packages()) == FALSE){
-      message("Installing deconstructSigs from CRAN...\n")
-
-      install.packages("deconstructSigs")
-    }
+    if("deconstructSigs" %in% rownames(installed.packages()) == FALSE)
+      InstalldeconstructSigs()
 
     ## Set seed
     set.seed(seed)
     seedInUse <- .Random.seed ## Save the seed used so that we can restore the pseudorandom series
+    RNGInUse <- RNGkind() ## Save the random number generator (RNG) used
 
     ## Read in spectra data from input.catalog file
     ## spectra: spectra data.frame in ICAMS format
     spectra <- read.catalog.function(input.catalog,
-                                      strict = FALSE)
+                                     strict = FALSE)
     if (test.only) spectra <- spectra[ , 1:10]
 
 
@@ -84,6 +90,7 @@ RundeconstructSigsAttributeOnly <-
     ## gt.sigs: signature data.frame in ICAMS format
     gt.sigs <- read.catalog.function(gt.sigs.file, strict = FALSE)
 
+    ## Create output directory
     if (dir.exists(out.dir)) {
       if (!overwrite) stop(out.dir, " already exits")
     } else {
@@ -96,15 +103,15 @@ RundeconstructSigsAttributeOnly <-
     gt.sigs.ds <- data.frame(t(gt.sigs))
 
     ## Obtain attributed exposures using whichSignatures function
-    ## Note: whichSignatures() can only attribute ONE tumor at each run!
+    ## Note: deconstructSigs::whichSignatures() can only attribute ONE tumor at each run!
     num.tumors <- nrow(spectra.ds)
     ## In each cycle, obtain attributed exposures for each tumor.
     exposures <- data.frame()
 
     for(ii in 1:num.tumors){
-      output.list <- whichSignatures(tumor.ref = spectra.ds[ii,,drop = FALSE],
-                                     signatures.ref = gt.sigs.ds,
-                                     contexts.needed = TRUE)
+      output.list <- deconstructSigs::whichSignatures(tumor.ref = spectra.ds[ii,,drop = FALSE],
+                                                      signatures.ref = gt.sigs.ds,
+                                                      contexts.needed = TRUE)
       ## names(output.list): [1] "weights" "tumor"   "product" "diff"    "unknown"
       ## $weights: attributed signature exposure (in relative percentage)
       ## Note: sum of all exposure may be smaller than 1
@@ -135,9 +142,9 @@ RundeconstructSigsAttributeOnly <-
 
     ## Save seeds and session information
     ## for better reproducibility
-    capture.output(sessionInfo(), file = paste0(dir.name,"/sessionInfo.txt")) ## Save session info
-    write(x = seedInUse, file = paste0(dir.name,"/seedInUse.txt")) ## Save seed in use to a text file
-    write(x = RNGInUse, file = paste0(dir.name,"/RNGInUse.txt")) ## Save seed in use to a text file
+    capture.output(sessionInfo(), file = paste0(out.dir,"/sessionInfo.txt")) ## Save session info
+    write(x = seedInUse, file = paste0(out.dir,"/seedInUse.txt")) ## Save seed in use to a text file
+    write(x = RNGInUse, file = paste0(out.dir,"/RNGInUse.txt")) ## Save seed in use to a text file
 
     ## Return the exposures attributed, invisibly
     invisible(exposures)
