@@ -135,6 +135,8 @@ RunsigneR <-
 
       ## Record best number of signatures, and verify this choice using BIC-plot
       K.best <- extractionObject$Nsign
+      print(paste0("The best number of signatures is found.
+                   It equals to: ",K.best,"\n"))
       pdf(paste0(out.dir,"/Nsig.BIC.plot.pdf"))
       signeR::BICboxplot(extractionObject)
       dev.off()
