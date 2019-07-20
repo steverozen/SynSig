@@ -27,11 +27,6 @@ InstallYAPSA <- function(){
 #' abort if it already exits.  Log files will be in
 #' \code{paste0(out.dir, "/tmp")}.
 #'
-#' @param input.exposures A file with the synthetic exposures
-#' used to generate \code{input.catalog}; if provided here,
-#' this is copied over to the output directory
-#' for downstream analysis.
-#'
 #' @param seed Specify the pseudo-random seed number
 #' used to run YAPSA. Setting seed can make the
 #' attribution of YAPSA repeatable.
@@ -68,18 +63,18 @@ RunYAPSAAttributeOnly <-
            seed = 1,
            signature.cutoff = NULL,
            test.only = FALSE,
-           input.exposures = NULL,
-           delete.tmp.files = TRUE,
            overwrite = FALSE) {
 
     ## Install YAPSA from Bioconductor, if not found in library.
     if("YAPSA" %in% rownames(installed.packages()) == FALSE)
       InstallYAPSA()
 
+
     ## Set seed
     set.seed(seed)
-    seedInUse <- .Random.seed ## Save the seed used so that we can restore the pseudorandom series
+    seedInUse <- .Random.seed  ## Save the seed used so that we can restore the pseudorandom series
     RNGInUse <- RNGkind() ## Save the random number generator (RNG) used
+
 
     ## Read in spectra data from input.catalog file
     ## spectra: spectra data.frame in ICAMS format
@@ -89,25 +84,24 @@ RunYAPSAAttributeOnly <-
 
 
     ## Read in ground-truth signatures
-    ## gt.sigs: signature data.frame in ICAMS format
-    gt.sigs <- read.catalog.function(gt.sigs.file, strict = FALSE)
+    ## gtSignatures: signature data.frame in ICAMS format
+    gtSignatures <- read.catalog.function(gt.sigs.file)
 
+    ## Create output directory
     if (dir.exists(out.dir)) {
       if (!overwrite) stop(out.dir, " already exits")
     } else {
-      dir.create(out.dir)
+      dir.create(out.dir, recursive = T)
     }
 
     ## If signature.cutoff is NULL (by default),
     ## set it to all zeros of length K (number of signatures)
     if(is.null(signature.cutoff))
-      signature.cutoff = rep(0,times = ncol(gt.sigs))
+      signature.cutoff = rep(0,times = ncol(gtSignatures))
 
-    ###### Exposure attribution: given gt.sigs (ground truth signatures)
-    ###### and  (tumor spectra),
-    ###### determine the exposures of these signatures in tumor spectra
+    ## Derive exposure count attribution results.
 
-    in_signatures_df <- gt.sigs  ## Known signature matrix
+    in_signatures_df <- gtSignatures  ## Known signature matrix
 
     #### Tumor spectra matrix and related parameters
     in_mutation_catalogue_df <- spectra ## Converted spectra matrix
@@ -117,23 +111,9 @@ RunYAPSAAttributeOnly <-
     ymax <- rep(0.4,ncol(in_mutation_catalogue_df))
     names(ymax) <- colnames(in_mutation_catalogue_df)
 
-    #### Using Linear Combination Decomposition to attribute exposures
-    #### YAPSA::LCD() is not recommended. The author recommended YAPSA::LCD_complex_cutoff()
-    if(FALSE){
-      LCD_object <- YAPSA::LCD(in_mutation_catalogue_df, in_signatures_df,
-                               in_per_sample_cutoff = 0)  ## Signature presence cutoff is set to 0
-      ## This means that as long as SBS1 and SBS5 are attributed to >0% of total mutations,
-      ## they will be kept as candidate signatures.
-      ## This makes sense because in this synthetic dataset,
-      ## all tumors have exposures to SBS1 and SBS5.
-
-      ## YAPSA::LCD() returns a data.frame with attributed exposures.
-      ## Note: For each tumor spectrum, sum of attributed exposures by YAPSA::LCD()
-      ## does not equal to the sum of ground-truth exposures!
-      class(LCD_object) ## [1] "data.frame"
-      dim(LCD_object) ## [1] 2 500
-    }
-
+    ## Using Linear Combination Decomposition to attribute exposures
+    ## YAPSA::LCD() is not recommended. The author recommended YAPSA::LCD_complex_cutoff(),
+    ## which is a wrapper of it.
     ## YAPSA also supports different presence cutoff for different signatures,
     ## this is done by providing different values of cutoff in LCD_complex_cutoff function.
     ## Authors suggest to use YAPSA::LCD_complex_cutoff() rather than YAPSA::LCD() in most cases.
@@ -164,9 +144,9 @@ RunYAPSAAttributeOnly <-
     ## For each tumor spectrum, $exposures (the exposure counts attributed by LCD_complex_object())
     ## sums up to the total mutation counts in 500 tumors in the dataset.
     ## But $norm_exposures (relative exposure probs attributed by LCD_complex_object())
-    ## sums up to 500 only.
+    ## sums up to number of tumors only.
     sum(LCD_complex_object$exposures) == sum(spectra) ## [1] TRUE
-    sum(LCD_complex_object$norm_exposures) ## [1] 500
+    sum(LCD_complex_object$norm_exposures) ## [1] (Number of tumors in spectra)
 
     ## For each tumor spectrum, sum of normalized attributed exposures by LCD_complex_cutoff()
     ## does not equal to the sum of ground-truth exposures.
@@ -175,17 +155,16 @@ RunYAPSAAttributeOnly <-
     ## Export attributed exposure probs
     LCD_exposure_prob <- LCD_complex_object$norm_exposures
     ## Export attributed exposure counts
-    LCD_exposure_counts <- LCD_complex_object$exposures ## Export exposure probs
+    exposureCounts <- LCD_complex_object$exposures ## Export exposure probs
 
     ## Copy ground.truth.sigs to out.dir
     file.copy(from = gt.sigs.file,
               to = paste0(out.dir,"/ground.truth.signatures.csv"),
               overwrite = overwrite)
 
-    ## Output attributed exposure counts to out.dir
-    write.csv(x = LCD_exposure_counts,
-              file = paste(out.dir,"attributed.exposures.csv",sep="/"),
-              row.names = TRUE)
+    ## Write attributed exposures into a SynSig formatted exposure file.
+    WriteExposure(exposureCounts,
+                  paste0(out.dir,"/attributed.exposures.csv"))
 
     ## Save seeds and session information
     ## for better reproducibility
@@ -194,5 +173,5 @@ RunYAPSAAttributeOnly <-
     write(x = RNGInUse, file = paste0(out.dir,"/RNGInUse.txt")) ## Save seed in use to a text file
 
     ## Return the exposures attributed, invisibly
-    invisible(LCD_exposure_counts)
+    invisible(exposureCounts)
   }
