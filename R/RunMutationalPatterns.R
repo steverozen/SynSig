@@ -52,7 +52,7 @@ InstallMutationalPatterns <- function(){
 #' @importFrom utils capture.output
 #'
 #' @export
-#'
+
 RunMutationalPatternsAttributeOnly <-
   function(input.catalog,
            gt.sigs.file,
@@ -80,6 +80,7 @@ RunMutationalPatternsAttributeOnly <-
     if (test.only) spectra <- spectra[ , 1:10]
 
     ## Read in ground-truth signature file
+    ## gt.sigs: signature data.frame in ICAMS format
     gtSignatures <- read.catalog.function(gt.sigs.file)
 
     ## Create output directory
@@ -102,6 +103,11 @@ RunMutationalPatternsAttributeOnly <-
     ## Write exposure counts in ICAMS and SynSig format.
     WriteExposure(exposureCounts,
                   paste0(out.dir,"/attributed.exposures.csv"))
+		  
+    ## Copy ground.truth.sigs to out.dir
+    file.copy(from = gt.sigs.file,
+              to = paste0(out.dir,"/ground.truth.signatures.csv"),
+              overwrite = overwrite)
 
     ## Save seeds and session information
     ## for better reproducibility
@@ -280,7 +286,7 @@ RunMutationalPatterns <-
     }
 
 
-    ## Generates a list contain
+    ## Generates a list contain extracted signatures
     sigs_nmf <- MutationalPatterns::extract_signatures(spectra,K.best,CPU.cores)
     ## names(sigs_nmf)
     ## [1] "signatures"    "contribution"  "reconstructed"
@@ -305,6 +311,7 @@ RunMutationalPatterns <-
     ## Write exposure counts in ICAMS and SynSig format.
     WriteExposure(exposureCounts,
                   paste0(out.dir,"/attributed.exposures.csv"))
+
 
     ## Save seeds and session information
     ## for better reproducibility
