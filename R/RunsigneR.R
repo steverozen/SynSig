@@ -103,7 +103,7 @@ RunsigneR <-
     if (dir.exists(out.dir)) {
       if (!overwrite) stop(out.dir, " already exits")
     } else {
-      dir.create(out.dir)
+      dir.create(out.dir, recursive = T)
     }
 
     ## Convert ICAMS-formatted spectra and signatures into signeR format.
@@ -112,14 +112,16 @@ RunsigneR <-
     dimnames(convSpectra) <- dimnames(spectra)
     sample.number <- dim(spectra)[2]
     convSpectra <- t(convSpectra)
-    write.table(x = convSpectra,file = paste0(out.dir,"/signeR_input.tsv"),sep = "\t", quote = FALSE)
 
-
+    ## Determine the best number of signatures (K.best).
+    ## If K is provided, use K as the K.best.
+    ## If K.range is provided, determine K.best by doing raw extraction.
     if(bool1){
       extractionObject <- signeR::signeR(M=convSpectra,  ## M: Mutation spectra you want to decompose
                                          #Opport = NULL, ## Opport: Abundance (Opportunity) matrix for the spectra (optional)
                                          nsig=K)         ## nsig: Number of signatures (K)
       K.best <- K
+      print(paste0("Assuming there are ",K.best," signatures active in input spectra."))
     }
     if(bool2){
       ## Extraction and attribution when number of signatures (K) is not known:
@@ -135,8 +137,8 @@ RunsigneR <-
 
       ## Record best number of signatures, and verify this choice using BIC-plot
       K.best <- extractionObject$Nsign
-      print(paste0("The best number of signatures is found.
-                   It equals to: ",K.best,"\n"))
+      print(paste0("The best number of signatures is found.",
+                   "It equals to: ",K.best))
       pdf(paste0(out.dir,"/Nsig.BIC.plot.pdf"))
       signeR::BICboxplot(extractionObject)
       dev.off()
@@ -154,7 +156,7 @@ RunsigneR <-
                            paste0(out.dir,"/extracted.signatures.csv"))
 
 
-    ## Derive exposure count attribution
+    ## Derive exposure count attribution results.
     exposureCounts <- extractionObject$Ehat ## Unnormalized exposures
     rownames(exposureCounts) <- paste("sig",seq(1,K.best),sep = ".") ## Assign row names of exposure matrix as names of signatures
     colnames(exposureCounts) <- colnames(spectra) ## Assign column names of exposure matrix as names of tumors
