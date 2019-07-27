@@ -6,9 +6,8 @@
 and known signatures.}
 \usage{
 RundeconstructSigsAttributeOnly(input.catalog, gt.sigs.file,
-  read.catalog.function, out.dir, seed = 1, maxK = NA,
-  signature.cutoff = 0.06, test.only = FALSE, input.exposures = NULL,
-  delete.tmp.files = TRUE, overwrite = FALSE)
+  read.catalog.function, out.dir, seed = 1, test.only = FALSE,
+  overwrite = FALSE)
 }
 \arguments{
 \item{input.catalog}{File containing input spectra catalog. Columns are
@@ -30,25 +29,12 @@ used to run deconstructSigs. Setting seed can make the
 attribution of deconstructSigs repeatable.
 Default: 1.}
 
-\item{maxK}{The maximum number of signatures to consider
-exist in tumor spectra. Default is \code{NA}.
-In this case the maximum would be equal to number of sigs
-in \code{gt.sigs.file}}
-
-\item{signature.cutoff}{Within each tumor, signatures whose
-relative exposures lower than this value would not be considered
-in exposure attribution.
-\code{signature.cutoff} was set to 0.06 by default.}
-
 \item{test.only}{If TRUE, only analyze the first 10 columns
-read in from \code{input.catalog}.}
+read in from \code{input.catalog}.
+Default: FALSE}
 
-\item{input.exposures}{A file with the synthetic exposures
-used to generate \code{input.catalog}; if provided here,
-this is copied over to the output directory
-for downstream analysis.}
-
-\item{overwrite}{If TRUE, overwrite existing output}
+\item{overwrite}{If TRUE, overwrite existing output.
+Default: FALSE}
 }
 \value{
 The attributed exposure of \code{deconstructSigs}, invisibly.

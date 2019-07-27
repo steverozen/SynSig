@@ -7,7 +7,7 @@ and known signatures.}
 \usage{
 RunYAPSAAttributeOnly(input.catalog, gt.sigs.file, read.catalog.function,
   out.dir, seed = 1, signature.cutoff = NULL, test.only = FALSE,
-  input.exposures = NULL, delete.tmp.files = TRUE, overwrite = FALSE)
+  overwrite = FALSE)
 }
 \arguments{
 \item{input.catalog}{File containing input spectra catalog.
@@ -38,11 +38,6 @@ Default: vector length of number of sigs with all zeros}
 \item{test.only}{If TRUE, only analyze the first 10 columns
 read in from \code{input.catalog}.
 Default: FALSE}
-
-\item{input.exposures}{A file with the synthetic exposures
-used to generate \code{input.catalog}; if provided here,
-this is copied over to the output directory
-for downstream analysis.}
 
 \item{overwrite}{If TRUE, overwrite existing output.
 Default: FALSE}
