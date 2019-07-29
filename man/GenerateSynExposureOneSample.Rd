@@ -2,22 +2,30 @@
 % Please edit documentation in R/CreateSynData.R
 \name{GenerateSynExposureOneSample}
 \alias{GenerateSynExposureOneSample}
-\title{TODO(steve) trace this to be sure we understand what it does.}
+\title{Using parameters given to generate exposures for synthetic tumors}
 \usage{
 GenerateSynExposureOneSample(tumor, sig.interest, burden.per.sig,
   sd.per.sig)
 }
 \arguments{
-\item{tumor}{TODO}
+\item{tumor}{Signature presence matrix or exposure matrix for a tumor.
+It has only one row, and K (# of signatures) columns.
+Value in each column is the presence flag for a mutational signature:
+the value can be non-zero(signature is present) or 0(absent).
+The name of each column should be the name of a signature.}
 
-\item{sig.interest}{TODO}
+\item{sig.interest}{Names of mutational signatures you want to use to
+generate exposures. It can be all, or part of signatures in colnames(tumor).}
 
-\item{burden.per.sig}{TODO}
+\item{burden.per.sig}{Mean mutation burden in log10(muts/mb).
+(counts of mutations per megabase of a tumor sequence)
+It has one row, and K columns. Each column name refers to a mutational signature.}
 
-\item{sd.per.sig}{TODO}
+\item{sd.per.sig}{standard deviation of mutation burden.
+It has one row, and K columns. Each column name refers to a mutational signature.}
 }
 \description{
-TODO(steve) trace this to be sure we understand what it does.
+Using parameters given to generate exposures for synthetic tumors
 }
 \details{
 ??Determine the intensity of each
