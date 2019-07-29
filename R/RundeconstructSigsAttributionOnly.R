@@ -21,7 +21,7 @@ InstalldeconstructSigs <- function(){
 #' abort if it already exits.  Log files will be in
 #' \code{paste0(out.dir, "/tmp")}.
 #'
-#' @param seed Specify the pseudo-random seed number
+#' @param seedNumber Specify the pseudo-random seed number
 #' used to run deconstructSigs. Setting seed can make the
 #' attribution of deconstructSigs repeatable.
 #' Default: 1.
@@ -48,7 +48,7 @@ RundeconstructSigsAttributeOnly <-
            gt.sigs.file,
            read.catalog.function,
            out.dir,
-           seed = 1,
+           seedNumber = 1,
            test.only = FALSE,
            overwrite = FALSE) {
 
@@ -58,7 +58,7 @@ RundeconstructSigsAttributeOnly <-
 
 
     ## Set seed
-    set.seed(seed)
+    set.seed(seedNumber)
     seedInUse <- .Random.seed  ## Save the seed used so that we can restore the pseudorandom series
     RNGInUse <- RNGkind() ## Save the random number generator (RNG) used
 
@@ -120,7 +120,7 @@ RundeconstructSigsAttributeOnly <-
     exposures <- t(exposures)
     WriteExposure(exposures,
                   paste0(out.dir,"/attributed.exposures.csv"))
-		  
+
     ## Copy ground.truth.sigs to out.dir
     file.copy(from = gt.sigs.file,
               to = paste0(out.dir,"/ground.truth.signatures.csv"),

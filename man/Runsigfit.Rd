@@ -5,8 +5,8 @@
 \title{Run sigfit extraction and attribution on a spectra catalog file}
 \usage{
 Runsigfit(input.catalog, read.catalog.function, write.catalog.function,
-  out.dir, CPU.cores = NULL, seed = 1, K = NULL, K.range = NULL,
-  test.only = FALSE, overwrite = FALSE)
+  out.dir, CPU.cores = NULL, seedNumber = 1, K = NULL,
+  K.range = NULL, test.only = FALSE, overwrite = FALSE)
 }
 \arguments{
 \item{input.catalog}{File containing input spectra catalog.
@@ -29,7 +29,7 @@ By default (CPU.cores = NULL), the CPU.cores would be equal
 to \code{(parallel::detectCores())/2}, total number of CPUs
 divided by 2.}
 
-\item{seed}{Specify the pseudo-random seed number
+\item{seedNumber}{Specify the pseudo-random seed number
 used to run sigfit. Setting seed can make the
 attribution of sigfit repeatable.
 Default: 1.}

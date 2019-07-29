@@ -26,7 +26,7 @@ InstallsigneR <- function(){
 #' abort if it already exits.  Log files will be in
 #' \code{paste0(out.dir, "/tmp")}.
 #'
-#' @param seed Specify the pseudo-random seed number
+#' @param seedNumber Specify the pseudo-random seed number
 #' used to run signeR. Setting seed can make the
 #' attribution of signeR repeatable.
 #' Default: 1.
@@ -71,7 +71,7 @@ RunsigneR <-
            read.catalog.function,
            write.catalog.function,
            out.dir,
-           seed = 1,
+           seedNumber = 1,
            K = NULL,
            K.range = NULL,
            test.only = FALSE,
@@ -88,7 +88,7 @@ RunsigneR <-
 
 
     ## Set seed
-    set.seed(seed)
+    set.seed(seedNumber)
     seedInUse <- .Random.seed  ## Save the seed used so that we can restore the pseudorandom series
     RNGInUse <- RNGkind() ## Save the random number generator (RNG) used
 

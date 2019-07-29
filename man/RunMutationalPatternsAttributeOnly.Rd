@@ -6,7 +6,7 @@
 and known signatures.}
 \usage{
 RunMutationalPatternsAttributeOnly(input.catalog, gt.sigs.file,
-  read.catalog.function, out.dir, seed = 1, test.only = FALSE,
+  read.catalog.function, out.dir, seedNumber = 1, test.only = FALSE,
   overwrite = FALSE)
 }
 \arguments{
@@ -24,7 +24,7 @@ its only argument and returning a catalog as a numeric matrix.}
 abort if it already exits.  Log files will be in
 \code{paste0(out.dir, "/tmp")}.}
 
-\item{seed}{Specify the pseudo-random seed number
+\item{seedNumber}{Specify the pseudo-random seed number
 used to run MutationalPatterns. Setting seed can make the
 attribution of MutationalPatterns repeatable.
 Default: 1.}

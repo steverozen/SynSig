@@ -1,16 +1,14 @@
-#' Install YAPSA package from Bioconductor.
+#' Install SignatureEstimation package from URL source.
 #'
 #' @keywords internal
-InstallYAPSA <- function(){
-  message("Installing YAPSA from Bioconductor...\n")
+InstallSignatureEstimation <- function(){
+  message("Installing SignatureEstimation from URL source...\n")
 
-  if (!requireNamespace("BiocManager", quietly = TRUE))
-    install.packages("BiocManager")
-  BiocManager::install("YAPSA")
+  devtools::install_url("https://www.ncbi.nlm.nih.gov/CBBresearch/Przytycka/software/signatureestimation/SignatureEstimation.tar.gz")
 }
 
 
-#' Run YAPSA attribution on a spectra catalog file
+#' Run SignatureEstimation attribution on a spectra catalog file
 #' and known signatures.
 #'
 #' @param input.catalog File containing input spectra catalog.
@@ -28,8 +26,8 @@ InstallYAPSA <- function(){
 #' \code{paste0(out.dir, "/tmp")}.
 #'
 #' @param seedNumber Specify the pseudo-random seed number
-#' used to run YAPSA. Setting seed can make the
-#' attribution of YAPSA repeatable.
+#' used to run SignatureEstimation. Setting seed can make the
+#' attribution of SignatureEstimation repeatable.
 #' Default: 1.
 #'
 #' @param signature.cutoff A numeric vector of values less than 1.
@@ -45,7 +43,7 @@ InstallYAPSA <- function(){
 #' @param overwrite If TRUE, overwrite existing output.
 #' Default: FALSE
 #'
-#' @return The attributed exposure of \code{YAPSA}, invisibly.
+#' @return The attributed exposure of \code{SignatureEstimation}, invisibly.
 #'
 #' @details Creates several
 #'  files in \code{paste0(out.dir, "/sa.output.rdata")}. These are
@@ -65,8 +63,8 @@ RunYAPSAAttributeOnly <-
            test.only = FALSE,
            overwrite = FALSE) {
 
-    ## Install YAPSA from Bioconductor, if not found in library.
-    if("YAPSA" %in% rownames(installed.packages()) == FALSE)
+    ## Install SignatureEstimation from Bioconductor, if not found in library.
+    if("SignatureEstimation" %in% rownames(installed.packages()) == FALSE)
       InstallYAPSA()
 
 
@@ -112,12 +110,12 @@ RunYAPSAAttributeOnly <-
     names(ymax) <- colnames(in_mutation_catalogue_df)
 
     ## Using Linear Combination Decomposition to attribute exposures
-    ## YAPSA::LCD() is not recommended. The author recommended YAPSA::LCD_complex_cutoff(),
+    ## SignatureEstimation::LCD() is not recommended. The author recommended SignatureEstimation::LCD_complex_cutoff(),
     ## which is a wrapper of it.
-    ## YAPSA also supports different presence cutoff for different signatures,
+    ## SignatureEstimation also supports different presence cutoff for different signatures,
     ## this is done by providing different values of cutoff in LCD_complex_cutoff function.
-    ## Authors suggest to use YAPSA::LCD_complex_cutoff() rather than YAPSA::LCD() in most cases.
-    LCD_complex_object <- YAPSA::LCD_complex_cutoff(in_mutation_catalogue_df,
+    ## Authors suggest to use SignatureEstimation::LCD_complex_cutoff() rather than SignatureEstimation::LCD() in most cases.
+    LCD_complex_object <- SignatureEstimation::LCD_complex_cutoff(in_mutation_catalogue_df,
                                                     in_signatures_df,
                                                     in_cutoff_vector = signature.cutoff, ## If there are 2 signatures in the spectra,
                                                     ## you must provide a
@@ -125,7 +123,7 @@ RunYAPSAAttributeOnly <-
     ## equals to the exposure sum in original spectra
     ## This prevents the difference between original spectra and observed spectra
     class(LCD_complex_object) ## [1] "list"
-    names(LCD_complex_object) ## For detail, see YAPSA user manual
+    names(LCD_complex_object) ## For detail, see SignatureEstimation user manual
     ##[1] "exposures"                   "norm_exposures"
     ##[3] "signatures"                  "choice"
     ##[5] "order"                       "residual_catalogue"

@@ -27,7 +27,7 @@ Installhdp <- function(){
 #' abort if it already exits.  Log files will be in
 #' \code{paste0(out.dir, "/tmp")}.
 #'
-#' @param seed Specify the pseudo-random seed number
+#' @param seedNumber Specify the pseudo-random seed number
 #' used to run hdp. Setting seed can make the
 #' attribution of hdp repeatable.
 #' Default: 1.
@@ -54,7 +54,7 @@ RunhdpAttributeOnly <-
            gt.sigs.file,
            read.catalog.function,
            out.dir,
-           seed = 1,
+           seedNumber = 1,
            test.only = FALSE,
            overwrite = FALSE) {
   }
@@ -86,7 +86,7 @@ RunhdpAttributeOnly <-
 #' to \code{(parallel::detectCores())/2}, total number of CPUs
 #' divided by 2.
 #'
-#' @param seed Specify the pseudo-random seed number
+#' @param seedNumber Specify the pseudo-random seed number
 #' used to run hdp. Setting seed can make the
 #' attribution of hdp repeatable.
 #' Default: 1.
@@ -132,7 +132,7 @@ Runhdp <-
            write.catalog.function,
            out.dir,
            CPU.cores = NULL,
-           seed = 1,
+           seedNumber = 1,
            K = NULL,
            K.range = NULL,
            test.only = FALSE,
@@ -149,7 +149,7 @@ Runhdp <-
 
 
     ## Set seed
-    set.seed(seed)
+    set.seed(seedNumber)
     seedInUse <- .Random.seed  ## Save the seed used so that we can restore the pseudorandom series
     RNGInUse <- RNGkind() ## Save the random number generator (RNG) used
 
@@ -208,7 +208,10 @@ Runhdp <-
 
       ## hdp also has to enter number of signatures in advance, but the final result doesn't necessarily equal to the initial input value
       ## When the number of sample is too large, hdp may eat up all your RAMs!
-      hdpObject <- hdp::dp_activate(hdpObject, 1:num.process, K.initial, seed=seed)	## K.initial initial components(start with 30 signatures)
+      hdpObject <- hdp::dp_activate(hdpObject,
+                                    1:num.process,
+                                    K.initial,
+                                    seed=seedNumber)	## K.initial initial components(start with 30 signatures)
 
       hdpObject
 
@@ -230,7 +233,7 @@ Runhdp <-
                                      n=50,	## n here refers to the times of posterior sampling after burnin. To be faster, n can be set to 50.
                                      space=50,	## space is the time of iterations between two samplings. In this case, I need to iterate 9000 times.
                                      cpiter=3,
-                                     seed=seed)
+                                     seed=seedNumber)
       }
 
       ## Generate the original multi_chain for the sample

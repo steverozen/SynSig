@@ -32,7 +32,7 @@ Installsigfit <- function(){
 #' abort if it already exits.  Log files will be in
 #' \code{paste0(out.dir, "/tmp")}.
 #'
-#' @param seed Specify the pseudo-random seed number
+#' @param seedNumber Specify the pseudo-random seed number
 #' used to run sigfit. Setting seed can make the
 #' attribution of sigfit repeatable.
 #' Default: 1.
@@ -59,7 +59,7 @@ RunsigfitAttributeOnly <-
            gt.sigs.file,
            read.catalog.function,
            out.dir,
-           seed = 1,
+           seedNumber = 1,
            test.only = FALSE,
            overwrite = FALSE) {
 
@@ -69,7 +69,7 @@ RunsigfitAttributeOnly <-
 
 
     ## Set seed
-    set.seed(seed)
+    set.seed(seedNumber)
     seedInUse <- .Random.seed  ## Save the seed used so that we can restore the pseudorandom series
     RNGInUse <- RNGkind() ## Save the random number generator (RNG) used
 
@@ -102,7 +102,7 @@ RunsigfitAttributeOnly <-
                                                iter = 2000,
                                                warmup = 1000,
                                                chains = 1,
-                                               seed = 1)
+                                               seed = seedNumber)
 
     ## exposuresObj$mean contain the mean of attributed exposures across multiple
     ## MCMC samples. Note that attributed exposure in exposuresObj$mean are un-normalized.
@@ -169,7 +169,7 @@ RunsigfitAttributeOnly <-
 #' to \code{(parallel::detectCores())/2}, total number of CPUs
 #' divided by 2.
 #'
-#' @param seed Specify the pseudo-random seed number
+#' @param seedNumber Specify the pseudo-random seed number
 #' used to run sigfit. Setting seed can make the
 #' attribution of sigfit repeatable.
 #' Default: 1.
@@ -215,7 +215,7 @@ Runsigfit <-
            write.catalog.function,
            out.dir,
            CPU.cores = NULL,
-           seed = 1,
+           seedNumber = 1,
            K = NULL,
            K.range = NULL,
            test.only = FALSE,
@@ -232,7 +232,7 @@ Runsigfit <-
 
 
     ## Set seed
-    set.seed(seed)
+    set.seed(seedNumber)
     seedInUse <- .Random.seed  ## Save the seed used so that we can restore the pseudorandom series
     RNGInUse <- RNGkind() ## Save the random number generator (RNG) used
 
@@ -295,7 +295,7 @@ Runsigfit <-
                                    nsignatures = K.range,  ## The possible number of signatures a spectra may have.
                                    model = "nmf",          ## Method to use: we choose "nmf" by default. We can also choose "emu"
                                    iter = 1000,            ## Number of iterations in the run
-                                   seed = 1)
+                                   seed = seedNumber)
 
       K.best <- mcmc_samples_extr$best ## Choose K.best
       print(paste0("The best number of signatures is found.",
@@ -317,7 +317,7 @@ Runsigfit <-
                                  nsignatures = K.best,   ## The possible number of signatures a spectra may have.
                                  model = "nmf",          ## Method to use: we choose "nmf" by default. We can also choose "emu"
                                  iter = 5000,            ## Number of iterations in the run
-                                 seed = 1)
+                                 seed = seedNumber)
 
     extrSigsObject <- sigfit::retrieve_pars(mcmc_samples_extr_precise,
                                             par = "signatures")

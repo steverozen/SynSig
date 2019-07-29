@@ -31,7 +31,7 @@ InstallMutationalPatterns <- function(){
 #' abort if it already exits.  Log files will be in
 #' \code{paste0(out.dir, "/tmp")}.
 #'
-#' @param seed Specify the pseudo-random seed number
+#' @param seedNumber Specify the pseudo-random seed number
 #' used to run MutationalPatterns. Setting seed can make the
 #' attribution of MutationalPatterns repeatable.
 #' Default: 1.
@@ -58,7 +58,7 @@ RunMutationalPatternsAttributeOnly <-
            gt.sigs.file,
            read.catalog.function,
            out.dir,
-           seed = 1,
+           seedNumber = 1,
            test.only = FALSE,
            overwrite = FALSE) {
 
@@ -68,7 +68,7 @@ RunMutationalPatternsAttributeOnly <-
 
 
     ## Set seed
-    set.seed(seed)
+    set.seed(seedNumber)
     seedInUse <- .Random.seed  ## Save the seed used so that we can restore the pseudorandom series
     RNGInUse <- RNGkind() ## Save the random number generator (RNG) used
 
@@ -103,7 +103,7 @@ RunMutationalPatternsAttributeOnly <-
     ## Write exposure counts in ICAMS and SynSig format.
     WriteExposure(exposureCounts,
                   paste0(out.dir,"/attributed.exposures.csv"))
-		  
+
     ## Copy ground.truth.sigs to out.dir
     file.copy(from = gt.sigs.file,
               to = paste0(out.dir,"/ground.truth.signatures.csv"),
@@ -146,7 +146,7 @@ RunMutationalPatternsAttributeOnly <-
 #' to \code{(parallel::detectCores())/2}, total number of CPUs
 #' divided by 2.
 #'
-#' @param seed Specify the pseudo-random seed number
+#' @param seedNumber Specify the pseudo-random seed number
 #' used to run MutationalPatterns. Setting seed can make the
 #' attribution of MutationalPatterns repeatable.
 #' Default: 1.
@@ -192,7 +192,7 @@ RunMutationalPatterns <-
            write.catalog.function,
            out.dir,
            CPU.cores = NULL,
-           seed = 1,
+           seedNumber = 1,
            K = NULL,
            K.range = NULL,
            test.only = FALSE,
@@ -209,7 +209,7 @@ RunMutationalPatterns <-
 
 
     ## Set seed
-    set.seed(seed)
+    set.seed(seedNumber)
     seedInUse <- .Random.seed  ## Save the seed used so that we can restore the pseudorandom series
     RNGInUse <- RNGkind() ## Save the random number generator (RNG) used
 
@@ -248,7 +248,7 @@ RunMutationalPatterns <-
                           rank = K.range,     ## Rank specifies number of signatures you want to assess
                           method = "brunet",  ## "brunet" is the default NMF method in NMF package.
                           nrun = CPU.cores,
-                          seed = seed)
+                          seed = seedNumber)
 
       K.best <- K
       print(paste0("Assuming there are ",K.best," signatures active in input spectra."))
@@ -258,7 +258,7 @@ RunMutationalPatterns <-
                           rank = K.range,     ## Rank specifies number of signatures you want to assess
                           method = "brunet",  ## "brunet" is the default NMF method in NMF package.
                           nrun = CPU.cores,
-                          seed = seed)
+                          seed = seedNumber)
 
 
       ## Choose the best signature number (K.best) active in the spectra

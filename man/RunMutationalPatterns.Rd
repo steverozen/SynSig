@@ -5,7 +5,7 @@
 \title{Run MutationalPatterns extraction and attribution on a spectra catalog file}
 \usage{
 RunMutationalPatterns(input.catalog, read.catalog.function,
-  write.catalog.function, out.dir, CPU.cores = NULL, seed = 1,
+  write.catalog.function, out.dir, CPU.cores = NULL, seedNumber = 1,
   K = NULL, K.range = NULL, test.only = FALSE, overwrite = FALSE)
 }
 \arguments{
@@ -29,7 +29,7 @@ By default (CPU.cores = NULL), the CPU.cores would be equal
 to \code{(parallel::detectCores())/2}, total number of CPUs
 divided by 2.}
 
-\item{seed}{Specify the pseudo-random seed number
+\item{seedNumber}{Specify the pseudo-random seed number
 used to run MutationalPatterns. Setting seed can make the
 attribution of MutationalPatterns repeatable.
 Default: 1.}

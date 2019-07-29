@@ -6,7 +6,7 @@
 and known signatures.}
 \usage{
 RunhdpAttributeOnly(input.catalog, gt.sigs.file, read.catalog.function,
-  out.dir, seed = 1, test.only = FALSE, overwrite = FALSE)
+  out.dir, seedNumber = 1, test.only = FALSE, overwrite = FALSE)
 }
 \arguments{
 \item{input.catalog}{File containing input spectra catalog.
@@ -23,7 +23,7 @@ its only argument and returning a catalog as a numeric matrix.}
 abort if it already exits.  Log files will be in
 \code{paste0(out.dir, "/tmp")}.}
 
-\item{seed}{Specify the pseudo-random seed number
+\item{seedNumber}{Specify the pseudo-random seed number
 used to run hdp. Setting seed can make the
 attribution of hdp repeatable.
 Default: 1.}
