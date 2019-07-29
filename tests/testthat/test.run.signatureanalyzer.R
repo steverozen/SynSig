@@ -7,7 +7,7 @@ test_that("SignatureAnalyzerOneRun", {
   tmp.result <<-
     SignatureAnalyzerOneRun(
       signatureanalyzer.code.dir =
-        "../../data-raw/SignatureAnalzyer.052418/",
+        devtools::package_file("data-raw/SignatureAnalzyer.052418/"),
       input.catalog = "test.random.sigs/sp.sp/ground.truth.syn.catalog.csv",
       read.catalog.function = ReadCatSNS96,
       out.dir = "test.random.sigs/sp.sp/sa.results/",
@@ -40,7 +40,7 @@ test_that("SignatureAnalyzer4MatchedCatalogs", {
     SignatureAnalyzer4MatchedCatalogs(
       num.runs = 2,
       signatureanalyzer.code.dir =
-        "../../data-raw/SignatureAnalzyer.052418/",
+        devtools::package_file("data-raw/SignatureAnalzyer.052418/"),
       dir.root = "test.random.sigs/",
       slice = 1,
       test.only = TRUE, # Just use a small subset of the input catalog
