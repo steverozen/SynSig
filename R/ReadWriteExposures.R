@@ -38,7 +38,7 @@ ReadExposure <- function(file) {
 #'
 #' @export
 #'
-#' @importFrom utils read.csv
+#' @importFrom utils read.csv read.table
 ReadSynapseExposure <- function(file) {
   return(read.table(file, header = T, sep = "\t",
                     as.is = T, row.names =  1))

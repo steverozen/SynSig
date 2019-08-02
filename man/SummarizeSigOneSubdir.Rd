@@ -29,16 +29,17 @@ in the \code{sub.dir}, i.e. \code{third.level.dir}/../}
 \item{attributed.exp.path}{Path to attributed exposures file.}
 
 \item{read.extracted.sigs.fn}{Function to read the extracted sigs file.
-e.g. \code{ReadCatSNS96}}
+e.g. [ICAMS]\code{ReadCatalog}}
 
 \item{read.ground.truth.sigs.fn}{Function to read the ground-truth sigs file.
-e.g. \code{ReadCatSNS96}}
+e.g. [ICAMS]\code{ReadCatalog}}
 
 \item{write.cat.fn}{Function to write a catalog to disk, for example
-[ICAMS]\code{WriteCatSNS96}}
+[ICAMS]\code{WriteCatalog}}
 
 \item{plot.pdf.fn}{If a function, use it to plot PDFs of the ground truth and
-extracted signatures.}
+extracted signatures.
+e.g. [ICAMS]\code{PlotCatalogToPdf}}
 
 \item{overwrite}{If TRUE overwrite existing directories and files.}
 

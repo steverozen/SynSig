@@ -23,7 +23,7 @@
 #'
 #' @export
 #'
-#' @importFrom ICAMS WriteCatSNS96 ReadCatSNS96
+#' @importFrom ICAMS WriteCatalog ReadCatalog
 #' @importFrom utils capture.output sessionInfo
 #' @importFrom grDevices dev.off
 #' @importFrom graphics par
@@ -53,10 +53,10 @@ SummarizeSigOneExtrAttr96Subdir <-
         ground.truth.exposure.name = ground.truth.exposure.name,
         extracted.sigs.path = extracted.sigs.path,
         attributed.exp.path = attributed.exp.path,
-        read.extracted.sigs.fn = ICAMS::ReadCatSNS96,
-        read.ground.truth.sigs.fn = ICAMS::ReadCatSNS96,
-        write.cat.fn = ICAMS::WriteCatSNS96,
-        plot.pdf.fn = ICAMS::PlotCatSNS96ToPdf,
+        read.extracted.sigs.fn = ICAMS::ReadCatalog,
+        read.ground.truth.sigs.fn = ICAMS::ReadCatalog,
+        write.cat.fn = ICAMS::WriteCatalog,
+        plot.pdf.fn = ICAMS::PlotCatalogToPdf,
         overwrite = overwrite)
 
     invisible(retval) # So we can test without looking at a file.
@@ -94,7 +94,7 @@ SummarizeSigOneExtrAttr96Subdir <-
 #'
 #' @export
 #'
-#' @importFrom ICAMS WriteCatSNS96 ReadCatSNS96
+#' @importFrom ICAMS WriteCatalog ReadCatalog
 #' @importFrom utils capture.output sessionInfo
 #' @importFrom grDevices dev.off
 #' @importFrom graphics par
@@ -121,10 +121,10 @@ SummarizeSigOneAttr96Subdir <-
         ground.truth.exposure.name = ground.truth.exposure.name,
         extracted.sigs.path = ground.truth.sigs.path,
         attributed.exp.path = paste0(inputPath,"/attributed.exposures.csv"),
-        read.extracted.sigs.fn = ReadCatSNS96,
-        read.ground.truth.sigs.fn = ReadCatSNS96,
-        write.cat.fn = WriteCatSNS96,
-        plot.pdf.fn = PlotCatSNS96ToPdf,
+        read.extracted.sigs.fn = ReadCatalog,
+        read.ground.truth.sigs.fn = ReadCatalog,
+        write.cat.fn = WriteCatalog,
+        plot.pdf.fn = PlotCatalogToPdf,
         overwrite = overwrite)
 
     invisible(retval) # So we can test without looking at a file.

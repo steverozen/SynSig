@@ -69,7 +69,7 @@ CreateMixedTumorTypeSyntheticData <-
       sa.96.sigs,
       sa.exp,
       "sa.sa.96",
-      WriteCatSNS96,
+      WriteCatalog,
       overwrite = overwrite)
 
     # Create catalogs of synthetic mutational spectra
@@ -95,7 +95,7 @@ CreateMixedTumorTypeSyntheticData <-
       sp.sigs,
       sp.exp,
       "sp.sp",
-      WriteCatSNS96,
+      WriteCatalog,
       overwrite = overwrite)
 
     AddAllScripts(maxK = 50)

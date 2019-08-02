@@ -20,7 +20,7 @@
 #'
 #' @export
 #'
-#' @importFrom ICAMS WriteCatSNS96 ReadCatSNS96
+#' @importFrom ICAMS WriteCatalog ReadCatalog
 #' @importFrom utils capture.output sessionInfo
 #' @importFrom grDevices dev.off
 #' @importFrom graphics par
@@ -62,10 +62,10 @@ SummarizeSigOneSE96Subdir <-
         ground.truth.exposure.name = ground.truth.exposure.name,
         extracted.sigs.path = ground.truth.sigs.path,
         attributed.exp.path = attributed.exp.path[["QP"]],
-        read.extracted.sigs.fn = ReadCatSNS96,
-        read.ground.truth.sigs.fn = ReadCatSNS96,
-        write.cat.fn = WriteCatSNS96,
-        plot.pdf.fn = PlotCatSNS96ToPdf,
+        read.extracted.sigs.fn = ReadCatalog,
+        read.ground.truth.sigs.fn = ReadCatalog,
+        write.cat.fn = WriteCatalog,
+        plot.pdf.fn = PlotCatalogToPdf,
         overwrite = overwrite,
         summary.folder.name = "summary.QP")
 
@@ -79,10 +79,10 @@ SummarizeSigOneSE96Subdir <-
         ground.truth.exposure.name = ground.truth.exposure.name,
         extracted.sigs.path = ground.truth.sigs.path,
         attributed.exp.path = attributed.exp.path[["SA"]],
-        read.extracted.sigs.fn = ReadCatSNS96,
-        read.ground.truth.sigs.fn = ReadCatSNS96,
-        write.cat.fn = WriteCatSNS96,
-        plot.pdf.fn = PlotCatSNS96ToPdf,
+        read.extracted.sigs.fn = ReadCatalog,
+        read.ground.truth.sigs.fn = ReadCatalog,
+        write.cat.fn = WriteCatalog,
+        plot.pdf.fn = PlotCatalogToPdf,
         overwrite = overwrite,
         summary.folder.name = "summary.SA")
 

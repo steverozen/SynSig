@@ -23,8 +23,8 @@ for(extrAttrPackage in extrAttrPackages){
   func <- get(paste0("Run",extrAttrPackage))
   for(datasetName in datasetNames){
     func(input.catalog = paste0(datasetName,"/sp.sp/ground.truth.syn.catalog.csv"),
-         read.catalog.function = ICAMS::ReadCatSNS96,
-         write.catalog.function = ICAMS::WriteCatSNS96,
+         read.catalog.function = ICAMS::ReadCatalog,
+         write.catalog.function = ICAMS::WriteCatalog,
          out.dir = paste0(datasetName,"/sp.sp/ExtrAttr/",extrAttrPackage,".results"),
          K.range = c(1,10),
          overwrite = T)
@@ -42,7 +42,7 @@ for(attrOnlyPackage in attrOnlyPackages){
   for(datasetName in datasetNames){
     func(input.catalog = paste0(datasetName,"/sp.sp/ground.truth.syn.catalog.csv"),
          gt.sigs.file = paste0(datasetName,"/sp.sp/ground.truth.syn.sigs.csv"),
-         read.catalog.function = ICAMS::ReadCatSNS96,
+         read.catalog.function = ICAMS::ReadCatalog,
          out.dir = paste0(datasetName,"/sp.sp/Attr/",attrOnlyPackage,".results"),
          overwrite = T)
   }

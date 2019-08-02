@@ -30,7 +30,7 @@ Diff4SynDataSets <- function(dirname, unlink) {
   }
 
   cmd.result <-
-    c(paste("diff -rq", tmpdirname, regressdirname), cmd.result)
+    c("diff", paste("diff -rq", tmpdirname, regressdirname), cmd.result)
   # cat(cmd.result, sep = "\n")
 
   return(cmd.result)

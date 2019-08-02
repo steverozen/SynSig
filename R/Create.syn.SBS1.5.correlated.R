@@ -227,6 +227,7 @@ GenSBS1SBS5ExposureOneTumor <- function(tumor.name = "TwoCorreSigsGen::1",
 #' \code{main.signature} over mutation burden of
 #' \code{correlated.signature} in each tumor.
 #'
+#' @importFrom stats cor
 #'
 #' @export
 #'
@@ -290,23 +291,18 @@ GenSBS1SBS5Exposure <- function(main.signature = "SBS5",
 }
 
 
-#' @title Plot scatter plot for correlation between exposures of two signatures
+#' @title Plot scatter plot for correlation between two vectors.
 #'
-#' Plot scatter plot for correlation between exposures of two signatures,
-#' SBS1 and SBS5 in this study.
 #'
-#' \code{plot.correlation.scatterplot.for.exposures} is a
-#' function to plot the correlation between two vectors,
+#'
+#' \code{PlotCorrelationScatterplot} is a wrapper around \code{graphics::plot()},
+#' and a function to plot the correlation between two vectors,
 #' \code{x} and \code{y}. These vectors are expected to be
 #' exposures of two signatures.
+#'
 #' It will draw a scatterplot, and it will also print information
 #' onto the plot, including correlation between \code{x} and \code{y},
 #' mean and stdev of \code{x} and \code{y}, etc.
-#'
-#' \code{plot.correlation.scatterplot.for.exposures}
-#' is a wrapper around \code{plot.correlation.scatterplot}.
-#' It lets \code{exposure.counts <-} the exposure matrix,
-#' and will draw a scatterplot for exposures of two signatures.
 #'
 #'
 #' @param x vector of exposures of \code{main.signature}
@@ -326,29 +322,16 @@ GenSBS1SBS5Exposure <- function(main.signature = "SBS5",
 #'
 #' @param optional.remarks Remarks added below the title.
 #'
-#' @param pdf.filename Name of the PDF to contain the scatterplots.
+#' @param ... Other parameters provided to the function \code{graphics::plot()}.
 #'
-#' @param main.signature Name of a signature with smaller variance
-#' in the log10 space. (Default: "SBS5")
-#'
-#' @param correlated.signature Name of a signature with larger variance
-#' in the log10 space. (Default: "SBS1")
-#'
-#' @param slope.linear Average ratio of mutation burden of \code{correlated.signature}
-#' over mutation burden of \code{main.signature}
-#'
-#' @param exposure.counts Data.frame or matrix storing exposures of two signatures.
-#' The exposure.counts object is usually obtained from \code{SynSig::ReadExposure()}.
-#'
-#' @param xlim,ylim numeric vectors of length 2,
-#' giving the x and y coordinates ranges.
-#' Default: c(0,4)
+#' @importFrom stats cor var
+#' @importFrom graphics mtext plot
 #'
 #'
 #' @export
 #'
 
-plot.correlation.scatterplot <-
+PlotCorrelationScatterplot <-
   function (x,y,
             xlab = NULL,
             ylab = NULL,
@@ -382,7 +365,47 @@ plot.correlation.scatterplot <-
           cex = 0.8) ## By default, the mtext() function adds text at the top margin
   }
 
-plot.correlation.scatterplot.for.exposures <-
+
+#' @title Plot scatter plot for correlation between exposures of two signatures
+#'
+#' Plot scatter plot for correlation between exposures of two signatures,
+#' SBS1 and SBS5 in this study.
+#'
+#' \code{PlotCorrelationScatterplotForExposures}
+#' is a wrapper around \code{\link{PlotCorrelationScatterplot}}.
+#' It lets \code{exposure.counts <-} the exposure matrix,
+#' and will draw a scatterplot for exposures of two signatures.
+#'
+#'
+#' @param main Title on the scatterplot.
+#' Default: NULL
+#'
+#' @param pdf.filename Name of the PDF to contain the scatterplots.
+#'
+#' @param main.signature Name of a signature with smaller variance
+#' in the log10 space. (Default: "SBS5")
+#'
+#' @param correlated.signature Name of a signature with larger variance
+#' in the log10 space. (Default: "SBS1")
+#'
+#' @param slope.linear Average ratio of mutation burden of \code{correlated.signature}
+#' over mutation burden of \code{main.signature}
+#'
+#' @param exposure.counts Data.frame or matrix storing exposures of two signatures.
+#' The exposure.counts object is usually obtained from \code{SynSig::ReadExposure()}.
+#'
+#' @param xlim,ylim numeric vectors of length 2,
+#' giving the x and y coordinates ranges.
+#' Default: c(0,4)
+#'
+#' @param ... Other parameters provided to the function \code{graphics::plot()}.
+#'
+#' @importFrom grDevices dev.off pdf
+#'
+#' @export
+
+
+PlotCorrelationScatterplotForExposures <-
   function(pdf.filename,
            main.signature = "SBS5",
            correlated.signature = "SBS1",
@@ -395,16 +418,16 @@ plot.correlation.scatterplot.for.exposures <-
 
     pdf(pdf.filename)
 
-    plot.correlation.scatterplot(x = log(exposure.counts[main.signature,], base = 10),
-                                 y = log(exposure.counts[correlated.signature,], base = 10),
-                                 xlab = paste("log10( ",main.signature," )",sep = ""),
-                                 ylab = paste("log10( ",correlated.signature," )",sep = ""),
-                                 main = "",
-                                 optional.remarks = paste("slope.linear = ", slope.linear,"; ",
-                                                          sep = ""),
-                                 xlim = xlim,
-                                 ylim = ylim,
-                                 ... = ...)
+    PlotCorrelationScatterplot(x = log(exposure.counts[main.signature,], base = 10),
+                               y = log(exposure.counts[correlated.signature,], base = 10),
+                               xlab = paste("log10( ",main.signature," )",sep = ""),
+                               ylab = paste("log10( ",correlated.signature," )",sep = ""),
+                               main = "",
+                               optional.remarks = paste("slope.linear = ", slope.linear,"; ",
+                                                        sep = ""),
+                               xlim = xlim,
+                               ylim = ylim,
+                               ... = ...)
     dev.off()
   }
 ##########################################################################################
@@ -512,7 +535,8 @@ plot.correlation.scatterplot.for.exposures <-
 #'
 #' @param max.main.to.correlated.ratio.linear (Default: Inf)
 #'
-#' @section Warning Exposure generation function will repeat generating exposure counts
+#' \strong{Warning} \cr
+#' Exposure generation function will repeat generating exposure counts
 #' using mean and stdev parameters, until the dataset has a Pearson's R^2
 #' which falls between two boundaries of Pearson's R^2.
 #' Below are a group of parameters which have been tested successfully.
@@ -520,7 +544,8 @@ plot.correlation.scatterplot.for.exposures <-
 #' the main.stdev.log and correlated.stdev.log.
 #' Otherwise, the exposure generation will keep generating and discarding datasets!
 #'
-#' @importFrom ICAMS WriteCatSNS96
+#' @importFrom ICAMS WriteCatalog
+#' @importFrom utils capture.output sessionInfo
 #'
 #' @export
 #'
@@ -557,8 +582,6 @@ CreateSBS1SBS5CorrelatedSyntheticData <-
     seedInUse <- .Random.seed ## Save the seed used so that we can restore the pseudorandom series
     RNGInUse <- RNGkind() ## Save the random number generator (RNG) used
 
-    #### Load SigProfiler signature profiles
-    data(sp.sigs,package = "SynSig")
 
     ## make a directory to store the dataset,
     ## and set the working directory to it.
@@ -587,13 +610,13 @@ CreateSBS1SBS5CorrelatedSyntheticData <-
 
     #### Plot out the scatter plot for the two correlated exposures
     cat("Plotting correlation scatterplot for exposures of two signatures...\n")
-    plot.correlation.scatterplot.for.exposures(pdf.filename = paste(dir.name,"/scatterplot.pdf",sep = ""),
-                                               main.signature = "SBS5",
-                                               correlated.signature = "SBS1",
-                                               slope.linear,
-                                               exposure.counts = dataset$exposure,
-                                               xlim = c(0,4),
-                                               ylim = c(0,4))
+    PlotCorrelationScatterplotForExposures(pdf.filename = paste(dir.name,"/scatterplot.pdf",sep = ""),
+                                           main.signature = main.signature,
+                                           correlated.signature = correlated.signature,
+                                           slope.linear,
+                                           exposure.counts = dataset$exposure,
+                                           xlim = c(0,4),
+                                           ylim = c(0,4))
 
 
     #### Using the exposure count generate synthetic spectra catalog.
@@ -604,10 +627,14 @@ CreateSBS1SBS5CorrelatedSyntheticData <-
     cat("Spectra generated.")
 
     #### Output Duke-NUS formatted mutational spectra and exposure.counts
-    ICAMS::WriteCatSNS96(dataset$spectra$ground.truth.catalog,
-                         paste0(dir.name,"/ground.truth.syn.catalog.csv"))
+    WriteCatalog(dataset$spectra$ground.truth.catalog,
+                 paste0(dir.name,"/ground.truth.syn.catalog.csv"))
     WriteExposure(dataset$exposure,
                   paste0(dir.name,"/ground.truth.syn.exposures.csv"))
+
+    #### Copy ground-truth signatures
+    WriteCatalog(dataset$spectra$ground.truth.signatures,
+                 paste0(dir.name,"/ground.truth.syn.sigs.csv"))
 
     #### Output parameters used for better reproducibility
     write.table(t(data.frame(dataset$parameter)),
@@ -623,5 +650,85 @@ CreateSBS1SBS5CorrelatedSyntheticData <-
     cat(paste("All result files have been stored in folder ",
               dir.name,"\n",sep = ""))
     cat("\n\nData generation has been finished successfully!\n\n")
+
+  }
+
+#' Function to generate 20 SBS1-SBS5-correlated Synthetic datasets used in testing.
+#'
+#' This function is a wrapper around \link{CreateSBS1SBS5CorrelatedSyntheticData}.
+#' It will use the default parameters to repeat the results.
+#'
+#' This function will generate 20 datasets, each with files listed below:
+#'
+#' ground.truth.syn.catalog.csv: Generated tumor spectra in
+#' ICAMS SBS96 CSV format.
+#'
+#' ground.truth.syn.exposures.csv: Mutation burdens of SBS1 and
+#' SBS5 in generated tumor spectra in ICAMS CSV format.
+#'
+#' ground.truth.syn.sigs.csv: Ground-truth SBS1 and SBS5
+#' signatures in ICAMS SBS96 CSV format.
+#'
+#' parameters.txt: Parameters used to generate the exposures
+#' and tumor spectra.
+#'
+#' scatterplot.pdf: scatterplot illustrating correlation of
+#' exposures of two signatures in generated spectra
+#'
+#' seedInUse.txt, RNGInUse.txt: seed and Random Number Generator
+#' used in generation. (For better reproducibility)
+#'
+#' sessionInfo.txt: information related to R versions, platforms,
+#' loaded or imported packages, etc. (For better reproducibility)
+#'
+#'
+#' @param top.level.dir Top-level-folder to place 20 spectra
+#' datasets generated by this function.
+#' Default: ./ (Current working directory)
+#'
+#' @param overwrite Whether to overwrite
+#' (Default: FALSE)
+#'
+#'
+#' @importFrom ICAMS WriteCatalog
+#' @importFrom utils capture.output sessionInfo
+#'
+#' @export
+#'
+CreateSBS1SBS5CorrelatedSyntheticDataDemo <-
+  function(top.level.dir = "./",overwrite = FALSE){
+
+    datasetNames <- rownames(SBS1SBS5parameter)
+
+    for(datasetName in datasetNames){
+      ## Before calling the generation function, assign the parameters
+      ## as provided in SBS1SBS5parameter.
+      for(parameter in colnames(SBS1SBS5parameter)){
+        assign(x = parameter,
+               value = SBS1SBS5parameter[datasetName,parameter])
+      }
+      dataset.name <- datasetName
+      dir.name <- paste0(top.level.dir,"/",datasetName,"/sp.sp")
+
+      ## Call the spectra generation function.
+      CreateSBS1SBS5CorrelatedSyntheticData(dir.name = dir.name,
+                                            dataset.name = dataset.name,
+                                            overwrite = overwrite,
+                                            seed = 1,
+                                            main.signature = main.signature,
+                                            correlated.signature = correlated.signature,
+                                            name.prefix = "TwoCorreSigsGen",
+                                            sample.number = sample.number,
+                                            main.mean.log = main.mean.log,
+                                            main.stdev.log = main.stdev.log,
+                                            correlated.stdev.log = correlated.stdev.log,
+                                            slope.linear = slope.linear,
+                                            main.signature.lower.thres = main.signature.lower.thres,
+                                            correlated.signature.lower.thres = correlated.signature.lower.thres,
+                                            pearson.r.2.lower.thres = pearson.r.2.lower.thres,
+                                            pearson.r.2.higher.thres = pearson.r.2.higher.thres,
+                                            min.main.to.correlated.ratio.linear = 1/3,
+                                            max.main.to.correlated.ratio.linear = Inf)
+    }
 
   }

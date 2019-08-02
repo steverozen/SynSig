@@ -20,7 +20,7 @@
 #'
 #' @keywords internal
 #'
-#' @importFrom ICAMS WriteCatSNS96 ReadCatSNS96
+#' @importFrom ICAMS WriteCatalog ReadCatalog
 #' @importFrom utils capture.output sessionInfo
 
 SummarizeSigOneSACOMPOSITESubdir <-
@@ -71,7 +71,7 @@ SummarizeSigOneSACOMPOSITESubdir <-
 #'
 #' @keywords internal
 #'
-#' @importFrom ICAMS WriteCatSNS96 ReadCatSNS96 PlotCatSNS96ToPdf
+#' @importFrom ICAMS WriteCatalog ReadCatalog PlotCatalogToPdf
 #' @importFrom utils capture.output sessionInfo
 
 SummarizeSigOneSA96Subdir <-
@@ -91,10 +91,10 @@ SummarizeSigOneSA96Subdir <-
         ground.truth.exposure.name = ground.truth.exposure.name,
         extracted.sigs.path = paste0(inputPath,"/sa.output.sigs.csv"),
         attributed.exp.path = paste0(inputPath,"/sa.output.raw.exp.csv"),
-        read.extracted.sigs.fn = ReadCatSNS96,
-        read.ground.truth.sigs.fn = ReadCatSNS96,
-        write.cat.fn = WriteCatSNS96,
-        plot.pdf.fn = PlotCatSNS96ToPdf,
+        read.extracted.sigs.fn = ReadCatalog,
+        read.ground.truth.sigs.fn = ReadCatalog,
+        write.cat.fn = WriteCatalog,
+        plot.pdf.fn = PlotCatalogToPdf,
         overwrite = overwrite)
 
     invisible(retval)
@@ -122,7 +122,7 @@ SummarizeSigOneSA96Subdir <-
 #'
 #' @keywords internal
 #'
-#' @importFrom ICAMS WriteCatDNS78 ReadCatDNS78 PlotCatDNS78ToPdf
+#' @importFrom ICAMS WriteCatalog ReadCatalog PlotCatalogToPdf
 #' @importFrom utils capture.output sessionInfo
 
 SummarizeSigOneSADNSSubdir <-
@@ -142,10 +142,10 @@ SummarizeSigOneSADNSSubdir <-
         ground.truth.exposure.name = ground.truth.exposure.name,
         extracted.sigs.path = paste0(inputPath,"/sa.output.sigs.csv"),
         attributed.exp.path = paste0(inputPath,"/sa.output.raw.exp.csv"),
-        read.extracted.sigs.fn = ReadCatDNS78,
-        read.ground.truth.sigs.fn = ReadCatDNS78,
-        write.cat.fn = WriteCatDNS78,
-        plot.pdf.fn = PlotCatDNS78ToPdf,
+        read.extracted.sigs.fn = ReadCatalog,
+        read.ground.truth.sigs.fn = ReadCatalog,
+        write.cat.fn = WriteCatalog,
+        plot.pdf.fn = PlotCatalogToPdf,
         overwrite = overwrite)
 
     invisible(retval)
@@ -173,7 +173,7 @@ SummarizeSigOneSADNSSubdir <-
 #'
 #' @keywords internal
 #'
-#' @importFrom ICAMS WriteCatID ReadCatID PlotCatIDToPdf
+#' @importFrom ICAMS WriteCatalog ReadCatalog PlotCatalogToPdf
 #' @importFrom utils capture.output sessionInfo
 
 SummarizeSigOneSAIDSubdir <-
@@ -193,10 +193,10 @@ SummarizeSigOneSAIDSubdir <-
         ground.truth.exposure.name = ground.truth.exposure.name,
         extracted.sigs.path = paste0(inputPath,"/sa.output.sigs.csv"),
         attributed.exp.path = paste0(inputPath,"/sa.output.raw.exp.csv"),
-        read.extracted.sigs.fn = ReadCatID,
-        read.ground.truth.sigs.fn = ReadCatID,
-        write.cat.fn = WriteCatID,
-        plot.pdf.fn = PlotCatIDToPdf,
+        read.extracted.sigs.fn = ReadCatalog,
+        read.ground.truth.sigs.fn = ReadCatalog,
+        write.cat.fn = WriteCatalog,
+        plot.pdf.fn = PlotCatalogToPdf,
         overwrite = overwrite)
 
     invisible(retval)

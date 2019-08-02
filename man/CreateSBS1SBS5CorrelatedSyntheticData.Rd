@@ -76,7 +76,16 @@ Default: 1}
 \item{min.main.to.correlated.ratio.linear}{The lower ratio for count(SBS5) / count(SBS1)
 in LINEAR SPACE! (Default: 1/3)}
 
-\item{max.main.to.correlated.ratio.linear}{(Default: Inf)}
+\item{max.main.to.correlated.ratio.linear}{(Default: Inf)
+
+\strong{Warning} \cr
+Exposure generation function will repeat generating exposure counts
+using mean and stdev parameters, until the dataset has a Pearson's R^2
+which falls between two boundaries of Pearson's R^2.
+Below are a group of parameters which have been tested successfully.
+If you intend to lower the Pearson's R^2, do remember to increase
+the main.stdev.log and correlated.stdev.log.
+Otherwise, the exposure generation will keep generating and discarding datasets!}
 }
 \description{
 This function will use SigProfiler-SBS96 mutational signatures

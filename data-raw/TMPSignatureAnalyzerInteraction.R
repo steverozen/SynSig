@@ -967,7 +967,7 @@ SAMultiRunOneCatalog <-
 #'
 #' @export
 #'
-#' @importFrom ICAMS WriteCatSNS96 ReadCatSNS96
+#' @importFrom ICAMS WriteCatalog ReadCatalog
 
 SignatureAnalyzer4MatchedCatalogs <-
   function(
@@ -985,8 +985,8 @@ SignatureAnalyzer4MatchedCatalogs <-
     if (!dir.exists(dir.root)) stop(dir.root, "does not exist")
 
     subdirs <- c("sa.sa.96", "sp.sp", "sa.sa.COMPOSITE", "sp.sa.COMPOSITE")
-    read.fn <- c(ReadCatSNS96, ReadCatSNS96, ReadCatCOMPOSITE, ReadCatCOMPOSITE)
-    write.fn <- c(WriteCatSNS96, WriteCatSNS96, WriteCatCOMPOSITE, WriteCatCOMPOSITE)
+    read.fn <- c(ReadCatalog, ReadCatalog, ReadCatCOMPOSITE, ReadCatCOMPOSITE)
+    write.fn <- c(WriteCatalog, WriteCatalog, WriteCatCOMPOSITE, WriteCatCOMPOSITE)
 
     tmp.fn <- function(subdir, read.fn, write.fn) {
       retval1 <-

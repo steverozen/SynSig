@@ -66,7 +66,7 @@ SignatureAnalyzerPrepHyper1Secondary <-
 
   if (nrow(best.sigs) == 96) {
     # This would break on composite signatures
-    PlotCatSNS96ToPdf(
+    PlotCatalogToPdf(
       pseudo.catalog,
       "pseudo.catalog.pdf",
       type = "counts")
@@ -112,7 +112,7 @@ SignatureAnalyzerPrepHyper1Secondary <-
 #'
 #' @export
 #'
-#' @importFrom ICAMS ReadCatSNS96 WriteCatSNS96 PlotCatSNS96ToPdf
+#' @importFrom ICAMS ReadCatalog WriteCatalog PlotCatalogToPdf
 
 SignatureAnalyzerPrepHyper4 <-
   function(parent.dir, overwrite = FALSE) {
@@ -123,9 +123,9 @@ SignatureAnalyzerPrepHyper4 <-
   if (!dir.exists(h.prefix)) stop(h.prefix, "does not exist")
 
   subdirs <- c("sa.sa.96", "sp.sp", "sa.sa.COMPOSITE", "sp.sa.COMPOSITE")
-  read.fn <- c(ReadCatSNS96, ReadCatSNS96,
+  read.fn <- c(ReadCatalog, ReadCatalog,
                ReadCatCOMPOSITE, ReadCatCOMPOSITE)
-  write.fn <- c(WriteCatSNS96, WriteCatSNS96,
+  write.fn <- c(WriteCatalog, WriteCatalog,
                 WriteCatCOMPOSITE, WriteCatCOMPOSITE)
 
   # TODO(Steve): This function should be rewritten to use
@@ -166,7 +166,7 @@ SignatureAnalyzerPrepHyper4 <-
 
     if (nrow(best.sigs) == 96) {
       # This would break on composite signatures
-      PlotCatSNS96ToPdf(
+      PlotCatalogToPdf(
         pseudo.catalog,
         paste0(dir2, "/pseudo.catalog.pdf"),
         type = "counts")

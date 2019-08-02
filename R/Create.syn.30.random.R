@@ -4,7 +4,7 @@
 #' Create one "random" artificial signature profile.
 #'
 #' @param row.names One of the \code{\link{ICAMS}} package variable such as
-#'  \code{catalog.row.order[["SNS96"]]}.
+#'  \code{catalog.row.order[["SBS96"]]}.
 #'
 #' @return A single column matrix with \code{rownames} \code{row.headers} and
 #'   \code{colnames} \code{"RandSig"}.
@@ -14,6 +14,8 @@
 #' @keywords internal
 
 CreateOneRandomMutSigProfile <- function(row.names) {
+  stopifnot(!is.null(row.names))
+
   retval <- matrix(10^runif(length(row.names)), ncol = 1)
   # retval <- matrix(10^rnorm(length(row.names)), ncol = 1) # Too spiky
   retval <- retval / sum(retval)
@@ -25,7 +27,7 @@ CreateOneRandomMutSigProfile <- function(row.names) {
 #' Create a matrix of "random" signature profiles.
 #'
 #' @param row.headers One of the \code{\link{ICAMS}} package variable such as
-#'  \code{catalog.row.order[["SNS96"]]}.
+#'  \code{catalog.row.order[["SBS96"]]}.
 #'
 #' @param num.signatures Number of signatures to create.
 #'
@@ -39,6 +41,9 @@ CreateOneRandomMutSigProfile <- function(row.names) {
 
 CreateRandomMutSigProfiles <-
   function(row.headers, num.signatures, sig.name.prefix) {
+
+  stopifnot(!is.null(row.headers))
+
   retval <- lapply(1:num.signatures,
                 function (x) CreateOneRandomMutSigProfile(row.headers))
   retval <- as.matrix(data.frame(retval))
@@ -194,7 +199,7 @@ CreateOneSetOfRandomCatalogs <-
 
     syn.96.sigs <-
       CreateRandomMutSigProfiles(
-        ICAMS::catalog.row.order[["SNS96"]], total.num.sigs, sig.name.prefix)
+        ICAMS::catalog.row.order[["SBS96"]], total.num.sigs, sig.name.prefix)
 
     syn.COMPOSITE.sigs <-
       CreateRandomMutSigProfiles(
@@ -240,18 +245,16 @@ CreateOneSetOfRandomCatalogs <-
     exp <- exp[ , 1:num.syn.tumors]
     colnames(exp) <- paste0(sample.name.prefix, 1:num.syn.tumors)
 
-    CreateAndWriteCatalog(
-      syn.COMPOSITE.sigs,
-      exp,
-      composite.dir.name,
-      WriteCatCOMPOSITE,
+    NewCreateAndWriteCatalog(
+      sigs = syn.COMPOSITE.sigs,
+      exp  = exp,
+      dir  = composite.dir.name,
       overwrite = overwrite)
 
-    CreateAndWriteCatalog(
-      syn.96.sigs,
-      exp,
-      x96.dir.name,
-      WriteCatSNS96,
+    NewCreateAndWriteCatalog(
+      sig = syn.96.sigs,
+      exp = exp,
+      dir = x96.dir.name,
       overwrite = overwrite)
 }
 
@@ -268,12 +271,17 @@ CreateOneSetOfRandomCatalogs <-
 
 CreateRandomSAAndSPSynCatalogs <-
   function(top.level.dir, num.syn.tumors, overwrite = FALSE) {
-  SetNewOutDir(top.level.dir, overwrite)
 
-  COMPOSITE.features <- c(ICAMS::catalog.row.order[["SNS1536"]],
-                          ICAMS::catalog.row.order[["DNS78"]],
+  COMPOSITE.features <- c(ICAMS::catalog.row.order[["SBS1536"]],
+                          ICAMS::catalog.row.order[["DBS78"]],
                           ICAMS::catalog.row.order[["ID"]])
   stopifnot(length(COMPOSITE.features) == 1697)
+
+  if (dir.exists(top.level.dir)) {
+    if (!overwrite) stop(top.level.dir, " exists and overwrite is FALSE")
+  } else {
+    MustCreateDir(top.level.dir)
+  }
 
   # The following are for choosing the mean number of mutations due to each
   # synthetic signature.
@@ -304,8 +312,8 @@ CreateRandomSAAndSPSynCatalogs <-
     num.sigs.sd        = sa.num.sigs.sd,
     sig.name.prefix    = "SARandSig",
     sample.name.prefix = "SARandSample",
-    composite.dir.name = "sa.sa.COMPOSITE",
-    x96.dir.name       = "sa.sa.96",
+    composite.dir.name = file.path(top.level.dir, "sa.sa.COMPOSITE"), # HERE
+    x96.dir.name       = file.path(top.level.dir, "sa.sa.96"),        # HERE
     COMPOSITE.features = COMPOSITE.features,
     overwrite = overwrite)
 
@@ -318,23 +326,28 @@ CreateRandomSAAndSPSynCatalogs <-
     num.sigs.sd        = sp.num.sigs.sd,
     sig.name.prefix    = "SPRandSig",
     sample.name.prefix = "SPRandSample",
-    composite.dir.name = "sp.sa.COMPOSITE",
-    x96.dir.name       = "sp.sp",
+    composite.dir.name = file.path(top.level.dir, "sp.sa.COMPOSITE"), # HERE
+    x96.dir.name       = file.path(top.level.dir, "sp.sp"),           # HERE
     COMPOSITE.features = COMPOSITE.features,
     overwrite = overwrite)
 
-  AddAllScripts(maxK = 50)
+  # AddAllScripts(maxK = 50)
   }
 
 Create.syn.30.random <- function(regress = FALSE) {
+  suppressWarnings(RNGkind(sample.kind="Rounding"))
+  # For compatibility with R < 3.6.0
   set.seed(1443196)
+
   CreateRandomSAAndSPSynCatalogs("tmp.syn.30.random.sigs",
                            1000, overwrite = TRUE)
   if (regress) {
-    if (Diff4SynDataSets("syn.30.random.sigs", unlink = TRUE) != 0) {
-      cat("\nThere was a difference, investigate\n")
+    diff.result <- Diff4SynDataSets("syn.30.random.sigs", unlink = TRUE)
+    if (diff.result[1] != "ok") {
+      message("\nThere was a difference, investigate\n",
+              paste0(diff.result, "\n"))
     } else {
-      cat("\nok\n")
+      message("\nok\n")
     }
   }
 }

@@ -24,7 +24,7 @@
 #'
 #' @export
 #'
-# TESTING @importFrom ICAMS WriteCatSNS96 ReadCatSNS96
+#' @importFrom ICAMS WriteCatalog ReadCatalog
 #' @importFrom utils capture.output sessionInfo
 #' @importFrom grDevices dev.off
 #' @importFrom graphics par
@@ -46,7 +46,7 @@ SummarizeSigOneSPSubdir <-
     # Converted signatures will be included in the /summary folder.
     extractedSigs <- ReadSigProfilerSig96(paste0(inputPath,"/De_Novo_Solution_Signatures.txt"))
     extracted.sigs.path <- paste0(inputPath,"/extracted.signatures.PCAWG.format.csv")
-    ICAMS::WriteCatSNS96(extractedSigs, extracted.sigs.path)
+    ICAMS::WriteCatalog(extractedSigs, extracted.sigs.path)
 
     # Read in attributed exposures in SP format,
     # and convert it into our internal format
@@ -67,10 +67,10 @@ SummarizeSigOneSPSubdir <-
         ground.truth.exposure.name = ground.truth.exposure.name,
         extracted.sigs.path = extracted.sigs.path,
         attributed.exp.path = attributed.exp.path,
-        read.extracted.sigs.fn = ReadCatSNS96,
-        read.ground.truth.sigs.fn = ReadCatSNS96,
-        write.cat.fn = WriteCatSNS96,
-        plot.pdf.fn = PlotCatSNS96ToPdf,
+        read.extracted.sigs.fn = ReadCatalog,
+        read.ground.truth.sigs.fn = ReadCatalog,
+        write.cat.fn = WriteCatalog,
+        plot.pdf.fn = PlotCatalog,
         overwrite = overwrite)
 
     # Copy stability.pdf and result_stat.csv

@@ -8,7 +8,7 @@ CreateRandomMutSigProfiles(row.headers, num.signatures, sig.name.prefix)
 }
 \arguments{
 \item{row.headers}{One of the \code{\link{ICAMS}} package variable such as
-\code{catalog.row.order[["SNS96"]]}.}
+\code{catalog.row.order[["SBS96"]]}.}
 
 \item{num.signatures}{Number of signatures to create.}
 

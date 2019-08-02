@@ -22,9 +22,12 @@ to sample.id.suffix. TODO(Steve): probably drop this}
 \value{
 A list of three elements that comprise the
 synthetic data: \enumerate{
- \item \code{ground.truth.catalog}
- \item \code{ground.truth.signatures}
- \item \code{ground.truth.exposures}
+ \item \code{ground.truth.catalog}: Spectra catalog for
+ the software input.
+ \item \code{ground.truth.signatures}: Signatures active
+ in \code{ground.truth.catalog}.
+ \item \code{ground.truth.exposures}: Exposures of \code{ground.truth.signatures}
+ in \code{ground.truth.catalog}.
 }
 }
 \description{
